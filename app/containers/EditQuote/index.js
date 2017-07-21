@@ -11,6 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import makeSelectEditQuote from './selectors';
 import messages from './messages';
+import { EditQuoteHeader } from '../EditQuoteHeader';
 
 export class EditQuote extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -23,6 +24,7 @@ export class EditQuote extends React.PureComponent { // eslint-disable-line reac
           ]}
         />
         <FormattedMessage {...messages.header} />
+        <EditQuoteHeader />
       </div>
     );
   }
