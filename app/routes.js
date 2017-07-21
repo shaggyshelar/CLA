@@ -38,9 +38,9 @@ export default function createRoutes(store) {
       name: 'editQuote',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          import('containers/EditQuote/reducer'),
-          import('containers/EditQuote/sagas'),
-          import('containers/EditQuote'),
+          import('containers/EditQuotePage/reducer'),
+          import('containers/EditQuotePage/sagas'),
+          import('containers/EditQuotePage'),
         ]);
 
         const renderRoute = loadModule(cb);

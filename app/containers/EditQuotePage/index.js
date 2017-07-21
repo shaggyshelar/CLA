@@ -13,14 +13,14 @@ import makeSelectEditQuote from './selectors';
 import messages from './messages';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 
-export class EditQuote extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class EditQuotePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div>
         <Helmet
-          title="EditQuote"
+          title="EditQuotePage"
           meta={[
-            { name: 'description', content: 'Description of EditQuote' },
+            { name: 'description', content: 'Description of EditQuotePage' },
           ]}
         />
         <FormattedMessage {...messages.header} />
@@ -30,12 +30,12 @@ export class EditQuote extends React.PureComponent { // eslint-disable-line reac
   }
 }
 
-EditQuote.propTypes = {
+EditQuotePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  EditQuote: makeSelectEditQuote(),
+  EditQuotePage: makeSelectEditQuote(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -44,4 +44,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditQuote);
+export default connect(mapStateToProps, mapDispatchToProps)(EditQuotePage);
