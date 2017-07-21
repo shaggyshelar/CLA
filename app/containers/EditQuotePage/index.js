@@ -23,7 +23,6 @@ export class EditQuotePage extends React.PureComponent { // eslint-disable-line 
             { name: 'description', content: 'Description of EditQuotePage' },
           ]}
         />
-        <FormattedMessage {...messages.header} />
         <EditQuoteHeader />
       </div>
     );

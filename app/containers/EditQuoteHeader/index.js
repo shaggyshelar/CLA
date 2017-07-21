@@ -15,6 +15,7 @@ import AddProductsDropdown from '../../components/AddProductsDropdown';
 import AddGroupDropdown from '../../components/AddGroupDropdown';
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
 import EditQuoteGrid from '../../components/EditQuoteGrid';
+import { Button } from 'semantic-ui-react';
 
 export class EditQuoteHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -29,8 +30,13 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
         <EditQuoteHeaderCard />
         <AddProductsDropdown />
         <AddGroupDropdown />
+        <Button>Delete Lines</Button>
+        <Button>Quick Save</Button>
+        <Button>Calculate</Button>
+        <Button>Cancel</Button>
+        <Button>Save</Button>
+        <Button>Fullscreen</Button>
         <EditQuoteGrid />
-        <FormattedMessage {...messages.header} />
       </div>
     );
   }
