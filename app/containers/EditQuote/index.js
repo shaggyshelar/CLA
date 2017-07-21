@@ -1,9 +1,3 @@
-/*
- *
- * EditQuote
- *
- */
-
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
@@ -11,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import makeSelectEditQuote from './selectors';
 import messages from './messages';
+import { TableHeader } from '../TableHeader';
+import Table from 'components/Table';
 
 export class EditQuote extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -22,7 +18,8 @@ export class EditQuote extends React.PureComponent { // eslint-disable-line reac
             { name: 'description', content: 'Description of EditQuote' },
           ]}
         />
-        <FormattedMessage {...messages.header} />
+        <TableHeader />
+        <Table />
       </div>
     );
   }
