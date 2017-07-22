@@ -7,15 +7,13 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
+import { Button } from 'semantic-ui-react';
 import { createStructuredSelector } from 'reselect';
 import makeSelectEditQuoteHeader from './selectors';
-import messages from './messages';
 import AddProductsDropdown from '../../components/AddProductsDropdown';
 import AddGroupDropdown from '../../components/AddGroupDropdown';
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
 import EditQuoteGrid from '../../components/EditQuoteGrid';
-import { Button } from 'semantic-ui-react';
 
 export class EditQuoteHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {

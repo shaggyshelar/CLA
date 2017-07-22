@@ -7,8 +7,6 @@
 import React from 'react';
 // import styled from 'styled-components';
 
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import { Dropdown, Menu } from 'semantic-ui-react';
 
 const options = [
@@ -21,7 +19,7 @@ class AddProductsDropdown extends React.PureComponent { // eslint-disable-line r
   render() {
     return (
       <Menu compact>
-        <Dropdown text='Add Products' options={options} simple item />
+        <Dropdown text="Add Products" options={options} simple item />
       </Menu>
     );
   }

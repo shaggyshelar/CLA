@@ -7,8 +7,6 @@
 import React from 'react';
 // import styled from 'styled-components';
 
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import { Comment, Icon } from 'semantic-ui-react';
 
 class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -16,7 +14,7 @@ class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line r
     return (
       <Comment.Group>
         <Comment>
-          <Comment.Avatar as='a' src='/assets/images/avatar/small/joe.jpg' />
+          <Comment.Avatar as="a" src="/assets/images/avatar/small/joe.jpg" />
           <Comment.Content>
             <Comment.Author>Q-000087</Comment.Author>
             <Comment.Text>
@@ -27,7 +25,7 @@ class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line r
               <Comment.Action>Save</Comment.Action>
               <Comment.Action>Hide</Comment.Action>
               <Comment.Action>
-                <Icon name='expand' />
+                <Icon name="expand" />
                 Full-screen
               </Comment.Action>
             </Comment.Actions>
