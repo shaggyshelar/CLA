@@ -11,7 +11,8 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import makeSelectProductSelectionPage from './selectors';
 import messages from './messages';
-import { ProductSelectionHeader } from '../ProductSelectionHeader';
+import  {ProductSelectionHeader}  from '../ProductSelectionHeader';
+import  ProductSelectionGrid  from 'components/ProductSelectionGrid';
 
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -23,8 +24,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             { name: 'description', content: 'Description of ProductSelectionPage' },
           ]}
         />
-        <FormattedMessage {...messages.header} />
-        <ProductSelectionHeader />
+        <ProductSelectionHeader/>
+        <ProductSelectionGrid />
       </div>
     );
   }
