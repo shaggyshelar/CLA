@@ -6,32 +6,23 @@
 
 import React from 'react';
 // import styled from 'styled-components';
-
-import { Comment, Icon } from 'semantic-ui-react';
+import {Row, Col,Grid,Glyphicon } from 'react-bootstrap/lib';
 
 class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <Comment.Group>
-        <Comment>
-          <Comment.Avatar as="a" src="/assets/images/avatar/small/joe.jpg" />
-          <Comment.Content>
-            <Comment.Author>Q-000087</Comment.Author>
-            <Comment.Text>
-              Edit Quote
-            </Comment.Text>
-            <Comment.Actions>
-              <Comment.Action>Reply</Comment.Action>
-              <Comment.Action>Save</Comment.Action>
-              <Comment.Action>Hide</Comment.Action>
-              <Comment.Action>
-                <Icon name="expand" />
-                Full-screen
-              </Comment.Action>
-            </Comment.Actions>
-          </Comment.Content>
-        </Comment>
-      </Comment.Group>
+      <Row className="show-grid  margin" >
+        <Col xs={1} md={4} ><Glyphicon className="cartIcon" glyph='shopping-cart' /></Col>
+        <Col xs={8}>
+          <Row>
+            <Col sm={12} className="cartFont">Q-00116|Edit Quote</Col>
+          </Row>
+          <Row>
+            <Col sm={12} className="cartFont">Total: $150,000.00</Col>
+          </Row>
+        </Col>
+      </Row>
+      
     );
   }
 }

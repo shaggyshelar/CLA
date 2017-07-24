@@ -222,6 +222,8 @@
     "lodash": "4.17.2",
     "minimist": "1.2.0",
     "react": "15.4.1",
+    "react-bootstrap": "^0.31.1",
+    "react-bootstrap-typeahead": "^2.0.0-alpha.1",
     "react-dom": "15.4.1",
     "react-helmet": "3.2.2",
     "react-intl": "2.1.5",
@@ -234,8 +236,6 @@
     "redux-saga": "0.14.0",
     "reselect": "2.5.4",
     "sanitize.css": "4.1.0",
-    "semantic-ui-react": "^0.71.1",
-    "styled-components": "1.1.2",
     "warning": "3.0.0",
     "whatwg-fetch": "2.0.1"
   },

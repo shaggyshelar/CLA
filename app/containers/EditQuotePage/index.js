@@ -11,10 +11,11 @@ import { createStructuredSelector } from 'reselect';
 import makeSelectEditQuote from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 
+import EditQuoteGrid from 'components/EditQuoteGrid';
 export class EditQuotePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div>
+      <div className="margin">
         <Helmet
           title="EditQuotePage"
           meta={[
@@ -22,6 +23,7 @@ export class EditQuotePage extends React.PureComponent { // eslint-disable-line 
           ]}
         />
         <EditQuoteHeader />
+        <EditQuoteGrid />
       </div>
     );
   }
