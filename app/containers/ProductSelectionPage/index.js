@@ -1,6 +1,6 @@
 /*
  *
- * EditQuote
+ * ProductSelectionPage
  *
  */
 
@@ -9,31 +9,33 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
-import makeSelectEditQuote from './selectors';
+import makeSelectProductSelectionPage from './selectors';
 import messages from './messages';
+import { ProductSelectionHeader } from '../ProductSelectionHeader';
 
-export class EditQuote extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div>
         <Helmet
-          title="EditQuote"
+          title="ProductSelectionPage"
           meta={[
-            { name: 'description', content: 'Description of EditQuote' },
+            { name: 'description', content: 'Description of ProductSelectionPage' },
           ]}
         />
         <FormattedMessage {...messages.header} />
+        <ProductSelectionHeader />
       </div>
     );
   }
 }
 
-EditQuote.propTypes = {
+ProductSelectionPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  EditQuote: makeSelectEditQuote(),
+  ProductSelectionPage: makeSelectProductSelectionPage(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -42,4 +44,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditQuote);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductSelectionPage);

@@ -38,15 +38,35 @@ export default function createRoutes(store) {
       name: 'editQuote',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          import('containers/EditQuote/reducer'),
-          import('containers/EditQuote/sagas'),
-          import('containers/EditQuote'),
+          import('containers/EditQuotePage/reducer'),
+          import('containers/EditQuotePage/sagas'),
+          import('containers/EditQuotePage'),
         ]);
 
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('editQuote', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/ProductSelection',
+      name: 'productSelectionPage',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/ProductSelectionPage/reducer'),
+          import('containers/ProductSelectionPage/sagas'),
+          import('containers/ProductSelectionPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('productSelectionPage', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });
