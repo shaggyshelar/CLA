@@ -34,26 +34,6 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/EditQuote',
-      name: 'editQuote',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          import('containers/EditQuotePage/reducer'),
-          import('containers/EditQuotePage/sagas'),
-          import('containers/EditQuotePage'),
-        ]);
-
-        const renderRoute = loadModule(cb);
-
-        importModules.then(([reducer, sagas, component]) => {
-          injectReducer('editQuote', reducer.default);
-          injectSagas(sagas.default);
-          renderRoute(component);
-        });
-
-        importModules.catch(errorLoading);
-      },
-    }, {
       path: '/ProductSelection',
       name: 'productSelectionPage',
       getComponent(nextState, cb) {
@@ -67,6 +47,26 @@ export default function createRoutes(store) {
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('productSelectionPage', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/EditQuote',
+      name: 'editQuoteHeader',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/EditQuoteHeader/reducer'),
+          import('containers/EditQuoteHeader/sagas'),
+          import('containers/EditQuoteHeader'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('editQuoteHeader', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });

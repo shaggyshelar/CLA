@@ -4,7 +4,7 @@
 *
 */
 
-import React from 'react';
+import { React, PropTypes } from 'react';
 // import styled from 'styled-components';
 
 import { Button, Checkbox, Icon, Table } from 'semantic-ui-react';
@@ -27,7 +27,7 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
             <Table.Cell collapsing>
               <Checkbox />
             </Table.Cell>
-            <Table.Cell>John Lilki</Table.Cell>
+            <Table.Cell>{ this.props.data.FirstName }</Table.Cell>
             <Table.Cell>September 14, 2013</Table.Cell>
             <Table.Cell>jhlilk22@yahoo.com</Table.Cell>
             <Table.Cell>No</Table.Cell>
@@ -69,7 +69,7 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
 }
 
 EditQuoteGrid.propTypes = {
-
+  data: PropTypes.any,
 };
 
 export default EditQuoteGrid;
