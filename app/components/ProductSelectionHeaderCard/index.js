@@ -11,18 +11,17 @@ import {Row, Col,Grid,Glyphicon } from 'react-bootstrap/lib';
 class ProductSelectionHeaderCard extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <Row className="show-grid  margin" >
-        <Col xs={1} md={4} ><Glyphicon className="cartIcon" glyph='barcode' /></Col>
-        <Col xs={8}>
-          <Row>
-            <Col sm={12} className="cartFont">Q-00116</Col>
-          </Row>
-          <Row>
-            <Col sm={12} className="cartFontTitle">Product Selection</Col>
-          </Row>
-        </Col>
-      </Row>
-      
+      <div className="card  margin" >
+        <div className="card-icon"><Glyphicon className="cartIcon" glyph='barcode' /></div>
+        <div className="card-detail">
+          <div>
+            <div  className="cartFont">Q-00116</div>
+          </div>
+          <div>
+            <div className="cartFont" ><h4 style={{marginTop: '0px'}}>Product Selection</h4></div>
+          </div>
+        </div>
+      </div>      
     );
   }
 }

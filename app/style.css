@@ -91,3 +91,160 @@ height:100%;
         opacity: 1 !important;
         color:#286090;
 }
+.modal-content{
+    border:none;
+}
+.modal-dialog {
+    width: 80%;
+    display:inline;
+}
+
+.modal {
+    display:table !important;
+    width:80%;
+    margin:auto;
+}
+.modal-body input {
+        display: inline;
+        width: 35%;
+        margin-left: 10px;
+
+        height: 30px;
+}
+
+.modal-body select {
+        display: inline;
+        width: 35%;
+        margin-left: 10px;
+
+        height: 30px;
+}
+
+.tooltip-inner {
+    display: block;
+    outline: 0;
+    font-family: Roboto,Noto,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 10px;
+    line-height: 1;
+    background-color: #616161;
+    opacity: .9;
+    color: #fff;
+    padding: 8px;
+    border-radius: 2px;
+    padding: 5px;
+    color: #16325C;
+    font-family: 'Salesforce Sans','Open Sans',Arial,sans-serif;
+    font-size: 12px;
+    border-radius: 4px;
+    z-index: 999;
+    background-color: #fff;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,.16);
+    border: 1px solid #d8dde6;
+    opacity: 1;
+}
+.tooltip-arrow {
+    color:white;
+    background-color: white;
+}
+.modal-title {
+    color: #16325C;
+}
+
+.modal-table {
+    width: 100%;
+}
+.modal-table tr {
+    border-bottom: 1px solid #e5e5e5;
+    
+}
+.modal-table tr td:first-child {
+  padding-top: 15px;
+  width: 10%;
+padding-bottom: 15px;
+}
+.modal-table tr td {
+  color: #3C3D3E;
+}
+.modal-table tr th {
+  padding-top: 20px;
+    padding-bottom: 20px;
+        color: #3C3D3E;
+}
+.container-modal-table {
+    margin-left:30px;
+    margin-right:30px;
+    }
+
+    /* SideBar filter */
+    .Sidebar-demo {
+  padding: 15px;
+}
+.card {
+    display: inline-flex;
+    width: 100%;
+}
+.card-icon {
+    margin-right:5px;
+}
+.Sidebar.modal.fade .modal-dialog {
+  transition: none;
+}
+.Sidebar.modal.fade {
+  transition: transform 0.3s ease-out, opacity 0.15s linear;
+}
+.Sidebar.modal.fade:not(.in).left {
+  transform: translate3d(-100%, 0, 0);
+}
+.Sidebar.modal.fade:not(.in).right {
+  transform: translate3d(100%, 0, 0);
+}
+.Sidebar.modal {
+  /* overflow: auto; */
+    max-width: 25%;
+    box-shadow: 5px 0 10px;
+    background-color: #f5f5f5;
+    height: 100%;
+    min-width: 300px;
+}
+.Sidebar.modal.left {
+  right: auto;
+}
+.Sidebar.modal.right {
+  left: auto;
+}
+.Sidebar.modal .modal-dialog {
+  margin: 0;
+  width: auto;
+}
+.Sidebar.modal .modal-dialog .modal-content {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.Sidebar.modal .modal-dialog .modal-content .modal-body {
+      padding: 20px;
+
+}
+.Sidebar.modal .modal-title {
+    padding: 2px;
+
+}
+.Sidebar.modal input {
+   margin-left:0px
+
+}
+.Sidebar.modal .clear {
+   margin-left:40px;
+
+}
+.Sidebar.modal.fade:not(.in).left .modal-dialog {
+  transform: translate3d(-100%, 0, 0);
+}
+.Sidebar.modal.fade:not(.in).right .modal-dialog {
+  transform: translate3d(100%, 0, 0);
+}
+
+.Sidebar .nav {
+  width: 80%;
+}
