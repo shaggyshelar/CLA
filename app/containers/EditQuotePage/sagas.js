@@ -2,7 +2,7 @@ import request from 'utils/request';
 import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
 // import { LOAD_REPOS } from 'containers/App/constants';
-import { LOAD_DATA } from '../App/constants';
+import { LOAD_DATA } from './constants';
 import { dataLoaded, dataLoadingError } from './actions';
 
 
@@ -23,7 +23,6 @@ export function* getData() {
 export function* dataSaga() {
   // See example in containers/HomePage/sagas.js
   const watcher = yield takeLatest(LOAD_DATA, getData);
-
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);

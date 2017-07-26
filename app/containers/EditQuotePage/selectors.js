@@ -1,25 +1,32 @@
 import { createSelector } from 'reselect';
 
-/**
- * Direct selector to the editQuote state domain
- */
-const selectEditQuoteDomain = () => (state) => state.get('editQuote');
+const selectEditQuote = (state) => state.get('editQuote');
 
-/**
- * Other specific selectors
- */
-
-
-/**
- * Default selector used by EditQuote
- */
-
-const makeSelectEditQuote = () => createSelector(
-  selectEditQuoteDomain(),
-  (substate) => substate.toJS()
+const makeSelectCurrentUser = () => createSelector(
+  selectEditQuote,
+  (homeState) => homeState.get('currentUser')
 );
 
-export default makeSelectEditQuote;
+const makeSelectLoading = () => createSelector(
+  selectEditQuote,
+  (homeState) => homeState.get('loading')
+);
+
+const makeSelectError = () => createSelector(
+  selectEditQuote,
+  (homeState) => homeState.get('error')
+);
+
+const makeSelectData = () => createSelector(
+  selectEditQuote,
+  (homeState) => homeState.getIn(['data'])
+);
+
+
 export {
-  selectEditQuoteDomain,
+  selectEditQuote,
+  makeSelectData,
+  makeSelectError,
+  makeSelectLoading,
+  makeSelectCurrentUser,
 };
