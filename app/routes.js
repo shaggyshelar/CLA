@@ -21,13 +21,24 @@ export default function createRoutes(store) {
       path: '/',
       name: 'home',
       getComponent(nextState, cb) {
+        // const importModules = Promise.all([
+        //   import('containers/HomePage'),
+        // ]);
         const importModules = Promise.all([
-          import('containers/HomePage'),
+          import('containers/EditQuotePage/reducer'),
+          import('containers/EditQuotePage/sagas'),
+          import('containers/EditQuotePage'),
         ]);
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([component]) => {
+        // importModules.then(([component]) => {
+        //   renderRoute(component);
+        // });
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('editQuote', reducer.default);
+          injectSagas(sagas.default);
           renderRoute(component);
         });
 
