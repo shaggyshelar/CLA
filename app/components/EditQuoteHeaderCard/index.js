@@ -11,17 +11,17 @@ import {Row, Col,Grid,Glyphicon } from 'react-bootstrap/lib';
 class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <Row className="show-grid  margin" >
-        <Col xs={1} md={4} ><Glyphicon className="cartIcon" glyph='shopping-cart' /></Col>
-        <Col xs={8}>
-          <Row>
-            <Col sm={12} className="cartFont">Q-00116|Edit Quote</Col>
-          </Row>
-          <Row>
-            <Col sm={12} className="cartFont">Total: $150,000.00</Col>
-          </Row>
-        </Col>
-      </Row>
+      <div className="card  margin" >
+        <div className="card-icon"><Glyphicon className="cartIcon" glyph='shopping-cart' /></div>
+        <div className="card-detail">
+          <div>
+            <div  className="cartFont">Q-00116|Edit Quote</div>
+          </div>
+          <div>
+            <div className="cartFont" ><h4 style={{marginTop: '0px'}}>Total: $150,000.00</h4></div>
+          </div>
+        </div>
+      </div>
       
     );
   }

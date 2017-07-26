@@ -13,8 +13,8 @@ import makeSelectProductSelectionPage from './selectors';
 import messages from './messages';
 import  {ProductSelectionHeader}  from '../ProductSelectionHeader';
 import  ProductSelectionGrid  from 'components/ProductSelectionGrid';
-
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  
   render() {
     return (
       <div>

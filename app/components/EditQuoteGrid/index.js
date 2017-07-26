@@ -1,15 +1,14 @@
 import ReactTable from 'react-table';
 import React, { PropTypes, Component } from 'react';
-import { Modal,Button, Checkbox, Icon, Table } from 'react-bootstrap/lib';
+import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip,OverlayTrigger,Table } from 'react-bootstrap/lib';
+
 import 'react-table/react-table.css';
 class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props)
     this.renderEditable = this.renderEditable.bind(this)
     this.handleToggle = this.handleToggle.bind(this)
-
     
-      
     this.state = {
       tableOptions: {
         loading: false,
@@ -56,7 +55,11 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
       }
     })
   }
+
   render() {
+    const tooltip = (
+      <Tooltip id="tooltip" bsClass="tooltip"><strong>Specifiy the discount unit: Amount or Percent</strong></Tooltip>
+    );
     const columns = [{
       columns: [{
         Header: <input type="checkbox" />,
@@ -67,7 +70,7 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
       {
         Header: 'ID',
         accessor: '_id',
-        Cell: ({ value }) => <a onClick={this.handleToggle}style={{ color: 'darkred' }}>{value}</a>
+        Cell: ({ value }) => <a onClick={this.handleToggle} style={{ color: 'darkred' }}>{value}</a>
       }, {
         Header: 'PRODUCT CODE',
 
@@ -119,6 +122,7 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
 
       ]
     }]
+
     return (
       <div>
         <div className='table-wrap'>
@@ -142,19 +146,98 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
             }}
           />
         </div>
-        <Modal show={this.state.isModalOpen} onHide={this.handleToggle} style={{display:'inline-flex'}}>
-          <Modal.Dialog>
-            <Modal.Header>
-              <Modal.Title style={{textAlign:'center'}}>Discount Schedule Editor</Modal.Title>
+        <Modal show={this.state.isModalOpen} onHide={this.handleToggle}
+          style={{ display: 'inline-flex' }}>
+          <Modal.Dialog >
+            <Modal.Header closeButton={true}>
+              <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph='calendar' /> <strong> Discount Schedule Editor </strong></Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
-              One fine body...
-      </Modal.Body>
+              <Row>
+                <Col md={6} style={{ textAlign: 'center' }}>
+                  <strong>Schedule Name </strong>
+                  <FormControl
+                    disabled={true}
+                    type="text"
+                    value={this.state.value ? this.state.value : ""}
+                    placeholder="Volume Discount"
+                  />
+                </Col>
+                <Col md={6} style={{ textAlign: 'center' }}>
+                  <strong>Schedule Name</strong>
+                  <OverlayTrigger placement="top" overlay={tooltip}>
+                    <Glyphicon glyph='question-sign' style={{paddingLeft:'2px',paddingBottom:'2px'}}/>
+                  </OverlayTrigger>
+                  <FormControl componentClass="select" placeholder="Percent" disabled={true}>
+                    <option value="select">Percent</option>
+                    <option value={this.state.value ? this.state.value : ""}>{this.state.value ? this.state.value : ""}</option>
+                  </FormControl>
+                </Col>
+              </Row>
+              <br/>
+              <Row className="container-modal-table">
+                 <Table responsive bsClass='modal-table'>
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>TIER NAME</th>
+                    <th>LOWER BOUND</th>
+                    <th>UPPER BOUND</th>
+                    <th>DISCOUNT (%)</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Maria Anders</td>
+                    <td>Germany</td>
+                     <td>Canada</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Francisco Chang</td>
+                    <td>Mexico</td>
+                     <td>Canada</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Ernst Handel</td>
+                    <td>Roland Mendel</td>
+                    <td>Austria</td>
+                     <td>Canada</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Island Trading</td>
+                    <td>Helen Bennett</td>
+                    <td>UK</td>
+                     <td>Canada</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Laughing Bacchus Winecellars</td>
+                    <td>Yoshi Tannamuri</td>
+                    <td>Canada</td>
+                     <td>Canada</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Magazzini Alimentari Riuniti</td>
+                    <td>Giovanni Rovelli</td>
+                    <td>Italy</td>
+                    <td>Italy</td>
+                  </tr>
+                  </tbody>
+                </Table>
+              </Row>
+
+            </Modal.Body>
 
             <Modal.Footer>
-              <Button>Close</Button>
-              <Button bsStyle="primary">Save changes</Button>
+              <Button onClick={this.handleToggle} >Cancel</Button>
             </Modal.Footer>
           </Modal.Dialog>
         </Modal>

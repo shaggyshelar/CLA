@@ -5,8 +5,6 @@ import 'react-table/react-table.css';
 class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props)
-    this.renderEditable = this.renderEditable.bind(this)
-
     const data =
       [
         {
@@ -64,7 +62,7 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
           "NET TOTAL": "$ 487.7556",
           "QUANTITY": 77.3144
         }
-      ]
+      ];
     this.state = {
       tableOptions: {
         loading: false,
@@ -79,20 +77,15 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
         resizable: true,
         pivot: true,
         expander: true,
-        freezeWhenExpanded:true
+        freezeWhenExpanded:true,
+       
       },
-      data: data
+      data: data,
     }
 
     this.setTableOption = this.setTableOption.bind(this)
   }
-  renderEditable(cellInfo) {
-    return (<div style={{ backgroundColor: '#fafafa' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
-      const data = [...this.state.data]
-      data[cellInfo.index][cellInfo.column.id] = e.target.textContent
-      this.setState({ data: data })
-    }}>{this.state.data[cellInfo.index][cellInfo.column.id]}</div>)
-  }
+  
   setTableOption(event) {
     const target = event.target
     const value = target.type === 'checkbox' ? target.checked : target.value
@@ -151,6 +144,7 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
             {...this.state.tableOptions}
             
           />
+          
         </div>
       </div>
     );

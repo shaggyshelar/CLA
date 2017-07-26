@@ -18,7 +18,7 @@ import { loadData } from './actions';
 export class EditQuotePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div className="margin">
+      <div>
         <Helmet
           title="EditQuotePage"
           meta={[
