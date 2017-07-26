@@ -10,18 +10,23 @@ import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import makeSelectEditQuote from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
+import EditQuoteGrid from 'components/EditQuoteGrid';
+import { makeSelectData, makeSelectError, makeSelectLoading } from '../App/selectors';
+import { loadData } from './actions';
+
 
 export class EditQuotePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div>
+      <div className="margin">
         <Helmet
           title="EditQuotePage"
           meta={[
             { name: 'description', content: 'Description of EditQuotePage' },
           ]}
         />
-        <EditQuoteHeader />
+        <EditQuoteHeader getOnLoadData={this.props.getAllData} />
+        <EditQuoteGrid data={this.props.data} />
       </div>
     );
   }
@@ -29,15 +34,22 @@ export class EditQuotePage extends React.PureComponent { // eslint-disable-line 
 
 EditQuotePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  getAllData: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   EditQuotePage: makeSelectEditQuote(),
+  data: makeSelectData(),
+  loading: makeSelectLoading(),
+  error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    getAllData: () => {
+      dispatch(loadData());
+    },
   };
 }
 

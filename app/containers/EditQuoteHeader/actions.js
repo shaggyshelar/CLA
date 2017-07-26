@@ -18,6 +18,7 @@ import {
 // }
 
 export function loadData() {
+  debugger;
   return {
     type: LOAD_DATA,
   };

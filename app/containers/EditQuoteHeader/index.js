@@ -3,7 +3,6 @@
  * EditQuoteHeader
  *
  */
-import { Button } from 'semantic-ui-react';
 // import React, { PropTypes } from 'react';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -14,10 +13,17 @@ import { loadData } from './actions';
 import AddProductsDropdown from '../../components/AddProductsDropdown';
 import AddGroupDropdown from '../../components/AddGroupDropdown';
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
-import EditQuoteGrid from '../../components/EditQuoteGrid';
+import { Button, Glyphicon, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
 
-export class EditQuoteHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
+export class EditQuoteHeader extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+
+  componentDidMount() {
+    console.log(this.props);
+    debugger;
+      //this.props.getAllData();
+      this.props.getOnLoadData();
+  }
   render() {
     const { loading, error, data } = this.props;
     const dataListProps = {
@@ -27,24 +33,29 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
     };
 
     return (
-      <div>
-        <Helmet
-          title="EditQuoteHeader"
-          meta={[
-            { name: 'description', content: 'Description of EditQuoteHeader' },
-          ]}
-        />
-        <EditQuoteHeaderCard />
-        <AddProductsDropdown />
-        <AddGroupDropdown />
-        <Button>Delete Lines</Button>
-        <Button>Quick Save</Button>
-        <Button>Calculate</Button>
-        <Button>Cancel</Button>
-        <Button onClick={() => { this.props.getAllData(); console.log(dataListProps); }}>Save</Button>
-        <Button>Fullscreen</Button>
-        <EditQuoteGrid {...dataListProps} />
-      </div>
+      <Row className="show-grid">
+        <Col xs={12} md={3}>
+          <Helmet
+            title="TableHeader"
+            meta={[
+              { name: 'description', content: 'Description of TableHeader' },
+            ]}
+          />
+          <EditQuoteHeaderCard />
+        </Col>
+        <Col xs={12} md={9}>
+          <AddProductsDropdown />
+          <AddGroupDropdown />
+          <Button className="margin">Delete Lines</Button>
+           <ButtonGroup className="margin">
+          <Button>Quick Save</Button>
+          <Button>Calculate</Button>
+           </ButtonGroup>
+          <Button className="margin">Cancel</Button>
+          <Button className="margin"><Glyphicon glyph='fullscreen' /></Button>
+          <Button onClick={() => this.props.getOnLoadData()} className="margin" bsStyle="primary">Save</Button>
+        </Col>
+      </Row>
     );
   }
 }
@@ -56,7 +67,8 @@ EditQuoteHeader.propTypes = {
     React.PropTypes.bool,
   ]),
   data: React.PropTypes.object,
-  getAllData: React.PropTypes.func,
+  //getAllData: React.PropTypes.func,
+  getOnLoadData: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -67,11 +79,13 @@ const mapStateToProps = createStructuredSelector({
 });
 
 function mapDispatchToProps(dispatch) {
+
   return {
     // dispatch,
-    getAllData: () => {
-      dispatch(loadData());
-    },
+   
+    // getAllData: () => {
+    //   dispatch(loadData());
+    // },
   };
 }
 

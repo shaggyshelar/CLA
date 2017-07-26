@@ -55,18 +55,18 @@ export default function createRoutes(store) {
       },
     }, {
       path: '/EditQuote',
-      name: 'editQuoteHeader',
+      name: 'editQuote',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          import('containers/EditQuoteHeader/reducer'),
-          import('containers/EditQuoteHeader/sagas'),
-          import('containers/EditQuoteHeader'),
+          import('containers/EditQuotePage/reducer'),
+          import('containers/EditQuotePage/sagas'),
+          import('containers/EditQuotePage'),
         ]);
 
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('editQuoteHeader', reducer.default);
+          injectReducer('editQuote', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });
