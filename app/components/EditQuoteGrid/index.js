@@ -4,10 +4,11 @@
 *
 */
 
-import { React, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 // import styled from 'styled-components';
 
 import { Button, Checkbox, Icon, Table } from 'semantic-ui-react';
+// import EditQuoteGridRow from '../EditQuoteGridRow';
 
 class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -23,6 +24,10 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
           </Table.Row>
         </Table.Header>
         <Table.Body>
+
+          {/* <EditQuoteGridRow {...this.props.data} /> */}
+
+
           <Table.Row>
             <Table.Cell collapsing>
               <Checkbox />

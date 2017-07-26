@@ -4,6 +4,7 @@ const express = require('express');
 const quoteRouter = express.Router();
 // A GET to the root of a resource returns a list of that resource
 quoteRouter.get('/', (req, res) => {
+  // res.json({ FirstName: 'Sagar122', LastName: 'Shelar444' });
   res.json({ FirstName: 'Sagar122', LastName: 'Shelar444' });
 });
 // A POST to the root of a resource should create a new object

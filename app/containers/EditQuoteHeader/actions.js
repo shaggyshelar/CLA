@@ -5,17 +5,17 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  // DEFAULT_ACTION,
   LOAD_DATA,
   LOAD_DATA_ERROR,
   LOAD_DATA_SUCCESS,
 } from '../App/constants';
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
+// export function defaultAction() {
+//   return {
+//     type: DEFAULT_ACTION,
+//   };
+// }
 
 export function loadData() {
   return {
