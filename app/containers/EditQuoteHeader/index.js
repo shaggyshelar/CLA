@@ -3,19 +3,31 @@
  * EditQuoteHeader
  *
  */
-
-import React, { PropTypes } from 'react';
+// import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { Button, Glyphicon, Row, Col,ButtonGroup } from 'react-bootstrap/lib';
 import { createStructuredSelector } from 'reselect';
-import makeSelectEditQuoteHeader from './selectors';
-import AddProductsDropdown from 'components/AddProductsDropdown';
-import AddGroupDropdown from 'components/AddGroupDropdown';
-import EditQuoteHeaderCard from 'components/EditQuoteHeaderCard';
+import { makeSelectData, makeSelectError, makeSelectLoading } from '../App/selectors';
+import AddProductsDropdown from '../../components/AddProductsDropdown';
+import AddGroupDropdown from '../../components/AddGroupDropdown';
+import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
+import { Button, Glyphicon, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
 
-export class EditQuoteHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+export class EditQuoteHeader extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+
+  componentDidMount() {
+    this.props.getOnLoadData();
+  }
   render() {
+    const { loading, error, data } = this.props;
+    const dataListProps = {
+      loading,
+      error,
+      data,
+    };
+
     return (
       <Row className="show-grid">
         <Col xs={12} md={3}>
@@ -37,9 +49,7 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
            </ButtonGroup>
           <Button className="margin">Cancel</Button>
           <Button className="margin"><Glyphicon glyph='fullscreen' /></Button>
-          <Button className="margin" bsStyle="primary">Save</Button>
-          
-          
+          <Button onClick={() => this.props.getOnLoadData()} className="margin" bsStyle="primary">Save</Button>
         </Col>
       </Row>
     );
@@ -47,16 +57,31 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
 }
 
 EditQuoteHeader.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  loading: React.PropTypes.bool,
+  error: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+  data: React.PropTypes.object,
+  //getAllData: React.PropTypes.func,
+  getOnLoadData: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  EditQuoteHeader: makeSelectEditQuoteHeader(),
+  // ApiPage: makeSelectApiPage(),
+  data: makeSelectData(),
+  loading: makeSelectLoading(),
+  error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {
+
   return {
-    dispatch,
+    // dispatch,
+   
+    // getAllData: () => {
+    //   dispatch(loadData());
+    // },
   };
 }
 

@@ -5,11 +5,8 @@
  */
 
 import {
-  DEFAULT_ACTION,
-} from './constants';
-
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
+  // DEFAULT_ACTION,
+  LOAD_DATA,
+  LOAD_DATA_ERROR,
+  LOAD_DATA_SUCCESS,
+} from '../App/constants';
