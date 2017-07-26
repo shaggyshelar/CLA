@@ -8,7 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectData, makeSelectError, makeSelectLoading } from '../App/selectors';
+// import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import AddProductsDropdown from '../../components/AddProductsDropdown';
 import AddGroupDropdown from '../../components/AddGroupDropdown';
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
@@ -88,20 +88,13 @@ EditQuoteHeader.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  // ApiPage: makeSelectApiPage(),
-  data: makeSelectData(),
-  loading: makeSelectLoading(),
-  error: makeSelectError(),
+
 });
 
 function mapDispatchToProps(dispatch) {
 
   return {
-    // dispatch,
-   
-    // getAllData: () => {
-    //   dispatch(loadData());
-    // },
+    // dispatch,   
   };
 }
 
