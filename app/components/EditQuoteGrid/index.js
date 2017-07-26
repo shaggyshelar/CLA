@@ -1,11 +1,13 @@
 import ReactTable from 'react-table';
 import React, { Component } from 'react';
+import { Modal,Button } from 'react-bootstrap/lib';
 import 'react-table/react-table.css';
 
 class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props)
     this.renderEditable = this.renderEditable.bind(this)
+    this.handleToggle = this.handleToggle.bind(this)
 
     const data =
       [
@@ -79,12 +81,19 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
         resizable: true,
         pivot: true,
         expander: true,
-        freezeWhenExpanded:true
+        freezeWhenExpanded: true
+
       },
-      data: data
+      data: data,
+      isModalOpen: false
     }
 
     this.setTableOption = this.setTableOption.bind(this)
+  }
+  handleToggle() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen
+    });
   }
   renderEditable(cellInfo) {
     return (<div style={{ backgroundColor: '#fafafa' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
@@ -107,15 +116,15 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
   render() {
     const columns = [{
       columns: [{
-        Header: <input type="checkbox"/>,
+        Header: <input type="checkbox" />,
         accessor: 'sd',
-        style:{textAlign: 'center'},
-        Cell: <input type="checkbox"/>,
+        style: { textAlign: 'center' },
+        Cell: <input type="checkbox" />,
       },
       {
         Header: 'ID',
         accessor: '_id',
-        PivotValue: ({value}) => <span style={{color: 'darkred'}}>{value}</span>
+        Cell: ({ value }) => <a onClick={this.handleToggle}style={{ color: 'darkred' }}>{value}</a>
       }, {
         Header: 'PRODUCT CODE',
 
@@ -129,7 +138,7 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
         Header: 'PRODUCT NAME',
         accessor: 'PRODUCT NAME',
         Cell: this.renderEditable
-        
+
       },
       {
         Header: 'LIST UNIT PRICE',
@@ -190,6 +199,22 @@ class EditQuoteGrid extends React.PureComponent { // eslint-disable-line react/p
             }}
           />
         </div>
+        <Modal show={this.state.isModalOpen} onHide={this.handleToggle} style={{display:'inline-flex'}}>
+          <Modal.Dialog>
+            <Modal.Header>
+              <Modal.Title style={{textAlign:'center'}}>Discount Schedule Editor</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              One fine body...
+      </Modal.Body>
+
+            <Modal.Footer>
+              <Button>Close</Button>
+              <Button bsStyle="primary">Save changes</Button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal>
       </div>
     );
   }
