@@ -8,10 +8,9 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
-import makeSelectEditQuote from './selectors';
+import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import EditQuoteGrid from 'components/EditQuoteGrid';
-import { makeSelectData, makeSelectError, makeSelectLoading } from '../App/selectors';
 import { loadData } from './actions';
 
 
@@ -38,7 +37,7 @@ EditQuotePage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  EditQuotePage: makeSelectEditQuote(),
+  // EditQuotePage: makeSelectEditQuote(),
   data: makeSelectData(),
   loading: makeSelectLoading(),
   error: makeSelectError(),

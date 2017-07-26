@@ -6,13 +6,10 @@
 
 import {
   DEFAULT_ACTION,
-} from './constants';
-import {
-  // DEFAULT_ACTION,
   LOAD_DATA,
   LOAD_DATA_ERROR,
   LOAD_DATA_SUCCESS,
-} from '../App/constants';
+} from './constants';
 
 export function defaultAction() {
   return {
