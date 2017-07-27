@@ -11,7 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import EditQuoteGrid from 'components/EditQuoteGrid';
-import { loadData,cloneLine,deleteLine } from './actions';
+import { loadData, cloneLine, deleteLine } from './actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -19,7 +19,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   componentDidMount() {
     this.props.getAllData()
   }
-   
+
   render() {
     return (
       <div>
@@ -29,15 +29,19 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             { name: 'description', content: 'Description of EditQuotePage' },
           ]}
         />
-        <EditQuoteHeader 
-          data={this.props.data}
-          cloneLine = {this.props.cloneLine}
-        />
-        <EditQuoteGrid 
-          data={this.props.data}
-          cloneLine = {this.props.cloneLine}
-          deleteLine = {this.props.deleteLine}
-        />
+        <div>
+          <EditQuoteHeader
+            data={this.props.data}
+            cloneLine={this.props.cloneLine}
+          />
+        </div>
+        <div>
+          <EditQuoteGrid
+            data={this.props.data}
+            cloneLine={this.props.cloneLine}
+            deleteLine={this.props.deleteLine}
+          />
+        </div>
       </div>
     );
   }
@@ -46,8 +50,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 EditQuotePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   getAllData: React.PropTypes.func,
-  cloneLine:PropTypes.func,
-  deleteLine:PropTypes.func
+  cloneLine: PropTypes.func,
+  deleteLine: PropTypes.func
 };
 
 const mapStateToProps = createStructuredSelector({

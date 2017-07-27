@@ -14,7 +14,7 @@ import messages from './messages';
 class Sidebar extends React.Component {
 	render() {
   	return (
-    	<Modal className='Sidebar right' show={ this.props.isVisible } onHide={this.props.onHide} 
+    	<Modal container={this.props.container} className='Sidebar right' show={ this.props.isVisible } onHide={this.props.onHide} 
       	 autoFocus keyboard
       >
       	<Modal.Header closeButton>

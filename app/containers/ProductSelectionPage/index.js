@@ -9,12 +9,13 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
+
 import makeSelectProductSelectionPage from './selectors';
 import messages from './messages';
-import  {ProductSelectionHeader}  from '../ProductSelectionHeader';
-import  ProductSelectionGrid  from 'components/ProductSelectionGrid';
+import { ProductSelectionHeader } from '../ProductSelectionHeader';
+import ProductSelectionGrid from 'components/ProductSelectionGrid';
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  
+
   render() {
     return (
       <div>
@@ -24,8 +25,13 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             { name: 'description', content: 'Description of ProductSelectionPage' },
           ]}
         />
-        <ProductSelectionHeader/>
-        <ProductSelectionGrid />
+        <div style={{zIndex:'9999999'}}>
+          <ProductSelectionHeader />
+        </div>
+        <div>
+          <ProductSelectionGrid />
+          
+        </div>
       </div>
     );
   }
