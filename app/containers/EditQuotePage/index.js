@@ -21,21 +21,12 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
    
   render() {
-    const { loading, error, data } = this.props;
-    const dataListProps = {
-      loading,
-      error,
-      data,
-    };
-
     return (
       <div>
         <Helmet
           title="EditQuotePage"
-          meta={[{
-            name: 'description',
-            content: 'Description of EditQuotePage',
-          },
+          meta={[
+            { name: 'description', content: 'Description of EditQuotePage' },
           ]}
         />
         <EditQuoteHeader 

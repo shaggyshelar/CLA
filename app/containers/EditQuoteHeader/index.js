@@ -8,8 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
-// import { makeSelectData, makeSelectError, makeSelectLoading } from
-// './selectors';
+// import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import AddProductsDropdown from '../../components/AddProductsDropdown';
 import AddGroupDropdown from '../../components/AddGroupDropdown';
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
@@ -26,42 +25,37 @@ constructor(props) {
     data.splice(index, 0, data[index]);
     this.props.cloneLine(data)
   }
-  handleFullScreen(d) {
-    if (d.requestFullscreen) {
-      d.requestFullscreen();
-    } else if (d.mozRequestFullScreen) {
-      d.mozRequestFullScreen();
-    } else if (d.webkitRequestFullscreen) {
-      d.webkitRequestFullscreen();
-    } else if (document.documentElement.msRequestFullscreen) {
-      d.msRequestFullscreen();
-    }
+ handleFullScreen(d) {
+  if(d.requestFullscreen) {
+    d.requestFullscreen();
+  } else if(d.mozRequestFullScreen) {
+    d.mozRequestFullScreen();
+  } else if(d.webkitRequestFullscreen) {
+    d.webkitRequestFullscreen();
+  } else if(document.documentElement.msRequestFullscreen) {
+    d.msRequestFullscreen();
   }
+}
   render() {
     const { loading, error, data } = this.props;
-    // const dataListProps = {
-    //   loading,
-    //   error,
-    //   data,
-    // };
+    const dataListProps = {
+      loading,
+      error,
+      data,
+    };
 
     return (
       <Row className="show-grid">
         <Col xs={12} md={3}>
           <Helmet
             title="TableHeader"
-            meta={[{
-              name: 'description',
-              content: 'Description of TableHeader'
-            },
+            meta={[
+              { name: 'description', content: 'Description of TableHeader' },
             ]}
           />
           <EditQuoteHeaderCard />
         </Col>
-        <Col xs={12} md={9} style={{
-            textAlign: "right",
-        }}
-        >
+        <Col xs={12} md={9} style={{textAlign:"right"}}>
           <AddProductsDropdown />
           <AddGroupDropdown />
           <Button className="margin">Delete Lines</Button>
@@ -87,12 +81,14 @@ EditQuoteHeader.propTypes = {
   data: React.PropTypes.any,
 };
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+
+});
 
 function mapDispatchToProps(dispatch) {
 
   return {
-    // dispatch,
+    // dispatch,   
   };
 }
 
