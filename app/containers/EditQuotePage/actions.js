@@ -7,6 +7,8 @@
 import {
   DEFAULT_ACTION,
   LOAD_DATA,
+  CLONE_LINE,
+  DELETE_LINE,
   LOAD_DATA_ERROR,
   LOAD_DATA_SUCCESS,
 } from './constants';
@@ -23,12 +25,22 @@ export function loadData() {
     type: LOAD_DATA,
   };
 }
-
-export function dataLoaded(DATA, username) {
+export function cloneLine(data) {
+  return {
+    type: CLONE_LINE,
+    data:data
+  };
+}
+export function deleteLine(data) {
+  return {
+    type: DELETE_LINE,
+    data:data
+  };
+}
+export function dataLoaded(data) {
   return {
     type: LOAD_DATA_SUCCESS,
-    DATA,
-    username,
+    data:data,
   };
 }
 

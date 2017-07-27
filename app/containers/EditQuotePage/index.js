@@ -11,10 +11,15 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import EditQuoteGrid from 'components/EditQuoteGrid';
-import { loadData } from './actions';
+import { loadData,cloneLine,deleteLine } from './actions';
 
 
-export class EditQuotePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  componentDidMount() {
+    this.props.getAllData()
+  }
+   
   render() {
     return (
       <div>
@@ -24,8 +29,15 @@ export class EditQuotePage extends React.PureComponent { // eslint-disable-line 
             { name: 'description', content: 'Description of EditQuotePage' },
           ]}
         />
-        <EditQuoteHeader getOnLoadData={this.props.getAllData} />
-        <EditQuoteGrid data={this.props.data} />
+        <EditQuoteHeader 
+          data={this.props.data}
+          cloneLine = {this.props.cloneLine}
+        />
+        <EditQuoteGrid 
+          data={this.props.data}
+          cloneLine = {this.props.cloneLine}
+          deleteLine = {this.props.deleteLine}
+        />
       </div>
     );
   }
@@ -34,13 +46,14 @@ export class EditQuotePage extends React.PureComponent { // eslint-disable-line 
 EditQuotePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   getAllData: React.PropTypes.func,
+  cloneLine:PropTypes.func,
+  deleteLine:PropTypes.func
 };
 
 const mapStateToProps = createStructuredSelector({
-  // EditQuotePage: makeSelectEditQuote(),
   data: makeSelectData(),
   loading: makeSelectLoading(),
-  error: makeSelectError(),
+  error: makeSelectError()
 });
 
 function mapDispatchToProps(dispatch) {
@@ -48,6 +61,12 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     getAllData: () => {
       dispatch(loadData());
+    },
+    cloneLine: (data) => {
+      dispatch(cloneLine(data));
+    },
+    deleteLine: (data) => {
+      dispatch(deleteLine(data));
     },
   };
 }
