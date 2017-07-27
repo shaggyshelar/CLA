@@ -9,6 +9,7 @@ import React from 'react';
 import {Row, Col,Grid,Glyphicon } from 'react-bootstrap/lib';
 
 class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  
   render() {
     return (
       <div className="card  margin" >

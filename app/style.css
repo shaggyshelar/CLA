@@ -248,3 +248,8 @@ padding-bottom: 15px;
 .Sidebar .nav {
   width: 80%;
 }
+
+.actionItems a {
+    padding-left:2px;
+    padding-right:2px;
+}
