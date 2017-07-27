@@ -17,7 +17,10 @@ import { loadData,cloneLine,deleteLine } from './actions';
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    this.props.getAllData()
+    this.props.getAllData();
+    console.log(window.parent.Xrm.Page.context.getClientUrl());
+    console.log(window.parent.Xrm.Page.data.entity.getId().replace("{", "").replace("}", ""));
+    console.log(window.parent.Xrm.Page.data.entity.getEntityName());
   }
    
   render() {
