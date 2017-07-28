@@ -17,9 +17,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.toggleSidebar = this
       .toggleSidebar
       .bind(this);
-    this
-      .props
-      .getCountriesData();
+    // this
+    //   .props
+    //   .getCountriesData();
   }
   toggleSidebar() {
     this
