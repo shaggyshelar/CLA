@@ -15,7 +15,7 @@ import ProductSelectionGrid from 'components/ProductSelectionGrid';
 import ProductSelectionHeaderCard from 'components/ProductSelectionHeaderCard';
 import SearchProductAutocomplete from 'components/SearchProductAutocomplete';
 import Sidebar from 'components/Sidebar';
-
+import { browserHistory } from 'react-router';
 export class ProductSelectionHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props, context) {
   	super(props, context);
@@ -53,15 +53,9 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
           <ButtonGroup className="margin">
             <Button>Select</Button>
             <Button>Select and Add More</Button>
-            <Button>Cancel</Button>
+            <Button onClick={() => { browserHistory.push('/EditQuote') }}>Cancel</Button>
           </ButtonGroup>
-          <Sidebar title="Product Filter" side='left' isVisible={ this.state.isVisible } onHide={ () => this.toggleSidebar(false) }>
-            <h4>FG</h4>
-            <FormControl type="text" placeholder="" style={{width:"80%"}}/>
-          <br/> <br/> <br/>
-          <Button bsStyle="primary">Apply</Button>
-          <a className="clear">Clear Fields</a>
-        </Sidebar>
+          
         </Col>
         
       </Row>

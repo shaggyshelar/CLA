@@ -13,21 +13,17 @@ import AddProductsDropdown from '../../components/AddProductsDropdown';
 import AddGroupDropdown from '../../components/AddGroupDropdown';
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
 import { Button, Glyphicon, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
-
+import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 
 export class EditQuoteHeader extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 constructor(props) {
     super(props)
     this.handleFullScreen = this.handleFullScreen.bind(this)
 }
- 
-  componentDidMount() {
-    this.props.getOnLoadData();
-    const w = window,
-  d = document,
-  documentElement = d.documentElement;
-  console.log(documentElement)
-   this.handleFullScreen(documentElement);
+ cloneLine(index,e) {
+    var data = this.props.data
+    data.splice(index, 0, data[index]);
+    this.props.cloneLine(data)
   }
  handleFullScreen(d) {
   if(d.requestFullscreen) {
@@ -65,11 +61,11 @@ constructor(props) {
           <Button className="margin">Delete Lines</Button>
            <ButtonGroup className="margin">
           <Button>Quick Save</Button>
-          <Button>Calculate</Button>
+          <Button onClick={this.cloneLine.bind(this,1)}>Calculate</Button>
            </ButtonGroup>
           <Button className="margin">Cancel</Button>
           <Button className="margin" onClick={this.handleFullScreen}><Glyphicon glyph='fullscreen' /></Button>
-          <Button onClick={() => this.props.getOnLoadData()} className="margin" bsStyle="primary">Save</Button>
+          <Button className="margin" bsStyle="primary">Save</Button>
         </Col>
       </Row>
     );
@@ -82,9 +78,7 @@ EditQuoteHeader.propTypes = {
     React.PropTypes.object,
     React.PropTypes.bool,
   ]),
-  data: React.PropTypes.object,
-  //getAllData: React.PropTypes.func,
-  getOnLoadData: React.PropTypes.func,
+  data: React.PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
