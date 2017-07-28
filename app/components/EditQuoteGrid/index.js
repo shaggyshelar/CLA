@@ -1,15 +1,13 @@
 import ReactTable from 'react-table';
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
-import _ from 'lodash';
-import { connect } from 'react-redux';
 import 'react-table/react-table.css';
 class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
-    super(props)
-    this.renderEditable = this.renderEditable.bind(this)
-    this.handleToggle = this.handleToggle.bind(this)
-    
+    super(props);
+    this.renderEditable = this.renderEditable.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
+
     this.state = {
       tableOptions: {
         loading: false,
@@ -24,63 +22,65 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         resizable: true,
         pivot: true,
         expander: true,
-        freezeWhenExpanded: true
+        freezeWhenExpanded: true,
 
       },
       data: this.props.data,
-      isModalOpen: false
-    }
-    this.setTableOption = this.setTableOption.bind(this)
-    this.cloneLine = this.cloneLine.bind(this)
-    this.renderActionItems = this.renderActionItems.bind(this)
-    this.deleteLine = this.deleteLine.bind(this)
+      isModalOpen: false,
+    };
+    this.setTableOption = this.setTableOption.bind(this);
+    this.cloneLine = this.cloneLine.bind(this);
+    this.renderActionItems = this.renderActionItems.bind(this);
+    this.deleteLine = this.deleteLine.bind(this);
+  }
+
+  setTableOption(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({
+      tableOptions: {
+        ...this.state.tableOptions,
+        [name]: value,
+      },
+    });
   }
 
   handleToggle() {
     this.setState({
-      isModalOpen: !this.state.isModalOpen
+      isModalOpen: !this.state.isModalOpen,
     });
   }
-  renderEditable(cellInfo) {
-    return (<div style={{ backgroundColor: '#fafafa' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
-      const data = [...this.props.data]
-      data[cellInfo.index][cellInfo.column.id] = e.target.textContent
-      this.setState({ data: data })
-    }}>{this.props.data[cellInfo.index][cellInfo.column.id]}</div>)
-  }
-  setTableOption(event) {
-    const target = event.target
-    const value = target.type === 'checkbox' ? target.checked : target.value
-    const name = target.name
-    this.setState({
-      tableOptions: {
-        ...this.state.tableOptions,
-        [name]: value
-      }
-    })
-  }
-  cloneLine(index,e) {
-    var data = this.props.data
+  cloneLine(index) {
+    const data = this.props.data;
     data.splice(index, 0, data[index]);
-    this.props.cloneLine(data)
+    this.props.cloneLine(data);
   }
-  deleteLine(index,e) {
-    var data = this.props.data
+  deleteLine(index) {
+    const data = this.props.data;
     data.splice(index, 1);
-    this.props.deleteLine(data)
+    this.props.deleteLine(data);
+  }
+  renderEditable(cellInfo) {
+    return (<div
+      style={{ backgroundColor: '#fafafa' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
+        const data = [...this.props.data];
+        data[cellInfo.index][cellInfo.column.id] = e.target.textContent;
+        this.setState({ data });
+      }}
+    >{this.props.data[cellInfo.index][cellInfo.column.id]}</div>);
   }
   renderActionItems(cellInfo) {
-
     return (
       <div className="actionItems" >
-        <a><Glyphicon glyph='star-empty' /></a>
-        <a><Glyphicon glyph='calendar' onClick={this.handleToggle} /></a>
-        <a><Glyphicon glyph='wrench' /></a>
-        <a><Glyphicon glyph='info-sign' /></a>
-        <a><Glyphicon glyph='duplicate' onClick={this.cloneLine.bind(this,cellInfo.index)}/></a>
-        <a><Glyphicon glyph='trash' onClick={this.deleteLine.bind(this,cellInfo.index)}/></a>
+        <a><Glyphicon glyph="star-empty" /></a>
+        <a><Glyphicon glyph="calendar" onClick={this.handleToggle} /></a>
+        <a><Glyphicon glyph="wrench" /></a>
+        <a><Glyphicon glyph="info-sign" /></a>
+        <a><Glyphicon glyph="duplicate" onClick={this.cloneLine.bind(this, cellInfo.index)} /></a>
+        <a><Glyphicon glyph="trash" onClick={this.deleteLine.bind(this, cellInfo.index)} /></a>
       </div>
-    )
+    );
   }
 
   render() {
@@ -94,100 +94,103 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           Header: '',
           style: { textAlign: 'left' },
           sortable: false,
-          Cell: this.renderActionItems
+          Cell: this.renderActionItems,
         },
-        {
-          Header: <input type="checkbox" />,
-          accessor: 'sd',
-          sortable: false,
-          width: 50,
-          style: { textAlign: 'center' },
-          Cell: <input type="checkbox" />,
-        },
-        {
-          Header: '#',
-          sortable: false,
-          width: 50,
-          Cell: ({ index }) =><span>{index+1}</span>
+          {
+            Header: <input type="checkbox" />,
+            accessor: 'sd',
+            sortable: false,
+            width: 50,
+            style: { textAlign: 'center' },
+            Cell: <input type="checkbox" />,
+          },
+          {
+            Header: '#',
+            sortable: false,
+            width: 50,
+            Cell: ({ index }) => <span>{index + 1}</span>,
 
-        }, {
-          Header: 'PRODUCT CODE',
+          }, {
+            Header: 'PRODUCT CODE',
 
-          id: 'PRODUCT CODE',
-          accessor: d => d['PRODUCT CODE'],
-          Cell: this.renderEditable
+            id: 'PRODUCT CODE',
+            accessor: (d) => d['PRODUCT CODE'],
+            Cell: this.renderEditable,
 
-        },
+          },
 
-        {
-          Header: 'PRODUCT NAME',
-          accessor: 'PRODUCT NAME',
-          Cell: this.renderEditable
+          {
+            Header: 'PRODUCT NAME',
+            accessor: 'PRODUCT NAME',
+            Cell: this.renderEditable,
 
-        },
-        {
-          Header: 'LIST UNIT PRICE',
-          accessor: 'LIST UNIT PRICE'
-        },
-        {
-          Header: 'ADDITIONAL DISC.',
-          accessor: 'ADDITIONAL DISC.'
-        },
-        {
-          Header: 'QUANTITY',
-          accessor: 'QUANTITY',
-          Footer: (
-            <span><strong>Subtotal: </strong>
-            </span>
-          )
-        },
-        {
-          Header: 'NET UNIT PRICE',
-          accessor: 'NET UNIT PRICE',
-          Footer: (
-            <span><strong>$ 123 </strong>
-            </span>
-          )
-        },
-        {
-          Header: 'NET TOTAL',
-          accessor: 'NET TOTAL',
-          Footer: (
-            <span><strong>Quote Total: </strong>
-            </span>
-          )
-        }
-        ]
-      }]
+          },
+          {
+            Header: 'LIST UNIT PRICE',
+            accessor: 'LIST UNIT PRICE',
+          },
+          {
+            Header: 'ADDITIONAL DISC.',
+            accessor: 'ADDITIONAL DISC.',
+          },
+          {
+            Header: 'QUANTITY',
+            accessor: 'QUANTITY',
+            Footer: (
+              <span>
+                <strong>Subtotal: </strong>
+              </span>
+          ),
+          },
+          {
+            Header: 'NET UNIT PRICE',
+            accessor: 'NET UNIT PRICE',
+            Footer: (
+              <span>
+                <strong>$ 123 </strong>
+              </span>
+          ),
+          },
+          {
+            Header: 'NET TOTAL',
+            accessor: 'NET TOTAL',
+            Footer: (
+              <span>
+                <strong>Quote Total: </strong>
+              </span>
+          ),
+          },
+        ],
+      }];
     return (
       <div>
-        <div className='table-wrap'>
+        <div className="table-wrap">
           <ReactTable
-            className='-striped -highlight'
+            className="-striped -highlight"
             data={this.props.data}
             columns={columns}
             defaultPageSize={this.props.data.length}
             pageSize={this.props.data.length}
             {...this.state.tableOptions}
-            SubComponent={(row) => {
-              return (
-                <div style={{ "padding-left": '35px' }}>
-                  <ReactTable
-                    data={this.props.data}
-                    columns={columns}
-                    defaultPageSize={3}
-                    showPagination={false}
-                  />
-                </div>
-              )
-            }}
+            SubComponent={() => (
+              <div style={{ 'padding-left': '35px' }}>
+                <ReactTable
+                  data={this.props.data}
+                  columns={columns}
+                  defaultPageSize={3}
+                  showPagination={false}
+                />
+              </div>
+            )}
           />
         </div>
-        <Modal show={this.state.isModalOpen} onHide={this.handleToggle}
-          style={{ display: 'inline-flex' }}>
+        <Modal
+          show={this.state.isModalOpen} onHide={this.handleToggle}
+          style={{ display: 'inline-flex' }}
+        >
           <Modal.Dialog >
-            <Modal.Header closeButton={true}>
-              <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph='calendar' /> <strong> Discount Schedule Editor </strong></Modal.Title>
+            <Modal.Header closeButton>
+              <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="calendar" /> <strong> Discount Schedule Editor </strong></Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
@@ -195,26 +198,26 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
                 <Col md={6} style={{ textAlign: 'center' }}>
                   <strong>Schedule Name </strong>
                   <FormControl
-                    disabled={true}
+                    disabled
                     type="text"
-                    value={this.state.value ? this.state.value : ""}
+                    value={this.state.value ? this.state.value : ''}
                     placeholder="Volume Discount"
                   />
                 </Col>
                 <Col md={6} style={{ textAlign: 'center' }}>
                   <strong>Schedule Name</strong>
                   <OverlayTrigger placement="top" overlay={tooltip}>
-                    <Glyphicon glyph='question-sign' style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
+                    <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
-                  <FormControl componentClass="select" placeholder="Percent" disabled={true}>
+                  <FormControl componentClass="select" placeholder="Percent" disabled>
                     <option value="select">Percent</option>
-                    <option value={this.state.value ? this.state.value : ""}>{this.state.value ? this.state.value : ""}</option>
+                    <option value={this.state.value ? this.state.value : ''}>{this.state.value ? this.state.value : ''}</option>
                   </FormControl>
                 </Col>
               </Row>
               <br />
               <Row className="container-modal-table">
-                <Table responsive bsClass='modal-table'>
+                <Table responsive bsClass="modal-table">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -285,8 +288,9 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
 
 EditQuoteGrid.propTypes = {
   data: PropTypes.any,
+  deleteLine: PropTypes.func,
+  cloneLine: PropTypes.func,
 };
-
 
 
 export default EditQuoteGrid;
