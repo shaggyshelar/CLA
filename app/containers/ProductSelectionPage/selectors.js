@@ -1,25 +1,20 @@
 import { createSelector } from 'reselect';
 
-/**
- * Direct selector to the productSelectionPage state domain
- */
-const selectProductSelectionPageDomain = () => (state) => state.get('productSelectionPage');
-
-/**
- * Other specific selectors
- */
-
-
-/**
- * Default selector used by ProductSelectionPage
- */
+const selectProductSelectionPageDomain = (state) => state.get('productSelectionPage');
 
 const makeSelectProductSelectionPage = () => createSelector(
-  selectProductSelectionPageDomain(),
-  (substate) => substate.toJS()
+  selectProductSelectionPageDomain,
+ (homeState) => homeState.toJS()
 );
 
-export default makeSelectProductSelectionPage;
+const showFilter = () => createSelector(
+  selectProductSelectionPageDomain,
+  (homeState) => homeState.get('showFilter')
+);
+
 export {
   selectProductSelectionPageDomain,
+  makeSelectProductSelectionPage,
+  showFilter
 };
+

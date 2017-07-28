@@ -19,16 +19,10 @@ import { browserHistory } from 'react-router';
 export class ProductSelectionHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props, context) {
   	super(props, context);
-    
-  	this.state = {
-      isVisible: false,
-    };
-    this.toggleSidebar = this.toggleSidebar.bind(this)
+
+  
   }
-  toggleSidebar(isVisible) {
-  	this.state.isVisible = isVisible;
-    this.forceUpdate();
-  }
+  
   render() {
     return (
       <Row className="show-grid">
@@ -47,7 +41,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
          </Col>
         <Col xs={12} md={5} style={{textAlign:"right"}}>
           <ButtonGroup className="margin">
-            <Button><Glyphicon glyph='filter' onClick={ () => this.toggleSidebar(true)}/></Button>
+            <Button><Glyphicon glyph='filter' onClick={this.props.toggleFilter}/></Button>
             <Button><Glyphicon glyph='star' /></Button>
           </ButtonGroup>
           <ButtonGroup className="margin">
@@ -64,7 +58,6 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
 }
 
 ProductSelectionHeader.propTypes = {
-  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -73,7 +66,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    
   };
 }
 
