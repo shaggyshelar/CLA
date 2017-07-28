@@ -6,7 +6,10 @@
 
 import {
   DEFAULT_ACTION,
-  SHOW_FILTER
+  SHOW_FILTER,
+  LOAD_COUNTRIES_DATA,
+  LOAD_COUNTRIES_DATA_SUCCESS,
+  LOAD_DATA_ERROR,
 } from './constants';
 
 export function defaultAction() {
@@ -16,9 +19,28 @@ export function defaultAction() {
 }
 
 export function showFilter(value) {
-  debugger
   return {
     type: SHOW_FILTER,
-    data:value.data
+    data: value.data,
+  };
+}
+
+export function loadCountriesData() {
+  return {
+    type: LOAD_COUNTRIES_DATA,
+  };
+}
+
+export function countriesDataLoaded(countries) {
+  return {
+    type: LOAD_COUNTRIES_DATA_SUCCESS,
+    countries,
+  };
+}
+
+export function dataLoadingError(error) {
+  return {
+    type: LOAD_DATA_ERROR,
+    error,
   };
 }
