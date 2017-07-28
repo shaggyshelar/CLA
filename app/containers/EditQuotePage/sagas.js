@@ -4,11 +4,11 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 // import { LOAD_REPOS } from 'containers/App/constants';
 import { LOAD_DATA, LOAD_XRM_DATA } from './constants';
 import { dataLoaded, dataLoadingError, xrmDataLoaded } from './actions';
-
+import { SERVER_URL, EntityURLs } from '../App/constants';
 
 export function* getData() {
   // Select username from store
-  // const requestURL = 'http://localhost:3000/api/quote';
+  // const requestURL = SERVER_URL + EntityURLs.QUOTE;
 
   try {
     // Call our request helper (see 'utils/request')
@@ -78,8 +78,9 @@ export function* getData() {
 
 export function* getXrmData() {
   // Select username from store
-  const requestURL = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/products?$select=name,productnum' +
-      'ber,standardcost,description,p2qes_quantityeditable';
+  // const requestURL = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/products?$select=name,productnum' +
+  //     'ber,standardcost,description,p2qes_quantityeditable';
+  const requestURL = SERVER_URL + EntityURLs.PRODUCTS + '?$select=name,productnumber,standardcost,description,p2qes_quantityeditable';
 
   try {
     const headers = {

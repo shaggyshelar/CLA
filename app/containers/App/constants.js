@@ -10,6 +10,25 @@
  */
 
 export const DEFAULT_LOCALE = 'en';
+let serverUrl = '';
+let entityUrls = {};
+if (process.env.NODE_ENV === 'production') {
+  serverUrl = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/';
+  entityUrls = {
+    PRODUCTS: 'products',
+    QUOTE: 'quote',
+  };
+}
+
+if (process.env.NODE_ENV === 'development') {
+  serverUrl = 'http://localhost:3000/api/';
+  entityUrls = {
+    PRODUCTS: 'products',
+    QUOTE: 'quote',
+  };
+}
+export const SERVER_URL = serverUrl;
+export const EntityURLs = entityUrls;
 // export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
 // export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
 // export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
