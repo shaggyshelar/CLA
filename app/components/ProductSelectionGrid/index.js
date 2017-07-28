@@ -1,7 +1,8 @@
 import ReactTable from 'react-table';
 import React, { Component } from 'react';
 import 'react-table/react-table.css';
-
+import Sidebar from 'components/Sidebar';
+import { Button, Glyphicon, Row, Col, ButtonGroup,FormControl } from 'react-bootstrap/lib';
 class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props)
@@ -81,11 +82,18 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
        
       },
       data: data,
+      isVisible:true,
     }
 
     this.setTableOption = this.setTableOption.bind(this)
+    this.toggleSidebar = this.toggleSidebar.bind(this)
   }
   
+  
+  toggleSidebar(isVisible) {
+  	this.state.isVisible = isVisible;
+    this.forceUpdate();
+  }
   setTableOption(event) {
     const target = event.target
     const value = target.type === 'checkbox' ? target.checked : target.value
@@ -144,7 +152,13 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
             {...this.state.tableOptions}
             
           />
-          
+          <Sidebar container={this} title="Product Filter" side='left' isVisible={this.state.isVisible} onHide={() => this.toggleSidebar(false)}>
+            <h4>FG</h4>
+            <FormControl type="text" placeholder="" style={{ width: "80%" }} />
+            <br /> <br /> <br />
+            <Button bsStyle="primary">Apply</Button>
+            <a className="clear">Clear Fields</a>
+          </Sidebar>
         </div>
       </div>
     );

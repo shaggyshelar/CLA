@@ -35,15 +35,19 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             { name: 'description', content: 'Description of EditQuotePage' },
           ]}
         />
-        <EditQuoteHeader
-          data={this.props.data}
-          cloneLine = {this.props.cloneLine}
-        />
-        <EditQuoteGrid
-          data={this.props.data}
-          cloneLine={this.props.cloneLine}
-          deleteLine={this.props.deleteLine}
-        />
+        <div>
+          <EditQuoteHeader
+            data={this.props.data}
+            cloneLine={this.props.cloneLine}
+          />
+        </div>
+        <div>
+          <EditQuoteGrid
+            data={this.props.data}
+            cloneLine={this.props.cloneLine}
+            deleteLine={this.props.deleteLine}
+          />
+        </div>
       </div>
     );
   }
