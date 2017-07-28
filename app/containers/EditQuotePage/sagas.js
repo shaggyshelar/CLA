@@ -8,11 +8,24 @@ import { dataLoaded, dataLoadingError } from './actions';
 
 export function* getData() {
   // Select username from store
-  const requestURL = 'http://localhost:3000/api/quote';
+  const requestURL = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/products?$select=name,productnum' +
+      'ber,standardcost,description,p2qes_quantityeditable';
 
   try {
+    const headers = {
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
+        'OData-MaxVersion': '4.0',
+        'Prefer': 'odata.include-annotations="*"',
+        'OData-Version': '4.0',
+      },
+    };
+
     // Call our request helper (see 'utils/request')
-    const repos = yield call(request, requestURL);
+    const repos = yield call(request, requestURL, headers);
+    console.log(repos);
     yield put(dataLoaded(repos));
   } catch (err) {
     yield put(dataLoadingError(err));
