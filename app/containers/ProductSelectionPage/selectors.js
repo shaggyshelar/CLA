@@ -15,6 +15,6 @@ const showFilter = () => createSelector(
 export {
   selectProductSelectionPageDomain,
   makeSelectProductSelectionPage,
-  showFilter
+  showFilter,
 };
 

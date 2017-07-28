@@ -22,8 +22,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.toggleSidebar = this.toggleSidebar.bind(this)
   }
   toggleSidebar() {
-    this.props.toggleFilter({data:!this.props.showFilter});
-    this.forceUpdate()
+    let value = this.props.showFilter;
+    this.props.toggleFilter(!value);
+    this.forceUpdate();
   }
   render() {
     return (
@@ -60,10 +61,8 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     toggleFilter: (value) => {
-      debugger
       dispatch(showFilter(value));
     },
-    
   };
 }
 

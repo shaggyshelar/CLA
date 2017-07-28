@@ -1,12 +1,12 @@
 /*
  *
- * ProductSelectionPage actions
+ * PriceBook actions
  *
  */
 
 import {
   DEFAULT_ACTION,
-  SHOW_FILTER
+  SAVE_ACTION,
 } from './constants';
 
 export function defaultAction() {
@@ -14,10 +14,9 @@ export function defaultAction() {
     type: DEFAULT_ACTION,
   };
 }
-
-export function showFilter(value) {
+export function saveAction(data) {
   return {
-    type: SHOW_FILTER,
-    data:value,
+    type: SAVE_ACTION,
+    data,
   };
 }
