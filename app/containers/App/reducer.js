@@ -19,16 +19,14 @@ const initialState = fromJS({
   loading: false,
   error: false,
   currentUser: false,
-  data: {},
+  // data: {},
   // userData: {
   //   repositories: false,
   // },
 });
 
 function appReducer(state = initialState, action) {
-  
-      return state;
-  
+  return state;
 }
 
 export default appReducer;
