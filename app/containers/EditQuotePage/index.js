@@ -11,18 +11,21 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import EditQuoteGrid from 'components/EditQuoteGrid';
-import { loadData,cloneLine,deleteLine } from './actions';
+import { loadData, cloneLine, deleteLine, loadXrmData } from './actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
     this.props.getAllData();
-    console.log(window.parent.Xrm.Page.context.getClientUrl());
-    console.log(window.parent.Xrm.Page.data.entity.getId().replace("{", "").replace("}", ""));
-    console.log(window.parent.Xrm.Page.data.entity.getEntityName());
+    this.props.getXrmData();
+    if (window.parent.Xrm !== undefined) {
+      console.log(window.parent.Xrm.Page.context.getClientUrl());
+      console.log(window.parent.Xrm.Page.data.entity.getId().replace("{", "").replace("}", ""));
+      console.log(window.parent.Xrm.Page.data.entity.getEntityName());
+    }
   }
-   
+
   render() {
     return (
       <div>
@@ -32,14 +35,14 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             { name: 'description', content: 'Description of EditQuotePage' },
           ]}
         />
-        <EditQuoteHeader 
+        <EditQuoteHeader
           data={this.props.data}
           cloneLine = {this.props.cloneLine}
         />
-        <EditQuoteGrid 
+        <EditQuoteGrid
           data={this.props.data}
-          cloneLine = {this.props.cloneLine}
-          deleteLine = {this.props.deleteLine}
+          cloneLine={this.props.cloneLine}
+          deleteLine={this.props.deleteLine}
         />
       </div>
     );
@@ -49,14 +52,16 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 EditQuotePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   getAllData: React.PropTypes.func,
-  cloneLine:PropTypes.func,
-  deleteLine:PropTypes.func
+  cloneLine: PropTypes.func,
+  deleteLine: PropTypes.func,
+  getXrmData: PropTypes.func,
+  data: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
   loading: makeSelectLoading(),
-  error: makeSelectError()
+  error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -70,6 +75,9 @@ function mapDispatchToProps(dispatch) {
     },
     deleteLine: (data) => {
       dispatch(deleteLine(data));
+    },
+    getXrmData: () => {
+      dispatch(loadXrmData());
     },
   };
 }
