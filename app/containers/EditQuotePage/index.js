@@ -11,13 +11,19 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import EditQuoteGrid from 'components/EditQuoteGrid';
-import { loadData, cloneLine, deleteLine } from './actions';
+import { loadData, cloneLine, deleteLine, loadXrmData } from './actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   componentDidMount() {
-    this.props.getAllData()
+    this.props.getAllData();
+    this.props.getXrmData();
+    if (window.parent.Xrm !== undefined) {
+      console.log(window.parent.Xrm.Page.context.getClientUrl());
+      console.log(window.parent.Xrm.Page.data.entity.getId().replace("{", "").replace("}", ""));
+      console.log(window.parent.Xrm.Page.data.entity.getEntityName());
+    }
   }
 
   render() {
@@ -51,13 +57,15 @@ EditQuotePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   getAllData: React.PropTypes.func,
   cloneLine: PropTypes.func,
-  deleteLine: PropTypes.func
+  deleteLine: PropTypes.func,
+  getXrmData: PropTypes.func,
+  data: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
   loading: makeSelectLoading(),
-  error: makeSelectError()
+  error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -71,6 +79,9 @@ function mapDispatchToProps(dispatch) {
     },
     deleteLine: (data) => {
       dispatch(deleteLine(data));
+    },
+    getXrmData: () => {
+      dispatch(loadXrmData());
     },
   };
 }
