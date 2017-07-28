@@ -16,8 +16,8 @@ const options = [
 class AddGroupDropdown extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <SplitButton title='Add Group' key="0" id={`split-button-basic-0`}>
-       {options.map(c => (
+      <SplitButton title="Add Group" key="0" id={'split-button-basic-0'}>
+        {options.map((c) => (
           <MenuItem key="{c.key}" eventKey="1">{c.text}</MenuItem>
         ))}
       </SplitButton>
