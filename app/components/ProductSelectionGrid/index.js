@@ -82,7 +82,6 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
        
       },
       data: data,
-      isVisible:true,
     }
 
     this.setTableOption = this.setTableOption.bind(this)
@@ -152,7 +151,7 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
             {...this.state.tableOptions}
             
           />
-          <Sidebar container={this} title="Product Filter" side='left' isVisible={this.state.isVisible} onHide={() => this.toggleSidebar(false)}>
+          <Sidebar container={this} title="Product Filter" side='left' isVisible={this.state.showFilter} onHide={() => this.toggleSidebar(false)}>
             <h4>FG</h4>
             <FormControl type="text" placeholder="" style={{ width: "80%" }} />
             <br /> <br /> <br />

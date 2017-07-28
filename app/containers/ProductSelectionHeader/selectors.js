@@ -1,18 +1,8 @@
 import { createSelector } from 'reselect';
 
-/**
- * Direct selector to the productSelectionHeader state domain
- */
-const selectProductSelectionHeaderDomain = () => (state) => state.get('productSelectionHeader');
-
-/**
- * Other specific selectors
- */
-
-
-/**
- * Default selector used by ProductSelectionHeader
- */
+const selectProductSelectionHeaderDomain = () =>
+  (state) =>
+    state.get('productSelectionHeader');
 
 const makeSelectProductSelectionHeader = () => createSelector(
   selectProductSelectionHeaderDomain(),
