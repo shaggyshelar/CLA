@@ -80,9 +80,41 @@ export function* getXrmData() {
   // Select username from store
   // const requestURL = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/products?$select=name,productnum' +
   //     'ber,standardcost,description,p2qes_quantityeditable';
-  const requestURL = SERVER_URL + EntityURLs.PRODUCTS + '?$select=name,productnumber,standardcost,description,p2qes_quantityeditable';
-
+  // const requestURL = `${SERVER_URL + EntityURLs.PRODUCTS}?$select=name,productnumber,standardcost,description,p2qes_quantityeditable`;
+  console.log('called');
   try {
+    const extendedQuery = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>" +
+      "<entity name='product'>" +
+      "<attribute name='name' />" +
+      "<attribute name='productid' />" +
+      "<attribute name='productnumber' />" +
+      "<attribute name='description' />" +
+      "<attribute name='statecode' />" +
+      "<attribute name='productstructure' />" +
+      "<order attribute='productnumber' descending='false' />" +
+      "<filter type='and'>" +
+      "<condition attribute='name' operator='not-null' />" +
+      "<condition attribute='standardcost' operator='not-null' />" +
+      "<condition attribute='p2qes_quantityeditable' operator='not-null' />" +
+      "<condition attribute='description' operator='not-null' />" +
+      '</filter>' +
+      "<link-entity name='productpricelevel' from='productid' to='productid'>" +
+      "<attribute name='amount' />" +
+      "<attribute name='pricingmethodcode' />" +
+      "<attribute name='pricelevelid' />" +
+      "<filter type='and'>" +
+      "<condition attribute='amount' operator='not-null' />" +
+      "<condition attribute='pricingmethodcode' operator='not-null' />" +
+      "<condition attribute='pricelevelid' operator='eq' uiname='Big billion day' uitype='pricelevel' value='{D3B8550E-7D6B-E711-812B-C4346BDCAEF1}' />" +
+      '</filter>' +
+      '</link-entity>' +
+      "<link-entity name='productassociation' to='productid' from='productid'>" +
+      "<attribute name='associatedproduct' />" +
+      '</link-entity>' +
+      '</entity>' +
+      '</fetch>';
+    const requestURL = `${SERVER_URL}/api/data/v8.0/${EntityURLs.PRODUCTS}?fetchXml=${extendedQuery}`;
+
     const headers = {
       credentials: 'include',
       headers: {
@@ -97,7 +129,7 @@ export function* getXrmData() {
     // Call our request helper (see 'utils/request')
     const repos = yield call(request, requestURL, headers);
     console.log(repos);
-    yield put(xrmDataLoaded(repos));
+    yield put(xrmDataLoaded(repos.value));
   } catch (err) {
     yield put(dataLoadingError(err));
   }
