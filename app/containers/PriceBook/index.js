@@ -4,20 +4,29 @@
  *
  */
 
+import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { Modal, Button, FormControl } from 'react-bootstrap/lib';
 import { makeSelectPriceBook, save } from './selectors';
-import { saveAction } from './actions';
+import { saveAction } from '../App/actions';
 export class PriceBook extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    this.hideMe = this.hideMe.bind(this);
+    this.state = {
+      selectValue: 'Computer',
+    };
+    this.save = this.save.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  hideMe() {
-    this.props.hideMe();
+  save(value) {
+    this.props.saveAction(this.state.selectValue);
+    browserHistory.push('/EditQuote');
+  }
+  handleChange(e) {
+    this.setState({ selectValue: e.target.value });
   }
   render() {
     return (
@@ -39,16 +48,19 @@ export class PriceBook extends React.Component { // eslint-disable-line react/pr
               </Modal.Header>
 
               <Modal.Body>
-                <FormControl style={{ width: '98%' }} componentClass="select" placeholder="select">
-                  <option value="select">Computer</option>
-                  <option value="other">Meal</option>
+                <FormControl
+                  style={{ width: '98%' }} defaultValue={'Computer'}
+                  onChange={this.handleChange} componentClass="select" placeholder="select"
+                >
+                  <option value="Computer">Computer</option>
+                  <option value="Meal">Meal</option>
                 </FormControl>
 
               </Modal.Body>
 
               <Modal.Footer>
                 <Button>Cancel</Button>
-                <Button bsStyle="primary" onClick={this.hideMe}>Save</Button>
+                <Button bsStyle="primary" onClick={this.save}>Save</Button>
               </Modal.Footer>
             </Modal.Dialog>
           </Modal>
@@ -65,14 +77,13 @@ PriceBook.propTypes = {
 const mapStateToProps = createStructuredSelector({
   PriceBook: makeSelectPriceBook(),
   ShowPriceBook: save(),
-
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    hideMe: (data = { data: 'aa' }) => {
-      dispatch(saveAction(data));
+    saveAction: (value) => {
+      dispatch(saveAction(value));
     },
   };
 }

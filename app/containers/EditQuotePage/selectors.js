@@ -1,33 +1,34 @@
 import { createSelector } from 'reselect';
 
-const selectEditQuote = (state) => state.get('editQuote');
-const selectPriceBook = (state) => state.get('priceBook');
+//const selectEditQuote = (state) => state.get('editQuote');
+const global = (state) => state.get('global');
 const makeSelectLoading = () => createSelector(
-  selectEditQuote,
+  global,
   (homeState) => homeState.get('loading')
 );
 
 const makeSelectError = () => createSelector(
-  selectEditQuote,
+  global,
   (homeState) => homeState.get('error')
 );
 
 const makeSelectData = () => 
  createSelector(
-  selectEditQuote,
+  global,
   (homeState) => homeState.getIn(['data'])
 );
 
 const showPrice = () => 
  createSelector(
-  selectPriceBook,
+  global,
   (homeState) => homeState ? homeState.get('showPrice') : false
 );
 
 export {
-  selectEditQuote,
+  //selectEditQuote,
   makeSelectData,
   makeSelectError,
   makeSelectLoading,
   showPrice,
+  global,
 };

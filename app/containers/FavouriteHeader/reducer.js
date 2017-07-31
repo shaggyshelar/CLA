@@ -1,6 +1,6 @@
 /*
  *
- * PriceBook reducer
+ * FavouriteHeader reducer
  *
  */
 
@@ -11,8 +11,7 @@ import {
 
 const initialState = fromJS({});
 
-
-function priceBookReducer(state = initialState, action) {
+function favouriteHeaderReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
@@ -21,4 +20,4 @@ function priceBookReducer(state = initialState, action) {
   }
 }
 
-export default priceBookReducer;
+export default favouriteHeaderReducer;
