@@ -13,10 +13,12 @@ export const DEFAULT_LOCALE = 'en';
 let serverUrl = '';
 let entityUrls = {};
 if (process.env.NODE_ENV === 'production') {
-  serverUrl = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/';
+  // serverUrl = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/';
+  serverUrl = window.parent.Xrm.Page.context.getClientUrl();
   entityUrls = {
     PRODUCTS: 'products',
     QUOTE: 'quote',
+    COUNTRIES: 'countries',
   };
 }
 
@@ -25,6 +27,7 @@ if (process.env.NODE_ENV === 'development') {
   entityUrls = {
     PRODUCTS: 'products',
     QUOTE: 'quote',
+    COUNTRIES: 'countries',
   };
 }
 export const SERVER_URL = serverUrl;

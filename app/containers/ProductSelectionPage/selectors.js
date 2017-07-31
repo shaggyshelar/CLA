@@ -12,9 +12,29 @@ const showFilter = () => createSelector(
   (homeState) => homeState.get('showFilter')
 );
 
+const makeSelectLoading = () => createSelector(
+  selectProductSelectionPageDomain,
+  (homeState) => homeState.get('loading')
+);
+
+const makeSelectError = () => createSelector(
+  selectProductSelectionPageDomain,
+  (homeState) => homeState.get('error')
+);
+
+const makeCountriesData = () =>
+ createSelector(
+  selectProductSelectionPageDomain,
+  (homeState) => homeState.getIn(['countries'])
+);
+
+
 export {
   selectProductSelectionPageDomain,
   makeSelectProductSelectionPage,
-  showFilter
+  showFilter,
+  makeSelectLoading,
+  makeSelectError,
+  makeCountriesData,
 };
 
