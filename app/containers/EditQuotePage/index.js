@@ -3,20 +3,19 @@
  * EditQuote
  *
  */
-
+import { browserHistory } from 'react-router';
+import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
+import { makeSelectData, makeSelectError, makeSelectLoading, showPrice } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
-import EditQuoteGrid from 'components/EditQuoteGrid';
 import { loadData, cloneLine, deleteLine, loadXrmData } from './actions';
-
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getAllData();
     this.props.getXrmData();
     if (window.parent.Xrm !== undefined) {
@@ -26,7 +25,16 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     }
   }
 
+  componentDidMount() {
+    if (this.props.data.length) {
+      browserHistory.push('/PriceBook');
+    }
+  }
+
   render() {
+    if (this.props.data.length === 0 || this.props.showPriceBook) {
+      browserHistory.push('/PriceBook');
+    }
     return (
       <div>
         <Helmet
@@ -66,6 +74,7 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  showPriceBook: showPrice(),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -21,7 +21,7 @@ export function defaultAction() {
 export function showFilter(value) {
   return {
     type: SHOW_FILTER,
-    data: value.data,
+    data: value,
   };
 }
 
