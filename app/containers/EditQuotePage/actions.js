@@ -19,7 +19,22 @@
 //   return {
 //     type: DEFAULT_ACTION,
 //   };
-// }
+// }/*
+ *
+ * FavouriteHeader actions
+ *
+ */
+
+import {
+  DEFAULT_ACTION,
+} from './constants';
+
+export function defaultAction() {
+  return {
+    type: DEFAULT_ACTION,
+  };
+}
+
 
 // export function loadXrmData() {
 //   return {
@@ -65,3 +80,13 @@
 //   };
 // }
 
+
+import {
+  DEFAULT_ACTION,
+} from './constants';
+
+export function defaultAction() {
+  return {
+    type: DEFAULT_ACTION,
+  };
+}

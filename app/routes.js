@@ -11,13 +11,27 @@ const errorLoading = (err) => {
 const loadModule = (cb) => (componentModule) => {
   cb(null, componentModule.default);
 };
-
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
 
-  return [
-    {
+  return {
+    getComponent(nextState, cb) {
+      const importModules = Promise.all([
+        import('containers/App/sagas'),
+        import('containers/App'),
+      ]);
+
+      const renderRoute = loadModule(cb);
+
+      importModules.then(([sagas, component]) => {
+        injectSagas(sagas.default);
+        renderRoute(component);
+      });
+
+      importModules.catch(errorLoading);
+    },
+    childRoutes: [{
       path: '/',
       name: 'home',
       getComponent(nextState, cb) {
@@ -129,9 +143,10 @@ export default function createRoutes(store) {
       name: 'notfound',
       getComponent(nextState, cb) {
         import('containers/NotFoundPage')
-          .then(loadModule(cb))
-          .catch(errorLoading);
+      .then(loadModule(cb))
+      .catch(errorLoading);
       },
     },
-  ];
+    ],
+  };
 }

@@ -82,17 +82,13 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
        
       },
       data: data,
+      isVisible:false
     }
 
     this.setTableOption = this.setTableOption.bind(this)
-    this.toggleSidebar = this.toggleSidebar.bind(this)
   }
   
-  
-  toggleSidebar(isVisible) {
-  	this.state.isVisible = isVisible;
-    this.forceUpdate();
-  }
+
   setTableOption(event) {
     const target = event.target
     const value = target.type === 'checkbox' ? target.checked : target.value
@@ -151,7 +147,7 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
             {...this.state.tableOptions}
             
           />
-          <Sidebar container={this} title="Product Filter" side='left' isVisible={this.state.showFilter} onHide={() => this.toggleSidebar(false)}>
+          <Sidebar container={this} title="Product Filter" side='left' isVisible={this.props.showFilter} onHide={this.props.toggleFilter}>
             <h4>FG</h4>
             <FormControl type="text" placeholder="" style={{ width: "80%" }} />
             <br /> <br /> <br />
