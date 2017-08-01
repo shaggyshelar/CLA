@@ -46,7 +46,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
           </ButtonGroup>
           <ButtonGroup className="margin">
             <Button onClick={this.props.addProducts}>Select</Button>
-            <Button>Select and Add More</Button>
+            <Button onClick={this.props.addProductsWait}>Select and Add More</Button>
             <Button onClick={() => { browserHistory.push('/EditQuote') }}>Cancel</Button>
           </ButtonGroup>
           

@@ -79,6 +79,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.addProducts = this.addProducts.bind(this);
+    this.addProductsWait = this.addProductsWait.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
   }
 
@@ -88,9 +89,10 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       .getCountriesData();
   }
   componentDidMount() {
-    if (!this.props.data.priceList) {
-      browserHistory.push('/ProductSelection');
+    if (!this.props.data.priceList || !this.props.data.priceList === null) {
+      browserHistory.push('/PriceBook');
     }
+    console.log(this.refs)
   }
   toggleSidebar() {
     this
@@ -105,6 +107,15 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     } else {
       data.push(e.target.value);
     }
+  }
+  addProductsWait() {
+    
+    let data = [];
+    data = _.filter(this.state.dataProd, (o) =>
+      this.state.selectedProducts.includes(o['_id'])
+    );
+    this.props.addProductsToQuote(data);
+    // browserHistory.push('/ProductSelection');
   }
   addProducts() {
     let data = [];
@@ -136,6 +147,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             addProducts={this.addProducts}
+            addProductsWait={this.addProductsWait}
           />
         </div>
         <div>
@@ -146,6 +158,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             toggleCheckboxChange={this.toggleCheckboxChange}
             data={this.state.dataProd}
             addProducts={this.addProducts}
+            addProductsWait={this.addProductsWait}
           />
 
         </div>
