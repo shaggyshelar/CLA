@@ -3,43 +3,55 @@
  * ProductSelectionPage
  *
  */
-
+import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { makeSelectProductSelectionPage, showFilter } from './selectors';
+import { makeSelectProductSelectionPage, showFilter, getQuoteLines } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadCountriesData, showFilteredData } from './actions';
 
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
-    this.toggleSidebar = this
-      .toggleSidebar
-      .bind(this);
+    this.state = {
+      selectedProducts: [],
+    };
+    this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.addProducts = this.addProducts.bind(this);
+    this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
   }
   componentWillMount() {
     this
       .props
       .getCountriesData();
   }
-  // constructor(props, context) {
-  //   super(props, context);
-  //   this.toggleSidebar = this
-  //     .toggleSidebar
-  //     .bind(this);
-  //   this
-  //     .props
-  //     .getCountriesData();
-  // }
+  componentDidMount() {
+    if (!this.props.data.priceList) {
+      browserHistory.push('/ProductSelection');
+    }
+  }
   toggleSidebar() {
     this
       .props
       .toggleFilter(!this.props.showFilter);
     this.forceUpdate();
   }
+  toggleCheckboxChange(e) {
+    const data = this.state.selectedProducts;
+    if (!e.target.checked) {
+      _.remove(data, (n) => n === e.target.value);
+    } else {
+      data.push(e.target.value);
+    }
+  }
+  addProducts() {
+    this.props.addProducts(this.state.selectedProducts);
+  }
+
   render() {
     return (
       <div>
@@ -59,6 +71,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
           <ProductSelectionHeader
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
+            addProducts={this.addProducts}
           />
         </div>
         <div>
@@ -66,6 +79,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             countries={this.props.countries}
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
+            toggleCheckboxChange={this.toggleCheckboxChange}
           />
 
         </div>
@@ -80,11 +94,13 @@ ProductSelectionPage.propTypes = {
   getCountriesData: PropTypes.func,
   countries: PropTypes.array,
   showFilter: PropTypes.any,
+  data: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   ProductSelectionPage: makeSelectProductSelectionPage(),
   showFilter: showFilter(),
+  data: getQuoteLines(),
 });
 
 function mapDispatchToProps(dispatch) {

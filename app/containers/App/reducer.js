@@ -21,6 +21,7 @@ import {
   LOAD_DATA_ERROR,
   LOAD_XRM_DATA,
   LOAD_XRM_DATA_SUCCESS,
+  ADD_PRODUCTS,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -53,6 +54,9 @@ function appReducer(state = initialState, action) {
     case CLONE_LINE:
       data = state.getIn(['data']);
       return state.setIn(['data'], { priceList: data.pricelist, products: data.products.splice(0, data.products.length).concat(action.data) });
+    case ADD_PRODUCTS:
+      data = state.getIn(['data']);
+      return state.setIn(['data'], { priceList: data.pricelist, products: data.push(action.data) });
     case DELETE_LINE:
       data = state.getIn(['data']);
       return state.setIn(['data'], { priceList: data.pricelist, products: data.products.splice(0, data.products.length).concat(action.data) });
