@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 const selectProductSelectionPageDomain = (state) => state.get('productSelectionPage');
+const globalState = (state) => state.get('global');
 
 const makeSelectProductSelectionPage = () => createSelector(
   selectProductSelectionPageDomain,
@@ -10,6 +11,10 @@ const makeSelectProductSelectionPage = () => createSelector(
 const showFilter = () => createSelector(
   selectProductSelectionPageDomain,
   (homeState) => homeState.get('showFilter')
+);
+const getQuoteLines = () => createSelector(
+  globalState,
+  (homeState) => homeState.getIn(['data'])
 );
 
 const makeSelectLoading = () => createSelector(
@@ -36,5 +41,6 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeCountriesData,
+  getQuoteLines,
 };
 

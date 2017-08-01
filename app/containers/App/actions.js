@@ -14,6 +14,7 @@ import {
   LOAD_DATA_SUCCESS,
   LOAD_XRM_DATA,
   LOAD_XRM_DATA_SUCCESS,
+  ADD_PRODUCTS,
 } from './constants';
 
 export function defaultAction() {
@@ -44,6 +45,14 @@ export function cloneLine(data) {
     data,
   };
 }
+
+export function addProducts(data) {
+  return {
+    type: ADD_PRODUCTS,
+    data,
+  };
+}
+
 export function deleteLine(data) {
   return {
     type: DELETE_LINE,
