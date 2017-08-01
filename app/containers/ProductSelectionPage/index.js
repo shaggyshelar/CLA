@@ -14,8 +14,8 @@ import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadCountriesData, showFilteredData } from './actions';
 
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor(props, context) {
-    super(props, context);
+
+  componentWillMount() {
     this.toggleSidebar = this
       .toggleSidebar
       .bind(this);
@@ -23,6 +23,15 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       .props
       .getCountriesData();
   }
+  // constructor(props, context) {
+  //   super(props, context);
+  //   this.toggleSidebar = this
+  //     .toggleSidebar
+  //     .bind(this);
+  //   this
+  //     .props
+  //     .getCountriesData();
+  // }
   toggleSidebar() {
     this
       .props
