@@ -6,7 +6,7 @@
 
 import React from 'react';
 // import styled from 'styled-components';
-import {Row, Col,Grid,Glyphicon } from 'react-bootstrap/lib';
+import {Glyphicon } from 'react-bootstrap/lib';
 
 class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   

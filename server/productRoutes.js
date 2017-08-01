@@ -6,7 +6,7 @@ const productRouter = express.Router();
 productRouter.get('/countries', (req, res) => {
   // res.json({ FirstName: 'Sagar122', LastName: 'Shelar444' });
   res.json(
-    [
+    { products: [
       {
         _id: '596db79f58d3f94623033cd0',
         'PRODUCT CODE': 'Tillman',
@@ -62,7 +62,10 @@ productRouter.get('/countries', (req, res) => {
         'NET TOTAL': '$ 487.7556',
         QUANTITY: 77.3144,
       },
-    ]
+    ],
+      priceList: null,
+    }
+
   );
 });
 // A POST to the root of a resource should create a new object
