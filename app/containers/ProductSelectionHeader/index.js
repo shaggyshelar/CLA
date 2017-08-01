@@ -42,11 +42,11 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
         <Col xs={12} md={5} style={{textAlign:"right"}}>
           <ButtonGroup className="margin">
             <Button><Glyphicon glyph='filter' onClick={this.props.toggleFilter}/></Button>
-            <Button><Glyphicon glyph='star' /></Button>
+            <Button><Glyphicon glyph='star' onClick={() => { browserHistory.push('/favourites') }}/></Button>
           </ButtonGroup>
           <ButtonGroup className="margin">
             <Button onClick={this.props.addProducts}>Select</Button>
-            <Button>Select and Add More</Button>
+            <Button onClick={this.props.addProductsWait}>Select and Add More</Button>
             <Button onClick={() => { browserHistory.push('/EditQuote') }}>Cancel</Button>
           </ButtonGroup>
           
