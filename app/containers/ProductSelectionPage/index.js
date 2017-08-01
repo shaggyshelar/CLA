@@ -9,17 +9,19 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { makeSelectProductSelectionPage, showFilter, makeCountriesData } from './selectors';
+import { makeSelectProductSelectionPage, showFilter } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
+import { loadCountriesData, showFilteredData } from './actions';
+
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props, context) {
     super(props, context);
     this.toggleSidebar = this
       .toggleSidebar
       .bind(this);
-    // this
-    //   .props
-    //   .getCountriesData();
+    this
+      .props
+      .getCountriesData();
   }
   toggleSidebar() {
     this
@@ -66,20 +68,23 @@ ProductSelectionPage.propTypes = {
   // dispatch: PropTypes.func,
   toggleFilter: PropTypes.func,
   getCountriesData: PropTypes.func,
-  countries: PropTypes.any,
+  countries: PropTypes.array,
   showFilter: PropTypes.any,
 };
 
-const mapStateToProps = createStructuredSelector({ ProductSelectionPage: makeSelectProductSelectionPage(), showFilter: showFilter() });
+const mapStateToProps = createStructuredSelector({
+  ProductSelectionPage: makeSelectProductSelectionPage(),
+  showFilter: showFilter(),
+});
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     toggleFilter: (value) => {
-      dispatch(showFilter(value));
+      dispatch(showFilteredData(value));
     },
     getCountriesData: () => {
-      dispatch(makeCountriesData());
+      dispatch(loadCountriesData());
     },
   };
 }

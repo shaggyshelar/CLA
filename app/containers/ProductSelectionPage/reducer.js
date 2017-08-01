@@ -17,7 +17,7 @@ const initialState = fromJS({
   showFilter: false,
   loading: false,
   error: false,
-  countries: [],
+  countries: {},
 });
 
 function productSelectionPageReducer(state = initialState, action) {
@@ -25,7 +25,8 @@ function productSelectionPageReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case SHOW_FILTER:
-      return state.set('showFilter', action.data);
+      return state
+        .set('showFilter', action.data);
     case LOAD_COUNTRIES_DATA:
       return state
         .set('loading', true)
