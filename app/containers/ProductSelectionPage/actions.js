@@ -18,10 +18,10 @@ export function defaultAction() {
   };
 }
 
-export function showFilter(value) {
+export function showFilteredData(data) {
   return {
     type: SHOW_FILTER,
-    data: value,
+    data,
   };
 }
 
@@ -44,3 +44,4 @@ export function dataLoadingError(error) {
     error,
   };
 }
+
