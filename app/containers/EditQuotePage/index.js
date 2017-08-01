@@ -9,14 +9,14 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectData, makeSelectError, makeSelectLoading, showPrice } from './selectors';
+import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
-import { loadData, cloneLine, deleteLine /* , loadXrmData*/ } from '../App/actions';
+import { cloneLine, deleteLine /* , loadXrmData*/ } from '../App/actions';
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   componentWillMount() {
-    this.props.getAllData();
+    //this.props.getAllData();
     // this.props.getXrmData();
     if (window.parent.Xrm !== undefined) {
       console.log(window.parent.Xrm.Page.context.getClientUrl());
@@ -26,15 +26,11 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   componentDidMount() {
-    if (this.props.data.priceList === null) {
+    if (!this.props.data.priceList) {
       browserHistory.push('/PriceBook');
     }
   }
-
   render() {
-    if (this.props.data.priceList === null) {
-      browserHistory.push('/PriceBook');
-    }
     return (
       <div>
         <Helmet
@@ -63,37 +59,27 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
 EditQuotePage.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  getAllData: React.PropTypes.func,
   cloneLine: PropTypes.func,
   deleteLine: PropTypes.func,
-  // getXrmData: PropTypes.func,
   data: PropTypes.any,
-  priceList: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
-  showPriceBook: showPrice(),
 
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    getAllData: () => {
-      dispatch(loadData());
-    },
     cloneLine: (data) => {
       dispatch(cloneLine(data));
     },
     deleteLine: (data) => {
       dispatch(deleteLine(data));
     },
-    // getXrmData: () => {
-    //   dispatch(loadXrmData());
-    // },
   };
 }
 

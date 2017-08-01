@@ -44,7 +44,6 @@ import './global-styles';
 
 // Import root routes
 import createRoutes from './routes';
-
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
 // Optionally, this could be changed to leverage a created history
@@ -60,11 +59,7 @@ const history = syncHistoryWithStore(browserHistory, store, {
 });
 
 // Set up the router, wrapping all Routes in the App component
-const rootRoute = {
-  component: App,
-  childRoutes: createRoutes(store),
-};
-
+const rootRoute = createRoutes(store);
 const render = (messages) => {
   ReactDOM.render(
     <Provider store={store}>

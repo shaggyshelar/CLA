@@ -6,15 +6,15 @@
 
 import { fromJS } from 'immutable';
 
-// import {
-//   LOAD_DATA_SUCCESS,
+import {
+DEFAULT_ACTION,
 //   LOAD_DATA,
 //   CLONE_LINE,
 //   DELETE_LINE,
 //   LOAD_DATA_ERROR,
 //   LOAD_XRM_DATA,
 //   LOAD_XRM_DATA_SUCCESS,
-// } from './constants';
+ } from './constants';
 
 const initialState = fromJS({
 
@@ -52,7 +52,12 @@ function editQuoteReducer(state = initialState, action) {
   //       .set('xrmData', action.xrmData)
   //       .set('loading', false);
   //   default:
-  return state;
+  switch (action.type) {
+    case DEFAULT_ACTION:
+      return state;
+    default:
+      return state;
+  }
 }
 
 

@@ -15,20 +15,14 @@ const makeSelectError = () => createSelector(
 const makeSelectData = () => 
  createSelector(
   global,
-  (homeState) => homeState.getIn(['data'])
+  (homeState) => homeState.get('data')
 );
 
-const showPrice = () => 
- createSelector(
-  global,
-  (homeState) => homeState ? homeState.get('showPrice') : false
-);
 
 export {
   //selectEditQuote,
   makeSelectData,
   makeSelectError,
   makeSelectLoading,
-  showPrice,
   global,
 };

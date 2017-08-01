@@ -22,20 +22,22 @@ import {
   LOAD_XRM_DATA,
   LOAD_XRM_DATA_SUCCESS,
 } from './constants';
-export const initialState = fromJS({
+const initialState = fromJS({
   loading: false,
   error: false,
   showPrice: false,
-  data: {},
+  data: {
+    priceList: null,
+    products: [],
+  },
 });
 
 function appReducer(state = initialState, action) {
   let data = state.get('data');
   switch (action.type) {
     case SAVE_ACTION:
-      return state
-      .set('showPrice', true)
-      .set(['data', 'priceList'], action.data);
+      data.priceList = action.data;
+      return state.set('data', data);
     case LOAD_DATA:
       return state
         .set('loading', true)
@@ -49,11 +51,11 @@ function appReducer(state = initialState, action) {
         .set('error', action.error)
         .set('loading', false);
     case CLONE_LINE:
-      data = state.get('data');
-      return state.set('data', data.splice(0, data.products.length).concat(action.data.products));
+      data = state.getIn(['data']);
+      return state.setIn(['data'], { priceList: data.pricelist, products: data.products.splice(0, data.products.length).concat(action.data) });
     case DELETE_LINE:
-      data = state.get('data');
-      return state.set('data', data.splice(0, data.products.length).concat(action.data.products));
+      data = state.getIn(['data']);
+      return state.setIn(['data'], { priceList: data.pricelist, products: data.products.splice(0, data.products.length).concat(action.data) });
     case LOAD_XRM_DATA:
       return state
         .set('loading', true)

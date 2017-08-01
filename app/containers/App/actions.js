@@ -34,7 +34,6 @@ export function loadXrmData() {
 }
 
 export function loadData() {
-  debugger
   return {
     type: LOAD_DATA,
   };
