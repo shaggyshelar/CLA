@@ -53,13 +53,16 @@ function appReducer(state = initialState, action) {
         .set('loading', false);
     case CLONE_LINE:
       data = state.getIn(['data']);
-      return state.setIn(['data'], { priceList: data.pricelist, products: data.products.splice(0, data.products.length).concat(action.data) });
+      return state.setIn(['data'], { priceList: data.priceList, products: data.products.splice(0, data.products.length).concat(action.data) });
     case ADD_PRODUCTS:
       data = state.getIn(['data']);
-      return state.setIn(['data'], { priceList: data.pricelist, products: data.push(action.data) });
+      const d = {};
+      d.priceList = data.priceList;
+      d.products = data.products.concat(action.data);
+      return state.set('data', d);
     case DELETE_LINE:
       data = state.getIn(['data']);
-      return state.setIn(['data'], { priceList: data.pricelist, products: data.products.splice(0, data.products.length).concat(action.data) });
+      return state.setIn(['data'], { priceList: data.priceList, products: data.products.splice(0, data.products.length).concat(action.data) });
     case LOAD_XRM_DATA:
       return state
         .set('loading', true)
