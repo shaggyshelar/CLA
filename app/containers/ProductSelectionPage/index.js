@@ -20,7 +20,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     super(props);
     this.state = {
       selectedProducts: [],
-      checkAll: false,
       dataProd: [
         {
           _id: '596db79f58d3f94623033cd0',
@@ -115,11 +114,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
     const data = this.state.selectedProducts;
-    console.log(d);
     if (!e.target.checked) {
       _.remove(data, (n) => n === e.target.value);
       if (d.checked) {
-        console.log('gotcha');
         d.checked = false;
       }
     } else {

@@ -24,12 +24,10 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
 
       },
       isVisible: false,
-      checkAll: false,
     };
 
     this.setTableOption = this.setTableOption.bind(this);
   }
-  
   setTableOption(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
