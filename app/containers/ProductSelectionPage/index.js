@@ -5,6 +5,7 @@
  */
 import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
@@ -81,6 +82,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.addProducts = this.addProducts.bind(this);
     this.addProductsWait = this.addProductsWait.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
+    this.checkAll = this.checkAll.bind(this);
   }
 
   componentWillMount() {
@@ -93,6 +95,16 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       browserHistory.push('/PriceBook');
     }
   }
+  checkAll(e) {
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    for (let i = 0; i < d.length; i++) {
+      if (!d[i].checked && e.target.checked) {
+        d[i].click();
+      } else if (d[i].checked && !e.target.checked) {
+        d[i].click();
+      }
+    }
+  }
   toggleSidebar() {
     this
       .props
@@ -100,30 +112,39 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.forceUpdate();
   }
   toggleCheckboxChange(e) {
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
     const data = this.state.selectedProducts;
     if (!e.target.checked) {
       _.remove(data, (n) => n === e.target.value);
+      if (d.checked) {
+        d.checked = false;
+      }
     } else {
       data.push(e.target.value);
     }
   }
   addProductsWait() {
-    
     let data = [];
     data = _.filter(this.state.dataProd, (o) =>
-      this.state.selectedProducts.includes(o['_id'])
+      this.state.selectedProducts.includes(o._id)
     );
+    this.setState({ selectedProducts: [] });
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    const e = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
+    for (let i = 0; i < d.length; i++) {
+      d[i].checked = false;
+      e.checked = false;
+    }
     this.props.addProductsToQuote(data);
     // browserHistory.push('/ProductSelection');
   }
   addProducts() {
     let data = [];
     data = _.filter(this.state.dataProd, (o) =>
-      this.state.selectedProducts.includes(o['_id'])
+      this.state.selectedProducts.includes(o._id)
     );
     this.props.addProductsToQuote(data);
     browserHistory.push('/EditQuote');
-
   }
 
   render() {
@@ -158,6 +179,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             data={this.state.dataProd}
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
+            checkAll={this.state.checkAll}
+            toggleCheckAll={this.checkAll}
           />
 
         </div>
