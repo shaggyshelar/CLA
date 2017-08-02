@@ -24,11 +24,12 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
 
       },
       isVisible: false,
+      checkAll: false,
     };
 
     this.setTableOption = this.setTableOption.bind(this);
   }
-
+  
   setTableOption(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -43,11 +44,13 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
   render() {
     const columns = [{
       columns: [{
-        Header: <input type="checkbox" />,
+        Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
         accessor: '_id',
         id: '_id',
+        sortable: false,
+        width: 50,
         style: { textAlign: 'center' },
-        Cell: (props) => <input ref={(input) => { this.textInput = input; }} type="checkbox" onChange={this.props.toggleCheckboxChange} value={props.value} />,
+        Cell: (props) => <input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />,
       }, {
         Header: 'PRODUCT CODE',
 
