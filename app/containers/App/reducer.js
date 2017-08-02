@@ -30,6 +30,7 @@ const initialState = fromJS({
   data: {
     priceList: null,
     products: [],
+    headers: [],
   },
 });
 
@@ -37,32 +38,28 @@ function appReducer(state = initialState, action) {
   let data = state.get('data');
   switch (action.type) {
     case SAVE_ACTION:
-      data.priceList = action.data;
-      return state.set('data', data);
+      return state.setIn(['data', 'priceList'], fromJS(action.data));
     case LOAD_DATA:
       return state
         .set('loading', true)
         .set('error', false);
     case LOAD_DATA_SUCCESS:
       return state
-        .set('data', action.data)
+        .set('data', fromJS(action.data))
         .set('loading', false);
     case LOAD_DATA_ERROR:
       return state
         .set('error', action.error)
         .set('loading', false);
     case CLONE_LINE:
-      data = state.getIn(['data']);
-      return state.setIn(['data'], { priceList: data.priceList, products: data.products.splice(0, data.products.length).concat(action.data) });
+      data = state.getIn(['data', 'products']);
+      return state.setIn(['data', 'products'], fromJS(action.data));
     case ADD_PRODUCTS:
-      data = state.getIn(['data']);
-      const d = {};
-      d.priceList = data.priceList;
-      d.products = data.products.concat(action.data);
-      return state.set('data', d);
+      data = state.getIn(['data', 'products']);
+      return state.setIn(['data', 'products'], fromJS(data.concat(action.data)));
     case DELETE_LINE:
-      data = state.getIn(['data']);
-      return state.setIn(['data'], { priceList: data.priceList, products: data.products.splice(0, data.products.length).concat(action.data) });
+      data = state.getIn(['data', 'products']);
+      return state.setIn(['data', 'products'], fromJS(action.data));
     case LOAD_XRM_DATA:
       return state
         .set('loading', true)

@@ -52,7 +52,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     });
   }
   cloneLine(index) {
-    const data = this.props.data;
+    let data = this.props.data;
     data.splice(index, 0, data[index]);
     this.props.cloneLine(data);
   }
