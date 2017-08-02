@@ -26,9 +26,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   componentDidMount() {
-    if (!this.props.data.priceList) {
+    if (!this.props.data.get('priceList')) {
       browserHistory.push('/PriceBook');
     }
+    console.log(this.props.data.getIn(['products']).toJS())
   }
   render() {
     return (
@@ -47,7 +48,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         </div>
         <div>
           <EditQuoteGrid
-            data={this.props.data.products ? this.props.data.products : []}
+            data={this.props.data.get('products') ? this.props.data.get('products').toJS() : []}
             cloneLine={this.props.cloneLine}
             deleteLine={this.props.deleteLine}
           />

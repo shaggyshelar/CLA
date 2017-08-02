@@ -12,6 +12,7 @@ export function* getData() {
     // const repos = yield call(request, requestURL);
     const repos = {
       priceList: null,
+      headers: [],
       products: [
         {
           _id: '596db79f58d3f94623033cd0',

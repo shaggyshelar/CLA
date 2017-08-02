@@ -89,10 +89,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       .getCountriesData();
   }
   componentDidMount() {
-    if (!this.props.data.priceList || !this.props.data.priceList === null) {
+    if (!this.props.data.get('priceList')) {
       browserHistory.push('/PriceBook');
     }
-    console.log(this.refs)
   }
   toggleSidebar() {
     this

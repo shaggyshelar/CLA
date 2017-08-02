@@ -19,7 +19,7 @@ const makeSelectLocationState = () => {
 const makeSelectData = () => 
  createSelector(
   selectGlobal,
-  (homeState) => homeState.get('data')
+  (homeState) => homeState.getIn(['data'])
 );
 export {
   makeSelectData,

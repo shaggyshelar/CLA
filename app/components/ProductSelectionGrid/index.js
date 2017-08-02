@@ -29,9 +29,6 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
     this.setTableOption = this.setTableOption.bind(this);
   }
 
-  componentDidMount() {
-    console.log(this);
-  }
   setTableOption(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -87,6 +84,7 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
             data={this.props.data}
             columns={columns}
             defaultPageSize={this.props.data.length}
+            style={{ width: '100%', position: 'fixed' }}
             {...this.state.tableOptions}
 
           />
