@@ -52,7 +52,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     });
   }
   cloneLine(index) {
-    let data = this.props.data;
+    const data = this.props.data;
     data.splice(index, 0, data[index]);
     this.props.cloneLine(data);
   }
@@ -97,12 +97,13 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           Cell: this.renderActionItems,
         },
           {
-            Header: <input type="checkbox" />,
-            accessor: 'sd',
+            Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleAllCheckBox} />,
+            accessor: '_id',
+            id: '_id',
             sortable: false,
             width: 50,
             style: { textAlign: 'center' },
-            Cell: <input type="checkbox" />,
+            Cell: (props) => <input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={props.value} />,
           },
           {
             Header: '#',
@@ -146,8 +147,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             Header: 'NET UNIT PRICE',
             accessor: 'NET UNIT PRICE',
             Footer: (
-              <span>
-                <strong>$ 123 </strong>
+              <span id="subtotal">
+                <strong> $ 236 </strong>
               </span>
           ),
           },
@@ -155,7 +156,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             Header: 'NET TOTAL',
             accessor: 'NET TOTAL',
             Footer: (
-              <span>
+              <span id="nettotal">
                 <strong>Quote Total: </strong>
               </span>
           ),
@@ -290,6 +291,8 @@ EditQuoteGrid.propTypes = {
   data: PropTypes.any,
   deleteLine: PropTypes.func,
   cloneLine: PropTypes.func,
+  toggleAllCheckBox: PropTypes.func,
+  toggleQuoteCheckbox: PropTypes.func,
 };
 
 

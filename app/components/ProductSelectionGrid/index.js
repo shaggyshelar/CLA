@@ -25,8 +25,6 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
       },
       isVisible: false,
     };
-    console.log("grid prop");
-    console.log(this.props.products.products);
     this.setTableOption = this.setTableOption.bind(this);
   }
   setTableOption(event) {
