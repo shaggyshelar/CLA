@@ -7,9 +7,9 @@
 import {
   DEFAULT_ACTION,
   SHOW_FILTER,
-  LOAD_COUNTRIES_DATA,
-  LOAD_COUNTRIES_DATA_SUCCESS,
   LOAD_DATA_ERROR,
+  LOAD_PRODUCTS_DATA,
+  LOAD_PRODUCTS_DATA_SUCCESS,
 } from './constants';
 
 export function defaultAction() {
@@ -25,16 +25,16 @@ export function showFilteredData(data) {
   };
 }
 
-export function loadCountriesData() {
+export function loadProductsData() {
   return {
-    type: LOAD_COUNTRIES_DATA,
+    type: LOAD_PRODUCTS_DATA,
   };
 }
 
-export function countriesDataLoaded(countries) {
+export function productsDataLoaded(products) {
   return {
-    type: LOAD_COUNTRIES_DATA_SUCCESS,
-    countries,
+    type: LOAD_PRODUCTS_DATA_SUCCESS,
+    products,
   };
 }
 

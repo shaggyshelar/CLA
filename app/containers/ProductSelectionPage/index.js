@@ -11,9 +11,9 @@ import Helmet from 'react-helmet';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { makeSelectProductSelectionPage, showFilter, getQuoteLines } from './selectors';
+import { makeSelectProductSelectionPage, showFilter, getQuoteLines, makeProductsData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
-import { loadCountriesData, showFilteredData } from './actions';
+import { loadProductsData, showFilteredData } from './actions';
 import { addProducts } from '../App/actions';
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -86,14 +86,16 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   componentWillMount() {
-    this
-      .props
-      .getCountriesData();
+    
   }
   componentDidMount() {
     if (!this.props.data.get('priceList')) {
       browserHistory.push('/PriceBook');
     }
+    this
+      .props
+      .getProductsData();
+    console.log(this);
   }
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
@@ -168,11 +170,12 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             toggleFilter={this.toggleSidebar}
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
+            data={this.state.dataProd}
           />
         </div>
         <div>
           <ProductSelectionGrid
-            countries={this.props.countries}
+            products={this.props.products}
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             toggleCheckboxChange={this.toggleCheckboxChange}
@@ -192,16 +195,18 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
 ProductSelectionPage.propTypes = {
   // dispatch: PropTypes.func,
   toggleFilter: PropTypes.func,
-  getCountriesData: PropTypes.func,
-  countries: PropTypes.array,
+  //countries: PropTypes.array,
   showFilter: PropTypes.any,
   data: PropTypes.any,
+  products:PropTypes.any,
+  getProductsData:PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   ProductSelectionPage: makeSelectProductSelectionPage(),
   showFilter: showFilter(),
   data: getQuoteLines(),
+  products: makeProductsData(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -210,8 +215,8 @@ function mapDispatchToProps(dispatch) {
     toggleFilter: (value) => {
       dispatch(showFilteredData(value));
     },
-    getCountriesData: () => {
-      dispatch(loadCountriesData());
+    getProductsData: () => {
+      dispatch(loadProductsData());
     },
     addProductsToQuote: (value) => {
       dispatch(addProducts(value));

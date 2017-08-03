@@ -27,10 +27,10 @@ const makeSelectError = () => createSelector(
   (homeState) => homeState.get('error')
 );
 
-const makeCountriesData = () =>
+const makeProductsData = () =>
  createSelector(
   selectProductSelectionPageDomain,
-  (homeState) => homeState.getIn(['countries'])
+  (homeState) => homeState.getIn(['products'])
 );
 
 
@@ -40,7 +40,7 @@ export {
   showFilter,
   makeSelectLoading,
   makeSelectError,
-  makeCountriesData,
+  makeProductsData,
   getQuoteLines,
 };
 

@@ -82,7 +82,6 @@ export function* getXrmData() {
   // const requestURL = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/products?$select=name,productnum' +
   //     'ber,standardcost,description,p2qes_quantityeditable';
   // const requestURL = `${SERVER_URL + EntityURLs.PRODUCTS}?$select=name,productnumber,standardcost,description,p2qes_quantityeditable`;
-  console.log('called');
   try {
     const extendedQuery = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true'>" +
       "<entity name='product'>" +
@@ -129,7 +128,6 @@ export function* getXrmData() {
 
     // Call our request helper (see 'utils/request')
     const repos = yield call(request, requestURL, headers);
-    console.log(repos);
     yield put(xrmDataLoaded(repos.value));
   } catch (err) {
     yield put(dataLoadingError(err));
@@ -140,7 +138,6 @@ export function* getXrmData() {
 // Individual exports for testing
 export function* dataSaga() {
   // See example in containers/HomePage/sagas.js
-  console.log("in saga asdasd");
   const watcher = yield takeLatest(LOAD_DATA, getData);
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE);

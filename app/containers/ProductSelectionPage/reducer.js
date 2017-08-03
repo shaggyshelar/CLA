@@ -8,16 +8,16 @@ import { fromJS } from 'immutable';
 import {
   DEFAULT_ACTION,
   SHOW_FILTER,
-  LOAD_COUNTRIES_DATA,
-  LOAD_COUNTRIES_DATA_SUCCESS,
   LOAD_DATA_ERROR,
+  LOAD_PRODUCTS_DATA,
+  LOAD_PRODUCTS_DATA_SUCCESS,
 } from './constants';
 
 const initialState = fromJS({
   showFilter: false,
   loading: false,
   error: false,
-  countries: {},
+  products: [],
 });
 
 function productSelectionPageReducer(state = initialState, action) {
@@ -27,14 +27,14 @@ function productSelectionPageReducer(state = initialState, action) {
     case SHOW_FILTER:
       return state
         .set('showFilter', action.data);
-    case LOAD_COUNTRIES_DATA:
+    case LOAD_PRODUCTS_DATA:
       return state
         .set('loading', true)
         .set('error', false)
-        .setIn('countries', false);
-    case LOAD_COUNTRIES_DATA_SUCCESS:
+        .setIn('products', false);
+    case LOAD_PRODUCTS_DATA_SUCCESS:
       return state
-        .set('countries', action.countries)
+        .set('products', action.products)
         .set('loading', false);
     case LOAD_DATA_ERROR:
       return state
