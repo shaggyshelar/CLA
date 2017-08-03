@@ -25,7 +25,8 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
       },
       isVisible: false,
     };
-
+    console.log("grid prop");
+    console.log(this.props.products.products);
     this.setTableOption = this.setTableOption.bind(this);
   }
   setTableOption(event) {
@@ -53,25 +54,26 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
         Header: 'PRODUCT CODE',
 
         id: 'PRODUCT CODE',
-        accessor: (d) => d['PRODUCT CODE'],
+        //accessor: (d) => d['PRODUCT CODE'],
+        accessor: (d) => d.productCode,
       },
 
         {
           Header: 'PRODUCT NAME',
-          accessor: 'PRODUCT NAME',
+          accessor: 'productName',
 
         },
         {
           Header: 'PRODUCT FAMILY',
-          accessor: 'PRODUCT FAMILY',
+          accessor: 'productFamily',
         },
         {
           Header: 'PRODUCT DESCRIPTION',
-          accessor: 'PRODUCT DESCRIPTION',
+          accessor: 'productDescription',
         },
         {
           Header: 'LIST PRICE',
-          accessor: 'LIST PRICE',
+          accessor: 'listPrice',
         },
 
 
@@ -82,9 +84,11 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
         <div className="table-wrap">
           <ReactTable
             className="-striped -highlight"
-            data={this.props.data}
+            // data={this.props.data}
+            data={this.props.products.products}
             columns={columns}
-            defaultPageSize={this.props.data.length}
+            // defaultPageSize={this.props.data.length}
+            defaultPageSize={this.props.products.products}
             style={{ width: '100%', position: 'fixed' }}
             {...this.state.tableOptions}
 
@@ -104,6 +108,7 @@ class ProductSelectionGrid extends React.PureComponent { // eslint-disable-line 
 
 ProductSelectionGrid.propTypes = {
   data: React.PropTypes.any,
+  products: React.PropTypes.any,
 };
 
 export default ProductSelectionGrid;
