@@ -178,6 +178,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
                 <ReactTable
                   data={this.props.data}
                   columns={columns}
+                  style={{display:'inline-table',width:'98%'}}
                   defaultPageSize={3}
                   showPagination={false}
                 />

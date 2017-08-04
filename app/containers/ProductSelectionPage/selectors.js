@@ -30,7 +30,7 @@ const makeSelectError = () => createSelector(
 const makeProductsData = () =>
  createSelector(
   selectProductSelectionPageDomain,
-  (homeState) => homeState.getIn(['products'])
+  (homeState) => homeState.get('products')
 );
 
 

@@ -9,7 +9,7 @@ export function* getData() {
   // const requestURL = SERVER_URL + EntityURLs.QUOTE;
   try {
     // Call our request helper (see 'utils/request')
-    // const repos = yield call(request, requestURL);
+    //let repos = yield call(request, 'https://14.141.105.180:1823/api/values/GetUserName/1?callback=ab');
     const repos = {
       priceList: null,
       headers: [],
