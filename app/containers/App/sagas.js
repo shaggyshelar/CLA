@@ -9,7 +9,7 @@ export function* getData() {
   // const requestURL = SERVER_URL + EntityURLs.QUOTE;
   try {
     // Call our request helper (see 'utils/request')
-    //let repos = yield call(request, 'https://14.141.105.180:1823/api/values/GetUserName/1?callback=ab');
+    // let repos = yield call(request, 'https://14.141.105.180:1823/api/values/GetUserName/1?callback=ab');
     const repos = {
       priceList: null,
       headers: [],
@@ -135,18 +135,24 @@ export function* getXrmData() {
 }
 
 export function* deleteSelectedQuotes(selectedList, currentList) {
-  const prodList = currentList.get('products').toJS();
-  const finalList = prodList.map((item, index) => {
+  let finalList = currentList;
+  let indexArr = [];
+  indexArr = finalList.get('products').toJS().map((item, index) => {
     if (selectedList.includes(item['_id'])) {
-      return currentList.deleteIn(['products', String(index)]);
+      return index;
     }
   }).filter((item) => item !== undefined);
+  indexArr.sort((a, b) => b - a);
+  indexArr.forEach((item) => {
+    finalList = finalList.deleteIn(['products', item]);
+  }, this);
+  const prodList = finalList.get('products').toJS();
   let responseObj = {};
-  if (finalList !== undefined && finalList.length > 0) {
+  if (prodList !== undefined && prodList.length > 0) {
     responseObj = {
       priceList: null,
       headers: [],
-      products: dataLoaded(finalList[0].get('products').toJS()).data,
+      products: dataLoaded(prodList).data,
     };
     yield put(dataLoaded(responseObj));
   } else {
@@ -159,14 +165,14 @@ export function* deleteSelectedQuotes(selectedList, currentList) {
   }
 }
 
-export function* deleteQuotes(){
+export function* deleteQuotes() {
   // See example in containers/HomePage/sagas.js
   const { data, productList } = yield take(DELETE_MULTIPLE_LINES);
   yield call(deleteSelectedQuotes, data, productList);
-  
+
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE);
-  //yield cancel(watcher);
+  // yield cancel(watcher);
 }
 
 // Individual exports for testing
