@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  serverUrl = 'http://localhost:3000/api/';
+  serverUrl = 'http://localhost:3000/v1/';
   entityUrls = {
     PRODUCTS: 'products',
     QUOTE: 'quote',
