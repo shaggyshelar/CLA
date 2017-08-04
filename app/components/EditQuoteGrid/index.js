@@ -116,14 +116,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
 
             id: 'PRODUCT CODE',
             accessor: (d) => d['PRODUCT CODE'],
-            Cell: this.renderEditable,
+            // Cell: this.renderEditable,
 
           },
 
           {
             Header: 'PRODUCT NAME',
             accessor: 'PRODUCT NAME',
-            Cell: this.renderEditable,
+            // Cell: this.renderEditable,
 
           },
           {
@@ -133,10 +133,12 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           {
             Header: 'ADDITIONAL DISC.',
             accessor: 'ADDITIONAL DISC.',
+            Cell: this.renderEditable,
           },
           {
             Header: 'QUANTITY',
             accessor: 'QUANTITY',
+            Cell: this.renderEditable,
             Footer: (
               <span>
                 <strong>Subtotal: </strong>

@@ -16,6 +16,8 @@ import {
   LOAD_XRM_DATA_SUCCESS,
   ADD_PRODUCTS,
   DELETE_MULTIPLE_LINES,
+  CALCULATE_SELECTED,
+  QUICK_SAVE_QUOTES,
 } from './constants';
 
 export function defaultAction() {
@@ -66,6 +68,20 @@ export function deleteMultipleLines(data, productList) {
     type: DELETE_MULTIPLE_LINES,
     data,
     productList,
+  };
+}
+
+export function calculateSelectedData(data) {
+  return {
+    type: CALCULATE_SELECTED,
+    data,
+  };
+}
+
+export function quickSaveQuotes(data) {
+  return {
+    type: QUICK_SAVE_QUOTES,
+    data,
   };
 }
 

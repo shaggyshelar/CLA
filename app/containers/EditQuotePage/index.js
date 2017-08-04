@@ -13,7 +13,7 @@ import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
-import { cloneLine, deleteLine, deleteMultipleLines /* , loadXrmData*/ } from '../App/actions';
+import { cloneLine, deleteLine, deleteMultipleLines, calculateSelectedData, quickSaveQuotes /* , loadXrmData*/ } from '../App/actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -27,6 +27,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.deleteCheckedLines = this.deleteCheckedLines.bind(this);
     this.checkAll = this.checkAll.bind(this);
+    this.calculateTotal = this.calculateTotal.bind(this);
+    this.quickSaveQuotes = this.quickSaveQuotes.bind(this);
   }
   componentWillMount() {
     // this.props.getAllData();
@@ -78,6 +80,14 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     }
   }
 
+  calculateTotal() {
+    this.props.calculateSelected(this.props.data.get('products').toJS());
+  }
+
+  quickSaveQuotes() {
+    this.props.quickSaveQuote(this.props.data.get('products').toJS());
+  }
+
   render() {
     return (
       <div>
@@ -92,6 +102,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             data={this.props.data.products}
             cloneLine={this.props.cloneLine}
             deleteLine={this.deleteCheckedLines}
+            calculateTotal={this.calculateTotal}
+            quickSave={this.quickSaveQuotes}
           />
         </div>
         <div>
@@ -114,6 +126,8 @@ EditQuotePage.propTypes = {
   deleteLine: PropTypes.func,
   data: PropTypes.any,
   deleteSelectedLines: PropTypes.func,
+  calculateSelected: React.PropTypes.func,
+  quickSaveQuote: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -134,6 +148,12 @@ function mapDispatchToProps(dispatch) {
     },
     deleteSelectedLines: (data, list) => {
       dispatch(deleteMultipleLines(data, list));
+    },
+    calculateSelected: (data) => {
+      dispatch(calculateSelectedData(data));
+    },
+    quickSaveQuote: (data) => {
+      dispatch(quickSaveQuotes(data));
     },
   };
 }

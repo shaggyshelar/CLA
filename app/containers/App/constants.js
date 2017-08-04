@@ -50,3 +50,5 @@ export const LOAD_XRM_DATA = 'app/EditQuote/LOAD_XRM_DATA';
 export const LOAD_XRM_DATA_SUCCESS = 'app/EditQuote/LOAD_XRM_DATA_SUCCESS';
 export const ADD_PRODUCTS = 'app/EditQuote/ADD_PRODUCTS';
 export const DELETE_MULTIPLE_LINES = 'app/EditQuote/DELETE_MULTIPLE_LINES';
+export const CALCULATE_SELECTED = 'app/EditQuote/CALCULATE_SELECTED';
+export const QUICK_SAVE_QUOTES = 'app/EditQuote/QUICK_SAVE_QUOTES';

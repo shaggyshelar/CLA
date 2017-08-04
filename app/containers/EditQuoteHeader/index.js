@@ -59,10 +59,10 @@ constructor(props) {
           <AddProductsDropdown />
           <AddGroupDropdown />
           <Button onClick={this.props.deleteLine} className="margin">Delete Lines</Button>
-           <ButtonGroup className="margin">
-          <Button>Quick Save</Button>
-          <Button onClick={this.cloneLine.bind(this,1)}>Calculate</Button>
-           </ButtonGroup>
+          <ButtonGroup className="margin">
+            <Button onClick={this.props.quickSave}>Quick Save</Button>
+            <Button onClick={this.props.calculateTotal}>Calculate</Button>
+          </ButtonGroup>
           <Button className="margin">Cancel</Button>
           <Button className="margin" onClick={this.handleFullScreen}><Glyphicon glyph='fullscreen' /></Button>
           <Button className="margin" bsStyle="primary">Save</Button>
@@ -79,6 +79,9 @@ EditQuoteHeader.propTypes = {
     React.PropTypes.bool,
   ]),
   data: React.PropTypes.any,
+  calculateTotal: React.PropTypes.func,
+  deleteLine: React.PropTypes.func,
+  quickSave: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
