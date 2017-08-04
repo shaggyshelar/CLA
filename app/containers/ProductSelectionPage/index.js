@@ -86,16 +86,12 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   componentWillMount() {
-    
-  }
-  componentDidMount() {
     if (!this.props.data.get('priceList')) {
       browserHistory.push('/PriceBook');
     }
-    this
-      .props
-      .getProductsData();
-    console.log(this);
+  }
+  componentDidMount() {
+    this.props.getProductsData();
   }
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
@@ -193,9 +189,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
 }
 
 ProductSelectionPage.propTypes = {
-  // dispatch: PropTypes.func,
   toggleFilter: PropTypes.func,
-  //countries: PropTypes.array,
   showFilter: PropTypes.any,
   data: PropTypes.any,
   products:PropTypes.any,

@@ -14,20 +14,21 @@ let serverUrl = '';
 let entityUrls = {};
 if (process.env.NODE_ENV === 'production') {
   // serverUrl = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/';
-  serverUrl = window.parent.Xrm.Page.context.getClientUrl();
+  //serverUrl = window.parent.Xrm.Page.context.getClientUrl();
+  serverUrl = 'http://localhost:3000/api';
   entityUrls = {
-    PRODUCTS: 'products',
-    QUOTE: 'quote',
-    COUNTRIES: 'countries',
+    PRODUCTS: '/products',
+    QUOTE: '/quote',
+    COUNTRIES: '/countries',
   };
 }
 
 if (process.env.NODE_ENV === 'development') {
-  serverUrl = 'http://localhost:3000/v1/';
+  serverUrl = 'http://localhost:3000/api';
   entityUrls = {
-    PRODUCTS: 'products',
-    QUOTE: 'quote',
-    COUNTRIES: 'countries',
+    PRODUCTS: '/products',
+    QUOTE: '/quote',
+    COUNTRIES: '/countries',
   };
 }
 export const SERVER_URL = serverUrl;
@@ -48,3 +49,4 @@ export const DELETE_LINE = 'app/EditQuote/DELETE_LINE';
 export const LOAD_XRM_DATA = 'app/EditQuote/LOAD_XRM_DATA';
 export const LOAD_XRM_DATA_SUCCESS = 'app/EditQuote/LOAD_XRM_DATA_SUCCESS';
 export const ADD_PRODUCTS = 'app/EditQuote/ADD_PRODUCTS';
+export const DELETE_MULTIPLE_LINES = 'app/EditQuote/DELETE_MULTIPLE_LINES';

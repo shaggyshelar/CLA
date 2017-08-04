@@ -2,14 +2,14 @@ import request from 'utils/request';
 import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import { dataLoaded, dataLoadingError, xrmDataLoaded } from '../App/actions';
-import { SERVER_URL, EntityURLs, LOAD_DATA, LOAD_XRM_DATA } from '../App/constants';
+import { SERVER_URL, EntityURLs, LOAD_DATA, LOAD_XRM_DATA, DELETE_MULTIPLE_LINES } from '../App/constants';
 
 export function* getData() {
   // Select username from store
   // const requestURL = SERVER_URL + EntityURLs.QUOTE;
   try {
     // Call our request helper (see 'utils/request')
-    // const repos = yield call(request, requestURL);
+    //let repos = yield call(request, 'https://14.141.105.180:1823/api/values/GetUserName/1?callback=ab');
     const repos = {
       priceList: null,
       headers: [],
@@ -134,6 +134,40 @@ export function* getXrmData() {
   }
 }
 
+export function* deleteSelectedQuotes(selectedList, currentList) {
+  const prodList = currentList.get('products').toJS();
+  const finalList = prodList.map((item, index) => {
+    if (selectedList.includes(item['_id'])) {
+      return currentList.deleteIn(['products', String(index)]);
+    }
+  }).filter((item) => item !== undefined);
+  let responseObj = {};
+  if (finalList !== undefined && finalList.length > 0) {
+    responseObj = {
+      priceList: null,
+      headers: [],
+      products: dataLoaded(finalList[0].get('products').toJS()).data,
+    };
+    yield put(dataLoaded(responseObj));
+  } else {
+    responseObj = {
+      priceList: null,
+      headers: [],
+      products: [],
+    };
+    yield put(dataLoaded(responseObj));
+  }
+}
+
+export function* deleteQuotes(){
+  // See example in containers/HomePage/sagas.js
+  const { data, productList } = yield take(DELETE_MULTIPLE_LINES);
+  yield call(deleteSelectedQuotes, data, productList);
+  
+  // Suspend execution until location changes
+  yield take(LOCATION_CHANGE);
+  //yield cancel(watcher);
+}
 
 // Individual exports for testing
 export function* dataSaga() {
@@ -156,4 +190,5 @@ export function* xrmDataSaga() {
 export default [
   dataSaga,
   xrmDataSaga,
+  deleteQuotes,
 ];

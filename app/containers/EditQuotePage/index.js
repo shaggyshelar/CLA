@@ -13,22 +13,23 @@ import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
-import { cloneLine, deleteLine /* , loadXrmData*/ } from '../App/actions';
+import { cloneLine, deleteLine, deleteMultipleLines /* , loadXrmData*/ } from '../App/actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       selectedQuotes: [],
     };
 
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
+    this.deleteCheckedLines = this.deleteCheckedLines.bind(this);
     this.checkAll = this.checkAll.bind(this);
   }
   componentWillMount() {
-    //this.props.getAllData();
+    // this.props.getAllData();
     // this.props.getXrmData();
     if (window.parent.Xrm !== undefined) {
       console.log(window.parent.Xrm.Page.context.getClientUrl());
@@ -41,7 +42,6 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     if (!this.props.data.get('priceList')) {
       browserHistory.push('/PriceBook');
     }
-    console.log(this.props.data.getIn(['products']).toJS())
   }
 
   checkAll(e) {
@@ -57,7 +57,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
-    //const data = this.state.selectedQuotes;
+    // const data = this.state.selectedQuotes;
     if (!e.target.checked) {
       _.remove(this.state.selectedQuotes, (n) => n === e.target.value);
       if (d.checked) {
@@ -65,6 +65,16 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       }
     } else {
       this.state.selectedQuotes.push(e.target.value);
+    }
+  }
+
+  deleteCheckedLines() {
+    this.props.deleteSelectedLines(this.state.selectedQuotes, this.props.data);
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    for (let i = 0; i < d.length; i++) {
+      if (d[i].checked) {
+        d[i].click();
+      } 
     }
   }
 
@@ -81,6 +91,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
           <EditQuoteHeader
             data={this.props.data.products}
             cloneLine={this.props.cloneLine}
+            deleteLine={this.deleteCheckedLines}
           />
         </div>
         <div>
@@ -102,6 +113,7 @@ EditQuotePage.propTypes = {
   cloneLine: PropTypes.func,
   deleteLine: PropTypes.func,
   data: PropTypes.any,
+  deleteSelectedLines: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -119,6 +131,9 @@ function mapDispatchToProps(dispatch) {
     },
     deleteLine: (data) => {
       dispatch(deleteLine(data));
+    },
+    deleteSelectedLines: (data, list) => {
+      dispatch(deleteMultipleLines(data, list));
     },
   };
 }

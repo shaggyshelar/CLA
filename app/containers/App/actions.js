@@ -15,6 +15,7 @@ import {
   LOAD_XRM_DATA,
   LOAD_XRM_DATA_SUCCESS,
   ADD_PRODUCTS,
+  DELETE_MULTIPLE_LINES,
 } from './constants';
 
 export function defaultAction() {
@@ -59,6 +60,15 @@ export function deleteLine(data) {
     data,
   };
 }
+
+export function deleteMultipleLines(data, productList) {
+  return {
+    type: DELETE_MULTIPLE_LINES,
+    data,
+    productList,
+  };
+}
+
 export function dataLoaded(data) {
   return {
     type: LOAD_DATA_SUCCESS,

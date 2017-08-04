@@ -58,7 +58,7 @@ constructor(props) {
         <Col xs={12} md={9} style={{textAlign:"right"}}>
           <AddProductsDropdown />
           <AddGroupDropdown />
-          <Button className="margin">Delete Lines</Button>
+          <Button onClick={this.props.deleteLine} className="margin">Delete Lines</Button>
            <ButtonGroup className="margin">
           <Button>Quick Save</Button>
           <Button onClick={this.cloneLine.bind(this,1)}>Calculate</Button>

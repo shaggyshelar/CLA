@@ -10,8 +10,8 @@ import { SERVER_URL, EntityURLs } from '../App/constants';
 export function* getProductsSaga() {
   // See example in containers/HomePage/sagas.js
   try {
-    const requestURL = `${SERVER_URL + EntityURLs.PRODUCTS}`;
-    // const requestURL = 'http://localhost:3000/api/product/countries';
+    //const requestURL = `${SERVER_URL + EntityURLs.PRODUCTS}`;
+    const requestURL = 'http://192.168.101.162:3000/api/products';
     const repos = yield call(request, requestURL);
     yield put(productsDataLoaded(repos));
   } catch (error) {
