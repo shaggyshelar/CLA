@@ -71,7 +71,20 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   deleteCheckedLines() {
-    this.props.deleteSelectedLines(this.state.selectedQuotes, this.props.data);
+    let allProducts=this.props.data.get('products').toJS();
+    let indexArr = [];
+    indexArr = allProducts.map((item, index) => {
+      if (this.state.selectedQuotes.includes(item['_id'])) {
+        return index;
+      }
+    }).filter((item) => item !== undefined);
+    indexArr.sort((a, b) => b - a);
+    indexArr.forEach((item) => {
+      allProducts.splice(item, 1);
+    }, this);
+    
+    this.props.deleteSelectedLines(allProducts);
+
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i++) {
       if (d[i].checked) {
@@ -146,8 +159,8 @@ function mapDispatchToProps(dispatch) {
     deleteLine: (data) => {
       dispatch(deleteLine(data));
     },
-    deleteSelectedLines: (data, list) => {
-      dispatch(deleteMultipleLines(data, list));
+    deleteSelectedLines: (data) => {
+      dispatch(deleteMultipleLines(data));
     },
     calculateSelected: (data) => {
       dispatch(calculateSelectedData(data));

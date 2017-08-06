@@ -125,43 +125,6 @@ export function* getXrmData() {
   }
 }
 
-export function* deleteSelectedQuotes(selectedList, currentList) {
-  let finalList = currentList;
-  let indexArr = [];
-  indexArr = finalList
-    .get('products')
-    .toJS()
-    .map((item, index) => {
-      if (selectedList.includes(item['_id'])) {
-        return index;
-      }
-    })
-    .filter((item) => item !== undefined);
-  indexArr.sort((a, b) => b - a);
-  indexArr.forEach((item) => {
-    finalList = finalList.deleteIn(['products', item]);
-  }, this);
-  const prodList = finalList
-    .get('products')
-    .toJS();
-  let responseObj = {};
-  if (prodList !== undefined && prodList.length > 0) {
-    responseObj = {
-      priceList: null,
-      headers: [],
-      products: dataLoaded(prodList).data
-    };
-    yield put(dataLoaded(responseObj));
-  } else {
-    responseObj = {
-      priceList: null,
-      headers: [],
-      products: []
-    };
-    yield put(dataLoaded(responseObj));
-  }
-}
-
 export function* calculateTotalPrice(data) {
   data.map((item, index) => {
     let listUnitPrice = 0.0;
@@ -212,13 +175,6 @@ export function * calcualteTotalValues() {
   yield take(LOCATION_CHANGE);
 }
 
-export function * deleteQuotes() {
-  const {data, productList} = yield take(DELETE_MULTIPLE_LINES);
-  yield call(deleteSelectedQuotes, data, productList);
-
-  yield take(LOCATION_CHANGE);
-  // yield cancel(watcher);
-}
 
 // Individual exports for testing
 export function * dataSaga() {
@@ -240,6 +196,5 @@ export function * xrmDataSaga() {
 // All sagas to be loaded
 export default[dataSaga,
   xrmDataSaga,
-  deleteQuotes,
   calcualteTotalValues,
   SaveQuotes];

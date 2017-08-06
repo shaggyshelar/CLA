@@ -22,6 +22,7 @@ import {
   LOAD_XRM_DATA,
   LOAD_XRM_DATA_SUCCESS,
   ADD_PRODUCTS,
+  DELETE_MULTIPLE_LINES,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -58,6 +59,9 @@ function appReducer(state = initialState, action) {
       data = state.getIn(['data', 'products']);
       return state.setIn(['data', 'products'], fromJS(data.concat(action.data)));
     case DELETE_LINE:
+      data = state.getIn(['data', 'products']);
+      return state.setIn(['data', 'products'], fromJS(action.data));
+    case DELETE_MULTIPLE_LINES:
       data = state.getIn(['data', 'products']);
       return state.setIn(['data', 'products'], fromJS(action.data));
     case LOAD_XRM_DATA:

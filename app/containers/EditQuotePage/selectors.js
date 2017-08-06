@@ -18,6 +18,14 @@ const makeSelectData = () =>
   (homeState) => homeState.get('data')
 );
 
+const updateProductState = () => {
+  
+  createSelector(
+    global,
+    (homeState) => homeState.get('data')
+  );
+}
+
 
 export {
   //selectEditQuote,

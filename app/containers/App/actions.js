@@ -63,11 +63,10 @@ export function deleteLine(data) {
   };
 }
 
-export function deleteMultipleLines(data, productList) {
+export function deleteMultipleLines(data) {
   return {
     type: DELETE_MULTIPLE_LINES,
     data,
-    productList,
   };
 }
 
