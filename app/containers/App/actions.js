@@ -18,6 +18,7 @@ import {
   DELETE_MULTIPLE_LINES,
   CALCULATE_SELECTED,
   QUICK_SAVE_QUOTES,
+  UPDTATE_PROPS,
 } from './constants';
 
 export function defaultAction() {
@@ -105,3 +106,9 @@ export function xrmDataLoaded(data) {
   };
 }
 
+export function updateProps(data) {
+  return {
+    type: UPDTATE_PROPS,
+    data,
+  };
+}

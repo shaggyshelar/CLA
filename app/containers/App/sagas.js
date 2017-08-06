@@ -125,23 +125,6 @@ export function* getXrmData() {
   }
 }
 
-export function* calculateTotalPrice(data) {
-  data.map((item, index) => {
-    let listUnitPrice = 0.0;
-    if (item['LIST UNIT PRICE'].indexOf('$') >= 0) {
-      listUnitPrice = parseFloat(item['LIST UNIT PRICE'].split('$ ')[1]);
-    }
-    const additionalDiscount = item['ADDITIONAL DISC.'];
-
-    if (additionalDiscount !== '') {
-      const totalDiscount = (parseFloat(additionalDiscount) / 100) * listUnitPrice;
-      item['LIST UNIT PRICE'] = listUnitPrice - totalDiscount;
-      console.log(listUnitPrice);
-    }
-  });
-
-}
-
 export function* saveQuoteDetails(data) {
   try {
     const requestURL = 'http://localhost:3000/v1/quote/save/1';
@@ -168,14 +151,6 @@ export function * SaveQuotes() {
   yield take(LOCATION_CHANGE);
 }
 
-export function * calcualteTotalValues() {
-  const {data} = yield take(CALCULATE_SELECTED);
-  yield call(calculateTotalPrice, data);
-
-  yield take(LOCATION_CHANGE);
-}
-
-
 // Individual exports for testing
 export function * dataSaga() {
   // See example in containers/HomePage/sagas.js
@@ -196,5 +171,4 @@ export function * xrmDataSaga() {
 // All sagas to be loaded
 export default[dataSaga,
   xrmDataSaga,
-  calcualteTotalValues,
   SaveQuotes];

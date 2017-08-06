@@ -52,3 +52,4 @@ export const ADD_PRODUCTS = 'app/EditQuote/ADD_PRODUCTS';
 export const DELETE_MULTIPLE_LINES = 'app/EditQuote/DELETE_MULTIPLE_LINES';
 export const CALCULATE_SELECTED = 'app/EditQuote/CALCULATE_SELECTED';
 export const QUICK_SAVE_QUOTES = 'app/EditQuote/QUICK_SAVE_QUOTES';
+export const UPDTATE_PROPS = 'app/EditQuote/UPDTATE_PROPS';

@@ -13,7 +13,7 @@ import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
-import { cloneLine, deleteLine, deleteMultipleLines, calculateSelectedData, quickSaveQuotes /* , loadXrmData*/ } from '../App/actions';
+import { cloneLine, deleteLine, deleteMultipleLines, calculateSelectedData, quickSaveQuotes, updateProps /* , loadXrmData*/ } from '../App/actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -29,6 +29,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.checkAll = this.checkAll.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.quickSaveQuotes = this.quickSaveQuotes.bind(this);
+    this.updateProps=this.updateProps.bind(this);
   }
   componentWillMount() {
     // this.props.getAllData();
@@ -94,8 +95,28 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   calculateTotal() {
-    this.props.calculateSelected(this.props.data.get('products').toJS());
+    let productsData=this.props.data.get('products').toJS().map((item, index) => {
+      let listUnitPrice = 0.0;
+      if (item['LIST UNIT PRICE'].indexOf('$') >= 0) {
+        listUnitPrice = parseFloat(item['LIST UNIT PRICE'].split('$ ')[1]);
+      } 
+      const additionalDiscount = item['ADDITIONAL DISC.'];
+
+      if (additionalDiscount !== '') {
+        const totalDiscount = listUnitPrice -((parseFloat(additionalDiscount) / 100) * listUnitPrice);
+        const totalAmount=totalDiscount*parseInt(item['QUANTITY']);
+        item['NET UNIT PRICE'] = '$ ' + totalAmount.toFixed(2);
+        item['NET TOTAL'] ='$ ' +totalAmount.toFixed(2);
+      }
+      return item;
+  });
+  this.props.calculateSelected(productsData);
   }
+
+  updateProps(updatedData) {
+    this.props.updateProps(updatedData);
+  }
+
 
   quickSaveQuotes() {
     this.props.quickSaveQuote(this.props.data.get('products').toJS());
@@ -126,6 +147,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             deleteLine={this.props.deleteLine}
             toggleAllCheckBox={this.checkAll}
             toggleQuoteCheckbox={this.toggleCheckboxChange}
+            updateProps={this.updateProps}
           />
         </div>
       </div>
@@ -167,6 +189,9 @@ function mapDispatchToProps(dispatch) {
     },
     quickSaveQuote: (data) => {
       dispatch(quickSaveQuotes(data));
+    },
+    updateProps: (data) => {
+      dispatch(updateProps(data));
     },
   };
 }

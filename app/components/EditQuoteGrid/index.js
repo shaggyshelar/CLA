@@ -67,6 +67,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         const data = [...this.props.data];
         data[cellInfo.index][cellInfo.column.id] = e.target.textContent;
         this.setState({ data });
+        this.props.updateProps(data);
       }}
     >{this.props.data[cellInfo.index][cellInfo.column.id]}</div>);
   }
@@ -150,7 +151,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             accessor: 'NET UNIT PRICE',
             Footer: (
               <span id="subtotal">
-                <strong> $ 236 </strong>
+                <strong> { this.props.data.reduce(function(total, item){ const netunitprice=item['NET UNIT PRICE'].split('$')[1]; return total+parseFloat(netunitprice) },0).toFixed(2) } </strong>
               </span>
           ),
           },
