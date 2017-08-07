@@ -26,6 +26,10 @@
     color: #0070d2 !important;
 }
 
+.btn-group>.btn+.dropdown-toggle {
+    height:34px
+}
+
 .dropdown-menu>li>a {
     color: #0070d2 !important;
 }
@@ -106,20 +110,29 @@ height:100%;
     border:none;
 }
 .modal-dialog {
-    width: 80%;
+    width: 100%;
     display:inline;
+    
 }
 
 .modal {
     display:table !important;
-    width:80%;
+    width:95%;
     margin:auto;
+}
+.modal-body {    
+    position: relative;    
+    padding: 15px;    
+    max-height: 60vh;
+    min-height: 10vh;  
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .modal-body input {
         display: inline;
         width: 35%;
         margin-left: 10px;
-
+    
         height: 30px;
 }
 
@@ -275,7 +288,13 @@ padding-bottom: 15px;
 .modal-open {    position: relative;}
 .modal-backdrop.in{ position: absolute ;}
 .modal-backdrop{ z-index:5}
-.table-wrap {    height: calc(100vh - 106px);}
+.table-wrap {    
+    /* height: calc(100vh - 106px); */
+    display: grid;
+}
+.filter {    
+    height: calc(100vh - 106px); 
+}
 
 .Sidebar.right.fade.in.modal {    display: block;}
 .small-modal .modal {width:40% !important}
