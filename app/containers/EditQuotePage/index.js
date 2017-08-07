@@ -42,9 +42,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   componentDidMount() {
-    if (!this.props.data.get('priceList')) {
-      browserHistory.push('/PriceBook');
-    }
+    // if (!this.props.data.get('priceList')) {
+    //   browserHistory.push('/PriceBook');
+    // }
   }
 
   checkAll(e) {
@@ -142,13 +142,16 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         </div>
         <div>
           <EditQuoteGrid
-            data={this.props.data.get('products') ? this.props.data.get('products').toJS() : []}
+            data={this.props.data ? this.props.data : []}
             cloneLine={this.props.cloneLine}
             deleteLine={this.props.deleteLine}
             toggleAllCheckBox={this.checkAll}
             toggleQuoteCheckbox={this.toggleCheckboxChange}
             updateProps={this.updateProps}
           />
+        </div>
+        <div className="sub-footer">
+            Sub Total : {this.props.data.get('netAmount')}
         </div>
       </div>
     );

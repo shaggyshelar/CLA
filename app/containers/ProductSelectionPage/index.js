@@ -86,9 +86,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   componentWillMount() {
-    if (!this.props.data.get('priceList')) {
-      browserHistory.push('/PriceBook');
-    }
+    // if (!this.props.data.get('priceList')) {
+    //   browserHistory.push('/PriceBook');
+    // }
   }
   componentDidMount() {
     this.props.getProductsData();
@@ -120,6 +120,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     } else {
       data.push(e.target.value);
     }
+    this.setState({
+      selectedProducts: data,
+    })
   }
   addProductsWait() {
     let data = [];
@@ -138,9 +141,15 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
   addProducts() {
     let data = [];
-    data = _.filter(this.state.dataProd, (o) =>
-      this.state.selectedProducts.includes(o._id)
+    const products = this.props.products;
+    console.log(this.state.selectedProducts)
+    console.log(products)
+    data = _.filter(this.props.products, (o) =>
+    
+      //this.state.selectedProducts[array.findIndex(x => x.id == o.id)]
+      this.state.selectedProducts.includes(o.id)
     );
+    console.log(data)
     this.props.addProductsToQuote(data);
     browserHistory.push('/EditQuote');
   }

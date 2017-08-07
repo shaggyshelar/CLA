@@ -30,11 +30,7 @@ const initialState = fromJS({
   loading: false,
   error: false,
   showPrice: false,
-  data: {
-    priceList: null,
-    products: [],
-    headers: [],
-  },
+  data: {},
 });
 
 function appReducer(state = initialState, action) {
@@ -48,24 +44,25 @@ function appReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_DATA_SUCCESS:
       return state
-        .set('data', fromJS(action.data))
+        .set('data', fromJS(action.data['quote']))
         .set('loading', false);
     case LOAD_DATA_ERROR:
       return state
         .set('error', action.error)
         .set('loading', false);
     case CLONE_LINE:
-      data = state.getIn(['data', 'products']);
-      return state.setIn(['data', 'products'], fromJS(action.data));
+      data = state.getIn(['data', 'lines']);
+      return state.setIn(['data', 'lines'], fromJS(action.data));
     case ADD_PRODUCTS:
-      data = state.getIn(['data', 'products']);
-      return state.setIn(['data', 'products'], fromJS(data.concat(action.data)));
+    debugger
+      data = state.getIn(['data', 'lines']);
+      return state.setIn(['data', 'lines'], fromJS(data.concat(action.data)));
     case DELETE_LINE:
-      data = state.getIn(['data', 'products']);
-      return state.setIn(['data', 'products'], fromJS(action.data));
+      data = state.getIn(['data', 'lines']);
+      return state.setIn(['data', 'lines'], fromJS(action.data));
     case DELETE_MULTIPLE_LINES:
-      data = state.getIn(['data', 'products']);
-      return state.setIn(['data', 'products'], fromJS(action.data));
+      data = state.getIn(['data', 'lines']);
+      return state.setIn(['data', 'lines'], fromJS(action.data));
     case LOAD_XRM_DATA:
       return state
         .set('loading', true)
@@ -76,9 +73,9 @@ function appReducer(state = initialState, action) {
         .set('xrmData', action.xrmData)
         .set('loading', false);
     case UPDTATE_PROPS:
-      return state.setIn(['data', 'products'], fromJS(action.data));
+      return state.setIn(['data', 'lines'], fromJS(action.data));
     case CALCULATE_SELECTED:
-      return state.setIn(['data', 'products'], fromJS(action.data));
+      return state.setIn(['data', 'lines'], fromJS(action.data));
     default:
       return state;
   }
