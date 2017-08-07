@@ -67,6 +67,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         const data = [...this.props.data];
         data[cellInfo.index][cellInfo.column.id] = e.target.textContent;
         this.setState({ data });
+        this.props.updateProps(data);
       }}
     >{this.props.data[cellInfo.index][cellInfo.column.id]}</div>);
   }
@@ -116,14 +117,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
 
             id: 'PRODUCT CODE',
             accessor: (d) => d['PRODUCT CODE'],
-            Cell: this.renderEditable,
+            // Cell: this.renderEditable,
 
           },
 
           {
             Header: 'PRODUCT NAME',
             accessor: 'PRODUCT NAME',
-            Cell: this.renderEditable,
+            // Cell: this.renderEditable,
 
           },
           {
@@ -133,10 +134,12 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           {
             Header: 'ADDITIONAL DISC.',
             accessor: 'ADDITIONAL DISC.',
+            Cell: this.renderEditable,
           },
           {
             Header: 'QUANTITY',
             accessor: 'QUANTITY',
+            Cell: this.renderEditable,
             Footer: (
               <span>
                 <strong>Subtotal: </strong>
@@ -148,7 +151,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             accessor: 'NET UNIT PRICE',
             Footer: (
               <span id="subtotal">
-                <strong> $ 236 </strong>
+                <strong> { this.props.data.reduce(function(total, item){ const netunitprice=item['NET UNIT PRICE'].split('$')[1]; return total+parseFloat(netunitprice) },0).toFixed(2) } </strong>
               </span>
           ),
           },
