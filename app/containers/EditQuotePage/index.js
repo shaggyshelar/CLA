@@ -1,8 +1,4 @@
-/*
- *
- * EditQuote
- *
- */
+
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
@@ -12,6 +8,7 @@ import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
+import { GroupQuote } from '../GroupQuote';
 import { cloneLine, deleteLine, deleteMultipleLines, calculateSelectedData, quickSaveQuotes, updateProps /* , loadXrmData*/ } from '../App/actions';
 
 
@@ -124,8 +121,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   render() {
+    const grouped = this.props.data.toJS().linesGrouped;
     return (
       <div>
+
         <Helmet
           title="EditQuotePage"
           meta={[
@@ -141,19 +140,33 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             quickSave={this.quickSaveQuotes}
           />
         </div>
-        <div>
-          <EditQuoteGrid
-            data={this.props.data ? this.props.data : []}
-            cloneLine={this.props.cloneLine}
-            deleteLine={this.props.deleteLine}
-            toggleAllCheckBox={this.checkAll}
-            toggleQuoteCheckbox={this.toggleCheckboxChange}
-            updateProps={this.updateProps}
-          />
-        </div>
-        <div className="sub-footer">
-            Sub Total : {this.props.data.get('netAmount')}
-        </div>
+
+        {grouped ?
+          <div>
+            <GroupQuote
+              data={this.props.data ? this.props.data : []}
+              cloneLine={this.props.cloneLine}
+              deleteLine={this.props.deleteLine}
+              toggleAllCheckBox={this.checkAll}
+              toggleQuoteCheckbox={this.toggleCheckboxChange}
+              updateProps={this.updateProps}
+            />
+          </div>
+        :
+          <div>
+            <EditQuoteGrid
+              data={this.props.data ? this.props.data : []}
+              cloneLine={this.props.cloneLine}
+              deleteLine={this.props.deleteLine}
+              toggleAllCheckBox={this.checkAll}
+              toggleQuoteCheckbox={this.toggleCheckboxChange}
+              updateProps={this.updateProps}
+            />
+            <div className="sub-footer">
+              Sub Total : {this.props.data.get('netAmount')}
+            </div>
+          </div>
+        }
       </div>
     );
   }
@@ -165,9 +178,9 @@ EditQuotePage.propTypes = {
   deleteLine: PropTypes.func,
   data: PropTypes.any,
   deleteSelectedLines: PropTypes.func,
-  calculateSelected: React.PropTypes.func,
-  quickSaveQuote: React.PropTypes.func,
-  updateProps: React.PropTypes.func,
+  calculateSelected: PropTypes.func,
+  quickSaveQuote: PropTypes.func,
+  updateProps: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

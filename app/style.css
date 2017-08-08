@@ -1,3 +1,113 @@
+.inline-edit{ 
+   display: none;
+   color: #54698d;
+ }
+.show-grid {
+    background-color: rgba(0,0,0,0.05);
+    border-bottom: 2px solid #d0d0d0;
+    padding-bottom: 10px;
+}
+.group-side {
+    width: 16px;
+    position: absolute;
+    height: 100%;
+    cursor: pointer;
+    background-color: #8199AF;
+    color: #FFF;
+    padding: 0 22px 0 2px;
+    font-size: 20px;
+}
+.group-side .center {
+position: relative;
+    top: 35%;
+}
+.group-side .panel-text {
+    transform: rotate(90deg);
+    text-align: center;
+    width: 20px;
+}
+ .group-edit:hover +.inline-edit{
+     display : inline !important;
+ }
+.group-description:hover +.inline-edit{
+     display : inline !important;
+ }
+.group-edit-on{
+    background-color: white;
+    margin: 10px 15px 15px;
+    color: #54698d;
+    font-size: 20px;
+    padding-left:5px;
+    width: 200px
+ }
+.group-desc-edit-on{
+    background-color: white;
+    margin-left: 15px;
+    color: #54698d;
+    font-size: 16px;
+    padding-left:5px;
+ }
+.group {
+    margin: 10px 15px 15px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d0d0d0;
+    border-radius: 4px;
+    height: 98%;
+    width:98%;
+    background-color: white;
+    display:block;
+    position: absolute;
+    overflow-x: hidden
+}
+
+.group .dropdown {
+    margin: 10px 0 0 0;
+    float: right;
+}
+.group-card {
+    background-color: rgba(0,0,0,0.05);
+    border-bottom: 2px solid #d0d0d0;
+    padding-bottom: 10px;
+}
+
+.input-group{
+        background: white;
+    /* border: azure; */
+    margin-top: 7px;
+    height: 28px;
+    border-radius: 2px;
+    border: 1px solid #CCCCCC;
+}
+
+.vertically {
+    border-left: 2px solid #ccc;
+    display: inline-block;
+    height: 100px;
+    margin: 10px;
+    position: absolute;
+    font-size: 4px;
+}
+.group-header{
+    margin: 10px 15px 15px;
+    color: #54698d;
+    font-size: 20px;
+    padding:5px;
+    line-height: 2.5;
+}
+.group-label{
+    margin: 10px 15px 15px;
+    color: #54698d;
+    font-size: 16px;
+    padding:5px;
+    line-height: 2.5;
+}
+.group-description {
+    margin: 10px 15px 15px;
+    color: #54698d;
+    font-size: 16px;
+    padding:5px;
+}
 .cartIcon {
     background: #904d4c;
     color: white;
@@ -231,7 +341,7 @@ padding-bottom: 15px;
 }
 .Sidebar.modal {
     position:absolute;
-  margin:0;
+    margin:0;
   /* overflow: auto; */
     max-width: 25%;
     box-shadow: 5px 0 10px;
@@ -301,9 +411,9 @@ padding-bottom: 15px;
 .small-modal .modal {width:40% !important}
 
 .sub-footer {
-        bottom: 0;
+    bottom: 0;
     border-top: rgba(0,0,0,0.08);
-    position: fixed;
+    position: absolute;
     text-align: right;
     background-color: rgba(0,0,0,0.05);
     width: 100%;
