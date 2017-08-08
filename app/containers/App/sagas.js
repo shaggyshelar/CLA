@@ -125,60 +125,6 @@ export function* getXrmData() {
   }
 }
 
-export function* deleteSelectedQuotes(selectedList, currentList) {
-  let finalList = currentList;
-  let indexArr = [];
-  indexArr = finalList
-    .get('products')
-    .toJS()
-    .map((item, index) => {
-      if (selectedList.includes(item['_id'])) {
-        return index;
-      }
-    })
-    .filter((item) => item !== undefined);
-  indexArr.sort((a, b) => b - a);
-  indexArr.forEach((item) => {
-    finalList = finalList.deleteIn(['products', item]);
-  }, this);
-  const prodList = finalList
-    .get('products')
-    .toJS();
-  let responseObj = {};
-  if (prodList !== undefined && prodList.length > 0) {
-    responseObj = {
-      priceList: null,
-      headers: [],
-      products: dataLoaded(prodList).data
-    };
-    yield put(dataLoaded(responseObj));
-  } else {
-    responseObj = {
-      priceList: null,
-      headers: [],
-      products: []
-    };
-    yield put(dataLoaded(responseObj));
-  }
-}
-
-export function* calculateTotalPrice(data) {
-  data.map((item, index) => {
-    let listUnitPrice = 0.0;
-    if (item['LIST UNIT PRICE'].indexOf('$') >= 0) {
-      listUnitPrice = parseFloat(item['LIST UNIT PRICE'].split('$ ')[1]);
-    }
-    const additionalDiscount = item['ADDITIONAL DISC.'];
-
-    if (additionalDiscount !== '') {
-      const totalDiscount = (parseFloat(additionalDiscount) / 100) * listUnitPrice;
-      item['LIST UNIT PRICE'] = listUnitPrice - totalDiscount;
-      console.log(listUnitPrice);
-    }
-  });
-
-}
-
 export function* saveQuoteDetails(data) {
   try {
     const requestURL = 'http://localhost:3000/v1/quote/save/1';
@@ -205,21 +151,6 @@ export function * SaveQuotes() {
   yield take(LOCATION_CHANGE);
 }
 
-export function * calcualteTotalValues() {
-  const {data} = yield take(CALCULATE_SELECTED);
-  yield call(calculateTotalPrice, data);
-
-  yield take(LOCATION_CHANGE);
-}
-
-export function * deleteQuotes() {
-  const {data, productList} = yield take(DELETE_MULTIPLE_LINES);
-  yield call(deleteSelectedQuotes, data, productList);
-
-  yield take(LOCATION_CHANGE);
-  // yield cancel(watcher);
-}
-
 // Individual exports for testing
 export function * dataSaga() {
   // See example in containers/HomePage/sagas.js
@@ -240,6 +171,4 @@ export function * xrmDataSaga() {
 // All sagas to be loaded
 export default[dataSaga,
   xrmDataSaga,
-  deleteQuotes,
-  calcualteTotalValues,
   SaveQuotes];
