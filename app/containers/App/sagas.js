@@ -477,5 +477,3 @@ export default[dataSaga,
   xrmDataSaga,
   SaveQuotes,
   CalculateQuotes];
-
-  
