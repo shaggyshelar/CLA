@@ -105,8 +105,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         },
           {
             Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleAllCheckBox} />,
-            accessor: '_id',
-            id: '_id',
+            accessor: 'id',
+            id: 'id',
             sortable: false,
             width: 50,
             style: { textAlign: 'center' },

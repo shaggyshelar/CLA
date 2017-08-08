@@ -413,7 +413,7 @@ export function* saveQuoteDetails(data) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: data,
+      body: JSON.stringify(data),
     };
 
     const repos = yield call(request, requestURL, options);
@@ -421,6 +421,31 @@ export function* saveQuoteDetails(data) {
   } catch (err) {
     yield put(dataLoadingError(err));
   }
+}
+
+export function* calculateQuoteTotals(data) {
+  try {
+    const requestURL = 'http://localhost:3000/v1/quote/calculate/1';
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    const quotes = yield call(request, requestURL, options);
+    yield put(dataLoaded(JSON.parse(quotes)));
+  } catch (err) {
+    yield put(dataLoadingError(err));
+  }
+}
+
+export function* CalculateQuotes() {
+  const { data } = yield take(CALCULATE_SELECTED);
+  yield call(calculateQuoteTotals, data);
+
+  yield take(LOCATION_CHANGE);
 }
 
 export function* SaveQuotes() {
@@ -450,4 +475,7 @@ export function* xrmDataSaga() {
 // All sagas to be loaded
 export default[dataSaga,
   xrmDataSaga,
-  SaveQuotes];
+  SaveQuotes,
+  CalculateQuotes];
+
+  

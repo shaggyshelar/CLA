@@ -338,6 +338,13 @@ quoteRouter.post('/save/:QuoteID', (req, res) => {
   res.json(req.body);
 });
 
+quoteRouter.post('/calculate/:QuoteID', (req, res) => {
+  // req.params.QuoteID;
+  quotes.quotes.push(req.body.quote);
+  res.json(req.body);
+});
+
+
 // A POST to the root of a resource should create a new object
 quoteRouter.post('/', (req, res) => {
   res.json({

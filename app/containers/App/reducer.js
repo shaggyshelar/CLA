@@ -54,7 +54,6 @@ function appReducer(state = initialState, action) {
       data = state.getIn(['data', 'lines']);
       return state.setIn(['data', 'lines'], fromJS(action.data));
     case ADD_PRODUCTS:
-    debugger
       data = state.getIn(['data', 'lines']);
       return state.setIn(['data', 'lines'], fromJS(data.concat(action.data)));
     case DELETE_LINE:
@@ -75,7 +74,7 @@ function appReducer(state = initialState, action) {
     case UPDTATE_PROPS:
       return state.setIn(['data', 'lines'], fromJS(action.data));
     case CALCULATE_SELECTED:
-      return state.setIn(['data', 'lines'], fromJS(action.data));
+      return state.setIn(['data'], fromJS(action.data));
     default:
       return state;
   }
