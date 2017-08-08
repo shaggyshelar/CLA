@@ -22,6 +22,9 @@ import {
   LOAD_XRM_DATA,
   LOAD_XRM_DATA_SUCCESS,
   ADD_PRODUCTS,
+  DELETE_MULTIPLE_LINES,
+  UPDTATE_PROPS,
+  CALCULATE_SELECTED,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -60,6 +63,9 @@ function appReducer(state = initialState, action) {
     case DELETE_LINE:
       data = state.getIn(['data', 'products']);
       return state.setIn(['data', 'products'], fromJS(action.data));
+    case DELETE_MULTIPLE_LINES:
+      data = state.getIn(['data', 'products']);
+      return state.setIn(['data', 'products'], fromJS(action.data));
     case LOAD_XRM_DATA:
       return state
         .set('loading', true)
@@ -69,6 +75,10 @@ function appReducer(state = initialState, action) {
       return state
         .set('xrmData', action.xrmData)
         .set('loading', false);
+    case UPDTATE_PROPS:
+      return state.setIn(['data', 'products'], fromJS(action.data));
+    case CALCULATE_SELECTED:
+      return state.setIn(['data', 'products'], fromJS(action.data));
     default:
       return state;
   }

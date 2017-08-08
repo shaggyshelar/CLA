@@ -15,6 +15,10 @@ import {
   LOAD_XRM_DATA,
   LOAD_XRM_DATA_SUCCESS,
   ADD_PRODUCTS,
+  DELETE_MULTIPLE_LINES,
+  CALCULATE_SELECTED,
+  QUICK_SAVE_QUOTES,
+  UPDTATE_PROPS,
 } from './constants';
 
 export function defaultAction() {
@@ -59,6 +63,28 @@ export function deleteLine(data) {
     data,
   };
 }
+
+export function deleteMultipleLines(data) {
+  return {
+    type: DELETE_MULTIPLE_LINES,
+    data,
+  };
+}
+
+export function calculateSelectedData(data) {
+  return {
+    type: CALCULATE_SELECTED,
+    data,
+  };
+}
+
+export function quickSaveQuotes(data) {
+  return {
+    type: QUICK_SAVE_QUOTES,
+    data,
+  };
+}
+
 export function dataLoaded(data) {
   return {
     type: LOAD_DATA_SUCCESS,
@@ -80,3 +106,9 @@ export function xrmDataLoaded(data) {
   };
 }
 
+export function updateProps(data) {
+  return {
+    type: UPDTATE_PROPS,
+    data,
+  };
+}
