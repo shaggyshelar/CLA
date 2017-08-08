@@ -95,22 +95,22 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   calculateTotal() {
-    let productsData=this.props.data.get('products').toJS().map((item, index) => {
-      let listUnitPrice = 0.0;
-      if (item['LIST UNIT PRICE'].indexOf('$') >= 0) {
-        listUnitPrice = parseFloat(item['LIST UNIT PRICE'].split('$ ')[1]);
-      } 
-      const additionalDiscount = item['ADDITIONAL DISC.'];
+  //   let productsData=this.props.data.get('products').toJS().map((item, index) => {
+  //     let listUnitPrice = 0.0;
+  //     if (item['LIST UNIT PRICE'].indexOf('$') >= 0) {
+  //       listUnitPrice = parseFloat(item['LIST UNIT PRICE'].split('$ ')[1]);
+  //     } 
+  //     const additionalDiscount = item['ADDITIONAL DISC.'];
 
-      if (additionalDiscount !== '') {
-        const totalDiscount = listUnitPrice -((parseFloat(additionalDiscount) / 100) * listUnitPrice);
-        const totalAmount=totalDiscount*parseInt(item['QUANTITY']);
-        item['NET UNIT PRICE'] = '$ ' + totalAmount.toFixed(2);
-        item['NET TOTAL'] ='$ ' +totalAmount.toFixed(2);
-      }
-      return item;
-  });
-  this.props.calculateSelected(productsData);
+  //     if (additionalDiscount !== '') {
+  //       const totalDiscount = listUnitPrice -((parseFloat(additionalDiscount) / 100) * listUnitPrice);
+  //       const totalAmount=totalDiscount*parseInt(item['QUANTITY']);
+  //       item['NET UNIT PRICE'] = '$ ' + totalAmount.toFixed(2);
+  //       item['NET TOTAL'] ='$ ' +totalAmount.toFixed(2);
+  //     }
+  //     return item;
+  // });
+  this.props.calculateSelected(this.props.data.toJS());
   }
 
   updateProps(updatedData) {
@@ -119,7 +119,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
 
   quickSaveQuotes() {
-    this.props.quickSaveQuote(this.props.data.get('products').toJS());
+    this.props.quickSaveQuote(this.props.data.toJS());
   }
 
   render() {

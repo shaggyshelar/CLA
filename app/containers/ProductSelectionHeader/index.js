@@ -5,22 +5,21 @@
  */
 
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import screenfull from 'screenfull';
 import Helmet from 'react-helmet';
-import { createStructuredSelector } from 'reselect';
-import { Button, Glyphicon, Row, Col, ButtonGroup, FormControl } from 'react-bootstrap/lib';
-import makeSelectProductSelectionHeader from './selectors';
-import messages from './messages';
-import ProductSelectionGrid from 'components/ProductSelectionGrid';
+import { browserHistory } from 'react-router';
 import ProductSelectionHeaderCard from 'components/ProductSelectionHeaderCard';
 import SearchProductAutocomplete from 'components/SearchProductAutocomplete';
-import Sidebar from 'components/Sidebar';
-import { browserHistory } from 'react-router';
+import { Button, Glyphicon, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
+
 export class ProductSelectionHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props, context) {
-  	super(props, context);
+    super(props, context);
+    this.handleFullScreen = this.handleFullScreen.bind(this);
   }
-
+  handleFullScreen() {
+    screenfull.toggle(document.getElementById('app'));
+  }
   render() {
     return (
       <Row className="show-grid">
@@ -39,9 +38,10 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
         </Col>
         <Col xs={12} md={5} style={{ textAlign: 'right' }}>
           <ButtonGroup className="margin">
-            <Button onClick={this.props.toggleFilter}><Glyphicon glyph="filter" /></Button>
+            <Button onClick={this.props.addProducts}><Glyphicon glyph="filter" /></Button>
             <Button onClick={() => { browserHistory.push('/favourites'); }} ><Glyphicon glyph="star" /></Button>
           </ButtonGroup>
+          <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button>
           <ButtonGroup className="margin">
             <Button onClick={this.props.addProducts}>Select</Button>
             <Button onClick={this.props.addProductsWait}>Select and Add More</Button>
@@ -56,17 +56,8 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
 }
 
 ProductSelectionHeader.propTypes = {
-  data: React.PropTypes.array,
+  data: PropTypes.array,
+  addProducts: PropTypes.func,
+  addProductsWait: PropTypes.func,
 };
-
-const mapStateToProps = createStructuredSelector({
-  ProductSelectionHeader: makeSelectProductSelectionHeader(),
-});
-
-function mapDispatchToProps(dispatch) {
-  return {
-
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductSelectionHeader);
+export default ProductSelectionHeader;
