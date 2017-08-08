@@ -104,8 +104,6 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   render() {
     const columns = [
       {
-        columns: [{
-
           Header: '',
           style: { textAlign: 'left' },
           sortable: false,
@@ -172,9 +170,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             Header: 'NET TOTAL',
             accessor: 'totalPrice',
             style: { textAlign: 'right' },
-          },
-        ],
-      }];
+          },];
     return (
       <div>
         <div className="table-wrap">
@@ -184,7 +180,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             columns={columns}
             defaultPageSize={this.props.data.get('lines').toJS().length}
             pageSize={this.props.data.get('lines').toJS().length}
-            style={{ position: 'fixed', width: '100%' }}
+            style={{ position: 'absolute', width: '100%' }}
             {...this.state.tableOptions}
             SubComponent={() => (
               <div style={{ paddingLeft: '35px' }}>
