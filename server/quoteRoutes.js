@@ -296,7 +296,7 @@ quoteRouter.get('/:id', (req, res) => {
     ],
   };
   response.config = {};
-  return res.json();
+  return res.json(response);
 });
 
 // /v1/quote/validateCustomSegment
