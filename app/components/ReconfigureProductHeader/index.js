@@ -6,9 +6,6 @@
 
 import React, { PropTypes } from 'react';
 // import styled from 'styled-components';
-
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import screenfull from 'screenfull';
 import { Button, Glyphicon, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
 import Helmet from 'react-helmet';

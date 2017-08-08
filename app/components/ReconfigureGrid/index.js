@@ -88,7 +88,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
             columns={columns}
             defaultPageSize={this.props.products.length}
             pageSize={this.props.products.length}
-            style={{ width: '100%', position: 'fixed' }}
+            style={{ position: 'absolute', width: '100%' }}
             {...this.state.tableOptions}
 
           />

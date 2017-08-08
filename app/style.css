@@ -430,6 +430,11 @@ padding-bottom: 15px;
 }
 
 /*styles for bootstrap tab on reconfigure lines page*/
+.margin-tabs{
+    width: 98%;
+    margin-left: 1%;
+}
+
 .nav-tabs { 
     border-bottom: 2px solid #DDD; 
 }

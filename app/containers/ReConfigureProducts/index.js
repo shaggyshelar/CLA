@@ -12,6 +12,7 @@ import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
 import makeSelectReConfigureProducts from './selectors';
 import loadConfigureProductsData from './actions';
 import ReconfigureGrid from 'components/ReconfigureGrid';
+import { Col, Row } from 'react-bootstrap/lib';
 
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -112,14 +113,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
   render() {
     return (
       <div>
-        {/* <Helmet
-          title="ProductSelectionPage"
-          meta={[{
-            name: 'description',
-            content: 'Description of ProductSelectionPage',
-          }, this.props.data,
-          ]}
-        /> */}
         <div
           style={{
             zIndex: '9999999',
@@ -130,22 +123,43 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             toggleFilter={this.toggleSidebar}
             data={this.state.dataProd}
           />
-          <ul className="nav nav-tabs" role="tablist">
-            <li role="presentation" className="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">OTHER OPTIONS</a></li>
-          </ul>
-          <div className="tab-content">
-            <div role="tabpanel" className="tab-pane active" id="home">
-              <ReconfigureGrid
-                products={this.state.dataProd}
-                showFilter={this.props.showFilter}
-                toggleFilter={this.toggleSidebar}
-                toggleCheckboxChange={this.toggleCheckboxChange}
-                data={this.state.dataProd}
-                addProductsWait={this.addProductsWait}
-                checkAll={this.state.checkAll}
-                toggleCheckAll={this.checkAll}
-              />
+          <div className="margin-tabs">
+            <Row>
+              <Col md={12} sm={12} xs={12}>
+                <h1>Happy Meal</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12} sm={12} xs={12}>
+                <ul className="nav nav-tabs" role="tablist">
+                  <li role="presentation" className="active"><a href="#configGrid" aria-controls="home" role="tab" data-toggle="tab">OTHER OPTIONS</a></li>
+                </ul>
+              </Col>
+            </Row>
+          </div>
+          <div className="group">
+
+            <div className="group-card">
+              <span className="group-header">Other Options</span>
             </div>
+            <Row>
+              <Col md={12} sm={12} xs={12}>
+                <div className="tab-content">
+                  <div role="tabpanel" className="tab-pane active" id="configGrid">
+                    <ReconfigureGrid
+                      products={this.state.dataProd}
+                      showFilter={this.props.showFilter}
+                      toggleFilter={this.toggleSidebar}
+                      toggleCheckboxChange={this.toggleCheckboxChange}
+                      data={this.state.dataProd}
+                      addProductsWait={this.addProductsWait}
+                      checkAll={this.state.checkAll}
+                      toggleCheckAll={this.checkAll}
+                    />
+                  </div>
+                </div>
+              </Col>
+            </Row>
           </div>
         </div>
       </div>
