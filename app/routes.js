@@ -139,6 +139,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/reconfigureproducts',
+      name: 'reConfigureProducts',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/ReConfigureProducts/reducer'),
+          import('containers/ReConfigureProducts/sagas'),
+          import('containers/ReConfigureProducts'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('reConfigureProducts', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
