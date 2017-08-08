@@ -3,7 +3,6 @@
  * EditQuote
  *
  */
-import { browserHistory } from 'react-router';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
@@ -29,7 +28,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.checkAll = this.checkAll.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.quickSaveQuotes = this.quickSaveQuotes.bind(this);
-    this.updateProps=this.updateProps.bind(this);
+    this.updateProps = this.updateProps.bind(this);
   }
   componentWillMount() {
     // this.props.getAllData();
@@ -72,25 +71,27 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   deleteCheckedLines() {
-    let allProducts=this.props.data.get('products').toJS();
+    const dataObj = this.props.data.toJS();
+
+    // let allProducts=this.props.data.get('lines').toJS();
     let indexArr = [];
-    indexArr = allProducts.map((item, index) => {
-      if (this.state.selectedQuotes.includes(item['_id'])) {
+    indexArr = dataObj.lines.map((item, index) => {
+      if (this.state.selectedQuotes.includes(item.id)) {
         return index;
       }
+      return undefined;
     }).filter((item) => item !== undefined);
     indexArr.sort((a, b) => b - a);
     indexArr.forEach((item) => {
-      allProducts.splice(item, 1);
+      dataObj.lines.splice(item, 1);
     }, this);
-    
-    this.props.deleteSelectedLines(allProducts);
+    this.props.deleteSelectedLines(dataObj.lines);
 
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i++) {
       if (d[i].checked) {
         d[i].click();
-      } 
+      }
     }
   }
 
@@ -99,7 +100,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   //     let listUnitPrice = 0.0;
   //     if (item['LIST UNIT PRICE'].indexOf('$') >= 0) {
   //       listUnitPrice = parseFloat(item['LIST UNIT PRICE'].split('$ ')[1]);
-  //     } 
+  //     }
   //     const additionalDiscount = item['ADDITIONAL DISC.'];
 
   //     if (additionalDiscount !== '') {
@@ -110,7 +111,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   //     }
   //     return item;
   // });
-  this.props.calculateSelected(this.props.data.toJS());
+    this.props.calculateSelected(this.props.data.toJS());
   }
 
   updateProps(updatedData) {
@@ -159,13 +160,14 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 }
 
 EditQuotePage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
   cloneLine: PropTypes.func,
   deleteLine: PropTypes.func,
   data: PropTypes.any,
   deleteSelectedLines: PropTypes.func,
   calculateSelected: React.PropTypes.func,
   quickSaveQuote: React.PropTypes.func,
+  updateProps: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

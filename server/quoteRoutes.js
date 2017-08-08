@@ -296,7 +296,7 @@ quoteRouter.get('/:id', (req, res) => {
     ],
   };
   response.config = {};
-  return res.json();
+  return res.json(response);
 });
 
 // /v1/quote/validateCustomSegment
@@ -337,6 +337,13 @@ quoteRouter.post('/save/:QuoteID', (req, res) => {
   quotes.quotes.push(req.body.quote);
   res.json(req.body);
 });
+
+quoteRouter.post('/calculate/:QuoteID', (req, res) => {
+  // req.params.QuoteID;
+  quotes.quotes.push(req.body.quote);
+  res.json(req.body);
+});
+
 
 // A POST to the root of a resource should create a new object
 quoteRouter.post('/', (req, res) => {
