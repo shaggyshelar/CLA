@@ -52,31 +52,38 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     });
   }
   cloneLine(index) {
-    const data = this.props.data;
+    const data = this.props.data.get('lines').toJS();
     data.splice(index, 0, data[index]);
     this.props.cloneLine(data);
   }
   deleteLine(index) {
-    const data = this.props.data;
+    const data = this.props.data.get('lines').toJS();
     data.splice(index, 1);
     this.props.deleteLine(data);
   }
   renderEditable(cellInfo) {
-    return (<div
-      style={{ backgroundColor: '#fafafa' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
-        const data = [...this.props.data];
-        data[cellInfo.index][cellInfo.column.id] = e.target.textContent;
-        this.setState({ data });
-      }}
-    >{this.props.data[cellInfo.index][cellInfo.column.id]}</div>);
+    if (cellInfo.original[cellInfo.column.id].isEditable === false) {
+      return (<span>{cellInfo.value}</span>);
+    } else {
+      return (<div>
+        <Glyphicon glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
+        <div
+          style={{ backgroundColor: '#fafafa', marginLeft: '20px' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
+          }}
+        >{cellInfo.value}</div>
+      </div>);
+    }
   }
   renderActionItems(cellInfo) {
+    const discount = cellInfo.original.canShowDiscountScheduler ? <a><Glyphicon glyph="calendar" onClick={this.handleToggle} /></a> : '';
+    const reconfigure = cellInfo.original.canReconfigure ? <a><Glyphicon glyph="wrench" /></a> : '';
+    const bundle = cellInfo.original.isBundled ? <a><Glyphicon glyph="info-sign" /></a> : '';
     return (
       <div className="actionItems" >
         <a><Glyphicon glyph="star-empty" /></a>
-        <a><Glyphicon glyph="calendar" onClick={this.handleToggle} /></a>
-        <a><Glyphicon glyph="wrench" /></a>
-        <a><Glyphicon glyph="info-sign" /></a>
+        {discount}
+        {reconfigure}
+        {bundle}
         <a><Glyphicon glyph="duplicate" onClick={this.cloneLine.bind(this, cellInfo.index)} /></a>
         <a><Glyphicon glyph="trash" onClick={this.deleteLine.bind(this, cellInfo.index)} /></a>
       </div>
@@ -113,53 +120,50 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
 
           }, {
             Header: 'PRODUCT CODE',
-
-            id: 'PRODUCT CODE',
-            accessor: (d) => d['PRODUCT CODE'],
-            Cell: this.renderEditable,
-
+            accessor: 'code',
           },
 
           {
             Header: 'PRODUCT NAME',
-            accessor: 'PRODUCT NAME',
+            accessor: 'name',
+          },
+          {
+            Header: 'QUANTITY',
+            accessor: 'quantity.value',
+            id: 'quantity',
+            style: { textAlign: 'right' },
             Cell: this.renderEditable,
 
           },
           {
             Header: 'LIST UNIT PRICE',
-            accessor: 'LIST UNIT PRICE',
+            id: 'netUnitPrice',
+            style: { textAlign: 'right' },
+            Cell: (props) => props.isEditable ? this.renderEditable : <span>{props.value}</span>,
           },
           {
             Header: 'ADDITIONAL DISC.',
-            accessor: 'ADDITIONAL DISC.',
+            accessor: 'additionalDiscount.value',
+            id: 'additionalDiscount',
+            style: { textAlign: 'right' },
+            Cell: (props) => props.isEditable ? this.renderEditable : <span>{props.value}</span>,
           },
           {
-            Header: 'QUANTITY',
-            accessor: 'QUANTITY',
-            Footer: (
-              <span>
-                <strong>Subtotal: </strong>
-              </span>
-          ),
+            Header: 'MARKUP',
+            accessor: 'markup',
+            style: { textAlign: 'right' },
+            Cell: (props) => props.isEditable ? this.renderEditable : <span>{props.value}</span>,
           },
           {
             Header: 'NET UNIT PRICE',
-            accessor: 'NET UNIT PRICE',
-            Footer: (
-              <span id="subtotal">
-                <strong> $ 236 </strong>
-              </span>
-          ),
+            accessor: 'netUnitPrice',
+            style: { textAlign: 'right' },
+            Cell: (props) => props.isEditable ? this.renderEditable : <span>{props.value}</span>,
           },
           {
             Header: 'NET TOTAL',
-            accessor: 'NET TOTAL',
-            Footer: (
-              <span id="nettotal">
-                <strong>Quote Total: </strong>
-              </span>
-          ),
+            accessor: 'totalPrice',
+            style: { textAlign: 'right' },
           },
         ],
       }];
@@ -168,17 +172,18 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         <div className="table-wrap">
           <ReactTable
             className="-striped -highlight"
-            data={this.props.data}
+            data={this.props.data.get('lines').toJS()}
             columns={columns}
-            defaultPageSize={this.props.data.length}
-            pageSize={this.props.data.length}
+            defaultPageSize={this.props.data.get('lines').toJS().length}
+            pageSize={this.props.data.get('lines').toJS().length}
+            style={{ position: 'fixed', width: '100%' }}
             {...this.state.tableOptions}
             SubComponent={() => (
-              <div style={{ 'padding-left': '35px' }}>
+              <div style={{ paddingLeft: '35px' }}>
                 <ReactTable
-                  data={this.props.data}
+                  data={this.props.data.get('lines').toJS()}
                   columns={columns}
-                  style={{display:'inline-table',width:'98%'}}
+                  style={{ display: 'inline-table', width: '98%' }}
                   defaultPageSize={3}
                   showPagination={false}
                 />

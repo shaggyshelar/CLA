@@ -12,10 +12,12 @@ const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
 const resolve = require('path').resolve;
 const app = express();
 const appRoutes = require('./serverRoutes');
+const quoteRoutes = require('./quoteRoutes');
 const productRoutes = require('./productRoutes');
 // If you need a backend, e.g. an API, add your custom backend-specific
 // middleware here app.use('/api', myApi);
-app.use('/api/quote', appRoutes.quoteRouter);
+app.use('/api/quote', appRoutes.serverRouter);
+app.use('/v1/quote', quoteRoutes.quoteRouter);
 app.use('/api/products', productRoutes.productRouter);
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

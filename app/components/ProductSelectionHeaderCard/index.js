@@ -15,10 +15,7 @@ class ProductSelectionHeaderCard extends React.PureComponent { // eslint-disable
         <div className="card-icon"><Glyphicon className="cartIcon" glyph="barcode" /></div>
         <div className="card-detail">
           <div>
-            <div className="cartFont">Q-00116</div>
-          </div>
-          <div>
-            <div className="cartFont" ><h4 style={{ marginTop: '0px' }}>Product Selection</h4></div>
+            <div className="cartFont" style={{marginTop:'5px'}}>Q-00116</div>
           </div>
         </div>
       </div>
