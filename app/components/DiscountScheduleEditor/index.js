@@ -10,7 +10,6 @@ import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigge
 
 class DiscountScheduleEditor extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
-    console.log(this.props.selectedLine);
     const tooltip = (
       <Tooltip id="tooltip" bsClass="tooltip"><strong>Specifiy the discount unit: Amount or Percent</strong></Tooltip>
     );

@@ -48,7 +48,6 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
 
   handleToggle(index) {
-    console.log('called');
     const selectedData = this.props.data.get('lines').toJS()[index];
     if (selectedData !== undefined) {
       this.setState({
