@@ -1,9 +1,9 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import EditQuoteGridRow from '../index';
+// import { GroupQuote } from '../index';
 
-describe('<EditQuoteGridRow />', () => {
+describe('<GroupQuote />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });

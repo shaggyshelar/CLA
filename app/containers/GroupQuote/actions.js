@@ -1,6 +1,6 @@
 /*
  *
- * FavouriteHeader actions
+ * GroupQuote actions
  *
  */
 
