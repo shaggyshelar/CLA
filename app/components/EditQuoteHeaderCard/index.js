@@ -16,10 +16,7 @@ class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line r
         <div className="card-icon"><Glyphicon className="cartIcon" glyph='shopping-cart' /></div>
         <div className="card-detail">
           <div>
-            <div  className="cartFont">Q-00116|Edit Quote</div>
-          </div>
-          <div>
-            <div className="cartFont" ><h4 style={{marginTop: '0px'}}>Total: $150,000.00</h4></div>
+            <div  className="cartFont">Q-00116 - <span style={{marginTop: '0px', fontSize: '20px'}}>$150,000.00</span></div>
           </div>
         </div>
       </div>

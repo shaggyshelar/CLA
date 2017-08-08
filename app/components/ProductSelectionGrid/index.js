@@ -43,36 +43,34 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
     const columns = [{
       columns: [{
         Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
-        accessor: '_id',
-        id: '_id',
+        accessor: 'id',
+        id: 'id',
         sortable: false,
         width: 50,
         style: { textAlign: 'center' },
         Cell: (props) => <input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />,
-      }, {
-        Header: 'PRODUCT CODE',
-
-        id: 'PRODUCT CODE',
-        //accessor: (d) => d['PRODUCT CODE'],
-        accessor: (d) => d.productCode,
-      },
+      }, 
+        {
+          Header: 'PRODUCT CODE',
+          accessor: 'code',
+        },
 
         {
           Header: 'PRODUCT NAME',
-          accessor: 'productName',
-
+          accessor: 'name',
         },
         {
           Header: 'PRODUCT FAMILY',
-          accessor: 'productFamily',
+          accessor: 'type',
         },
         {
           Header: 'PRODUCT DESCRIPTION',
-          accessor: 'productDescription',
+          accessor: 'type',
         },
         {
           Header: 'LIST PRICE',
-          accessor: 'listPrice',
+          accessor: 'netUnitPrice',
+          style: { textAlign: 'right' },
         },
 
 
@@ -86,7 +84,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
             data={this.props.products}
             columns={columns}
             defaultPageSize={this.props.products.length}
-            pageSize={this.props.data.length}
+            pageSize={this.props.products.length}
             style={{ width: '100%', position: 'fixed' }}
             {...this.state.tableOptions}
 

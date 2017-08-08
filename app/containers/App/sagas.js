@@ -1,7 +1,7 @@
 import request from 'utils/request';
-import {take, call, put, cancel, takeLatest} from 'redux-saga/effects';
-import {LOCATION_CHANGE} from 'react-router-redux';
-import {dataLoaded, dataLoadingError, xrmDataLoaded} from '../App/actions';
+import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
+import { LOCATION_CHANGE } from 'react-router-redux';
+import { dataLoaded, dataLoadingError, xrmDataLoaded } from '../App/actions';
 import {
   SERVER_URL,
   EntityURLs,
@@ -9,70 +9,349 @@ import {
   LOAD_XRM_DATA,
   DELETE_MULTIPLE_LINES,
   CALCULATE_SELECTED,
-  QUICK_SAVE_QUOTES
+  QUICK_SAVE_QUOTES,
 } from '../App/constants';
 
-export function * getData() {
+export function* getData() {
   // Select username from store const requestURL = SERVER_URL + EntityURLs.QUOTE;
   try {
     // Call our request helper (see 'utils/request') let repos = yield call(request,
     // 'https://14.141.105.180:1823/api/values/GetUserName/1?callback=ab');
     const repos = {
-      priceList: null,
-      headers: [],
-      products: [
-        {
-          _id: '596db79f58d3f94623033cd0',
-          'PRODUCT CODE': 'Tillman',
-          'PRODUCT NAME': 'Bradley',
-          'LIST UNIT PRICE': '$ 332.9494',
-          balance: '$2,234.27',
-          'ADDITIONAL DISC.': '10',
-          'NET UNIT PRICE': '$ 625.0061',
-          'NET TOTAL': '$ 25.9874',
-          QUANTITY: 14.7428
-        }, {
-          _id: '596db79f34ec0f84605ca6a1',
-          'PRODUCT CODE': 'Hernandez',
-          'PRODUCT NAME': 'Holman',
-          'LIST UNIT PRICE': '$ 700.7878',
-          balance: '$2,407.24',
-          'ADDITIONAL DISC.': '',
-          'NET UNIT PRICE': '$ 506.595',
-          'NET TOTAL': '$ 502.2979',
-          QUANTITY: 50.8204
-        }, {
-          _id: '596db79f10b858fe71591077',
-          'PRODUCT CODE': 'Burch',
-          'PRODUCT NAME': 'Collins',
-          'LIST UNIT PRICE': '$ 964.9937',
-          balance: '$2,023.00',
-          'ADDITIONAL DISC.': '',
-          'NET UNIT PRICE': '$ 269.6924',
-          'NET TOTAL': '$ 305.6421',
-          QUANTITY: 47.5805
-        }, {
-          _id: '596db79f90613ebdf6dc2b7c',
-          'PRODUCT CODE': 'Coleman',
-          'PRODUCT NAME': 'Hunter',
-          'LIST UNIT PRICE': '$ 833.9739',
-          balance: '$2,644.06',
-          'ADDITIONAL DISC.': '',
-          'NET UNIT PRICE': '$ 942.7997',
-          'NET TOTAL': '$ 72.1729',
-          QUANTITY: 82.5088
-        }, {
-          _id: '596db79f94800616a15f5ed5',
-          'PRODUCT CODE': 'Lorene',
-          'PRODUCT NAME': 'Brennan',
-          'LIST UNIT PRICE': '$ 804.2955',
-          balance: '$1,677.35',
-          'ADDITIONAL DISC.': '',
-          'NET UNIT PRICE': '$ 121.7662',
-          'NET TOTAL': '$ 487.7556',
-          QUANTITY: 77.3144
-        }
-      ]
+      quote: {
+        id: '1',
+        name: 'sample',
+        netAmount: 123,
+        customerAmount: 123,
+        paymentTerms: 123,
+        priceBookId: '',
+        linesGrouped: true,
+        expirationDate: 'Date',
+        isPrimary: true,
+        type: 'Quote/Renewal/Amendement',
+        lines: [
+          {
+            id: '123',
+            code: 'P121',
+            name: 'ABCD',
+            type: 'Product/Bundle',
+            isBundled: true,
+            isDisableReconfiguration: true,
+            groupId: 123,
+            markup: 123,
+            quantity: {
+              value: 123,
+              isEditable: true,
+              isVisible: true,
+              dataType: 'text/select/textarea/inputSelect',
+              selectValues: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+              ],
+            },
+            discountSchedule: {
+              id: 123,
+              name: 'Diwali',
+              discountUnit: 'Percent/Amount',
+              type: 'Range/Slab',
+              tiers: [
+                {
+                  id: 123,
+                  name: 'tier1',
+                  lowerBound: 1,
+                  upperBound: 10,
+                  discountpercent: 10,
+                  discountamount: 123,
+                },
+              ],
+            },
+            canClone: true,
+            canSegment: true,
+            segmentData: {
+              type: 'Year/Quarter/Month/Custom/OneTime',
+              columns: [
+                {
+                  name: 'Dimension 1',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+              ],
+            },
+            canReconfigure: true,
+            canShowDiscountScheduler: true,
+            listPrice: {
+              value: 123,
+              isEditable: true,
+              isVisible: true,
+              dataType: 'text/select/textarea/inputSelect',
+              selectValues: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+              ],
+            },
+            isTaxable: true,
+            additionalDiscount: {
+              value: 123,
+              isEditable: true,
+              isVisible: true,
+              dataType: 'text/select/textarea/inputSelect',
+              selectValues: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+              ],
+            },
+            netUnitPrice: 123,
+            totalPrice: 123,
+            netTotal: 123,
+            pricingMethod: {
+              values: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+                {
+                  id: 123,
+                  value: ':Cost',
+                  isSelected: false,
+                },
+              ],
+            },
+          },
+          {
+            id: '123ass',
+            code: 'P121',
+            name: 'Testing1',
+            type: 'Product',
+            isBundled: true,
+            isDisableReconfiguration: true,
+            groupId: 123,
+            markup: 123,
+            quantity: {
+              value: 123,
+              isEditable: false,
+              isVisible: true,
+              dataType: 'text/select/textarea/inputSelect',
+              selectValues: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+              ],
+            },
+            discountSchedule: {
+              id: 123,
+              name: 'Diwali',
+              discountUnit: 'Percent/Amount',
+              type: 'Range/Slab',
+              tiers: [
+                {
+                  id: 123,
+                  name: 'tier1',
+                  lowerBound: 1,
+                  upperBound: 10,
+                  discountpercent: 10,
+                  discountamount: 123,
+                },
+              ],
+            },
+            canClone: true,
+            canSegment: true,
+            segmentData: {
+              type: 'Year/Quarter/Month/Custom/OneTime',
+              columns: [
+                {
+                  name: 'Dimension 1',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+              ],
+            },
+            canReconfigure: true,
+            canShowDiscountScheduler: true,
+            listPrice: {
+              value: 123,
+              isEditable: true,
+              isVisible: true,
+              dataType: 'text/select/textarea/inputSelect',
+              selectValues: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+              ],
+            },
+            isTaxable: true,
+            additionalDiscount: {
+              value: 123,
+              isEditable: true,
+              isVisible: true,
+              dataType: 'text/select/textarea/inputSelect',
+              selectValues: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+              ],
+            },
+            netUnitPrice: 123,
+            totalPrice: 123,
+            netTotal: 123,
+            pricingMethod: {
+              values: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+                {
+                  id: 123,
+                  value: ':Cost',
+                  isSelected: false,
+                },
+              ],
+            },
+          },
+          {
+            id: '123',
+            code: 'P121',
+            name: 'Testing',
+            type: 'Product/Bundle',
+            isBundled: true,
+            isDisableReconfiguration: true,
+            groupId: 123,
+            markup: 123,
+            quantity: {
+              value: 123,
+              isEditable: true,
+              isVisible: true,
+              dataType: 'text/select/textarea/inputSelect',
+              selectValues: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+              ],
+            },
+            discountSchedule: {
+              id: 123,
+              name: 'Diwali',
+              discountUnit: 'Percent/Amount',
+              type: 'Range/Slab',
+              tiers: [
+                {
+                  id: 123,
+                  name: 'tier1',
+                  lowerBound: 1,
+                  upperBound: 10,
+                  discountpercent: 10,
+                  discountamount: 123,
+                },
+              ],
+            },
+            canClone: true,
+            canSegment: true,
+            segmentData: {
+              type: 'Year/Quarter/Month/Custom/OneTime',
+              columns: [
+                {
+                  name: 'Dimension 1',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+              ],
+            },
+            canReconfigure: true,
+            canShowDiscountScheduler: true,
+            listPrice: {
+              value: 123,
+              isEditable: true,
+              isVisible: true,
+              dataType: 'text/select/textarea/inputSelect',
+              selectValues: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+              ],
+            },
+            isTaxable: true,
+            additionalDiscount: {
+              value: 123,
+              isEditable: true,
+              isVisible: true,
+              dataType: 'text/select/textarea/inputSelect',
+              selectValues: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+              ],
+            },
+            netUnitPrice: 123,
+            totalPrice: 123,
+            netTotal: 123,
+            pricingMethod: {
+              values: [
+                {
+                  id: 123,
+                  value: ':List',
+                  isSelected: true,
+                },
+                {
+                  id: 123,
+                  value: ':Cost',
+                  isSelected: false,
+                },
+              ],
+            },
+          },
+        ],
+        groups: [
+          {
+            id: 123,
+            name: 'Group1',
+            isOptional: true,
+            description: 'longtext',
+            additionaldiscount: 123,
+            subscriptionTerm: 123,
+          },
+        ],
+      },
+      config: {},
     };
     yield put(dataLoaded(repos));
   } catch (err) {
@@ -103,7 +382,7 @@ export function* getXrmData() {
         "' uiname='Big billion day' uitype='pricelevel' value='{D3B8550E-7D6B-E711-812B-C" +
         "4346BDCAEF1}' /></filter></link-entity><link-entity name='productassociation' to" +
         "='productid' from='productid'><attribute name='associatedproduct' /></link-entit" +
-        "y></entity></fetch>";
+        'y></entity></fetch>';
     const requestURL = `${SERVER_URL}/api/data/v8.0/${EntityURLs.PRODUCTS}?fetchXml=${extendedQuery}`;
 
     const headers = {
@@ -113,8 +392,8 @@ export function* getXrmData() {
         'Content-Type': 'application/json; charset=utf-8',
         'OData-MaxVersion': '4.0',
         Prefer: 'odata.include-annotations="*"',
-        'OData-Version': '4.0'
-      }
+        'OData-Version': '4.0',
+      },
     };
 
     // Call our request helper (see 'utils/request')
@@ -137,22 +416,22 @@ export function* saveQuoteDetails(data) {
       body: data,
     };
 
-    let repos = yield call(request, requestURL, options);
-    //yield put(dataLoaded(repos));
+    const repos = yield call(request, requestURL, options);
+    // yield put(dataLoaded(repos));
   } catch (err) {
     yield put(dataLoadingError(err));
   }
 }
 
-export function * SaveQuotes() {
-  const {data} = yield take(QUICK_SAVE_QUOTES);
+export function* SaveQuotes() {
+  const { data } = yield take(QUICK_SAVE_QUOTES);
   yield call(saveQuoteDetails, data);
 
   yield take(LOCATION_CHANGE);
 }
 
 // Individual exports for testing
-export function * dataSaga() {
+export function* dataSaga() {
   // See example in containers/HomePage/sagas.js
   const watcher = yield takeLatest(LOAD_DATA, getData);
   // Suspend execution until location changes
@@ -160,7 +439,7 @@ export function * dataSaga() {
   yield cancel(watcher);
 }
 
-export function * xrmDataSaga() {
+export function* xrmDataSaga() {
   // See example in containers/HomePage/sagas.js
   const watcher = yield takeLatest(LOAD_XRM_DATA, getXrmData);
   // Suspend execution until location changes
