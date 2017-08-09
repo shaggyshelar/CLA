@@ -34,15 +34,11 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
 
           <ReconfigureProductHeaderCard />
         </Col>
-        {/* <Col xs={12} md={4} style={{ textAlign: 'left' }}>
-          <SearchProductAutocomplete data={this.props.data} />
-        </Col> */}
+
         <Col xs={12} md={9} style={{ textAlign: 'right' }}>
           <ButtonGroup className="margin">
             <Button onClick={this.props.addProducts}><Glyphicon glyph="filter" /></Button>
-            {/* <Button onClick={() => { browserHistory.push('/favourites'); }} ><Glyphicon glyph="star" /></Button> */}
           </ButtonGroup>
-          {/* <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
           <ButtonGroup className="margin">
             <Button onClick={() => { browserHistory.push('/EditQuote'); }}>Cancel</Button>
             <Button bsStyle="primary" onClick={this.props.addProducts}>Save</Button>
@@ -56,7 +52,7 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
 }
 
 ReconfigureProductHeader.propTypes = {
-  data: PropTypes.any,
+  // data: PropTypes.any,
   addProducts: PropTypes.func,
 };
 

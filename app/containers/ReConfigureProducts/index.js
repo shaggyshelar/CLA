@@ -6,14 +6,13 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
+import { Col, Row } from 'react-bootstrap/lib';
+import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
+import ReconfigureGrid from 'components/ReconfigureGrid';
 import makeSelectReConfigureProducts from './selectors';
 import loadConfigureProductsData from './actions';
-import ReconfigureGrid from 'components/ReconfigureGrid';
-import { Col, Row } from 'react-bootstrap/lib';
-
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -142,24 +141,20 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             <div className="group-card">
               <span className="group-header">Other Options</span>
             </div>
-            <Row>
-              <Col md={12} sm={12} xs={12}>
-                <div className="tab-content">
-                  <div role="tabpanel" className="tab-pane active" id="configGrid">
-                    <ReconfigureGrid
-                      products={this.state.dataProd}
-                      showFilter={this.props.showFilter}
-                      toggleFilter={this.toggleSidebar}
-                      toggleCheckboxChange={this.toggleCheckboxChange}
-                      data={this.state.dataProd}
-                      addProductsWait={this.addProductsWait}
-                      checkAll={this.state.checkAll}
-                      toggleCheckAll={this.checkAll}
-                    />
-                  </div>
-                </div>
-              </Col>
-            </Row>
+            <div className="tab-content">
+              <div role="tabpanel" className="tab-pane active" id="configGrid">
+                <ReconfigureGrid
+                  products={this.state.dataProd}
+                  showFilter={this.props.showFilter}
+                  toggleFilter={this.toggleSidebar}
+                  toggleCheckboxChange={this.toggleCheckboxChange}
+                  data={this.state.dataProd}
+                  addProductsWait={this.addProductsWait}
+                  checkAll={this.state.checkAll}
+                  toggleCheckAll={this.checkAll}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -170,9 +165,9 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
 ReConfigureProducts.propTypes = {
   toggleFilter: PropTypes.func,
   showFilter: PropTypes.any,
-  data: PropTypes.any,
-  products: PropTypes.any,
-  getProductsData: PropTypes.func,
+  // data: PropTypes.any,
+  // products: PropTypes.any,
+  // getProductsData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

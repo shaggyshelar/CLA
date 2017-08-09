@@ -16,7 +16,7 @@ class ReconfigureProductHeaderCard extends React.Component { // eslint-disable-l
         <div className="card-detail">
           <div>
             <div className="cartFont" style={{ marginTop: '5px' }}>Q-00116</div>
-            <h1 style={{ margin: '0px' }}>Q-00116</h1>
+            <h1 style={{ margin: '0px' }}>Configure Products</h1>
           </div>
         </div>
       </div>

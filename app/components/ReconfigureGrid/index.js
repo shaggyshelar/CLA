@@ -6,8 +6,9 @@
 import ReactTable from 'react-table';
 import React from 'react';
 import 'react-table/react-table.css';
+import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
-import { Button, FormControl } from 'react-bootstrap/lib';
+
 class ReconfigureGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -44,6 +45,19 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       },
     });
   }
+  renderEditable(cellInfo) {
+    if (cellInfo.original[cellInfo.column.id].isEditable === false) {
+      return (<span>{cellInfo.value}</span>);
+    } else {
+      return (<div>
+        <Glyphicon glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
+        <div
+          style={{ backgroundColor: '#fafafa', marginLeft: '20px' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
+          }}
+        >{cellInfo.value}</div>
+      </div>);
+    }
+  }
   render() {
     const columns = [{
       columns: [{
@@ -58,6 +72,9 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         {
           Header: 'QUANTITY',
           accessor: 'quantity',
+          id: 'quantity',
+          style: { textAlign: 'right' },
+          Cell: this.renderEditable,
         }, {
           Header: 'PRODUCT CODE',
           accessor: 'code',
