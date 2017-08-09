@@ -474,3 +474,7 @@ padding-bottom: 15px;
 .tab-content{
     /* padding:20px */
 }
+
+#configureProductsList .group {
+    position: inherit;
+}

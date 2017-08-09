@@ -13,7 +13,7 @@ import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
 import ReconfigureGrid from 'components/ReconfigureGrid';
 import makeSelectReConfigureProducts from './selectors';
 import loadConfigureProductsData from './actions';
-
+import ReconfigureProductTab from 'components//ReconfigureProductTab';
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -61,6 +61,116 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
           unitPrice: '$ 230.653',
         },
       ],
+      products: {
+        productBundle: {
+          id: 1,
+          quoteId: 123,
+          name: 'Meal',
+          products: [
+            {
+              id: 123,
+              code: 'P121',
+              name: 'ABCD',
+              featureId: 123,
+              // categoryId: 123,
+              categoryId: null,
+              isDependent: true,
+              optionSelectionMethod: 123,
+              optionLayout: 'wizard/section/tab',
+              quantity: {
+                value: 123,
+                isEditable: true,
+                isVisible: true,
+                dataType: 'text/select/textarea/inputSelect',
+                selectValues: [
+                  {
+                    id: 123,
+                    value: ':List',
+                    isSelected: true,
+                  },
+                ],
+              },
+              listPrice: {
+                value: 123,
+                isEditable: true,
+                isVisible: true,
+                dataType: 'text/select/textarea/inputSelect',
+                selectValues: [
+                  {
+                    id: 123,
+                    value: ':List',
+                    isSelected: true,
+                  },
+                ],
+              },
+            },
+            {
+              id: 234,
+              code: 'P122',
+              name: 'EFGH',
+              featureId: 123,
+              // categoryId: 456,
+              categoryId: null,
+              isDependent: true,
+              optionSelectionMethod: 456,
+              optionLayout: 'wizard/section/tab',
+              quantity: {
+                value: 565,
+                isEditable: true,
+                isVisible: true,
+                dataType: 'text/select/textarea/inputSelect',
+                selectValues: [
+                  {
+                    id: 123,
+                    value: ':List',
+                    isSelected: true,
+                  },
+                ],
+              },
+              listPrice: {
+                value: 654,
+                isEditable: true,
+                isVisible: true,
+                dataType: 'text/select/textarea/inputSelect',
+                selectValues: [
+                  {
+                    id: 554,
+                    value: ':List',
+                    isSelected: true,
+                  },
+                ],
+              },
+            },
+          ],
+          categories: [
+            // {
+            //   id: 123,
+            //   name: 'Hardware',
+            // },
+            // {
+            //   id: 456,
+            //   name: 'Software',
+            // },
+          ],
+          features: [
+            {
+              id: 123,
+              // categoryId: 123,
+              categoryId: null,
+              name: 'Drinks',
+              DynamicAddEnabled: true,
+            },
+            {
+              id: 456,
+              // categoryId: 456,
+              categoryId: null,
+              name: 'Mc Meal',
+              DynamicAddEnabled: true,
+            },
+          ],
+        },
+        config: {},
+      },
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
@@ -122,16 +232,27 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             toggleFilter={this.toggleSidebar}
             data={this.state.dataProd}
           />
-          <div className="margin-tabs">
+          <ReconfigureProductTab
+            productBundle={this.state.products ? this.state.products.productBundle : {}}
+            dataProd ={this.state.dataProd}
+            products={this.props.dataProd}
+            showFilter={this.props.showFilter}
+            toggleSidebar={this.toggleSidebar}
+            toggleCheckboxChange={this.toggleCheckboxChange}
+            addProductsWait={this.addProductsWait}
+            checkAll={this.state.checkAll}
+            toggleCheckAll={this.checkAll}
+            />
+          {/* <div className="margin-tabs">
             <Row>
               <Col md={12} sm={12} xs={12}>
-                <h1>Happy Meal</h1>
+                <h1>{this.state.products ? this.state.products.productBundle.name : ''}</h1>
               </Col>
             </Row>
             <Row>
               <Col md={12} sm={12} xs={12}>
                 <ul className="nav nav-tabs" role="tablist">
-                  <li role="presentation" className="active"><a href="#configGrid" aria-controls="home" role="tab" data-toggle="tab">OTHER OPTIONS</a></li>
+                  <li role="presentation" className="active"><a href="#configGrid" aria-controls="home" role="tab" data-toggle="tab">Other</a></li>
                 </ul>
               </Col>
             </Row>
@@ -155,7 +276,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
                 />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );

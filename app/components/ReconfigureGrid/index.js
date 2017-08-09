@@ -71,9 +71,9 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       },
         {
           Header: 'QUANTITY',
-          accessor: 'quantity',
+          accessor: 'quantity.value',
           id: 'quantity',
-          style: { textAlign: 'right' },
+          // style: { textAlign: 'right' },
           Cell: this.renderEditable,
         }, {
           Header: 'PRODUCT CODE',
@@ -85,11 +85,11 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         },
         {
           Header: 'PRODUCT DESCRIPTION',
-          accessor: 'type',
+          // accessor: 'type',
         },
         {
           Header: 'UNIT PRICE',
-          accessor: 'unitPrice',
+          accessor: 'listPrice.value',
           style: { textAlign: 'right' },
         },
 
@@ -105,7 +105,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
             columns={columns}
             defaultPageSize={this.props.products.length}
             pageSize={this.props.products.length}
-            style={{ position: 'absolute', width: '100%' }}
+            // style={{ position: 'absolute', width: '100%' }}
+            style={{ width: '100%' }}
             {...this.state.tableOptions}
 
           />
