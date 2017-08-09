@@ -138,7 +138,7 @@ export function* getData() {
             code: 'P121',
             name: 'Testing1',
             type: 'Product',
-            isBundled: true,
+            isBundled: false,
             isDisableReconfiguration: true,
             groupId: 123,
             markup: 123,

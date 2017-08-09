@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react';
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
 import 'react-table/react-table.css';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
+import { browserHistory } from 'react-router';
+
 class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -85,7 +87,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
   renderActionItems(cellInfo) {
     const discount = cellInfo.original.canShowDiscountScheduler ? <a><Glyphicon glyph="calendar" onClick={this.handleToggle.bind(this, cellInfo.index)} /></a> : '';
-    const reconfigure = cellInfo.original.canReconfigure ? <a><Glyphicon glyph="wrench" /></a> : '';
+    const reconfigure = cellInfo.original.isBundled ? <a><Glyphicon glyph="wrench" onClick={() => { browserHistory.push('/reconfigureproducts'); }} /></a> : '';
     const bundle = cellInfo.original.isBundled ? <a><Glyphicon glyph="info-sign" /></a> : '';
     return (
       <div className="actionItems" >
