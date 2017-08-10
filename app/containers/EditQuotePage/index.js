@@ -9,7 +9,14 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import { GroupQuote } from '../GroupQuote';
-import { cloneLine, deleteLine, deleteMultipleLines, calculateSelectedData, quickSaveQuotes, updateProps /* , loadXrmData*/ } from '../App/actions';
+import { cloneLine, 
+  deleteLine, 
+  deleteMultipleLines, 
+  calculateSelectedData,
+  quickSaveQuotes, 
+  updateProps,
+  cloneGroup,
+  deleteGroup, } from '../App/actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -133,7 +140,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         />
         <div>
           <EditQuoteHeader
-            data={this.props.data.products}
+            data={this.props.data ? this.props.data.toJS() : []}
             cloneLine={this.props.cloneLine}
             deleteLine={this.deleteCheckedLines}
             calculateTotal={this.calculateTotal}
@@ -142,28 +149,33 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         </div>
 
         {grouped ?
-          <div>
+          <div className="qoute-container">
             <GroupQuote
-              data={this.props.data ? this.props.data : []}
+              data={this.props.data ? this.props.data.toJS() : []}
+              groups={this.props.data ? this.props.data.toJS().groups : []}
+              lines={this.props.data ? this.props.data.toJS().lines : []}
               cloneLine={this.props.cloneLine}
               deleteLine={this.props.deleteLine}
               toggleAllCheckBox={this.checkAll}
               toggleQuoteCheckbox={this.toggleCheckboxChange}
               updateProps={this.updateProps}
+              cloneGroup={this.props.cloneGroup}
+              deleteGroup={this.props.deleteGroup}
             />
           </div>
         :
-          <div>
+          <div className="qoute-container">
             <EditQuoteGrid
-              data={this.props.data ? this.props.data : []}
+              data={this.props.data ? this.props.data.toJS().lines : []}
               cloneLine={this.props.cloneLine}
               deleteLine={this.props.deleteLine}
               toggleAllCheckBox={this.checkAll}
               toggleQuoteCheckbox={this.toggleCheckboxChange}
               updateProps={this.updateProps}
+              currency={this.props.data.get('currency')}
             />
             <div className="sub-footer">
-              Sub Total : {this.props.data.get('netAmount')}
+              Sub Total : {this.props.data.get('currency')}{this.props.data.get('total')}
             </div>
           </div>
         }
@@ -181,6 +193,8 @@ EditQuotePage.propTypes = {
   calculateSelected: PropTypes.func,
   quickSaveQuote: PropTypes.func,
   updateProps: PropTypes.func,
+  deleteGroup: PropTypes.func,
+  cloneGroup: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -210,6 +224,12 @@ function mapDispatchToProps(dispatch) {
     },
     updateProps: (data) => {
       dispatch(updateProps(data));
+    },
+    cloneGroup: (lines, group) => {
+      dispatch(cloneGroup(lines, group));
+    },
+    deleteGroup: (lines, group) => {
+      dispatch(deleteGroup(lines, group));
     },
   };
 }

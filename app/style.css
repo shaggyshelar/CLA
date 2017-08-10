@@ -48,17 +48,17 @@ position: relative;
     padding-left:5px;
  }
 .group {
-    margin: 10px 15px 15px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #d0d0d0;
-    border-radius: 4px;
-    height: 98%;
-    width:98%;
-    background-color: white;
-    display:block;
-    position: absolute;
-    overflow-x: hidden
+    margin: 0!important;    
+    border-width: 1px;    
+    border-style: solid;    
+    border-color: #d0d0d0;    
+    border-radius: 4px;    
+    height: 100%;    
+    width: 100%!important;    
+    background-color: white;    
+    display: block;    
+    position: relative!important;    
+    overflow-x: hidden!important;
 }
 
 .group .dropdown {
@@ -68,7 +68,7 @@ position: relative;
 .group-card {
     background-color: rgba(0,0,0,0.05);
     border-bottom: 2px solid #d0d0d0;
-    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .input-group{
@@ -78,6 +78,8 @@ position: relative;
     height: 28px;
     border-radius: 2px;
     border: 1px solid #CCCCCC;
+    text-align: right;
+    padding-right:8px;
 }
 
 .vertically {
@@ -402,18 +404,20 @@ padding-bottom: 15px;
 .table-wrap {    
     /* height: calc(100vh - 106px); */
     display: grid;
+    max-height: 61vh;    
+    overflow-y: auto;
 }
 .filter {    
     height: calc(100vh - 106px); 
 }
-
+@media (max-width:767px){       .qoute-container {           height: auto!important;        }}
 .Sidebar.right.fade.in.modal {    display: block;}
 .small-modal .modal {width:40% !important}
 
 .sub-footer {
     bottom: 0;
     border-top: rgba(0,0,0,0.08);
-    position: absolute;
+    position: relative;
     text-align: right;
     background-color: rgba(0,0,0,0.05);
     width: 100%;
@@ -427,6 +431,16 @@ padding-bottom: 15px;
     padding-top: 13px;
     padding-right: 13px;
     text-transform: none;
+}
+.qoute-container{    
+    padding: 15px;    
+    height: 100%;    
+    overflow-y: auto;
+}
+@media (max-width:767px){    
+    .group-card .col-md-4{ 
+        border-bottom:1px solid #ddd;     
+    }
 }
 
 /*styles for bootstrap tab on reconfigure lines page*/

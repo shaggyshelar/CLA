@@ -25,6 +25,8 @@ import {
   DELETE_MULTIPLE_LINES,
   UPDTATE_PROPS,
   CALCULATE_SELECTED,
+  CLONE_GROUP,
+  DELETE_GROUP,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -44,7 +46,7 @@ function appReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_DATA_SUCCESS:
       return state
-        .set('data', fromJS(action.data['quote']))
+        .set('data', fromJS(action.data.quote))
         .set('loading', false);
     case LOAD_DATA_ERROR:
       return state
@@ -74,7 +76,16 @@ function appReducer(state = initialState, action) {
     case UPDTATE_PROPS:
       return state.setIn(['data', 'lines'], fromJS(action.data));
     case CALCULATE_SELECTED:
-      return state.setIn(['data'], fromJS(action.data));
+      return state
+          .setIn(['data'], fromJS(action.data));
+    case CLONE_GROUP:
+      return state
+        .setIn(['data', 'lines'], fromJS(action.lines))
+        .setIn(['data', 'groups'], fromJS(action.groups));
+    case DELETE_GROUP:
+      return state
+        .setIn(['data', 'lines'], fromJS(action.lines))
+        .setIn(['data', 'groups'], fromJS(action.groups));
     default:
       return state;
   }

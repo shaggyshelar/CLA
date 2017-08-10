@@ -19,6 +19,8 @@ import {
   CALCULATE_SELECTED,
   QUICK_SAVE_QUOTES,
   UPDTATE_PROPS,
+  CLONE_GROUP,
+  DELETE_GROUP,
 } from './constants';
 
 export function defaultAction() {
@@ -47,6 +49,22 @@ export function cloneLine(data) {
   return {
     type: CLONE_LINE,
     data,
+  };
+}
+
+export function cloneGroup(lines, groups) {
+  return {
+    type: CLONE_GROUP,
+    lines,
+    groups,
+  };
+}
+
+export function deleteGroup(lines, groups) {
+  return {
+    type: DELETE_GROUP,
+    lines,
+    groups,
   };
 }
 
