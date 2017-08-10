@@ -53,3 +53,5 @@ export const DELETE_MULTIPLE_LINES = 'app/EditQuote/DELETE_MULTIPLE_LINES';
 export const CALCULATE_SELECTED = 'app/EditQuote/CALCULATE_SELECTED';
 export const QUICK_SAVE_QUOTES = 'app/EditQuote/QUICK_SAVE_QUOTES';
 export const UPDTATE_PROPS = 'app/EditQuote/UPDTATE_PROPS';
+export const CLONE_GROUP = 'app/EditQuote/CLONE_GROUP';
+export const DELETE_GROUP = 'app/EditQuote/DELETE_GROUP';

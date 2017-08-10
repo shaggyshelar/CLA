@@ -2,6 +2,7 @@ import ReactTable from 'react-table';
 import React, { PropTypes } from 'react';
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
 import 'react-table/react-table.css';
+import InlineEdit from 'react-edit-inline';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
 import { browserHistory } from 'react-router';
 
@@ -50,7 +51,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
 
   handleToggle(index) {
-    const selectedData = this.props.data.get('lines').toJS()[index];
+    const selectedData = this.props.data[index];
     if (selectedData !== undefined) {
       this.setState({
         isModalOpen: !this.state.isModalOpen,
@@ -63,21 +64,29 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     }
   }
   cloneLine(index) {
-    const data = this.props.data.get('lines').toJS();
+    const data = this.props.data;
     data.splice(index, 0, data[index]);
     this.props.cloneLine(data);
   }
   deleteLine(index) {
-    const data = this.props.data.get('lines').toJS();
+    const data = this.props.data;
     data.splice(index, 1);
     this.props.deleteLine(data);
   }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
-      return (<span>{cellInfo.value}</span>);
+      return (<span> {this.props.currency} {cellInfo.value}</span>);
     } else {
       return (<div>
         <Glyphicon glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
+        
+        {/* <InlineEdit
+          className="group-description"
+          activeClassName="group-desc-edit-on"
+          text="Click here to edit description "
+          paramName="message"
+          change={this.dataChanged}
+        /> */}
         <div
           style={{ backgroundColor: '#fafafa', marginLeft: '20px' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
           }}
@@ -104,88 +113,88 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   render() {
     const columns = [
       {
-          Header: '',
-          style: { textAlign: 'left' },
-          sortable: false,
-          Cell: this.renderActionItems,
-        },
-          {
-            Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleAllCheckBox} />,
-            accessor: 'id',
-            id: 'id',
-            sortable: false,
-            width: 50,
-            style: { textAlign: 'center' },
-            Cell: (props) => <input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={props.value} />,
-          },
-          {
-            Header: '#',
-            sortable: false,
-            width: 50,
-            Cell: ({ index }) => <span>{index + 1}</span>,
+        Header: '',
+        style: { textAlign: 'left' },
+        sortable: false,
+        Cell: this.renderActionItems,
+      },
+      {
+        Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleAllCheckBox} />,
+        accessor: 'id',
+        id: 'id',
+        sortable: false,
+        width: 50,
+        style: { textAlign: 'center' },
+        Cell: (props) => <input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={props.value} />,
+      },
+      {
+        Header: '#',
+        sortable: false,
+        width: 50,
+        Cell: ({ index }) => <span>{index + 1}</span>,
 
-          }, {
-            Header: 'PRODUCT CODE',
-            accessor: 'code',
-          },
+      }, {
+        Header: 'PRODUCT CODE',
+        accessor: 'code',
+      },
 
-          {
-            Header: 'PRODUCT NAME',
-            accessor: 'name',
-          },
-          {
-            Header: 'QUANTITY',
-            accessor: 'quantity.value',
-            id: 'quantity',
-            style: { textAlign: 'right' },
-            Cell: this.renderEditable,
+      {
+        Header: 'PRODUCT NAME',
+        accessor: 'name',
+      },
+      {
+        Header: 'QUANTITY',
+        accessor: 'quantity.value',
+        id: 'quantity',
+        style: { textAlign: 'right' },
+        Cell: this.renderEditable,
 
-          },
-          {
-            Header: 'LIST UNIT PRICE',
-            id: 'netUnitPrice',
-            style: { textAlign: 'right' },
-            Cell: (props) => props.isEditable ? this.renderEditable : <span>{props.value}</span>,
-          },
-          {
-            Header: 'ADDITIONAL DISC.',
-            accessor: 'additionalDiscount.value',
-            id: 'additionalDiscount',
-            style: { textAlign: 'right' },
-            Cell: (props) => props.isEditable ? this.renderEditable : <span>{props.value}</span>,
-          },
-          {
-            Header: 'MARKUP',
-            accessor: 'markup',
-            style: { textAlign: 'right' },
-            Cell: (props) => props.isEditable ? this.renderEditable : <span>{props.value}</span>,
-          },
-          {
-            Header: 'NET UNIT PRICE',
-            accessor: 'netUnitPrice',
-            style: { textAlign: 'right' },
-            Cell: (props) => props.isEditable ? this.renderEditable : <span>{props.value}</span>,
-          },
-          {
-            Header: 'NET TOTAL',
-            accessor: 'totalPrice',
-            style: { textAlign: 'right' },
-          },];
+      },
+      {
+        Header: 'LIST UNIT PRICE',
+        id: 'netUnitPrice',
+        style: { textAlign: 'right' },
+        Cell: (props) => props.isEditable ? this.renderEditable : <span> {this.props.currency } {props.value}</span>,
+      },
+      {
+        Header: 'ADDITIONAL DISC.',
+        accessor: 'additionalDiscount.value',
+        id: 'additionalDiscount',
+        style: { textAlign: 'right' },
+        Cell: (props) => props.isEditable ? this.renderEditable : <span> {this.props.currency } {props.value}</span>,
+      },
+      {
+        Header: 'MARKUP',
+        accessor: 'markup',
+        style: { textAlign: 'right' },
+        Cell: (props) => props.isEditable ? this.renderEditable : <span> {this.props.currency } {props.value}</span>,
+      },
+      {
+        Header: 'NET UNIT PRICE',
+        accessor: 'netUnitPrice',
+        style: { textAlign: 'right' },
+        Cell: (props) => props.isEditable ? this.renderEditable : <span> {this.props.currency } {props.value}</span>,
+      },
+      {
+        Header: 'NET TOTAL',
+        accessor: 'totalPrice',
+        style: { textAlign: 'right' },
+      } ];
     return (
       <div>
         <div className="table-wrap">
           <ReactTable
             className="-striped -highlight"
-            data={this.props.data.get('lines').toJS()}
+            data={this.props.data}
             columns={columns}
-            defaultPageSize={this.props.data.get('lines').toJS().length}
-            pageSize={this.props.data.get('lines').toJS().length}
-            style={{ position: 'absolute', width: '100%' }}
+            defaultPageSize={this.props.data.length}
+            pageSize={this.props.data.length}
+            style={{ width: '100%' }}
             {...this.state.tableOptions}
             SubComponent={() => (
               <div style={{ paddingLeft: '35px' }}>
                 <ReactTable
-                  data={this.props.data.get('lines').toJS()}
+                  data={this.props.data}
                   columns={columns}
                   style={{ display: 'inline-table', width: '98%' }}
                   defaultPageSize={3}
@@ -210,6 +219,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
 
 EditQuoteGrid.propTypes = {
   data: PropTypes.any,
+  currency: PropTypes.any,
   deleteLine: PropTypes.func,
   cloneLine: PropTypes.func,
   toggleAllCheckBox: PropTypes.func,
