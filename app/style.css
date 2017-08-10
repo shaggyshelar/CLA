@@ -120,7 +120,7 @@ position: relative;
 }
 .cartFont {
     color: #54698d;
-    font-size: 14px;
+    font-size: 18px;
     font-family: 'Salesforce Sans','Open Sans',Arial,sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -406,6 +406,7 @@ padding-bottom: 15px;
     display: grid;
     max-height: 61vh;    
     overflow-y: auto;
+    min-height: 150px;
 }
 .filter {    
     height: calc(100vh - 106px); 

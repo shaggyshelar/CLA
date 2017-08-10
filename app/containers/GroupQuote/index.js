@@ -11,7 +11,7 @@ import InlineEdit from 'react-edit-inline';
 import _ from 'lodash';
 import { Button, Glyphicon, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
-
+import { browserHistory } from 'react-router';
 export class GroupQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -132,7 +132,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               </Row>
             </Col>
             <Col md={4} sm={6} xs={12}>
-              <Button className="margin">Add Products</Button>
+              <Button className="margin" onClick={() => { browserHistory.push(`/ProductSelection?groupId=${group.id}`); }}>Add Products</Button>
               <ButtonGroup className="margin">
                 <Button onClick={this.cloneGroupIn}>Clone Group</Button>
                 <Button onClick={this.deleteGroupIn} disabled={this.props.groups.length === 1}>Delete Group</Button>
@@ -141,7 +141,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
           </Row>
         </div>
         <div>
-          <EditQuoteGrid
+          {/* <EditQuoteGrid
             data={groupLines}
             cloneLine={this.props.cloneLine}
             deleteLine={this.props.deleteLine}
@@ -149,11 +149,24 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             toggleQuoteCheckbox={this.toggleCheckboxChange}
             updateProps={this.updateProps}
             currency={this.props.data.currency}
+          /> */}
+          <EditQuoteGrid
+            data={groupLines}
+            cloneLine={this.props.cloneLine}
+            deleteLine={this.props.deleteLine}
+            toggleAllCheckBox={this.props.toggleAllCheckBox}
+            toggleQuoteCheckbox={this.props.toggleAllCheckBox}
+            updateProps={this.props.updateProps}
+            currency={this.props.data.currency}
           />
         </div>
-        <div className="sub-footer">
-          Sub Total : {this.props.data.currency} {group.netTotal}
-        </div>
+        {groupLines.length > 0 ?
+          <div className="sub-footer">
+                Sub Total : {this.props.data.currency} {group.netTotal}
+          </div>
+              :
+          <div className="sub-footer"></div>
+            }
       </div>
     );
   }
@@ -167,6 +180,9 @@ GroupQuote.propTypes = {
   data: PropTypes.any,
   groups: PropTypes.any,
   lines: PropTypes.any,
+  toggleAllCheckBox: PropTypes.func,
+  updateProps: PropTypes.func,
+  addProducts: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

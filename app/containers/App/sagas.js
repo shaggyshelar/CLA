@@ -21,7 +21,7 @@ export function* getData() {
       quote: {
         id: '1',
         name: 'sample',
-        netAmount: 123,
+        netAmount: 15000,
         customerAmount: 123,
         paymentTerms: 123,
         priceBookId: '',

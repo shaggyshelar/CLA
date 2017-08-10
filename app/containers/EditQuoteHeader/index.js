@@ -33,7 +33,7 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
               { name: 'description', content: 'Description of TableHeader' },
             ]}
           />
-          <EditQuoteHeaderCard />
+          <EditQuoteHeaderCard currency={this.props.data.currency} name={this.props.data.name} total={this.props.data.netAmount}/>
         </Col>
         <Col xs={12} md={9} style={{ textAlign: 'right' }}>
           {this.props.grouped ?
@@ -44,7 +44,11 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
           {(!this.props.grouped && this.props.data.groups.length === 0) ?
             <Button className="margin" onClick={this.props.group}>Add Group</Button>
             :
-            <Button className="margin" onClick={this.props.ungroup}>Ungroup</Button>
+            <ButtonGroup className="margin">
+              <Button onClick={this.props.ungroup}>Ungroup</Button>
+              <Button onClick={this.props.group}>Add Group</Button>
+            </ButtonGroup>
+            
           }
           <ButtonGroup className="margin">
             <Button onClick={this.props.deleteLine} bsStyle="danger">Delete Lines</Button>

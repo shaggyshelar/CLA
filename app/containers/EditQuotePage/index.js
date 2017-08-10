@@ -65,17 +65,31 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   group() {
     const data = this.props.data.toJS();
     const randomID = parseInt(Math.random() * 100000, 0);
-    data.lines.forEach((i) => { i.groupId = randomID; } );
-    data.groups.push({
-      id: randomID,
-      name: 'Group1',
-      isOptional: false,
-      description: '',
-      additionaldiscount: '',
-      subscriptionTerm: '',
-      netTotal: this.props.data.toJS().total,
-    });
-    data.linesGrouped = true;
+    if (data.linesGrouped) {
+      const name = `Group ${data.groups.length}`;
+      data.groups.push({
+        id: randomID,
+        name,
+        isOptional: false,
+        description: '',
+        additionaldiscount: '',
+        subscriptionTerm: '',
+        netTotal: this.props.data.toJS().netAmount,
+      });
+    } else {
+      data.lines.forEach((i) => { i.groupId = randomID; } );
+      data.groups.push({
+        id: randomID,
+        name: 'Group1',
+        isOptional: false,
+        description: '',
+        additionaldiscount: '',
+        subscriptionTerm: '',
+        netTotal: this.props.data.toJS().netAmount,
+      });
+      data.linesGrouped = true;
+    }
+    
     this.props.group(data);
   }
   checkAll(e) {
@@ -206,9 +220,15 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateProps={this.updateProps}
               currency={this.props.data.get('currency')}
             />
-            <div className="sub-footer">
-              Sub Total : {this.props.data.get('currency')}{this.props.data.get('total')}
-            </div>
+            {this.props.data.toJS().lines.length > 0 ? 
+              <div className="sub-footer">
+                Sub Total : {this.props.data.get('currency')}{this.props.data.get('netAmount')}
+              </div>
+              :
+              <div className="sub-footer">
+                
+              </div>
+            }
           </div>
         }
       </div>
