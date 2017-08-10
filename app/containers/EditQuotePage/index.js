@@ -9,14 +9,17 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import { GroupQuote } from '../GroupQuote';
-import { cloneLine, 
-  deleteLine, 
-  deleteMultipleLines, 
+import { cloneLine,
+  deleteLine,
+  deleteMultipleLines,
   calculateSelectedData,
-  quickSaveQuotes, 
+  quickSaveQuotes,
   updateProps,
   cloneGroup,
-  deleteGroup, } from '../App/actions';
+  deleteGroup,
+  ungroup,
+  group,
+ } from '../App/actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -33,6 +36,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.calculateTotal = this.calculateTotal.bind(this);
     this.quickSaveQuotes = this.quickSaveQuotes.bind(this);
     this.updateProps = this.updateProps.bind(this);
+    this.ungroup = this.ungroup.bind(this);
+    this.group = this.group.bind(this);
   }
   componentWillMount() {
     // this.props.getAllData();
@@ -50,6 +55,29 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     // }
   }
 
+  ungroup() {
+    const data = this.props.data.toJS();
+    data.lines.forEach((i) => { i.groupId = ''; } );
+    data.groups = [];
+    data.linesGrouped = false;
+    this.props.ungroup(data);
+  }
+  group() {
+    const data = this.props.data.toJS();
+    const randomID = parseInt(Math.random() * 100000, 0);
+    data.lines.forEach((i) => { i.groupId = randomID; } );
+    data.groups.push({
+      id: randomID,
+      name: 'Group1',
+      isOptional: false,
+      description: '',
+      additionaldiscount: '',
+      subscriptionTerm: '',
+      netTotal: this.props.data.toJS().total,
+    });
+    data.linesGrouped = true;
+    this.props.group(data);
+  }
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i++) {
@@ -145,10 +173,14 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             deleteLine={this.deleteCheckedLines}
             calculateTotal={this.calculateTotal}
             quickSave={this.quickSaveQuotes}
+            grouped={grouped}
+            ungroup={this.ungroup}
+            group={this.group}
           />
         </div>
 
         {grouped ?
+
           <div className="qoute-container">
             <GroupQuote
               data={this.props.data ? this.props.data.toJS() : []}
@@ -195,6 +227,8 @@ EditQuotePage.propTypes = {
   updateProps: PropTypes.func,
   deleteGroup: PropTypes.func,
   cloneGroup: PropTypes.func,
+  ungroup: PropTypes.func,
+  group: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -225,11 +259,17 @@ function mapDispatchToProps(dispatch) {
     updateProps: (data) => {
       dispatch(updateProps(data));
     },
-    cloneGroup: (lines, group) => {
-      dispatch(cloneGroup(lines, group));
+    cloneGroup: (lines, groups) => {
+      dispatch(cloneGroup(lines, groups));
     },
-    deleteGroup: (lines, group) => {
-      dispatch(deleteGroup(lines, group));
+    deleteGroup: (lines, groups) => {
+      dispatch(deleteGroup(lines, groups));
+    },
+    ungroup: (data) => {
+      dispatch(ungroup(data));
+    },
+    group: (data) => {
+      dispatch(group(data));
     },
   };
 }

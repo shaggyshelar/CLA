@@ -11,6 +11,7 @@
  */
 
 import { fromJS } from 'immutable';
+import _ from 'lodash';
 // The initial state of the App
 import {
   SAVE_ACTION,
@@ -27,6 +28,8 @@ import {
   CALCULATE_SELECTED,
   CLONE_GROUP,
   DELETE_GROUP,
+  UNGROUP,
+  GROUP,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -53,14 +56,20 @@ function appReducer(state = initialState, action) {
         .set('error', action.error)
         .set('loading', false);
     case CLONE_LINE:
-      data = state.getIn(['data', 'lines']);
-      return state.setIn(['data', 'lines'], fromJS(action.data));
+      data = state.getIn(['data', 'lines']).toJS();
+      const index = _.findIndex(data, { id: action.data });
+      const cloneData = Object.assign({}, data[index]);
+      cloneData.id = parseInt(Math.random() * 100000, 0);
+      data.splice(index, 0, cloneData);
+      return state.setIn(['data', 'lines'], fromJS(data));
     case ADD_PRODUCTS:
       data = state.getIn(['data', 'lines']);
       return state.setIn(['data', 'lines'], fromJS(data.concat(action.data)));
     case DELETE_LINE:
-      data = state.getIn(['data', 'lines']);
-      return state.setIn(['data', 'lines'], fromJS(action.data));
+      data = state.getIn(['data', 'lines']).toJS();
+      _.remove(data, (n) => n.id === action.data);
+      return state.setIn(['data', 'lines'], fromJS(data));
+
     case DELETE_MULTIPLE_LINES:
       data = state.getIn(['data', 'lines']);
       return state.setIn(['data', 'lines'], fromJS(action.data));
@@ -86,6 +95,12 @@ function appReducer(state = initialState, action) {
       return state
         .setIn(['data', 'lines'], fromJS(action.lines))
         .setIn(['data', 'groups'], fromJS(action.groups));
+    case UNGROUP:
+      return state
+        .setIn(['data'], fromJS(action.data));
+    case GROUP:
+      return state
+        .setIn(['data'], fromJS(action.data));
     default:
       return state;
   }

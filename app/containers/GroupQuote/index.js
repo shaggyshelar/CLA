@@ -11,7 +11,6 @@ import InlineEdit from 'react-edit-inline';
 import _ from 'lodash';
 import { Button, Glyphicon, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
-import makeSelectGroupQuote from './selectors';
 
 export class GroupQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -26,10 +25,10 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.cloneGroupIn = this.cloneGroupIn.bind(this);
     this.deleteGroupIn = this.deleteGroupIn.bind(this);
   }
-  componentWillMount() {  
+  componentWillMount() {
     if (this.state.selectedGroup === null) {
       this.setState({ selectedGroup: this.props.groups[0].id });
-    } 
+    }
   }
 
   changeGroup(e) {
@@ -45,12 +44,13 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     const lines = this.props.lines;
     const groups = this.props.groups;
     group.id = randomID;
-    groupLines.forEach((i, index) => {
+    groupLines.forEach((i) => {
       const groupLine = Object.assign({}, i);
       groupLine.groupId = randomID;
+      groupLine.id = parseInt(Math.random() * 100000, 0);
       lines.push(groupLine);
     });
-    
+
     groups.push(group);
     this.props.cloneGroup(lines, groups);
   }
@@ -160,7 +160,6 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
 }
 
 GroupQuote.propTypes = {
-  dispatch: PropTypes.func,
   cloneLine: PropTypes.func,
   deleteLine: PropTypes.func,
   cloneGroup: PropTypes.func,
