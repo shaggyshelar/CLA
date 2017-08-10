@@ -81,15 +81,15 @@ export class FavouriteLookup extends React.Component { // eslint-disable-line re
         accessor: (d) => d['FAVOURITE NAME'],
       },
 
-      {
-        Header: 'DESCRIPTION',
-        accessor: 'DESCRIPTION',
+        {
+          Header: 'DESCRIPTION',
+          accessor: 'DESCRIPTION',
 
-      },
-      {
-        Header: 'OWNER NAME',
-        accessor: 'OWNER NAME',
-      },
+        },
+        {
+          Header: 'OWNER NAME',
+          accessor: 'OWNER NAME',
+        },
       ],
     }];
     return (
@@ -136,7 +136,7 @@ export class FavouriteLookup extends React.Component { // eslint-disable-line re
           />
         </div>
         <Modal
-        container ={this}
+          container={this}
           show={this.state.isModalOpen} onHide={this.handleToggle}
           style={{ display: 'inline-flex' }}
           bsClass="small-modal modal"
@@ -152,7 +152,7 @@ export class FavouriteLookup extends React.Component { // eslint-disable-line re
                 bsSize="small"
                 options={options}
                 placeholder="Enter a name or group"
-                clearButton={true}
+                clearButton
                 maxResults={5}
 
               />

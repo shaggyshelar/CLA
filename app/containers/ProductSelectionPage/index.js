@@ -95,7 +95,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-    for (let i = 0; i < d.length; i++) {
+    for (let i = 0; i < d.length; i += 1) {
       if (!d[i].checked && e.target.checked) {
         d[i].click();
       } else if (d[i].checked && !e.target.checked) {
@@ -126,28 +126,27 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
   addProductsWait() {
     let data = [];
-    data = _.filter(this.state.dataProd, (o) =>
-      this.state.selectedProducts.includes(o._id)
-    );
-    this.setState({ selectedProducts: [] });
-    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-    const e = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
-    for (let i = 0; i < d.length; i++) {
-      d[i].checked = false;
-      e.checked = false;
-    }
-    this.props.addProductsToQuote(data);
-    // browserHistory.push('/ProductSelection');
-  }
-  addProducts() {
-    let data = [];
-    const products = this.props.products;
     data = _.filter(this.props.products, (o) =>
       this.state.selectedProducts.includes(o.id)
     );
     if (this.props.location.query.groupId) {
       data.forEach((i) => {
-        i.groupId = parseInt(this.props.location.query.groupId,0);
+        i.groupId = parseInt(this.props.location.query.groupId, 0);
+        i.id = parseInt(Math.random() * 100000, 0).toString();
+      });
+      this.props.addProductsToQuote(data);
+    } else {
+      this.props.addProductsToQuote(data);
+    }
+  }
+  addProducts() {
+    let data = [];
+    data = _.filter(this.props.products, (o) =>
+      this.state.selectedProducts.includes(o.id)
+    );
+    if (this.props.location.query.groupId) {
+      data.forEach((i) => {
+        i.groupId = parseInt(this.props.location.query.groupId, 0);
         i.id = parseInt(Math.random() * 100000, 0).toString();
       });
       this.props.addProductsToQuote(data);
@@ -207,6 +206,8 @@ ProductSelectionPage.propTypes = {
   data: PropTypes.any,
   products: PropTypes.any,
   getProductsData: PropTypes.func,
+  location: PropTypes.any,
+  addProductsToQuote: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

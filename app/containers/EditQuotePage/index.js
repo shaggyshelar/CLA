@@ -57,7 +57,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   ungroup() {
     const data = this.props.data.toJS();
-    data.lines.forEach((i) => { i.groupId = ''; } );
+    data.lines.forEach((i) => { i.groupId = ''; });
     data.groups = [];
     data.linesGrouped = false;
     this.props.ungroup(data);
@@ -77,7 +77,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         netTotal: this.props.data.toJS().netAmount,
       });
     } else {
-      data.lines.forEach((i) => { i.groupId = randomID; } );
+      data.lines.forEach((i) => { i.groupId = randomID; });
       data.groups.push({
         id: randomID,
         name: 'Group1',
@@ -89,12 +89,12 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       });
       data.linesGrouped = true;
     }
-    
+
     this.props.group(data);
   }
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-    for (let i = 0; i < d.length; i++) {
+    for (let i = 0; i < d.length; i += 1) {
       if (!d[i].checked && e.target.checked) {
         d[i].click();
       } else if (d[i].checked && !e.target.checked) {
@@ -134,7 +134,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.props.deleteSelectedLines(dataObj.lines);
 
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-    for (let i = 0; i < d.length; i++) {
+    for (let i = 0; i < d.length; i += 1) {
       if (d[i].checked) {
         d[i].click();
       }
@@ -220,14 +220,12 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateProps={this.updateProps}
               currency={this.props.data.get('currency')}
             />
-            {this.props.data.toJS().lines.length > 0 ? 
+            {this.props.data.toJS().lines.length > 0 ?
               <div className="sub-footer">
                 Sub Total : {this.props.data.get('currency')}{this.props.data.get('netAmount')}
               </div>
               :
-              <div className="sub-footer">
-                
-              </div>
+              <div className="sub-footer"></div>
             }
           </div>
         }
