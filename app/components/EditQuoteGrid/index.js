@@ -63,15 +63,11 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       });
     }
   }
-  cloneLine(index) {
-    const data = this.props.data;
-    data.splice(index, 0, data[index]);
-    this.props.cloneLine(data);
+  cloneLine(id) {
+    this.props.cloneLine(id);
   }
-  deleteLine(index) {
-    const data = this.props.data;
-    data.splice(index, 1);
-    this.props.deleteLine(data);
+  deleteLine(id) {
+    this.props.deleteLine(id);
   }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
@@ -104,8 +100,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         {discount}
         {reconfigure}
         {bundle}
-        <a><Glyphicon glyph="duplicate" onClick={this.cloneLine.bind(this, cellInfo.index)} /></a>
-        <a><Glyphicon glyph="trash" onClick={this.deleteLine.bind(this, cellInfo.index)} /></a>
+        <a><Glyphicon glyph="duplicate" onClick={this.cloneLine.bind(this, cellInfo.original.id)} /></a>
+        <a><Glyphicon glyph="trash" onClick={this.deleteLine.bind(this, cellInfo.original.id)} /></a>
       </div>
     );
   }

@@ -55,3 +55,5 @@ export const QUICK_SAVE_QUOTES = 'app/EditQuote/QUICK_SAVE_QUOTES';
 export const UPDTATE_PROPS = 'app/EditQuote/UPDTATE_PROPS';
 export const CLONE_GROUP = 'app/EditQuote/CLONE_GROUP';
 export const DELETE_GROUP = 'app/EditQuote/DELETE_GROUP';
+export const UNGROUP = 'app/EditQuote/UNGROUP';
+export const GROUP = 'app/EditQuote/GROUP';

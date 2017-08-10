@@ -122,7 +122,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     }
     this.setState({
       selectedProducts: data,
-    })
+    });
   }
   addProductsWait() {
     let data = [];
@@ -142,15 +142,19 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   addProducts() {
     let data = [];
     const products = this.props.products;
-    console.log(this.state.selectedProducts)
-    console.log(products)
     data = _.filter(this.props.products, (o) =>
-    
-      //this.state.selectedProducts[array.findIndex(x => x.id == o.id)]
       this.state.selectedProducts.includes(o.id)
     );
-    console.log(data)
-    this.props.addProductsToQuote(data);
+    if (this.props.location.query.groupId) {
+      data.forEach((i) => {
+        i.groupId = parseInt(this.props.location.query.groupId,0);
+        i.id = parseInt(Math.random() * 100000, 0).toString();
+      });
+      this.props.addProductsToQuote(data);
+    } else {
+      this.props.addProductsToQuote(data);
+    }
+
     browserHistory.push('/EditQuote');
   }
 
@@ -201,8 +205,8 @@ ProductSelectionPage.propTypes = {
   toggleFilter: PropTypes.func,
   showFilter: PropTypes.any,
   data: PropTypes.any,
-  products:PropTypes.any,
-  getProductsData:PropTypes.func,
+  products: PropTypes.any,
+  getProductsData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

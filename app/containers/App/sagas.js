@@ -21,7 +21,7 @@ export function* getData() {
       quote: {
         id: '1',
         name: 'sample',
-        netAmount: 123,
+        netAmount: 15000,
         customerAmount: 123,
         paymentTerms: 123,
         priceBookId: '',
@@ -32,7 +32,7 @@ export function* getData() {
         type: 'Quote/Renewal/Amendement',
         lines: [
           {
-            id: '123',
+            id: '111',
             code: 'Dom154',
             name: 'Porche',
             type: 'Product/Bundle',
@@ -238,7 +238,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '222',
             code: 'Car3422',
             name: 'Lamborghini',
             type: 'Product/Bundle',
@@ -341,7 +341,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '333',
             code: 'Car348',
             name: 'Pagani',
             type: 'Product/Bundle',
@@ -444,7 +444,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '444',
             code: 'Bike123',
             name: 'Ducatti',
             type: 'Product/Bundle',
@@ -547,7 +547,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '555',
             code: 'Bike489',
             name: 'Harley Davidson',
             type: 'Product/Bundle',
@@ -650,7 +650,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '666',
             code: 'Bike 121',
             name: 'BMW',
             type: 'Product/Bundle',
@@ -753,7 +753,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '777',
             code: 'P121',
             name: 'Classic',
             type: 'Product/Bundle',
@@ -856,7 +856,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '888',
             code: 'Mob',
             name: 'Mobile',
             type: 'Product/Bundle',
@@ -959,7 +959,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '999',
             code: 'M123',
             name: 'Mobile Smart',
             type: 'Product/Bundle',
@@ -1062,7 +1062,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '112',
             code: 'T132',
             name: 'Android',
             type: 'Product/Bundle',
@@ -1165,7 +1165,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '113',
             code: 'Light254',
             name: 'LED',
             type: 'Product/Bundle',
@@ -1268,7 +1268,7 @@ export function* getData() {
             },
           },
           {
-            id: '123',
+            id: '115',
             code: 'Cam325',
             name: 'Camera',
             type: 'Product/Bundle',

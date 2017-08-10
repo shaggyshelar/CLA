@@ -21,6 +21,8 @@ import {
   UPDTATE_PROPS,
   CLONE_GROUP,
   DELETE_GROUP,
+  UNGROUP,
+  GROUP,
 } from './constants';
 
 export function defaultAction() {
@@ -121,6 +123,20 @@ export function xrmDataLoaded(data) {
   return {
     type: LOAD_XRM_DATA_SUCCESS,
     xrmData: data,
+  };
+}
+
+export function ungroup(data) {
+  return {
+    type: UNGROUP,
+    data,
+  };
+}
+
+export function group(data) {
+  return {
+    type: GROUP,
+    data,
   };
 }
 

@@ -8,12 +8,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import screenfull from 'screenfull';
 import Helmet from 'react-helmet';
-import { createStructuredSelector } from 'reselect';
-// import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
-import AddProductsDropdown from '../../components/AddProductsDropdown';
-import AddGroupDropdown from '../../components/AddGroupDropdown';
-import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
+import { browserHistory } from 'react-router';
+
 import { Button, Glyphicon, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
+import { createStructuredSelector } from 'reselect';
+import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
 
 export class EditQuoteHeader extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -34,21 +33,30 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
               { name: 'description', content: 'Description of TableHeader' },
             ]}
           />
-          <EditQuoteHeaderCard />
+          <EditQuoteHeaderCard currency={this.props.data.currency} name={this.props.data.name} total={this.props.data.netAmount}/>
         </Col>
         <Col xs={12} md={9} style={{ textAlign: 'right' }}>
-          <AddProductsDropdown />
-          <AddGroupDropdown />
-
+          {this.props.grouped ?
+            ''
+            :
+            <Button className="margin" onClick={() => { browserHistory.push('/ProductSelection'); }}>Add Products</Button>
+          }
+          {(!this.props.grouped && this.props.data.groups.length === 0) ?
+            <Button className="margin" onClick={this.props.group}>Add Group</Button>
+            :
+            <ButtonGroup className="margin">
+              <Button onClick={this.props.ungroup}>Ungroup</Button>
+              <Button onClick={this.props.group}>Add Group</Button>
+            </ButtonGroup>
+            
+          }
           <ButtonGroup className="margin">
             <Button onClick={this.props.deleteLine} bsStyle="danger">Delete Lines</Button>
             <Button >Cancel</Button>
-
           </ButtonGroup>
           <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button>
           <ButtonGroup className="margin">
             <Button onClick={this.props.calculateTotal}>Calculate</Button>
-
             <Button bsStyle="primary" onClick={this.props.quickSave}>Save</Button>
           </ButtonGroup>
         </Col>
@@ -59,9 +67,12 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
 
 EditQuoteHeader.propTypes = {
   data: React.PropTypes.any,
+  grouped: React.PropTypes.any,
   calculateTotal: React.PropTypes.func,
   deleteLine: React.PropTypes.func,
   quickSave: React.PropTypes.func,
+  group: React.PropTypes.func,
+  ungroup: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
