@@ -1,15 +1,10 @@
-/**
-*
-* ReconfigureGrid
-*
-*/
 import ReactTable from 'react-table';
 import React from 'react';
 import 'react-table/react-table.css';
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
 
-class ReconfigureGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
+class AddConfigureProductGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +22,6 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         pivot: true,
         expander: true,
         freezeWhenExpanded: true,
-
       },
       isVisible: false,
     };
@@ -45,6 +39,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       },
     });
   }
+
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (<span>{cellInfo.value}</span>);
@@ -60,18 +55,12 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   }
 
   renderInput(props) {
-    let input;
-    if (this.props.feature.DynamicAddEnabled) {
-      input = (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />);
-    } else {
-      input = (<a className="disabledIcon"><Glyphicon glyph="trash" /></a>);
-    }
-    return input;
+    return (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />);
   }
-
   render() {
     const columns = [{
       columns: [{
+        Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
         accessor: 'id',
         id: 'id',
         sortable: false,
@@ -80,11 +69,6 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         Cell: (props) => this.renderInput(props),
       },
         {
-          Header: 'QUANTITY',
-          accessor: 'quantity.value',
-          id: 'quantity',
-          Cell: this.renderEditable,
-        }, {
           Header: 'PRODUCT CODE',
           accessor: 'code',
         },
@@ -93,16 +77,18 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           accessor: 'name',
         },
         {
+          Header: 'PRODUCT FAMILY',
+          // accessor: 'type',
+        },
+        {
           Header: 'PRODUCT DESCRIPTION',
           // accessor: 'type',
         },
         {
-          Header: 'UNIT PRICE',
+          Header: 'LIST PRICE',
           accessor: 'listPrice.value',
           style: { textAlign: 'right' },
         },
-
-
       ],
     }];
     return (
@@ -117,7 +103,6 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
             // style={{ position: 'absolute', width: '100%' }}
             style={{ width: '100%' }}
             {...this.state.tableOptions}
-
           />
           <div className="filter">
             <Sidebar container={this} title="Product Filter" side="left" isVisible={this.props.showFilter} onHide={this.props.toggleFilter}>
@@ -134,12 +119,12 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   }
 }
 
-ReconfigureGrid.propTypes = {
+AddConfigureProductGrid.propTypes = {
   products: React.PropTypes.any,
+  toggleCheckAll: React.PropTypes.func,
   showFilter: React.PropTypes.func,
   toggleCheckboxChange: React.PropTypes.func,
   toggleFilter: React.PropTypes.func,
-  feature: React.PropTypes.any,
 };
 
-export default ReconfigureGrid;
+export default AddConfigureProductGrid;
