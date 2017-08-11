@@ -528,3 +528,12 @@ padding-bottom: 15px;
 #configureProductsList .group {
     position: inherit;
 }
+
+#configureGridId .ReactTable .rt-noData {
+    top: 185%;
+}
+
+.disabledIcon { 
+  cursor: default;
+  color: grey; 
+}

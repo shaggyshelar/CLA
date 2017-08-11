@@ -72,8 +72,8 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
               code: 'P121',
               name: 'ABCD',
               featureId: 123,
-              // categoryId: 123,
-              categoryId: null,
+              categoryId: 123,
+              // categoryId: null,
               isDependent: true,
               optionSelectionMethod: 123,
               optionLayout: 'wizard/section/tab',
@@ -108,9 +108,9 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
               id: 234,
               code: 'P122',
               name: 'EFGH',
-              featureId: 123,
-              // categoryId: 456,
-              categoryId: null,
+              featureId: 456,
+              categoryId: 456,
+              // categoryId: null,
               isDependent: true,
               optionSelectionMethod: 456,
               optionLayout: 'wizard/section/tab',
@@ -143,29 +143,29 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             },
           ],
           categories: [
-            // {
-            //   id: 123,
-            //   name: 'Hardware',
-            // },
-            // {
-            //   id: 456,
-            //   name: 'Software',
-            // },
+            {
+              id: 123,
+              name: 'Hardware',
+            },
+            {
+              id: 456,
+              name: 'Software',
+            },
           ],
           features: [
             {
               id: 123,
-              // categoryId: 123,
-              categoryId: null,
+              categoryId: 123,
+              // categoryId: null,
               name: 'Drinks',
               DynamicAddEnabled: true,
             },
             {
               id: 456,
-              // categoryId: 456,
-              categoryId: null,
+              categoryId: 456,
+              // categoryId: null,
               name: 'Mc Meal',
-              DynamicAddEnabled: true,
+              DynamicAddEnabled: false,
             },
           ],
         },
@@ -234,7 +234,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
           />
           <ReconfigureProductTab
             productBundle={this.state.products ? this.state.products.productBundle : {}}
-            dataProd ={this.state.dataProd}
+            dataProd={this.state.dataProd}
             products={this.props.dataProd}
             showFilter={this.props.showFilter}
             toggleSidebar={this.toggleSidebar}
@@ -242,41 +242,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             addProductsWait={this.addProductsWait}
             checkAll={this.state.checkAll}
             toggleCheckAll={this.checkAll}
-            />
-          {/* <div className="margin-tabs">
-            <Row>
-              <Col md={12} sm={12} xs={12}>
-                <h1>{this.state.products ? this.state.products.productBundle.name : ''}</h1>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={12} sm={12} xs={12}>
-                <ul className="nav nav-tabs" role="tablist">
-                  <li role="presentation" className="active"><a href="#configGrid" aria-controls="home" role="tab" data-toggle="tab">Other</a></li>
-                </ul>
-              </Col>
-            </Row>
-          </div>
-          <div className="group">
-
-            <div className="group-card">
-              <span className="group-header">Other Options</span>
-            </div>
-            <div className="tab-content">
-              <div role="tabpanel" className="tab-pane active" id="configGrid">
-                <ReconfigureGrid
-                  products={this.state.dataProd}
-                  showFilter={this.props.showFilter}
-                  toggleFilter={this.toggleSidebar}
-                  toggleCheckboxChange={this.toggleCheckboxChange}
-                  data={this.state.dataProd}
-                  addProductsWait={this.addProductsWait}
-                  checkAll={this.state.checkAll}
-                  toggleCheckAll={this.checkAll}
-                />
-              </div>
-            </div>
-          </div> */}
+          />
         </div>
       </div>
     );
@@ -286,6 +252,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
 ReConfigureProducts.propTypes = {
   toggleFilter: PropTypes.func,
   showFilter: PropTypes.any,
+  dataProd: PropTypes.any,
   // data: PropTypes.any,
   // products: PropTypes.any,
   // getProductsData: PropTypes.func,
