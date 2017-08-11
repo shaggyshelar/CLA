@@ -14,7 +14,7 @@ module.exports = require('./webpack.base.babel')({
   output: {
     filename: 'p2qes_[name].js',
     chunkFilename: 'p2qes_[name].chunk.js',
-    publicPath: '/WebResources/' 
+    publicPath: '/WebResources/',
   },
 
   plugins: [

@@ -5,13 +5,10 @@
  */
 // import React, { PropTypes } from 'react';
 import React from 'react';
-import { connect } from 'react-redux';
 import screenfull from 'screenfull';
 import Helmet from 'react-helmet';
 import { browserHistory } from 'react-router';
-
 import { Button, Glyphicon, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
-import { createStructuredSelector } from 'reselect';
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
 
 export class EditQuoteHeader extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -33,7 +30,7 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
               { name: 'description', content: 'Description of TableHeader' },
             ]}
           />
-          <EditQuoteHeaderCard currency={this.props.data.currency} name={this.props.data.name} total={this.props.data.netAmount}/>
+          <EditQuoteHeaderCard currency={this.props.data.currency} name={this.props.data.name} total={this.props.data.netAmount} />
         </Col>
         <Col xs={12} md={9} style={{ textAlign: 'right' }}>
           {this.props.grouped ?
@@ -48,7 +45,7 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
               <Button onClick={this.props.ungroup}>Ungroup</Button>
               <Button onClick={this.props.group}>Add Group</Button>
             </ButtonGroup>
-            
+
           }
           <ButtonGroup className="margin">
             <Button onClick={this.props.deleteLine} bsStyle="danger">Delete Lines</Button>
@@ -75,14 +72,5 @@ EditQuoteHeader.propTypes = {
   ungroup: React.PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector({
 
-});
-
-function mapDispatchToProps(dispatch) {
-  return {
-    // dispatch,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditQuoteHeader);
+export default (EditQuoteHeader);
