@@ -1,3 +1,8 @@
+/**
+*
+* SegmentedSegmentedEditQuoteGrid
+*
+*/
 import ReactTable from 'react-table';
 import React, { PropTypes } from 'react';
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
@@ -6,7 +11,7 @@ import InlineEdit from 'react-edit-inline';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
 import { browserHistory } from 'react-router';
 
-class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
+class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.renderEditable = this.renderEditable.bind(this);
@@ -39,8 +44,6 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.deleteLine = this.deleteLine.bind(this);
     this.renderChecbox = this.renderChecbox.bind(this);
   }
-
-  
   setTableOption(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -84,7 +87,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   renderChecbox(cellInfo) {
     if (!cellInfo.original.isProductOption) {
       return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original[cellInfo.column.id].id} />);
-    } 
+    }
   }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
@@ -223,7 +226,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
 }
 
-EditQuoteGrid.propTypes = {
+SegmentedEditQuoteGrid.propTypes = {
   data: PropTypes.any,
   currency: PropTypes.any,
   deleteLine: PropTypes.func,
@@ -231,6 +234,3 @@ EditQuoteGrid.propTypes = {
   toggleAllCheckBox: PropTypes.func,
   toggleQuoteCheckbox: PropTypes.func,
 };
-
-
-export default EditQuoteGrid;

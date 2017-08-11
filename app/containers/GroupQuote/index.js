@@ -11,6 +11,7 @@ import InlineEdit from 'react-edit-inline';
 import _ from 'lodash';
 import { Button, Glyphicon, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
+import { SegmentedQuote } from '../SegmentedQuote';
 import { browserHistory } from 'react-router';
 export class GroupQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -141,16 +142,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
           </Row>
         </div>
         <div>
-          {/* <EditQuoteGrid
-            data={groupLines}
-            cloneLine={this.props.cloneLine}
-            deleteLine={this.props.deleteLine}
-            toggleAllCheckBox={this.checkAll}
-            toggleQuoteCheckbox={this.toggleCheckboxChange}
-            updateProps={this.updateProps}
-            currency={this.props.data.currency}
-          /> */}
-          <EditQuoteGrid
+          <SegmentedQuote
             data={groupLines}
             cloneLine={this.props.cloneLine}
             deleteLine={this.props.deleteLine}
@@ -159,6 +151,15 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             updateProps={this.props.updateProps}
             currency={this.props.data.currency}
           />
+          {/* <EditQuoteGrid
+            data={groupLines}
+            cloneLine={this.props.cloneLine}
+            deleteLine={this.props.deleteLine}
+            toggleAllCheckBox={this.props.toggleAllCheckBox}
+            toggleQuoteCheckbox={this.props.toggleAllCheckBox}
+            updateProps={this.props.updateProps}
+            currency={this.props.data.currency}
+          /> */}
         </div>
         {groupLines.length > 0 ?
           <div className="sub-footer">
