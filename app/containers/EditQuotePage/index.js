@@ -192,8 +192,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             group={this.group}
           />
         </div>
-
-        {grouped ?
+         {grouped ?
 
           <div className="qoute-container">
             <GroupQuote
@@ -228,7 +227,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               <div className="sub-footer"></div>
             }
           </div>
-        }
+        } 
       </div>
     );
   }

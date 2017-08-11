@@ -1,3 +1,38 @@
+.disabled-link {
+  pointer-events: none;
+  cursor: pointer;
+  opacity: .7;
+}
+.segmented {
+}    
+#inner-tab-example > ul{
+    background: #EDEDED;
+    border-radius: 6px;
+}
+.nav-tabs {
+    border: 2px solid #ddd;
+    border-radius: 6px;
+}
+#inner-tab-example > ul > li{
+    border-right: 2px solid white;
+    border-radius: 6px;
+}
+#noanim-tab-example > ul > li:hover {
+    background: #EDEDED;
+    border-radius: 6px;
+}
+#noanim-tab-example > .nav > li.active {
+    background: #EDEDED;
+    border-radius: 6px;
+}
+#noanim-tab-example > .nav  > li {
+    background:white;
+    width:50%;
+    border-radius: 6px;
+}
+.link {
+  cursor: pointer;
+}
 .inline-edit{ 
    display: none;
    color: #54698d;
