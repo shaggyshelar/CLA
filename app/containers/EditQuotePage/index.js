@@ -9,6 +9,7 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import { GroupQuote } from '../GroupQuote';
+import { SegmentedQuote } from '../SegmentedQuote';
 import { cloneLine,
   deleteLine,
   deleteMultipleLines,
@@ -28,6 +29,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     super(props);
     this.state = {
       selectedQuotes: [],
+      segmented: false,
     };
 
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
@@ -38,6 +40,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.updateProps = this.updateProps.bind(this);
     this.ungroup = this.ungroup.bind(this);
     this.group = this.group.bind(this);
+    this.segment = this.segment.bind(this);
   }
   componentWillMount() {
     // this.props.getAllData();
@@ -61,6 +64,11 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     data.groups = [];
     data.linesGrouped = false;
     this.props.ungroup(data);
+  }
+
+  segment() {
+    console.log("segmented clicked")
+    this.setState({ segmented: !this.state.segmented });
   }
   group() {
     const data = this.props.data.toJS();
@@ -206,10 +214,24 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateProps={this.updateProps}
               cloneGroup={this.props.cloneGroup}
               deleteGroup={this.props.deleteGroup}
+              segmented={this.state.segmented}
+              segment={this.segment}
             />
           </div>
         :
           <div className="qoute-container">
+            {this.state.segmented ?
+            <SegmentedQuote
+              data={this.props.data ? this.props.data.toJS().lines : []}
+              cloneLine={this.props.cloneLine}
+              deleteLine={this.props.deleteLine}
+              toggleAllCheckBox={this.checkAll}
+              toggleQuoteCheckbox={this.toggleCheckboxChange}
+              updateProps={this.updateProps}
+              currency={this.props.data.get('currency')}
+              segment={this.segment}
+            />
+            :
             <EditQuoteGrid
               data={this.props.data ? this.props.data.toJS().lines : []}
               cloneLine={this.props.cloneLine}
@@ -218,7 +240,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               toggleQuoteCheckbox={this.toggleCheckboxChange}
               updateProps={this.updateProps}
               currency={this.props.data.get('currency')}
+              segment={this.segment}
             />
+            }
             {this.props.data.toJS().lines.length > 0 ?
               <div className="sub-footer">
                 Sub Total : {this.props.data.get('currency')}{this.props.data.get('netAmount')}

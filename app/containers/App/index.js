@@ -26,10 +26,13 @@ export class App extends React.Component { // eslint-disable-line react/prefer-s
     this.props.getAllData();
     // this.props.getXrmData();
   }
-  
   render() {
+    const currency = this.props.data.toJS().currency;
     return (
       <div>
+        <style
+          dangerouslySetInnerHTML={{ __html: `.table-edit:before { content:  "${ currency }" }` }}
+        />
         {React.Children.toArray(this.props.children)}
       </div>
     );

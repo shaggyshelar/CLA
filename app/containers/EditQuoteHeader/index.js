@@ -36,25 +36,25 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
           {this.props.grouped ?
             ''
             :
-            <Button className="margin" onClick={() => { browserHistory.push('/ProductSelection'); }}>Add Products</Button>
+            <Button title="Add products" className="margin" onClick={() => { browserHistory.push('/ProductSelection'); }}>Add Products</Button>
           }
           {(!this.props.grouped && this.props.data.groups.length === 0) ?
-            <Button className="margin" onClick={this.props.group}>Add Group</Button>
+            <Button title="Add group" className="margin" onClick={this.props.group}>Add Group</Button>
             :
             <ButtonGroup className="margin">
-              <Button onClick={this.props.ungroup}>Ungroup</Button>
-              <Button onClick={this.props.group}>Add Group</Button>
+              <Button title="Ungroup" onClick={this.props.ungroup}>Ungroup</Button>
+              <Button title="Add Group" onClick={this.props.group}>Add Group</Button>
             </ButtonGroup>
 
           }
           <ButtonGroup className="margin">
-            <Button onClick={this.props.deleteLine} bsStyle="danger">Delete Lines</Button>
-            <Button >Cancel</Button>
+            <Button title="Delete Selected Lines" onClick={this.props.deleteLine} bsStyle="danger">Delete Lines</Button>
+            <Button title="Cancel" >Cancel</Button>
           </ButtonGroup>
-          <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button>
+          <Button title="Go to Full Screen" className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button>
           <ButtonGroup className="margin">
-            <Button onClick={this.props.calculateTotal}>Calculate</Button>
-            <Button bsStyle="primary" onClick={this.props.quickSave}>Save</Button>
+            <Button title="Calculate" onClick={this.props.calculateTotal}>Calculate</Button>
+            <Button title="Save" bsStyle="primary" onClick={this.props.quickSave}>Save</Button>
           </ButtonGroup>
         </Col>
       </Row>
