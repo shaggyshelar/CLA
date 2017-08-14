@@ -3,6 +3,18 @@
   cursor: pointer;
   opacity: .7;
 }
+.table-edit {
+   padding-left: 58%;
+}
+ .table-edit:hover +.inline-edit{
+     display : inline !important;
+ }
+
+.table-edit-input{
+    text-align: right;
+    height:22px
+}
+
 .segmented {
 }    
 #inner-tab-example > ul{
@@ -428,10 +440,16 @@ padding-bottom: 15px;
 .Sidebar .nav {
   width: 80%;
 }
-
+.rt-td input[type=checkbox] {
+    cursor: pointer;
+}
+.rt-th input[type=checkbox] {
+    cursor: pointer;
+}
 .actionItems a {
     padding-left:2px;
     padding-right:2px;
+    cursor: pointer;
 }
 .modal-open {    position: relative;}
 .modal-backdrop.in{ position: absolute ;}
@@ -441,7 +459,22 @@ padding-bottom: 15px;
     display: grid;
     max-height: 61vh;    
     overflow-y: auto;
-    min-height: 150px;
+    min-height: 70px;
+}
+.ReactTable .rt-noData {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 75% !important;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background: rgba(255,255,255,0.8);
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    z-index: 1;
+    pointer-events: none;
+    padding: 0px !important;
+    color: rgba(0,0,0,0.5);
 }
 .filter {    
     height: calc(100vh - 106px); 

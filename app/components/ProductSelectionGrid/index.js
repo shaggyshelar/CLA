@@ -48,29 +48,40 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
         sortable: false,
         width: 50,
         style: { textAlign: 'center' },
+        headerStyle: { textAlign: 'center' },
         Cell: (props) => <input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />,
       }, 
         {
-          Header: 'PRODUCT CODE',
+          Header: () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
           accessor: 'code',
+          style: { textAlign: 'left' },
+          headerStyle: { textAlign: 'left' },
         },
 
         {
-          Header: 'PRODUCT NAME',
+          Header: () => <span title="PRODUCT NAME">PRODUCT NAME</span>,
           accessor: 'name',
+          style: { textAlign: 'left' },
+          headerStyle: { textAlign: 'left' },
         },
         {
-          Header: 'PRODUCT FAMILY',
+          Header: () => <span title="PRODUCT FAMILY">PRODUCT FAMILY</span>,
           accessor: 'type',
+          style: { textAlign: 'left' },
+          headerStyle: { textAlign: 'left' },
         },
         {
-          Header: 'PRODUCT DESCRIPTION',
-          accessor: 'type',
+          Header: () => <span title="PRODUCT DESCRIPTION">PRODUCT DESCRIPTION</span>,
+          style: { textAlign: 'left' },
+          accessor: 'description',
+          headerStyle: { textAlign: 'left', title: 'PRODUCT DESCRIPTION' },
         },
         {
-          Header: 'LIST PRICE',
+          Header: () => <span title="LIST PRICE">LIST PRICE</span>,
           accessor: 'netUnitPrice',
           style: { textAlign: 'right' },
+          headerStyle: { textAlign: 'right' },
+          Cell: (props) => <span>₹ {props.value.toFixed(2)}</span>,
         },
 
 

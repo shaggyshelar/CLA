@@ -107,7 +107,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this
       .props
       .toggleFilter(!this.props.showFilter);
-    this.forceUpdate();
   }
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];

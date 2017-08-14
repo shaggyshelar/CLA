@@ -97,7 +97,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 </DropdownButton><br />
 
               </span>
-              <span className="group-header" >Subtotal: {this.props.data.currency} {group.netTotal} </span><br />
+              <span className="group-header" >Subtotal: {this.props.data.currency} {group.netTotal.toFixed(2)} </span><br />
               <InlineEdit
                 className="group-description"
                 activeClassName="group-desc-edit-on"
@@ -142,6 +142,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
           </Row>
         </div>
         <div>
+          {this.props.segmented ?
           <SegmentedQuote
             data={groupLines}
             cloneLine={this.props.cloneLine}
@@ -150,8 +151,10 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             toggleQuoteCheckbox={this.props.toggleAllCheckBox}
             updateProps={this.props.updateProps}
             currency={this.props.data.currency}
+            segment={this.props.segment}
           />
-          {/* <EditQuoteGrid
+          :
+          <EditQuoteGrid
             data={groupLines}
             cloneLine={this.props.cloneLine}
             deleteLine={this.props.deleteLine}
@@ -159,11 +162,13 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             toggleQuoteCheckbox={this.props.toggleAllCheckBox}
             updateProps={this.props.updateProps}
             currency={this.props.data.currency}
-          /> */}
+            segment={this.props.segment}
+          />
+          }
         </div>
         {groupLines.length > 0 ?
           <div className="sub-footer">
-                Sub Total : {this.props.data.currency} {group.netTotal}
+                Sub Total : {this.props.data.currency} {group.netTotal.toFixed(2)}
           </div>
               :
           <div className="sub-footer"></div>

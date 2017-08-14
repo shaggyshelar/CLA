@@ -142,6 +142,95 @@ export function* getData() {
                 ],
               },
             },
+              {
+                id: 's',
+                isProductOption: true,
+                code: 'Dom154Stter',
+                name: 'Porche Steering',
+                type: 'Product/Bundle',
+                isBundled: true,
+                isDisableReconfiguration: false,
+                groupId: 456,
+                markup: 123,
+                quantity: {
+                  value: 123,
+                  isEditable: true,
+                  isVisible: true,
+                  dataType: 'text/select/textarea/inputSelect',
+                  selectValues: [
+                    {
+                      id: 123,
+                      value: ':List',
+                      isSelected: true,
+                    },
+                  ],
+                },
+                discountSchedule: {
+                  id: 123,
+                  name: 'Diwali',
+                  discountUnit: 'Percent/Amount',
+                  type: 'Range/Slab',
+                  tiers: [
+                    {
+                      id: 123,
+                      name: 'tier1',
+                      lowerBound: 1,
+                      upperBound: 10,
+                      discountpercent: 10,
+                      discountamount: 123,
+                    },
+                  ],
+                },
+                canClone: true,
+                canSegment: false,
+                segmentData: null,
+                canReconfigure: false,
+                canShowDiscountScheduler: false,
+                listPrice: {
+                  value: 123,
+                  isEditable: true,
+                  isVisible: true,
+                  dataType: 'text/select/textarea/inputSelect',
+                  selectValues: [
+                    {
+                      id: 123,
+                      value: ':List',
+                      isSelected: true,
+                    },
+                  ],
+                },
+                isTaxable: true,
+                additionalDiscount: {
+                  value: 123,
+                  isEditable: true,
+                  isVisible: true,
+                  dataType: 'text/select/textarea/inputSelect',
+                  selectValues: [
+                    {
+                      id: 123,
+                      value: ':List',
+                      isSelected: true,
+                    },
+                  ],
+                },
+                netUnitPrice: 123,
+                totalPrice: 123,
+                netTotal: 123,
+                pricingMethod: {
+                  values: [
+                    {
+                      id: 123,
+                      value: ':List',
+                      isSelected: true,
+                    },
+                    {
+                      id: 123,
+                      value: ':Cost',
+                      isSelected: false,
+                    },
+                  ],
+                },
+              },
             ],
             discountSchedule: {
               id: 123,
@@ -441,7 +530,7 @@ export function* getData() {
             canClone: false,
             canSegment: true,
             segmentData: {
-              type: 'Custom',
+              type: 'Monthly',
               columns: [
                 {
                   name: 'Dimension 1',
@@ -750,7 +839,7 @@ export function* getData() {
             canClone: true,
             canSegment: true,
             segmentData: {
-              type: 'Custom',
+              type: 'Monthly',
               columns: [
                 {
                   name: 'Dimension 1',
@@ -853,7 +942,7 @@ export function* getData() {
             canClone: true,
             canSegment: true,
             segmentData: {
-              type: 'Custom',
+              type: 'Yearly',
               columns: [
                 {
                   name: 'Dimension 1',
@@ -956,7 +1045,7 @@ export function* getData() {
             canClone: true,
             canSegment: true,
             segmentData: {
-              type: 'Custom',
+              type: 'Yearly',
               columns: [
                 {
                   name: 'Dimension 1',
@@ -1059,7 +1148,7 @@ export function* getData() {
             canClone: true,
             canSegment: true,
             segmentData: {
-              type: 'Custom',
+              type: 'Quaterly',
               columns: [
                 {
                   name: 'Dimension 1',
@@ -1265,7 +1354,7 @@ export function* getData() {
             canClone: true,
             canSegment: true,
             segmentData: {
-              type: 'Custom',
+              type: 'Monthly',
               columns: [
                 {
                   name: 'Dimension 1',
@@ -1368,7 +1457,7 @@ export function* getData() {
             canClone: true,
             canSegment: true,
             segmentData: {
-              type: 'Custom',
+              type: 'Quaterly',
               columns: [
                 {
                   name: 'Dimension 1',

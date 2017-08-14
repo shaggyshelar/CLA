@@ -38,7 +38,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
         </Col>
         <Col xs={12} md={5} style={{ textAlign: 'right' }}>
           <ButtonGroup className="margin">
-            <Button onClick={this.props.addProducts}><Glyphicon glyph="filter" /></Button>
+            <Button onClick={this.props.toggleFilter}><Glyphicon glyph="filter" /></Button>
             <Button onClick={() => { browserHistory.push('/favourites'); }} ><Glyphicon glyph="star" /></Button>
           </ButtonGroup>
           <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button>
