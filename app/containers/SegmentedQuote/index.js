@@ -10,6 +10,7 @@ import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { Tabs, Tab } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
+import SegmentedEditQuoteGrid from 'components/SegmentedEditQuoteGrid';
 import makeSelectSegmentedQuote from './selectors';
 export class SegmentedQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -34,14 +35,14 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
             <Tabs animation id="inner-tab-example">
               { data.CustomLines.length > 0 ?
                 <Tab eventKey={1} title="Custom">
-                  <EditQuoteGrid
+                  <SegmentedEditQuoteGrid
                     data={data.CustomLines}
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
                     toggleQuoteCheckbox={this.props.toggleAllCheckBox}
                     updateProps={this.props.updateProps}
-                    currency={this.props.data.currency}
+                    currency={this.props.currency}
                     segment={this.props.segment}
                   />
                 </Tab>
@@ -50,33 +51,33 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
             }
               { data.MonthlyLines.length > 0 ?
                 <Tab eventKey={2} title="Monthly">
-                  <EditQuoteGrid
+                  <SegmentedEditQuoteGrid
                     data={data.MonthlyLines}
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
                     toggleQuoteCheckbox={this.props.toggleAllCheckBox}
                     updateProps={this.props.updateProps}
-                    currency={this.props.data.currency}
+                    currency={this.props.currency}
                     segment={this.props.segment}
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
                 <Tab eventKey={3} title="Quaterly">
-                  <EditQuoteGrid
+                  <SegmentedEditQuoteGrid
                     data={data.QuaterlyLines}
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
                     toggleQuoteCheckbox={this.props.toggleAllCheckBox}
                     updateProps={this.props.updateProps}
-                    currency={this.props.data.currency}
+                    currency={this.props.currency}
                     segment={this.props.segment}
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
                 <Tab eventKey={4} title="Yearly">
-                  <EditQuoteGrid
+                  <SegmentedEditQuoteGrid
                     data={data.YearlyLines}
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}

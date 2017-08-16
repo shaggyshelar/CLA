@@ -48,7 +48,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -71,7 +71,7 @@ export function* getData() {
                 selectValues: [
                   {
                     id: 123,
-                    value: ':List',
+                    value: 'List',
                     isSelected: true,
                   },
                 ],
@@ -105,7 +105,7 @@ export function* getData() {
                 selectValues: [
                   {
                     id: 123,
-                    value: ':List',
+                    value: 'List',
                     isSelected: true,
                   },
                 ],
@@ -119,7 +119,7 @@ export function* getData() {
                 selectValues: [
                   {
                     id: 123,
-                    value: ':List',
+                    value: 'List',
                     isSelected: true,
                   },
                 ],
@@ -131,7 +131,7 @@ export function* getData() {
                 values: [
                   {
                     id: 123,
-                    value: ':List',
+                    value: 'List',
                     isSelected: true,
                   },
                   {
@@ -160,7 +160,7 @@ export function* getData() {
                   selectValues: [
                     {
                       id: 123,
-                      value: ':List',
+                      value: 'List',
                       isSelected: true,
                     },
                   ],
@@ -194,7 +194,7 @@ export function* getData() {
                   selectValues: [
                     {
                       id: 123,
-                      value: ':List',
+                      value: 'List',
                       isSelected: true,
                     },
                   ],
@@ -208,7 +208,7 @@ export function* getData() {
                   selectValues: [
                     {
                       id: 123,
-                      value: ':List',
+                      value: 'List',
                       isSelected: true,
                     },
                   ],
@@ -220,7 +220,7 @@ export function* getData() {
                   values: [
                     {
                       id: 123,
-                      value: ':List',
+                      value: 'List',
                       isSelected: true,
                     },
                     {
@@ -261,7 +261,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -275,7 +275,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -287,7 +287,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -315,7 +315,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -349,7 +349,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -363,7 +363,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -375,7 +375,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -403,7 +403,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -430,7 +430,18 @@ export function* getData() {
               type: 'Custom',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Custom',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Custom 1',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -452,7 +463,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -466,7 +477,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -478,7 +489,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -506,7 +517,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -533,7 +544,29 @@ export function* getData() {
               type: 'Monthly',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Month 1',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Month 2',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Month 3',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -555,7 +588,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -569,7 +602,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -581,7 +614,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -609,7 +642,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -636,7 +669,18 @@ export function* getData() {
               type: 'Custom',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Custom',
+                  quantity: 12541,
+                  listPrice: 12541,
+                  uplift: 12541,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 12541,
+                  netunitPrice: 12541,
+                  netTotal: 12541,
+                },
+                {
+                  name: 'Custom 1',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -658,7 +702,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -672,7 +716,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -684,7 +728,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -712,7 +756,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -739,7 +783,18 @@ export function* getData() {
               type: 'Custom',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Custom',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Custom 1',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -761,7 +816,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -775,7 +830,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -787,7 +842,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -815,7 +870,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -842,7 +897,29 @@ export function* getData() {
               type: 'Monthly',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Month 1',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Month 2',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Month 3',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -864,7 +941,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -878,7 +955,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -890,7 +967,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -918,7 +995,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -945,7 +1022,7 @@ export function* getData() {
               type: 'Yearly',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Year 1',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -967,7 +1044,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -981,7 +1058,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -993,7 +1070,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -1021,7 +1098,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1048,7 +1125,7 @@ export function* getData() {
               type: 'Yearly',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Year 1',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -1070,7 +1147,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1084,7 +1161,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1096,7 +1173,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -1124,7 +1201,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1151,7 +1228,29 @@ export function* getData() {
               type: 'Quaterly',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Quater 1',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Quater 2',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Quater 3',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -1173,7 +1272,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1187,7 +1286,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1199,7 +1298,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -1227,7 +1326,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1254,7 +1353,18 @@ export function* getData() {
               type: 'Custom',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Custom',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Custom 1',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -1276,7 +1386,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1290,7 +1400,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1302,7 +1412,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -1330,7 +1440,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1357,7 +1467,29 @@ export function* getData() {
               type: 'Monthly',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Month 1',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Month 2',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Month 3',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -1379,7 +1511,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1393,7 +1525,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1405,7 +1537,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {
@@ -1433,7 +1565,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1460,7 +1592,29 @@ export function* getData() {
               type: 'Quaterly',
               columns: [
                 {
-                  name: 'Dimension 1',
+                  name: 'Quater 1',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Quater 2',
+                  quantity: 123,
+                  listPrice: 123,
+                  uplift: 123,
+                  startDate: 'Date',
+                  endDate: 'Date',
+                  additionalDiscount: 123,
+                  netunitPrice: 123,
+                  netTotal: 123,
+                },
+                {
+                  name: 'Quater 3',
                   quantity: 123,
                   listPrice: 123,
                   uplift: 123,
@@ -1482,7 +1636,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1496,7 +1650,7 @@ export function* getData() {
               selectValues: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
               ],
@@ -1508,7 +1662,7 @@ export function* getData() {
               values: [
                 {
                   id: 123,
-                  value: ':List',
+                  value: 'List',
                   isSelected: true,
                 },
                 {

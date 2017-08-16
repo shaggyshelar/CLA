@@ -81,7 +81,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
           accessor: 'netUnitPrice',
           style: { textAlign: 'right' },
           headerStyle: { textAlign: 'right' },
-          Cell: (props) => <span>₹ {props.value.toFixed(2)}</span>,
+          Cell: (props) => <span>₹ {props.value.toLocaleString('en', {     minimumFractionDigits: 2 })}</span>,
         },
 
 

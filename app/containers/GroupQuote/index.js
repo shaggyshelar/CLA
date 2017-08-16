@@ -97,7 +97,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 </DropdownButton><br />
 
               </span>
-              <span className="group-header" >Subtotal: {this.props.data.currency} {group.netTotal.toFixed(2)} </span><br />
+              <span className="group-header" >Subtotal: {this.props.data.currency} {group.netTotal.toLocaleString('en', {     minimumFractionDigits: 2 })} </span><br />
               <InlineEdit
                 className="group-description"
                 activeClassName="group-desc-edit-on"
@@ -168,7 +168,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
         </div>
         {groupLines.length > 0 ?
           <div className="sub-footer">
-                Sub Total : {this.props.data.currency} {group.netTotal.toFixed(2)}
+                Sub Total : {this.props.data.currency} {group.netTotal.toLocaleString('en', {     minimumFractionDigits: 2 })}
           </div>
               :
           <div className="sub-footer"></div>
