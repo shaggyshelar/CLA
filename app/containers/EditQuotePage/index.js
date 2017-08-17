@@ -160,8 +160,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   //     if (additionalDiscount !== '') {
   //       const totalDiscount = listUnitPrice -((parseFloat(additionalDiscount) / 100) * listUnitPrice);
   //       const totalAmount=totalDiscount*parseInt(item['QUANTITY']);
-  //       item['NET UNIT PRICE'] = '$ ' + totalAmount.toFixed(2);
-  //       item['NET TOTAL'] ='$ ' +totalAmount.toFixed(2);
+  //       item['NET UNIT PRICE'] = '$ ' + totalAmount.toLocaleString('en', {     minimumFractionDigits: 2 });
+  //       item['NET TOTAL'] ='$ ' +totalAmount.toLocaleString('en', {     minimumFractionDigits: 2 });
   //     }
   //     return item;
   // });
@@ -195,7 +195,6 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             deleteLine={this.deleteCheckedLines}
             calculateTotal={this.calculateTotal}
             quickSave={this.quickSaveQuotes}
-            grouped={grouped}
             ungroup={this.ungroup}
             group={this.group}
           />

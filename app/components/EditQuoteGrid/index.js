@@ -91,7 +91,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       if (cellInfo.column.id === 'quantity') {
         return (<span> {cellInfo.value}</span>)
       } else {
-        return (<span>{cellInfo.value.toFixed(2)}</span>) 
+        return (<span>{cellInfo.value.toLocaleString('en', {     minimumFractionDigits: 2 })}</span>) 
       }
     } else {
       return (<div>
@@ -212,7 +212,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'totalPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
-        Cell: (props) => <span> {this.props.currency } {props.value.toFixed(2)}</span>,
+        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', {     minimumFractionDigits: 2 })}</span>,
       }];
     return (
       <div>

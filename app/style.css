@@ -1,10 +1,21 @@
+.sub-component .-header {
+    display: none !important;
+}
+.sub-component .rt-tbody .rt-td {
+    border-right: 0px !important;
+    background: #F2F2F2 !important;
+}
+.sub-component .rt-tbody .rt-tr-group {
+    border-bottom: 0px !important;
+}
+.upper-case {text-transform: uppercase;}
 .disabled-link {
   pointer-events: none;
   cursor: pointer;
   opacity: .7;
 }
 .table-edit {
-   padding-left: 58%;
+   padding-left: 47%;
 }
  .table-edit:hover +.inline-edit{
      display : inline !important;
