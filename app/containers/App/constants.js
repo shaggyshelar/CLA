@@ -57,3 +57,5 @@ export const CLONE_GROUP = 'app/EditQuote/CLONE_GROUP';
 export const DELETE_GROUP = 'app/EditQuote/DELETE_GROUP';
 export const UNGROUP = 'app/EditQuote/UNGROUP';
 export const GROUP = 'app/EditQuote/GROUP';
+export const UPDATE = 'app/EditQuote/UPDATE';
+export const UPDATE_BUNDLE = 'app/EditQuote/UPDATE_BUNDLE';

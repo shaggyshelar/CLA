@@ -20,6 +20,8 @@ import { cloneLine,
   deleteGroup,
   ungroup,
   group,
+  update,
+  updateBundle,
  } from '../App/actions';
 
 
@@ -67,9 +69,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   segment() {
-    console.log("segmented clicked")
     this.setState({ segmented: !this.state.segmented });
   }
+
   group() {
     const data = this.props.data.toJS();
     const randomID = parseInt(Math.random() * 100000, 0);
@@ -215,6 +217,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               deleteGroup={this.props.deleteGroup}
               segmented={this.state.segmented}
               segment={this.segment}
+              update={this.props.update}
             />
           </div>
         :
@@ -229,6 +232,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateProps={this.updateProps}
               currency={this.props.data.get('currency')}
               segment={this.segment}
+              update={this.props.update}
             />
             :
             <EditQuoteGrid
@@ -240,6 +244,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateProps={this.updateProps}
               currency={this.props.data.get('currency')}
               segment={this.segment}
+              update={this.props.update}
+              updateBundle={this.props.updateBundle}
             />
             }
             {this.props.data.toJS().lines.length > 0 ?
@@ -310,6 +316,12 @@ function mapDispatchToProps(dispatch) {
     },
     group: (data) => {
       dispatch(group(data));
+    },
+    update: (id, data, field) => {
+      dispatch(update(id, data, field));
+    },
+    updateBundle: (parentId, id, field, data) => {
+      dispatch(updateBundle(parentId, id, field, data));
     },
   };
 }

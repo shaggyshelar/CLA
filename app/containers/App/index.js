@@ -31,7 +31,7 @@ export class App extends React.Component { // eslint-disable-line react/prefer-s
     return (
       <div>
         <style
-          dangerouslySetInnerHTML={{ __html: `.table-edit:before { content:  "${ currency }" }` }}
+          dangerouslySetInnerHTML={{ __html: `.table-edit:before { content:  "${ currency } " }` }}
         />
         {React.Children.toArray(this.props.children)}
       </div>

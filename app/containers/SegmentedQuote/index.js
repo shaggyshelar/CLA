@@ -100,6 +100,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               updateProps={this.props.updateProps}
               currency={this.props.data.currency}
               segment={this.props.segment}
+              update={this.props.update}
             />
           </Tab>
         </Tabs>
