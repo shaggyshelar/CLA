@@ -27,8 +27,12 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.deleteGroupIn = this.deleteGroupIn.bind(this);
   }
   componentWillMount() {
+    const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId)});
+    
     if (this.state.selectedGroup === null) {
-      this.setState({ selectedGroup: this.props.groups[0].id });
+       this.props.location.query.groupId && groupLen ? 
+       this.setState({ selectedGroup: parseInt(this.props.location.query.groupId) }) : 
+       this.setState({ selectedGroup: this.props.groups[0].id });
     }
   }
 
@@ -169,11 +173,14 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               cloneLine={this.props.cloneLine}
               deleteLine={this.props.deleteLine}
               toggleAllCheckBox={this.props.toggleAllCheckBox}
-              toggleQuoteCheckbox={this.props.toggleAllCheckBox}
+              toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
               updateProps={this.props.updateProps}
               currency={this.props.data.currency}
               segment={this.props.segment}
               update={this.props.update}
+              updateBundle={this.props.updateBundle}
+              updateSeg={this.props.updateSeg}
+              updateSegBundle={this.props.updateSegBundle}
             />
           :
               <EditQuoteGrid
@@ -181,11 +188,12 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 cloneLine={this.props.cloneLine}
                 deleteLine={this.props.deleteLine}
                 toggleAllCheckBox={this.props.toggleAllCheckBox}
-                toggleQuoteCheckbox={this.props.toggleAllCheckBox}
+                toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
                 updateProps={this.props.updateProps}
                 currency={this.props.data.currency}
                 segment={this.props.segment}
                 update={this.props.update}
+                updateBundle={this.props.updateBundle}
               />
           }
         </div>

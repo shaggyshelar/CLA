@@ -25,6 +25,8 @@ import {
   GROUP,
   UPDATE,
   UPDATE_BUNDLE,
+  UPDATE_SEG,
+  UPDATE_SEG_BUNDLE,
 } from './constants';
 
 export function defaultAction() {
@@ -149,7 +151,7 @@ export function updateProps(data) {
   };
 }
 
-export function update(id,data,field) {
+export function update(id, data, field) {
   return {
     type: UPDATE,
     data,
@@ -164,5 +166,25 @@ export function updateBundle(parentId, id, field, data) {
     data,
     id,
     field,
+  };
+}
+
+export function updateSeg(id, name, field, data) {
+  return {
+    type: UPDATE_SEG,
+    data,
+    id,
+    field,
+    name,
+  };
+}
+export function updateSegBundle(parentId, id, name, field, data) {
+  return {
+    type: UPDATE_SEG_BUNDLE,
+    parentId,
+    data,
+    id,
+    field,
+    name,
   };
 }

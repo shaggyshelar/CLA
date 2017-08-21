@@ -32,6 +32,8 @@ import {
   GROUP,
   UPDATE,
   UPDATE_BUNDLE,
+  UPDATE_SEG,
+  UPDATE_SEG_BUNDLE,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -113,6 +115,22 @@ function appReducer(state = initialState, action) {
         return state.setIn(['data', 'lines'], fromJS(lines));
       }
     case UPDATE_BUNDLE:
+      {
+        const linesBundle = state.getIn(['data', 'lines']).toJS();
+        const lineBundle = _.filter(linesBundle, { id: action.parentId });
+        const bundleLine = _.filter(lineBundle[0].bundleProducts, { id: action.id });
+        bundleLine[0][action.field].value = action.data;
+        return state.setIn(['data', 'lines'], fromJS(linesBundle));
+      }
+    case UPDATE_SEG:
+      {
+        const lines = state.getIn(['data', 'lines']).toJS();
+        const line = _.filter(lines, { id: action.id });
+        const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
+        segLine[0][action.field] = action.data;
+        return state.setIn(['data', 'lines'], fromJS(lines));
+      }
+    case UPDATE_SEG_BUNDLE:
       {
         const linesBundle = state.getIn(['data', 'lines']).toJS();
         const lineBundle = _.filter(linesBundle, { id: action.parentId });

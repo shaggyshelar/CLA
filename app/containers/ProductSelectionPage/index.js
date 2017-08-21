@@ -149,11 +149,11 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         i.id = parseInt(Math.random() * 100000, 0).toString();
       });
       this.props.addProductsToQuote(data);
+      browserHistory.push(`/EditQuote?groupId=${this.props.location.query.groupId}`);
     } else {
       this.props.addProductsToQuote(data);
+      browserHistory.push('/EditQuote');
     }
-
-    browserHistory.push('/EditQuote');
   }
 
   render() {

@@ -53,23 +53,8 @@ export function* getProductsSaga() {
           ],
         },
         canClone: true,
-        canSegment: true,
-        segmentData: {
-          type: 'Year/Quarter/Month/Custom/OneTime',
-          columns: [
-            {
-              name: 'Dimension 1',
-              quantity: 123,
-              listPrice: 123,
-              uplift: 123,
-              startDate: 'Date',
-              endDate: 'Date',
-              additionalDiscount: 123,
-              netunitPrice: 123,
-              netTotal: 123,
-            },
-          ],
-        },
+        canSegment: false,
+        segmentData: null,
         canReconfigure: true,
         canShowDiscountScheduler: true,
         listPrice: {
@@ -156,23 +141,8 @@ export function* getProductsSaga() {
           ],
         },
         canClone: true,
-        canSegment: true,
-        segmentData: {
-          type: 'Year/Quarter/Month/Custom/OneTime',
-          columns: [
-            {
-              name: 'Dimension 1',
-              quantity: 123,
-              listPrice: 123,
-              uplift: 123,
-              startDate: 'Date',
-              endDate: 'Date',
-              additionalDiscount: 123,
-              netunitPrice: 123,
-              netTotal: 123,
-            },
-          ],
-        },
+        canSegment: false,
+        segmentData: null,
         canReconfigure: true,
         canShowDiscountScheduler: true,
         listPrice: {
@@ -259,23 +229,8 @@ export function* getProductsSaga() {
           ],
         },
         canClone: true,
-        canSegment: true,
-        segmentData: {
-          type: 'Year/Quarter/Month/Custom/OneTime',
-          columns: [
-            {
-              name: 'Dimension 1',
-              quantity: 123,
-              listPrice: 123,
-              uplift: 123,
-              startDate: 'Date',
-              endDate: 'Date',
-              additionalDiscount: 123,
-              netunitPrice: 123,
-              netTotal: 123,
-            },
-          ],
-        },
+        canSegment: false,
+        segmentData: null,
         canReconfigure: true,
         canShowDiscountScheduler: true,
         listPrice: {

@@ -1,5 +1,6 @@
 import ReactTable from 'react-table';
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
 import 'react-table/react-table.css';
 import InlineEdit from 'react-edit-inline';
@@ -40,6 +41,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.renderChecbox = this.renderChecbox.bind(this);
     this.dataChanged = this.dataChanged.bind(this);
     this.bundleDataChanged = this.bundleDataChanged.bind(this);
+    this.checkAll = this.checkAll.bind(this);
   }
 
 
@@ -68,6 +70,16 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       });
     }
   }
+  checkAll(e) {
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    for (let i = 0; i < d.length; i += 1) {
+      if (!d[i].checked && e.target.checked) {
+        d[i].click();
+      } else if (d[i].checked && !e.target.checked) {
+        d[i].click();
+      }
+    }
+  }
   cloneLine(id) {
     this.props.cloneLine(id);
   }
@@ -90,7 +102,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
   renderChecbox(cellInfo) {
     if (!cellInfo.original.isProductOption) {
-      return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original[cellInfo.column.id].id} />);
+      return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original.id} />);
     }
     return (<span></span>);
   }
@@ -98,14 +110,12 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const data1 = data[key];
-    console.log('data', data);
     this.props.update(field[1], parseFloat(data1), field[2]);
   }
   bundleDataChanged(data) {
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const data1 = data[key];
-    console.log('bundle', data);
     this.props.updateBundle(field[0], field[1], field[2], parseFloat(data1) );
   }
   validate(text) {
@@ -162,7 +172,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: this.renderActionItems,
       },
       {
-        Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleAllCheckBox} />,
+        Header: <input type="checkbox" className="checkAll" onChange={this.checkAll} />,
         accessor: 'id',
         id: 'id',
         sortable: false,

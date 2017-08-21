@@ -22,6 +22,8 @@ import { cloneLine,
   group,
   update,
   updateBundle,
+  updateSeg,
+  updateSegBundle,
  } from '../App/actions';
 
 
@@ -143,12 +145,12 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     }, this);
     this.props.deleteSelectedLines(dataObj.lines);
 
-    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-    for (let i = 0; i < d.length; i += 1) {
-      if (d[i].checked) {
-        d[i].click();
-      }
-    }
+    // const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    // for (let i = 0; i < d.length; i += 1) {
+    //   if (d[i].checked) {
+    //     d[i].click();
+    //   }
+    // }
   }
 
   calculateTotal() {
@@ -199,6 +201,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             quickSave={this.quickSaveQuotes}
             ungroup={this.ungroup}
             group={this.group}
+            grouped= {grouped}
           />
         </div>
          {grouped ?
@@ -218,6 +221,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               segmented={this.state.segmented}
               segment={this.segment}
               update={this.props.update}
+              updateBundle={this.props.updateBundle}
+              updateSeg={this.props.updateSeg}
+              updateSegBundle={this.props.updateSegBundle}
+              location={this.props.location}
             />
           </div>
         :
@@ -233,6 +240,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               currency={this.props.data.get('currency')}
               segment={this.segment}
               update={this.props.update}
+              updateBundle={this.props.updateBundle}
+              updateSeg={this.props.updateSeg}
+              updateSegBundle={this.props.updateSegBundle}
             />
             :
             <EditQuoteGrid
@@ -322,6 +332,12 @@ function mapDispatchToProps(dispatch) {
     },
     updateBundle: (parentId, id, field, data) => {
       dispatch(updateBundle(parentId, id, field, data));
+    },
+    updateSeg: (id, name, field, data) => {
+      dispatch(updateSeg(id, name, field, data));
+    },
+    updateSegBundle: (parentId, id, name, field, data) => {
+      dispatch(updateSegBundle(parentId, id, name, field, data));
     },
   };
 }
