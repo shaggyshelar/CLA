@@ -47,6 +47,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     this.renderActionItems = this.renderActionItems.bind(this);
     this.deleteLine = this.deleteLine.bind(this);
     this.renderChecbox = this.renderChecbox.bind(this);
+    this.renderCell = this.renderCell.bind(this);
   }
   setTableOption(event) {
     const target = event.target;
@@ -59,7 +60,10 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       },
     });
   }
-  
+  renderCell(index,e) {
+    let row = <span>asdkh</span>;
+    return(<span title='to be done'>{e.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>)
+  }
   handleToggle(index) {
     const selectedData = this.props.data[index];
     if (selectedData !== undefined) {
@@ -162,6 +166,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         className: 'table-edit',
+        Cell: this.renderCell.bind(this,index),
       })
     ));
     columns.push({

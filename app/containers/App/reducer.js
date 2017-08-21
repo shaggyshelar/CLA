@@ -34,6 +34,8 @@ import {
   UPDATE_BUNDLE,
   UPDATE_SEG,
   UPDATE_SEG_BUNDLE,
+  UPDATE_GROUP_DATA,
+  UPDATE_GROUP_VAL,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -64,7 +66,7 @@ function appReducer(state = initialState, action) {
         data = state.getIn(['data', 'lines']).toJS();
         const index = _.findIndex(data, { id: action.data });
         const cloneData = Object.assign({}, data[index]);
-        cloneData.id = parseInt(Math.random() * 100000, 0);
+        cloneData.id = parseInt(Math.random() * 100000, 0).toString();
         data.splice(index, 0, cloneData);
         return state.setIn(['data', 'lines'], fromJS(data));
       }
@@ -107,6 +109,20 @@ function appReducer(state = initialState, action) {
     case GROUP:
       return state
         .setIn(['data'], fromJS(action.data));
+    case UPDATE_GROUP_DATA:
+      {
+        const groups = state.getIn(['data', 'groups']).toJS();
+        const group = _.filter(groups, { id: action.id });
+        group[0][action.field] = action.data;
+        return state.setIn(['data', 'groups'], fromJS(groups));
+      }
+    case UPDATE_GROUP_VAL:
+      {
+        const groups = state.getIn(['data', 'groups']).toJS();
+        const group = _.filter(groups, { id: action.id });
+        group[0][action.field] = action.data;
+        return state.setIn(['data', 'groups'], fromJS(groups));
+      }
     case UPDATE:
       {
         const lines = state.getIn(['data', 'lines']).toJS();

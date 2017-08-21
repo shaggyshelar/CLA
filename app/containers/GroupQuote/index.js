@@ -13,25 +13,26 @@ import { Button, Glyphicon, ButtonGroup, Col, Row, DropdownButton, MenuItem, Bad
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import { SegmentedQuote } from '../SegmentedQuote';
 import { browserHistory } from 'react-router';
+import { updateGroupData, updateGroupValue } from '../App/actions';
 export class GroupQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
 
     this.state = {
       selectedGroup: null,
-
     };
     this.changeGroup = this.changeGroup.bind(this);
     this.dataChanged = this.dataChanged.bind(this);
+    this.changeOptional = this.changeOptional.bind(this);
     this.cloneGroupIn = this.cloneGroupIn.bind(this);
     this.deleteGroupIn = this.deleteGroupIn.bind(this);
   }
   componentWillMount() {
-    const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId)});
-    
+    const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId) });
+
     if (this.state.selectedGroup === null) {
-       this.props.location.query.groupId && groupLen ? 
-       this.setState({ selectedGroup: parseInt(this.props.location.query.groupId) }) : 
+      this.props.location.query.groupId && groupLen ?
+       this.setState({ selectedGroup: parseInt(this.props.location.query.groupId) }) :
        this.setState({ selectedGroup: this.props.groups[0].id });
     }
   }
@@ -45,14 +46,14 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
       _.filter(this.props.lines, { groupId: this.state.selectedGroup }));
     const group = Object.assign({},
       _.filter(this.props.groups, { id: this.state.selectedGroup })[0]);
-    const randomID = parseInt(Math.random() * 100000, 0);
+    const randomID = parseInt(Math.random() * 100000, 0).toString();
     const lines = this.props.lines;
     const groups = this.props.groups;
     group.id = randomID;
     groupLines.forEach((i) => {
       const groupLine = Object.assign({}, i);
       groupLine.groupId = randomID;
-      groupLine.id = parseInt(Math.random() * 100000, 0);
+      groupLine.id = parseInt(Math.random() * 100000, 0).toString();
       lines.push(groupLine);
     });
 
@@ -72,8 +73,21 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   }
 
   dataChanged(e) {
-    console.log(e);
+    const key = Object.keys(e)[0];
+    const value = isNaN(parseFloat(e[key])) ? e[key] : parseFloat(e[key]);
+    const data = key.split('*($)*');
+    if (value !== '') {
+      this.props.updateGroupData(data[0], data[1], value);
+    }
   }
+  changeOptional(e) {
+    this.props.updateGroupData( e.target.name, e.target.id, e.target.checked);
+  }
+  validate(text) {
+    const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
+    return (decimal.test(text) && (parseFloat(text) > 0));
+  }
+
   render() {
     let group = {};
     let groupLines = [];
@@ -97,7 +111,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 className="group-header group-edit"
                 activeClassName="group-edit-on"
                 text={group.name}
-                paramName="message"
+                paramName={`${group.id}*($)*name`}
                 change={this.dataChanged}
               /><Glyphicon glyph="pencil" className="inline-edit" />
               <span>
@@ -115,7 +129,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 className="group-description"
                 activeClassName="group-desc-edit-on"
                 text={group.description === '' ? 'Click here to edit description ' : group.description}
-                paramName="message"
+                paramName={`${group.id}*($)*description`}
                 change={this.dataChanged}
               /><Glyphicon glyph="pencil" className="inline-edit" />
             </Col>
@@ -129,7 +143,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   </OverlayTrigger>
                 </Col>
                 <Col md={4} sm={4} xs={4}>
-                  <input className="input-group" type="checkbox" checked={group.isOptional} />
+                  <input className="input-group" value={group.isOptional} id="isOptional" onChange={this.changeOptional} name={group.id} type="checkbox" checked={group.isOptional} />
                 </Col>
               </Row>
               <Row>
@@ -140,7 +154,15 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   </OverlayTrigger>
                 </Col>
                 <Col md={4} sm={4} xs={4}>
-                  <input className="input-group input-text" type="text" name="name" value={group.additionaldiscount} />
+                  <InlineEdit
+                    className="group-input"
+                    activeClassName="input-group input-text"
+                    text={group.additionaldiscount===""?"0.00":group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 2 })}
+                    paramName={`${group.id}*($)*additionaldiscount`}
+                    change={this.dataChanged}
+                    validate={this.validate}
+                  /><Glyphicon glyph="pencil" className="inline-edit" />
+                  {/* <input className="input-group input-text" step="0.1" onChange={this.valueChanged} id="additionaldiscount" type="text" name={group.id} value={group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 2 })} /> */}
                 </Col>
               </Row>
               <Row>
@@ -151,7 +173,15 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   </OverlayTrigger>
                 </Col>
                 <Col md={4} sm={4} xs={4}>
-                  <input className="input-group input-text" type="text" name="name" value={group.subscriptionTerm} />
+                  <InlineEdit
+                  className="group-input"
+                  activeClassName="input-group input-text"
+                  text={group.subscriptionTerm===""?"0.00":group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2 })}
+                  paramName={`${group.id}*($)*subscriptionTerm`}
+                  change={this.dataChanged}
+                  validate={this.validate}
+                /><Glyphicon glyph="pencil" className="inline-edit" />
+                  {/* <input className="input-group input-text" onChange={this.valueChanged} id="subscriptionTerm" type="text" name={group.id} value={group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2 })} /> */}
                 </Col>
               </Row>
             </Col>

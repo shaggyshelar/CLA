@@ -38,7 +38,7 @@ export function* getData() {
             type: 'Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 456,
+            groupId: '456',
             markup: 123,
             quantity: {
               value: 123,
@@ -61,7 +61,7 @@ export function* getData() {
               type: 'Product/Bundle',
               isBundled: true,
               isDisableReconfiguration: false,
-              groupId: 456,
+              groupId: '456',
               markup: 123,
               quantity: {
                 value: 123,
@@ -176,7 +176,7 @@ export function* getData() {
                 type: 'Product/Bundle',
                 isBundled: true,
                 isDisableReconfiguration: false,
-                groupId: 456,
+                groupId: '456',
                 markup: 123,
                 quantity: {
                   value: 123,
@@ -331,7 +331,7 @@ export function* getData() {
             type: 'Product',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 456,
+            groupId: '456',
             markup: 123,
             quantity: {
               value: 123,
@@ -419,7 +419,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 456,
+            groupId: '456',
             markup: 123,
             quantity: {
               value: 123,
@@ -533,7 +533,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 456,
+            groupId: '456',
             markup: 123,
             quantity: {
               value: 123,
@@ -658,7 +658,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 789,
+            groupId: '789',
             markup: 123,
             quantity: {
               value: 123,
@@ -772,7 +772,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 789,
+            groupId: '789',
             markup: 123,
             quantity: {
               value: 123,
@@ -886,7 +886,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 789,
+            groupId: '789',
             markup: 123,
             quantity: {
               value: 123,
@@ -1011,7 +1011,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 789,
+            groupId: '789',
             markup: 123,
             quantity: {
               value: 123,
@@ -1114,7 +1114,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: true,
-            groupId: 123,
+            groupId: '123',
             markup: 123,
             quantity: {
               value: 123,
@@ -1217,7 +1217,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: true,
-            groupId: 123,
+            groupId: '123',
             markup: 123,
             quantity: {
               value: 123,
@@ -1342,7 +1342,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 123,
+            groupId: '123',
             markup: 123,
             quantity: {
               value: 123,
@@ -1456,7 +1456,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 123,
+            groupId: '123',
             markup: 123,
             quantity: {
               value: 123,
@@ -1581,7 +1581,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 123,
+            groupId: '123',
             markup: 123,
             quantity: {
               value: 123,
@@ -1702,7 +1702,7 @@ export function* getData() {
         ],
         groups: [
           {
-            id: 123,
+            id: '123',
             name: 'Group1',
             isOptional: true,
             description: 'longtext',
@@ -1711,7 +1711,7 @@ export function* getData() {
             netTotal: 52000,
           },
           {
-            id: 456,
+            id: '456',
             name: 'Group2',
             isOptional: true,
             description: 'longtext',
@@ -1720,7 +1720,7 @@ export function* getData() {
             netTotal: 52000,
           },
           {
-            id: 789,
+            id: '789',
             name: 'Group3',
             isOptional: true,
             description: 'longtext',

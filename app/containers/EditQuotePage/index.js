@@ -24,6 +24,8 @@ import { cloneLine,
   updateBundle,
   updateSeg,
   updateSegBundle,
+  updateGroupData,
+  updateGroupValue,
  } from '../App/actions';
 
 
@@ -76,7 +78,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   group() {
     const data = this.props.data.toJS();
-    const randomID = parseInt(Math.random() * 100000, 0);
+    const randomID = parseInt(Math.random() * 100000, 0).toString();
     if (data.linesGrouped) {
       const name = `Group ${data.groups.length}`;
       data.groups.push({
@@ -225,6 +227,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateSeg={this.props.updateSeg}
               updateSegBundle={this.props.updateSegBundle}
               location={this.props.location}
+              updateGroupData={this.props.updateGroupData}
+              updateGroupValue={this.props.updateGroupValue}
             />
           </div>
         :
@@ -338,6 +342,12 @@ function mapDispatchToProps(dispatch) {
     },
     updateSegBundle: (parentId, id, name, field, data) => {
       dispatch(updateSegBundle(parentId, id, name, field, data));
+    },
+    updateGroupData: (id, field, data) => {
+      dispatch(updateGroupData(id, field, data));
+    },
+    updateGroupValue: (id, field, data) => {
+      dispatch(updateGroupValue(id, field, data));
     },
   };
 }
