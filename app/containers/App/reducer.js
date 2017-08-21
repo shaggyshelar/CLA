@@ -30,6 +30,10 @@ import {
   DELETE_GROUP,
   UNGROUP,
   GROUP,
+  UPDATE,
+  UPDATE_BUNDLE,
+  UPDATE_SEG,
+  UPDATE_SEG_BUNDLE,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -56,12 +60,14 @@ function appReducer(state = initialState, action) {
         .set('error', action.error)
         .set('loading', false);
     case CLONE_LINE:
-      data = state.getIn(['data', 'lines']).toJS();
-      const index = _.findIndex(data, { id: action.data });
-      const cloneData = Object.assign({}, data[index]);
-      cloneData.id = parseInt(Math.random() * 100000, 0);
-      data.splice(index, 0, cloneData);
-      return state.setIn(['data', 'lines'], fromJS(data));
+      {
+        data = state.getIn(['data', 'lines']).toJS();
+        const index = _.findIndex(data, { id: action.data });
+        const cloneData = Object.assign({}, data[index]);
+        cloneData.id = parseInt(Math.random() * 100000, 0);
+        data.splice(index, 0, cloneData);
+        return state.setIn(['data', 'lines'], fromJS(data));
+      }
     case ADD_PRODUCTS:
       data = state.getIn(['data', 'lines']);
       return state.setIn(['data', 'lines'], fromJS(data.concat(action.data)));
@@ -101,6 +107,37 @@ function appReducer(state = initialState, action) {
     case GROUP:
       return state
         .setIn(['data'], fromJS(action.data));
+    case UPDATE:
+      {
+        const lines = state.getIn(['data', 'lines']).toJS();
+        const line = _.filter(lines, { id: action.id });
+        line[0][action.field].value = action.data;
+        return state.setIn(['data', 'lines'], fromJS(lines));
+      }
+    case UPDATE_BUNDLE:
+      {
+        const linesBundle = state.getIn(['data', 'lines']).toJS();
+        const lineBundle = _.filter(linesBundle, { id: action.parentId });
+        const bundleLine = _.filter(lineBundle[0].bundleProducts, { id: action.id });
+        bundleLine[0][action.field].value = action.data;
+        return state.setIn(['data', 'lines'], fromJS(linesBundle));
+      }
+    case UPDATE_SEG:
+      {
+        const lines = state.getIn(['data', 'lines']).toJS();
+        const line = _.filter(lines, { id: action.id });
+        const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
+        segLine[0][action.field] = action.data;
+        return state.setIn(['data', 'lines'], fromJS(lines));
+      }
+    case UPDATE_SEG_BUNDLE:
+      {
+        const linesBundle = state.getIn(['data', 'lines']).toJS();
+        const lineBundle = _.filter(linesBundle, { id: action.parentId });
+        const bundleLine = _.filter(lineBundle[0].bundleProducts, { id: action.id });
+        bundleLine[0][action.field].value = action.data;
+        return state.setIn(['data', 'lines'], fromJS(linesBundle));
+      }
     default:
       return state;
   }

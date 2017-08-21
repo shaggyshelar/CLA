@@ -5,9 +5,11 @@
 */
 import ReactTable from 'react-table';
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
 import 'react-table/react-table.css';
 import InlineEdit from 'react-edit-inline';
+import _ from 'lodash';
 import SegmentSubComponent from 'components/SegmentSubComponent';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
 import { browserHistory } from 'react-router';
@@ -18,6 +20,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     this.renderEditable = this.renderEditable.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.renderColumns = this.renderColumns.bind(this);
+    this.checkAll = this.checkAll.bind(this);
 
     this.state = {
       tableOptions: {
@@ -45,9 +48,6 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     this.deleteLine = this.deleteLine.bind(this);
     this.renderChecbox = this.renderChecbox.bind(this);
   }
-  componentWillMount() {
-    console.log(this.props.data);
-  }
   setTableOption(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -59,6 +59,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       },
     });
   }
+  
   handleToggle(index) {
     const selectedData = this.props.data[index];
     if (selectedData !== undefined) {
@@ -78,6 +79,16 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   deleteLine(id) {
     this.props.deleteLine(id);
   }
+  checkAll(e) {
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    for (let i = 0; i < d.length; i += 1) {
+      if (!d[i].checked && e.target.checked) {
+        d[i].click();
+      } else if (d[i].checked && !e.target.checked) {
+        d[i].click();
+      }
+    }
+  }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (<span> {this.props.currency} {cellInfo.value}</span>);
@@ -88,7 +99,6 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
            activeClassName="table-edit-input"
            text={cellInfo.value}
            paramName="message"
-           change={this.dataChanged}
         />
         <Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
         {/* <div
@@ -100,7 +110,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   }
   renderChecbox(cellInfo) {
     if (!cellInfo.original.isProductOption) {
-      return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original[cellInfo.column.id].id} />);
+      return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original.id} />);
     }
     return (<span></span>);
   }
@@ -115,7 +125,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         Cell: this.renderActionItems,
       },
       {
-        Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleAllCheckBox} />,
+        Header: <input type="checkbox" className="checkAll" onChange={this.checkAll} />,
         accessor: 'id',
         id: 'id',
         sortable: false,
@@ -200,8 +210,10 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
             {...this.state.tableOptions}
             SubComponent={(row) => (
               <SegmentSubComponent
-                data={row}
+                data={_.filter(this.props.data, { id: row.original.id })[0]}
                 currency = {this.props.currency}
+                updateSeg={this.props.updateSeg}
+                updateSegBundle={this.props.updateSegBundle}
               />
             )}
           />

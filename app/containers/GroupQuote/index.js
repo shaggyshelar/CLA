@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import InlineEdit from 'react-edit-inline';
 import _ from 'lodash';
-import { Button, Glyphicon, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge } from 'react-bootstrap/lib';
+import { Button, Glyphicon, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import { SegmentedQuote } from '../SegmentedQuote';
 import { browserHistory } from 'react-router';
@@ -27,8 +27,12 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.deleteGroupIn = this.deleteGroupIn.bind(this);
   }
   componentWillMount() {
+    const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId)});
+    
     if (this.state.selectedGroup === null) {
-      this.setState({ selectedGroup: this.props.groups[0].id });
+       this.props.location.query.groupId && groupLen ? 
+       this.setState({ selectedGroup: parseInt(this.props.location.query.groupId) }) : 
+       this.setState({ selectedGroup: this.props.groups[0].id });
     }
   }
 
@@ -75,11 +79,20 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     let groupLines = [];
     groupLines = _.filter(this.props.lines, { groupId: this.state.selectedGroup });
     group = _.filter(this.props.groups, { id: this.state.selectedGroup })[0];
+    const optionalTooltip = (
+      <Tooltip id="tooltip" bsClass="tooltip"><strong>Marks the entire group as optional.</strong></Tooltip>
+    );
+    const discountTooltip = (
+      <Tooltip id="dtooltip" bsClass="tooltip"><strong>Default additional discount rate applied to line items in this group.</strong></Tooltip>
+    );
+    const subscriptionTooltip = (
+      <Tooltip id="stooltip" bsClass="tooltip"><strong>Subscription term used to prorate eligible products in this group.</strong></Tooltip>
+    );
     return (
       <div className="group">
         <div className="group-card">
           <Row>
-            <Col md={4} sm={6} xs={12}>
+            <Col md={4} sm={6} xs={12} className="containers">
               <InlineEdit
                 className="group-header group-edit"
                 activeClassName="group-edit-on"
@@ -97,7 +110,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 </DropdownButton><br />
 
               </span>
-              <span className="group-header" >Subtotal: {this.props.data.currency} {group.netTotal.toLocaleString('en', {     minimumFractionDigits: 2 })} </span><br />
+              <span className="group-header" >Subtotal: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })} </span><br />
               <InlineEdit
                 className="group-description"
                 activeClassName="group-desc-edit-on"
@@ -106,69 +119,87 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 change={this.dataChanged}
               /><Glyphicon glyph="pencil" className="inline-edit" />
             </Col>
-            <Col md={4} sm={6} xs={12}>
+            <Col md={4} sm={6} xs={12} className="containers">
               <Row>
-                <Col md={6} sm={6} xs={6}>
+                <Col md={8} sm={8} xs={8}>
+
                   <span className="group-label" >Optional</span>
+                  <OverlayTrigger placement="top" overlay={optionalTooltip}>
+                    <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
+                  </OverlayTrigger>
                 </Col>
-                <Col md={6} sm={6} xs={6}>
+                <Col md={4} sm={4} xs={4}>
                   <input className="input-group" type="checkbox" checked={group.isOptional} />
                 </Col>
               </Row>
               <Row>
-                <Col md={6} sm={6} xs={6}>
+                <Col md={8} sm={8} xs={8}>
                   <span className="group-label" >Additional Disc. (%)</span>
+                  <OverlayTrigger placement="top" overlay={discountTooltip}>
+                    <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
+                  </OverlayTrigger>
                 </Col>
-                <Col md={6} sm={6} xs={6}>
-                  <input className="input-group" type="text" name="name" value={group.additionaldiscount} />
+                <Col md={4} sm={4} xs={4}>
+                  <input className="input-group input-text" type="text" name="name" value={group.additionaldiscount} />
                 </Col>
               </Row>
               <Row>
-                <Col md={6} sm={6} xs={6}>
+                <Col md={8} sm={8} xs={8}>
                   <span className="group-label" >Subscription Term</span>
+                  <OverlayTrigger placement="top" overlay={subscriptionTooltip}>
+                    <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
+                  </OverlayTrigger>
                 </Col>
-                <Col md={6} sm={6} xs={6}>
-                  <input className="input-group" type="text" name="name" value={group.subscriptionTerm} />
+                <Col md={4} sm={4} xs={4}>
+                  <input className="input-group input-text" type="text" name="name" value={group.subscriptionTerm} />
                 </Col>
               </Row>
             </Col>
-            <Col md={4} sm={6} xs={12}>
-              <Button className="margin" onClick={() => { browserHistory.push(`/ProductSelection?groupId=${group.id}`); }}>Add Products</Button>
-              <ButtonGroup className="margin">
-                <Button onClick={this.cloneGroupIn}>Clone Group</Button>
-                <Button onClick={this.deleteGroupIn} disabled={this.props.groups.length === 1}>Delete Group</Button>
-              </ButtonGroup>
+            <Col md={4} sm={6} xs={12} className="containers">
+              <div>
+                <Button className="margin" title="Add Products Group" onClick={() => { browserHistory.push(`/ProductSelection?groupId=${group.id}`); }}>Add Products</Button>
+                <ButtonGroup className="margin">
+                  <Button onClick={this.cloneGroupIn} title="Clone Group">Clone Group</Button>
+                  <Button onClick={this.deleteGroupIn} title="Delete Group" disabled={this.props.groups.length === 1}>Delete Group</Button>
+                </ButtonGroup>
+              </div>
             </Col>
           </Row>
         </div>
         <div>
           {this.props.segmented ?
-          <SegmentedQuote
-            data={groupLines}
-            cloneLine={this.props.cloneLine}
-            deleteLine={this.props.deleteLine}
-            toggleAllCheckBox={this.props.toggleAllCheckBox}
-            toggleQuoteCheckbox={this.props.toggleAllCheckBox}
-            updateProps={this.props.updateProps}
-            currency={this.props.data.currency}
-            segment={this.props.segment}
-          />
+            <SegmentedQuote
+              data={groupLines}
+              cloneLine={this.props.cloneLine}
+              deleteLine={this.props.deleteLine}
+              toggleAllCheckBox={this.props.toggleAllCheckBox}
+              toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
+              updateProps={this.props.updateProps}
+              currency={this.props.data.currency}
+              segment={this.props.segment}
+              update={this.props.update}
+              updateBundle={this.props.updateBundle}
+              updateSeg={this.props.updateSeg}
+              updateSegBundle={this.props.updateSegBundle}
+            />
           :
-          <EditQuoteGrid
-            data={groupLines}
-            cloneLine={this.props.cloneLine}
-            deleteLine={this.props.deleteLine}
-            toggleAllCheckBox={this.props.toggleAllCheckBox}
-            toggleQuoteCheckbox={this.props.toggleAllCheckBox}
-            updateProps={this.props.updateProps}
-            currency={this.props.data.currency}
-            segment={this.props.segment}
-          />
+              <EditQuoteGrid
+                data={groupLines}
+                cloneLine={this.props.cloneLine}
+                deleteLine={this.props.deleteLine}
+                toggleAllCheckBox={this.props.toggleAllCheckBox}
+                toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
+                updateProps={this.props.updateProps}
+                currency={this.props.data.currency}
+                segment={this.props.segment}
+                update={this.props.update}
+                updateBundle={this.props.updateBundle}
+              />
           }
         </div>
         {groupLines.length > 0 ?
           <div className="sub-footer">
-                Sub Total : {this.props.data.currency} {group.netTotal.toLocaleString('en', {     minimumFractionDigits: 2 })}
+                Sub Total : {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })}
           </div>
               :
           <div className="sub-footer"></div>

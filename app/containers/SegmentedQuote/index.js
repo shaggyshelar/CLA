@@ -40,10 +40,12 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
-                    toggleQuoteCheckbox={this.props.toggleAllCheckBox}
+                    toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
                     updateProps={this.props.updateProps}
                     currency={this.props.currency}
                     segment={this.props.segment}
+                    updateSeg={this.props.updateSeg}
+                    updateSegBundle={this.props.updateSegBundle}
                   />
                 </Tab>
               :
@@ -56,10 +58,12 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
-                    toggleQuoteCheckbox={this.props.toggleAllCheckBox}
+                    toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
                     updateProps={this.props.updateProps}
                     currency={this.props.currency}
                     segment={this.props.segment}
+                    updateSeg={this.props.updateSeg}
+                    updateSegBundle={this.props.updateSegBundle}
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
@@ -69,10 +73,12 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
-                    toggleQuoteCheckbox={this.props.toggleAllCheckBox}
+                    toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
                     updateProps={this.props.updateProps}
                     currency={this.props.currency}
                     segment={this.props.segment}
+                    updateSeg={this.props.updateSeg}
+                    updateSegBundle={this.props.updateSegBundle}
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
@@ -82,10 +88,12 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
-                    toggleQuoteCheckbox={this.props.toggleAllCheckBox}
+                    toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
                     updateProps={this.props.updateProps}
                     currency={this.props.data.currency}
                     segment={this.props.segment}
+                    updateSeg={this.props.updateSeg}
+                    updateSegBundle={this.props.updateSegBundle}
                   />
                 </Tab> : '' }
             </Tabs>
@@ -96,10 +104,12 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               cloneLine={this.props.cloneLine}
               deleteLine={this.props.deleteLine}
               toggleAllCheckBox={this.props.toggleAllCheckBox}
-              toggleQuoteCheckbox={this.props.toggleAllCheckBox}
+              toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
               updateProps={this.props.updateProps}
               currency={this.props.data.currency}
               segment={this.props.segment}
+              update={this.props.update}
+              updateBundle={this.props.updateBundle}
             />
           </Tab>
         </Tabs>

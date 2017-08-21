@@ -1,5 +1,6 @@
 import ReactTable from 'react-table';
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
 import 'react-table/react-table.css';
 import InlineEdit from 'react-edit-inline';
@@ -12,7 +13,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.renderEditable = this.renderEditable.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.renderData = this.renderData.bind(this);
-
+    this.validate = this.validate.bind(this);
     this.state = {
       tableOptions: {
         loading: false,
@@ -38,6 +39,9 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.renderActionItems = this.renderActionItems.bind(this);
     this.deleteLine = this.deleteLine.bind(this);
     this.renderChecbox = this.renderChecbox.bind(this);
+    this.dataChanged = this.dataChanged.bind(this);
+    this.bundleDataChanged = this.bundleDataChanged.bind(this);
+    this.checkAll = this.checkAll.bind(this);
   }
 
 
@@ -66,6 +70,16 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       });
     }
   }
+  checkAll(e) {
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    for (let i = 0; i < d.length; i += 1) {
+      if (!d[i].checked && e.target.checked) {
+        d[i].click();
+      } else if (d[i].checked && !e.target.checked) {
+        d[i].click();
+      }
+    }
+  }
   cloneLine(id) {
     this.props.cloneLine(id);
   }
@@ -76,46 +90,64 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     const data = Object.assign([], this.props.data);
     data.map((item, index) => {
       if (item.type === 'Bundle' && item.bundleProducts) {
+        item.bundleProducts.map((i,index1) => {
+          data[index].bundleProducts[index1].parent = item.id;
+          return this;
+        });
         data.splice(index + 1, 0, ...item.bundleProducts);
       }
+      return this;
     });
     return data;
   }
   renderChecbox(cellInfo) {
     if (!cellInfo.original.isProductOption) {
-      return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original[cellInfo.column.id].id} />);
+      return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original.id} />);
     }
+    return (<span></span>);
+  }
+  dataChanged(data) {
+    const key = Object.keys(data)[0];
+    const field = key.split('*(&)*');
+    const data1 = data[key];
+    this.props.update(field[1], parseFloat(data1), field[2]);
+  }
+  bundleDataChanged(data) {
+    const key = Object.keys(data)[0];
+    const field = key.split('*(&)*');
+    const data1 = data[key];
+    this.props.updateBundle(field[0], field[1], field[2], parseFloat(data1) );
+  }
+  validate(text) {
+    const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
+    return (decimal.test(text) && (parseFloat(text) > 0));
   }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
-      if (cellInfo.column.id === 'quantity') {
-        return (<span> {cellInfo.value}</span>)
-      } else {
-        return (<span>{cellInfo.value.toLocaleString('en', {     minimumFractionDigits: 2 })}</span>) 
-      }
+      return (<span>{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
     } else {
-      return (<div>
-       
-        <InlineEdit
-          className="table-edit"
-          activeClassName="table-edit-input"
-          text={cellInfo.value}
-          paramName="message"
-          change={this.dataChanged}
-        />
-        <Glyphicon className='inline-edit' glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
-        {/* <div
-          style={{ backgroundColor: '#fafafa', marginLeft: '20px' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
-          }}
-        >{cellInfo.value}</div> */}
-      </div>);
+      return (
+        <div>
+          <InlineEdit
+            className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
+            activeClassName="table-edit-input"
+            text={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
+            paramName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+            staticElement="div"
+            change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
+            validate={this.validate}
+            title="asdasd"
+            id={cellInfo.original.isProductOption ? cellInfo.original.parent : cellInfo.original.id}
+          />
+          <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+        </div>);
     }
   }
   renderActionItems(cellInfo) {
     const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : '';
     const reconfigure = cellInfo.original.canReconfigure ? <a title="Reconfigure Lines" className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push('/reconfigureproducts'); }}><Glyphicon glyph="wrench" /></a> : '';
-    const bundle = cellInfo.original.isBundled ? <a title={'Required by ' + cellInfo.original.name}><Glyphicon glyph="info-sign" /></a> : '';
-    const clone = cellInfo.original.canClone ? <a  title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
+    const bundle = cellInfo.original.isBundled ? <a title={`Required by ${cellInfo.original.name}`}><Glyphicon glyph="info-sign" /></a> : '';
+    const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment} title="Segment / Desegment"><Glyphicon glyph="transfer" /></a> : '';
     return (
       <div className="actionItems" >
@@ -124,7 +156,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         {discount}
         {reconfigure}
         {cellInfo.original.isProductOption ? <span></span> : clone}
-        {cellInfo.original.isProductOption ? <span></span> : <a  title="Delete Line" onClick={this.deleteLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="trash" /></a>}
+        {cellInfo.original.isProductOption ? <span></span> : <a title="Delete Line" onClick={this.deleteLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="trash" /></a>}
         {segment}
       </div>
     );
@@ -140,7 +172,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: this.renderActionItems,
       },
       {
-        Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleAllCheckBox} />,
+        Header: <input type="checkbox" className="checkAll" onChange={this.checkAll} />,
         accessor: 'id',
         id: 'id',
         sortable: false,
@@ -157,7 +189,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: ({ index }) => <span>{index + 1}</span>,
 
       }, {
-        Header:  () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
+        Header: () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
         accessor: 'code',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
@@ -181,7 +213,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       },
       {
         Header: () => <span title="LIST UNIT PRICE">LIST UNIT PRICE</span>,
-        id: 'netUnitPrice',
+        accessor: 'listPrice.value',
+        id: 'listPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         Cell: this.renderEditable,
@@ -198,21 +231,21 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Header: () => <span title="MARKUP">MARKUP</span>,
         accessor: 'markup',
         style: { textAlign: 'right' },
-        Cell: this.renderEditable,
+        Cell: (props) => <span>{props.value.toLocaleString('en', { minimumFractionDigits: 2 })} %</span>,
       },
       {
         Header: () => <span title="NET UNIT PRICE">NET UNIT PRICE</span>,
         accessor: 'netUnitPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
-        Cell: this.renderEditable,
+        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,
       },
       {
         Header: () => <span title="NET TOTAL">NET TOTAL</span>,
         accessor: 'totalPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
-        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', {     minimumFractionDigits: 2 })}</span>,
+        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,
       }];
     return (
       <div>
@@ -247,6 +280,7 @@ EditQuoteGrid.propTypes = {
   cloneLine: PropTypes.func,
   toggleAllCheckBox: PropTypes.func,
   toggleQuoteCheckbox: PropTypes.func,
+  update: PropTypes.func,
 };
 
 
