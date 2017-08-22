@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import AddConfigureProductHeader from 'components/AddConfigureProductHeader';
 import AddConfigureProductGrid from 'components/AddConfigureProductGrid';
 import { createStructuredSelector } from 'reselect';
-import makeSelectAddConfigureProducts from './selectors';
+import { makeSelectAddConfigureProducts, makeProductsData } from './selectors';
+import { loadProductsData } from './actions';
+import { addOptions } from '../ReConfigureProducts/actions';
 
 export class AddConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -94,6 +97,16 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.checkAll = this.checkAll.bind(this);
+    this.addOptions = this.addOptions.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getProductsData();
+  }
+
+  addOptions() {
+    this.props.addOptions(true);
+    browserHistory.push('/reconfigureproducts');
   }
 
   toggleSidebar() {
@@ -131,6 +144,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   render() {
+    console.log('this.props.productsData.products', this.props.productsData.products);
     return (
       <div>
         <div
@@ -142,9 +156,10 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             data={this.state.dataProd}
+            addOptions={this.addOptions}
           />
           <AddConfigureProductGrid
-            products={this.state.products}
+            products={this.props.productsData.products ? this.props.productsData.products : []}
             showFilter={this.props.showFilter}
             toggleSidebar={this.toggleSidebar}
             toggleCheckboxChange={this.toggleCheckboxChange}
@@ -162,15 +177,25 @@ AddConfigureProducts.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   toggleFilter: PropTypes.func,
   showFilter: PropTypes.any,
+  getProductsData: PropTypes.func,
+  productsData: PropTypes.any,
+  addOptions: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   AddConfigureProducts: makeSelectAddConfigureProducts(),
+  productsData: makeProductsData(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    getProductsData: () => {
+      dispatch(loadProductsData());
+    },
+    addOptions: (value) => {
+      dispatch(addOptions(value));
+    },
   };
 }
 

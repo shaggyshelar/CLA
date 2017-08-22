@@ -1,3 +1,4 @@
+
 /*
  *
  * ReConfigureProducts
@@ -6,14 +7,14 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Col, Row } from 'react-bootstrap/lib';
 import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
+import _ from 'lodash';
+import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
-import ReconfigureGrid from 'components/ReconfigureGrid';
-import makeSelectReConfigureProducts from './selectors';
-import loadConfigureProductsData from './actions';
-import ReconfigureProductTab from 'components//ReconfigureProductTab';
+import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState } from './selectors';
+import { loadReConfigureProductsData } from './actions';
+
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -61,127 +62,19 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
           unitPrice: '$ 230.653',
         },
       ],
-      products: {
-        productBundle: {
-          id: 1,
-          quoteId: 123,
-          name: 'Meal',
-          products: [
-            {
-              id: 123,
-              code: 'P121',
-              name: 'ABCD',
-              featureId: 123,
-              categoryId: 123,
-              // categoryId: null,
-              isDependent: true,
-              optionSelectionMethod: 123,
-              optionLayout: 'wizard/section/tab',
-              quantity: {
-                value: 123,
-                isEditable: true,
-                isVisible: true,
-                dataType: 'text/select/textarea/inputSelect',
-                selectValues: [
-                  {
-                    id: 123,
-                    value: ':List',
-                    isSelected: true,
-                  },
-                ],
-              },
-              listPrice: {
-                value: 123,
-                isEditable: true,
-                isVisible: true,
-                dataType: 'text/select/textarea/inputSelect',
-                selectValues: [
-                  {
-                    id: 123,
-                    value: ':List',
-                    isSelected: true,
-                  },
-                ],
-              },
-            },
-            {
-              id: 234,
-              code: 'P122',
-              name: 'EFGH',
-              featureId: 456,
-              categoryId: 456,
-              // categoryId: null,
-              isDependent: true,
-              optionSelectionMethod: 456,
-              optionLayout: 'wizard/section/tab',
-              quantity: {
-                value: 565,
-                isEditable: true,
-                isVisible: true,
-                dataType: 'text/select/textarea/inputSelect',
-                selectValues: [
-                  {
-                    id: 123,
-                    value: ':List',
-                    isSelected: true,
-                  },
-                ],
-              },
-              listPrice: {
-                value: 654,
-                isEditable: true,
-                isVisible: true,
-                dataType: 'text/select/textarea/inputSelect',
-                selectValues: [
-                  {
-                    id: 554,
-                    value: ':List',
-                    isSelected: true,
-                  },
-                ],
-              },
-            },
-          ],
-          categories: [
-            {
-              id: 123,
-              name: 'Hardware',
-            },
-            {
-              id: 456,
-              name: 'Software',
-            },
-          ],
-          features: [
-            {
-              id: 123,
-              categoryId: 123,
-              // categoryId: null,
-              name: 'Drinks',
-              DynamicAddEnabled: true,
-            },
-            {
-              id: 456,
-              categoryId: 456,
-              // categoryId: null,
-              name: 'Mc Meal',
-              DynamicAddEnabled: false,
-            },
-          ],
-        },
-        config: {},
-      },
+      reConfigureData: {},
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.checkAll = this.checkAll.bind(this);
   }
-  componentWillMount() {
-
-  }
 
   componentDidMount() {
-    // this.props.getProductsData();
+    // console.log('fromAddOption', this.props.fromAddOption);
+    if (!this.props.fromAddOption) {
+    // console.log('fromAddOption111', this.props.fromAddOption);
+      this.props.getProductsData();
+    }
   }
 
   toggleSidebar() {
@@ -218,7 +111,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     });
   }
 
-
   render() {
     return (
       <div>
@@ -233,7 +125,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             data={this.state.dataProd}
           />
           <ReconfigureProductTab
-            productBundle={this.state.products ? this.state.products.productBundle : {}}
+            reConfigureData={this.props.reConfigureProductData}
             dataProd={this.state.dataProd}
             products={this.props.dataProd}
             showFilter={this.props.showFilter}
@@ -253,20 +145,23 @@ ReConfigureProducts.propTypes = {
   toggleFilter: PropTypes.func,
   showFilter: PropTypes.any,
   dataProd: PropTypes.any,
-  // data: PropTypes.any,
-  // products: PropTypes.any,
-  // getProductsData: PropTypes.func,
+  reConfigureProductData: PropTypes.any,
+  getProductsData: PropTypes.func,
+  fromAddOption: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   ReConfigureProducts: makeSelectReConfigureProducts(),
+  productBundleData: getProductBundle(),
+  reConfigureProductData: getReConfigureProductData(),
+  fromAddOption: getAddOptionState(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    // dispatch,
+    dispatch,
     getProductsData: () => {
-      dispatch(loadConfigureProductsData());
+      dispatch(loadReConfigureProductsData());
     },
   };
 }

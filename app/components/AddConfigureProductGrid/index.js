@@ -58,6 +58,7 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
     return (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />);
   }
   render() {
+    console.log('this.props.products Grid', this.props.products);
     const columns = [{
       columns: [{
         Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
