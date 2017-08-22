@@ -29,6 +29,7 @@ import {
   UPDATE_SEG_BUNDLE,
   UPDATE_GROUP_DATA,
   UPDATE_GROUP_VAL,
+  SEGMENT,
 } from './constants';
 
 export function defaultAction() {
@@ -207,4 +208,10 @@ export function updateGroupValue(id, field, data) {
     data,
   };
 }
-
+export function segment(id, value) {
+  return {
+    type: SEGMENT,
+    id,
+    value,
+  };
+}

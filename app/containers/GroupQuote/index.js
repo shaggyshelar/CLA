@@ -102,6 +102,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     const subscriptionTooltip = (
       <Tooltip id="stooltip" bsClass="tooltip"><strong>Subscription term used to prorate eligible products in this group.</strong></Tooltip>
     );
+    const segmented = _.filter(groupLines, { isSegmented: true }).length;
     return (
       <div className="group">
         <div className="group-card">
@@ -197,7 +198,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
           </Row>
         </div>
         <div>
-          {this.props.segmented ?
+          {segmented ?
             <SegmentedQuote
               data={groupLines}
               cloneLine={this.props.cloneLine}

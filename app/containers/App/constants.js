@@ -63,3 +63,5 @@ export const UPDATE_SEG = 'app/EditQuote/UPDATE_SEG';
 export const UPDATE_SEG_BUNDLE = 'app/EditQuote/UPDATE_SEG_BUNDLE';
 export const UPDATE_GROUP_DATA = 'app/EditQuote/UPDATE_GROUP_DATA';
 export const UPDATE_GROUP_VAL = 'app/EditQuote/UPDATE_GROUP_VAL';
+export const SEGMENT = 'app/EditQuote/SEGMENT';
+export const DESEGMENT = 'app/EditQuote/DESEGMENT';

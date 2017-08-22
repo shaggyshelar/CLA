@@ -38,7 +38,6 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const data1 = data[key];
-    console.log('data', data);
     this.props.updateSeg(field[1], field[2], field[3], parseFloat(data1));
     this.forceUpdate();
   }
@@ -46,7 +45,6 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const data1 = data[key];
-    console.log('bundle', data);
     // this.props.updateBundle(field[0], field[1], field[2], parseFloat(data1) );
   }
   validate(text) {
@@ -57,7 +55,6 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     if (cellInfo.original.editable === false) {
       return (<span> {this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
     } else {
-      console.log(cellInfo);
       const col = cellInfo.column.id.split('.')[0];
       return (<div>
         <InlineEdit
@@ -73,7 +70,6 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     }
   }
   renderColumns(data) {
-    console.log("row", data);
     const columns = [
       {
         accessor: 'code',
@@ -103,7 +99,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         accessor: 'prop',
         sortable: false,
         style: { textAlign: 'left' },
-        Cell: (props) => <span> {props.value.replace(/([A-Z])/g, ' $1').toUpperCase()}</span>
+        Cell: (props) => <span><strong> {props.value.replace(/([A-Z])/g, ' $1').toUpperCase()}</strong></span>
       },
     ];
     data.segmentData.columns.map((i) => (

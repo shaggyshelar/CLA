@@ -477,6 +477,18 @@ padding-bottom: 15px;
 .Sidebar .nav {
   width: 80%;
 }
+.hover-tip .lab {
+    font-weight: bold;
+    float: left;
+    margin: 5px;
+}
+.hover-tip .val {
+    float: right;
+     margin: 5px;
+}
+.hover-tip .tooltip-inner  {
+    height: 150px;
+}
 .rt-td input[type=checkbox] {
     cursor: pointer;
 }

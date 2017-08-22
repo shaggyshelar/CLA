@@ -36,6 +36,8 @@ import {
   UPDATE_SEG_BUNDLE,
   UPDATE_GROUP_DATA,
   UPDATE_GROUP_VAL,
+  SEGMENT,
+  DESEGMENT,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -153,6 +155,13 @@ function appReducer(state = initialState, action) {
         const bundleLine = _.filter(lineBundle[0].bundleProducts, { id: action.id });
         bundleLine[0][action.field].value = action.data;
         return state.setIn(['data', 'lines'], fromJS(linesBundle));
+      }
+    case SEGMENT:
+      {
+        const lines = state.getIn(['data', 'lines']).toJS();
+        const line = _.filter(lines, { id: action.id });
+        line[0].isSegmented = action.value;
+        return state.setIn(['data', 'lines'], fromJS(lines));
       }
     default:
       return state;
