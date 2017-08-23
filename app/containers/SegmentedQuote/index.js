@@ -19,11 +19,20 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
   }
   renderSegmentData() {
     const data = {};
-    data.NormalLines = _.filter(this.props.data, { canSegment: false });
-    data.CustomLines = _.filter(this.props.data, { canSegment: true, segmentData: { type: 'Custom' } });
-    data.MonthlyLines = _.filter(this.props.data, { canSegment: true, segmentData: { type: 'Monthly' } });
-    data.YearlyLines = _.filter(this.props.data, { canSegment: true, segmentData: { type: 'Yearly' } });
-    data.QuaterlyLines = _.filter(this.props.data, { canSegment: true, segmentData: { type: 'Quaterly' } });
+    let bundleLines = [];
+    _.map(this.props.data, (e) => {
+      const a = _.filter(e.bundleProducts, { isSegmented: true });
+      if (a.length) {
+        bundleLines = bundleLines.concat(a);
+      }
+    });
+
+    data.NormalLines = _.filter(this.props.data, { isSegmented: false });
+    data.CustomLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Custom' } });
+    data.CustomLines = data.CustomLines.concat(_.filter(bundleLines, {segmentData: { type: 'Custom' } }));
+    data.MonthlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Monthly' } });
+    data.YearlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Yearly' } });
+    data.QuaterlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Quaterly' } });
     return data;
   }
   render() {
@@ -34,7 +43,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
           <Tab eventKey={1} title="Segmented">
             <Tabs animation id="inner-tab-example">
               { data.CustomLines.length > 0 ?
-                <Tab eventKey={1} title="Custom">
+                <Tab eventKey={'custom'} title="Custom">
                   <SegmentedEditQuoteGrid
                     data={data.CustomLines}
                     cloneLine={this.props.cloneLine}
@@ -52,7 +61,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               ''
             }
               { data.MonthlyLines.length > 0 ?
-                <Tab eventKey={2} title="Monthly">
+                <Tab eventKey={'monthly'} title="Monthly">
                   <SegmentedEditQuoteGrid
                     data={data.MonthlyLines}
                     cloneLine={this.props.cloneLine}
@@ -67,7 +76,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
-                <Tab eventKey={3} title="Quaterly">
+                <Tab eventKey={'quaterly'} title="Quaterly">
                   <SegmentedEditQuoteGrid
                     data={data.QuaterlyLines}
                     cloneLine={this.props.cloneLine}
@@ -82,7 +91,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
-                <Tab eventKey={4} title="Yearly">
+                <Tab eventKey={'yearly'} title="Yearly">
                   <SegmentedEditQuoteGrid
                     data={data.YearlyLines}
                     cloneLine={this.props.cloneLine}
@@ -126,6 +135,12 @@ SegmentedQuote.propTypes = {
   segment: PropTypes.any,
   data: PropTypes.any,
   updateProps: PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired,
+  updateBundle: PropTypes.func.isRequired,
+  updateSegBundle: PropTypes.func.isRequired,
+  updateSeg: PropTypes.func.isRequired,
+  toggleQuoteCheckbox: PropTypes.func.isRequired,
+
 
 };
 

@@ -38,7 +38,7 @@ export function* getData() {
             type: 'Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 456,
+            groupId: '456',
             markup: 123,
             quantity: {
               value: 123,
@@ -61,7 +61,7 @@ export function* getData() {
               type: 'Product/Bundle',
               isBundled: true,
               isDisableReconfiguration: false,
-              groupId: 456,
+              groupId: '456',
               markup: 123,
               quantity: {
                 value: 123,
@@ -94,19 +94,20 @@ export function* getData() {
               },
               canClone: true,
               canSegment: true,
+              isSegmented: true,
               segmentData: {
                 type: 'Custom',
                 columns: [
                   {
                     name: 'Custom',
-                    quantity: 123,
-                    listPrice: 123,
-                    uplift: 123,
+                    quantity: 345,
+                    listPrice: 3453453,
+                    uplift: 345345,
                     startDate: 'Date',
                     endDate: 'Date',
-                    additionalDiscount: 123,
-                    netunitPrice: 123,
-                    netTotal: 123,
+                    additionalDiscount: 334534,
+                    netunitPrice: 345345,
+                    netTotal: 345333,
                   },
                   {
                     name: 'Custom 1',
@@ -176,7 +177,7 @@ export function* getData() {
                 type: 'Product/Bundle',
                 isBundled: true,
                 isDisableReconfiguration: false,
-                groupId: 456,
+                groupId: '456',
                 markup: 123,
                 quantity: {
                   value: 123,
@@ -208,7 +209,8 @@ export function* getData() {
                   ],
                 },
                 canClone: true,
-                canSegment: false,
+                canSegment: true,
+                isSegmented: true,
                 segmentData: null,
                 canReconfigure: false,
                 canShowDiscountScheduler: false,
@@ -276,6 +278,7 @@ export function* getData() {
             },
             canClone: true,
             canSegment: false,
+            isSegmented: false,
             segmentData: null,
             canReconfigure: false,
             canShowDiscountScheduler: false,
@@ -331,7 +334,7 @@ export function* getData() {
             type: 'Product',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 456,
+            groupId: '456',
             markup: 123,
             quantity: {
               value: 123,
@@ -364,6 +367,7 @@ export function* getData() {
             },
             canClone: true,
             canSegment: false,
+            isSegmented: false,
             segmentData: null,
             canReconfigure: false,
             canShowDiscountScheduler: true,
@@ -416,10 +420,10 @@ export function* getData() {
             id: '222',
             code: 'Car3422',
             name: 'Lamborghini',
-            type: 'Product/Bundle',
+            type: 'Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 456,
+            groupId: '456',
             markup: 123,
             quantity: {
               value: 123,
@@ -434,6 +438,122 @@ export function* getData() {
                 },
               ],
             },
+            bundleProducts: [{
+              id: '3453453',
+              isProductOption: true,
+              code: 'LAmbo154AC',
+              name: 'Lambo AC',
+              type: 'Product',
+              isBundled: true,
+              isDisableReconfiguration: false,
+              groupId: '456',
+              markup: 123,
+              quantity: {
+                value: 123,
+                isEditable: true,
+                isVisible: true,
+                dataType: 'text/select/textarea/inputSelect',
+                selectValues: [
+                  {
+                    id: 123,
+                    value: 'List',
+                    isSelected: true,
+                  },
+                ],
+              },
+              discountSchedule: {
+                id: 123,
+                name: 'Diwali',
+                discountUnit: 'Percent/Amount',
+                type: 'Range/Slab',
+                tiers: [
+                  {
+                    id: 123,
+                    name: 'tier1',
+                    lowerBound: 1,
+                    upperBound: 10,
+                    discountpercent: 10,
+                    discountamount: 123,
+                  },
+                ],
+              },
+              canClone: true,
+              canSegment: true,
+              isSegmented: true,
+              segmentData: {
+                type: 'Custom',
+                columns: [
+                  {
+                    name: 'Custom',
+                    quantity: 345,
+                    listPrice: 3453453,
+                    uplift: 345345,
+                    startDate: 'Date',
+                    endDate: 'Date',
+                    additionalDiscount: 334534,
+                    netunitPrice: 345345,
+                    netTotal: 345333,
+                  },
+                  {
+                    name: 'Custom 1',
+                    quantity: 123,
+                    listPrice: 123,
+                    uplift: 123,
+                    startDate: 'Date',
+                    endDate: 'Date',
+                    additionalDiscount: 123,
+                    netunitPrice: 123,
+                    netTotal: 123,
+                  },
+                ],
+              },
+              canReconfigure: false,
+              canShowDiscountScheduler: false,
+              listPrice: {
+                value: 123,
+                isEditable: true,
+                isVisible: true,
+                dataType: 'text/select/textarea/inputSelect',
+                selectValues: [
+                  {
+                    id: 123,
+                    value: 'List',
+                    isSelected: true,
+                  },
+                ],
+              },
+              isTaxable: true,
+              additionalDiscount: {
+                value: 123,
+                isEditable: true,
+                isVisible: true,
+                dataType: 'text/select/textarea/inputSelect',
+                selectValues: [
+                  {
+                    id: 123,
+                    value: 'List',
+                    isSelected: true,
+                  },
+                ],
+              },
+              netUnitPrice: 123,
+              totalPrice: 123,
+              netTotal: 123,
+              pricingMethod: {
+                values: [
+                  {
+                    id: 123,
+                    value: 'List',
+                    isSelected: true,
+                  },
+                  {
+                    id: 123,
+                    value: ':Cost',
+                    isSelected: false,
+                  },
+                ],
+              },
+            }],
             discountSchedule: {
               id: 123,
               name: 'Diwali',
@@ -452,6 +572,7 @@ export function* getData() {
             },
             canClone: false,
             canSegment: true,
+            isSegmented: false,
             segmentData: {
               type: 'Custom',
               columns: [
@@ -533,7 +654,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 456,
+            groupId: '456',
             markup: 123,
             quantity: {
               value: 123,
@@ -566,6 +687,7 @@ export function* getData() {
             },
             canClone: false,
             canSegment: true,
+            isSegmented: false,
             segmentData: {
               type: 'Monthly',
               columns: [
@@ -658,7 +780,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 789,
+            groupId: '789',
             markup: 123,
             quantity: {
               value: 123,
@@ -691,12 +813,13 @@ export function* getData() {
             },
             canClone: true,
             canSegment: true,
+            isSegmented: true,
             segmentData: {
               type: 'Custom',
               columns: [
                 {
                   name: 'Custom',
-                  quantity: 12541,
+                  quantity: 123123,
                   listPrice: 12541,
                   uplift: 12541,
                   startDate: 'Date',
@@ -772,7 +895,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 789,
+            groupId: '789',
             markup: 123,
             quantity: {
               value: 123,
@@ -805,6 +928,7 @@ export function* getData() {
             },
             canClone: true,
             canSegment: true,
+            isSegmented: true,
             segmentData: {
               type: 'Custom',
               columns: [
@@ -886,7 +1010,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 789,
+            groupId: '789',
             markup: 123,
             quantity: {
               value: 123,
@@ -919,6 +1043,7 @@ export function* getData() {
             },
             canClone: true,
             canSegment: true,
+            isSegmented: false,
             segmentData: {
               type: 'Monthly',
               columns: [
@@ -1011,7 +1136,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 789,
+            groupId: '789',
             markup: 123,
             quantity: {
               value: 123,
@@ -1044,6 +1169,7 @@ export function* getData() {
             },
             canClone: true,
             canSegment: true,
+            isSegmented: false,
             segmentData: {
               type: 'Yearly',
               columns: [
@@ -1114,7 +1240,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: true,
-            groupId: 123,
+            groupId: '123',
             markup: 123,
             quantity: {
               value: 123,
@@ -1147,6 +1273,7 @@ export function* getData() {
             },
             canClone: true,
             canSegment: true,
+            isSegmented: true,
             segmentData: {
               type: 'Yearly',
               columns: [
@@ -1217,7 +1344,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: true,
-            groupId: 123,
+            groupId: '123',
             markup: 123,
             quantity: {
               value: 123,
@@ -1250,6 +1377,7 @@ export function* getData() {
             },
             canClone: true,
             canSegment: true,
+            isSegmented: true,
             segmentData: {
               type: 'Quaterly',
               columns: [
@@ -1342,7 +1470,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 123,
+            groupId: '123',
             markup: 123,
             quantity: {
               value: 123,
@@ -1375,6 +1503,7 @@ export function* getData() {
             },
             canClone: false,
             canSegment: true,
+            isSegmented: true,
             segmentData: {
               type: 'Custom',
               columns: [
@@ -1456,7 +1585,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 123,
+            groupId: '123',
             markup: 123,
             quantity: {
               value: 123,
@@ -1489,6 +1618,7 @@ export function* getData() {
             },
             canClone: true,
             canSegment: true,
+            isSegmented: true,
             segmentData: {
               type: 'Monthly',
               columns: [
@@ -1581,7 +1711,7 @@ export function* getData() {
             type: 'Product/Bundle',
             isBundled: false,
             isDisableReconfiguration: false,
-            groupId: 123,
+            groupId: '123',
             markup: 123,
             quantity: {
               value: 123,
@@ -1614,6 +1744,7 @@ export function* getData() {
             },
             canClone: true,
             canSegment: true,
+            isSegmented: false,
             segmentData: {
               type: 'Quaterly',
               columns: [
@@ -1702,7 +1833,7 @@ export function* getData() {
         ],
         groups: [
           {
-            id: 123,
+            id: '123',
             name: 'Group1',
             isOptional: true,
             description: 'longtext',
@@ -1711,7 +1842,7 @@ export function* getData() {
             netTotal: 52000,
           },
           {
-            id: 456,
+            id: '456',
             name: 'Group2',
             isOptional: true,
             description: 'longtext',
@@ -1720,7 +1851,7 @@ export function* getData() {
             netTotal: 52000,
           },
           {
-            id: 789,
+            id: '789',
             name: 'Group3',
             isOptional: true,
             description: 'longtext',

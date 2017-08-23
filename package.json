@@ -225,6 +225,7 @@
     "react": "15.4.1",
     "react-bootstrap": "^0.31.1",
     "react-bootstrap-typeahead": "^2.0.0-alpha.1",
+    "react-ckeditor-component": "^1.0.3",
     "react-dom": "15.4.1",
     "react-edit-inline": "^1.0.8",
     "react-helmet": "3.2.2",

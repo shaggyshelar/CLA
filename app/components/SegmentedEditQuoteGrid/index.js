@@ -47,6 +47,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     this.renderActionItems = this.renderActionItems.bind(this);
     this.deleteLine = this.deleteLine.bind(this);
     this.renderChecbox = this.renderChecbox.bind(this);
+    this.renderCell = this.renderCell.bind(this);
   }
   setTableOption(event) {
     const target = event.target;
@@ -59,7 +60,22 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       },
     });
   }
-  
+  renderCell(index, e) {
+    const data = e.original.segmentData.columns[index];
+    const tooltip = (
+      <Tooltip id={`${e.original.id}-${e.original.segmentData.columns[index].name}`} bsClass="tooltip" className="hover-tip">
+        <span className="lab">QUANTITY</span><span className="val">{data.quantity}</span><br />
+        <span className="lab">LIST PRICE</span><span className="val">{this.props.currency} {data.listPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">UPLIFT</span><span className="val">{this.props.currency} {data.uplift.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">ADD. DISC.</span><span className="val">{data.additionalDiscount.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">UNIT PRICE</span><span className="val">{this.props.currency} {data.netunitPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">TOTAL</span><span className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+      </Tooltip>
+    );
+    return (<OverlayTrigger placement="top" overlay={tooltip}>
+      <span>{e.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>
+    </OverlayTrigger>);
+  }
   handleToggle(index) {
     const selectedData = this.props.data[index];
     if (selectedData !== undefined) {
@@ -95,10 +111,10 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     } else {
       return (<div>
         <InlineEdit
-           className="table-edit"
-           activeClassName="table-edit-input"
-           text={cellInfo.value}
-           paramName="message"
+          className="table-edit"
+          activeClassName="table-edit-input"
+          text={cellInfo.value}
+          paramName="message"
         />
         <Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
         {/* <div
@@ -162,6 +178,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         className: 'table-edit',
+        Cell: this.renderCell.bind(this, index),
       })
     ));
     columns.push({
@@ -180,7 +197,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     const reconfigure = cellInfo.original.canReconfigure ? <a className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push('/reconfigureproducts'); }}><Glyphicon glyph="wrench" /></a> : '';
     const bundle = cellInfo.original.isBundled ? <a><Glyphicon glyph="info-sign" /></a> : '';
     const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
-    const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment} title="segment/desegment"><Glyphicon glyph="transfer" /></a> : '';
+    const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, false)} title="segment/desegment"><Glyphicon glyph="transfer" /></a> : '';
     return (
       <div className="actionItems" >
         {/* <a><Glyphicon glyph="star-empty" /></a> */}
@@ -211,7 +228,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
             SubComponent={(row) => (
               <SegmentSubComponent
                 data={_.filter(this.props.data, { id: row.original.id })[0]}
-                currency = {this.props.currency}
+                currency= {this.props.currency}
                 updateSeg={this.props.updateSeg}
                 updateSegBundle={this.props.updateSegBundle}
               />

@@ -24,6 +24,10 @@ import { cloneLine,
   updateBundle,
   updateSeg,
   updateSegBundle,
+  updateGroupData,
+  updateGroupValue,
+  segment,
+  deSegment,
  } from '../App/actions';
 
 
@@ -34,6 +38,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.state = {
       selectedQuotes: [],
       segmented: false,
+      segLines: [],
     };
 
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
@@ -49,6 +54,12 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   componentWillMount() {
     // this.props.getAllData();
     // this.props.getXrmData();
+    const segLines = _.filter(this.props.data.toJS().lines, { isSegmented: true });
+    if (segLines.length) {
+      this.setState({
+        segmented: true 
+      });
+    }
     if (window.parent.Xrm !== undefined) {
       console.log(window.parent.Xrm.Page.context.getClientUrl());
       console.log(window.parent.Xrm.Page.data.entity.getId().replace('{', '').replace('}', ''));
@@ -70,13 +81,16 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.props.ungroup(data);
   }
 
-  segment() {
-    this.setState({ segmented: !this.state.segmented });
+  segment(id, value) {
+    this.props.segment(id, value);
+  }
+  deSegment(id) {
+    this.props.deSegment(id, false);
   }
 
   group() {
     const data = this.props.data.toJS();
-    const randomID = parseInt(Math.random() * 100000, 0);
+    const randomID = parseInt(Math.random() * 100000, 0).toString();
     if (data.linesGrouped) {
       const name = `Group ${data.groups.length}`;
       data.groups.push({
@@ -145,12 +159,12 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     }, this);
     this.props.deleteSelectedLines(dataObj.lines);
 
-    // const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-    // for (let i = 0; i < d.length; i += 1) {
-    //   if (d[i].checked) {
-    //     d[i].click();
-    //   }
-    // }
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    for (let i = 0; i < d.length; i += 1) {
+      if (d[i].checked) {
+        d[i].click();
+      }
+    }
   }
 
   calculateTotal() {
@@ -183,6 +197,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   render() {
     const grouped = this.props.data.toJS().linesGrouped;
+    const segmented = _.filter(this.props.data.toJS().lines, { isSegmented: true }).length;
     return (
       <div>
 
@@ -218,18 +233,20 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateProps={this.updateProps}
               cloneGroup={this.props.cloneGroup}
               deleteGroup={this.props.deleteGroup}
-              segmented={this.state.segmented}
+              segmented={segmented}
               segment={this.segment}
               update={this.props.update}
               updateBundle={this.props.updateBundle}
               updateSeg={this.props.updateSeg}
               updateSegBundle={this.props.updateSegBundle}
               location={this.props.location}
+              updateGroupData={this.props.updateGroupData}
+              updateGroupValue={this.props.updateGroupValue}
             />
           </div>
         :
           <div className="qoute-container">
-            {this.state.segmented ?
+            {segmented ?
             <SegmentedQuote
               data={this.props.data ? this.props.data.toJS().lines : []}
               cloneLine={this.props.cloneLine}
@@ -243,6 +260,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateBundle={this.props.updateBundle}
               updateSeg={this.props.updateSeg}
               updateSegBundle={this.props.updateSegBundle}
+              
             />
             :
             <EditQuoteGrid
@@ -338,6 +356,15 @@ function mapDispatchToProps(dispatch) {
     },
     updateSegBundle: (parentId, id, name, field, data) => {
       dispatch(updateSegBundle(parentId, id, name, field, data));
+    },
+    updateGroupData: (id, field, data) => {
+      dispatch(updateGroupData(id, field, data));
+    },
+    updateGroupValue: (id, field, data) => {
+      dispatch(updateGroupValue(id, field, data));
+    },
+    segment: (id, value) => {
+      dispatch(segment(id, value));
     },
   };
 }
