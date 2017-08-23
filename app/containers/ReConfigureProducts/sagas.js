@@ -1,8 +1,8 @@
-import { take, put, cancel, takeLatest } from 'redux-saga/effects';
+import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
 // import { LOAD_REPOS } from 'containers/App/constants';
-import { LOAD_CONFIGURE_PRODUCTS_DATA } from './constants';
-import { loadReConfigureProductsDataSuccess, dataLoadingError } from './actions';
+import { LOAD_CONFIGURE_PRODUCTS_DATA, SAVE_CONFIGURE_PRODUCTS_DATA } from './constants';
+import { loadReConfigureProductsDataSuccess, dataLoadingError, configuredProductsSaveSuccess } from './actions';
 
 // Individual exports for testing
 export function* getProductBundleSaga() {
@@ -188,10 +188,10 @@ export function* getProductBundleSaga() {
           },
           {
             id: 456,
-          // categoryId: 456,
-            categoryId: null,
+            categoryId: 456,
+           // categoryId: null,
             name: 'Mc Meal',
-            DynamicAddEnabled: false,
+            DynamicAddEnabled: true,
           },
           {
             id: 789,
@@ -210,6 +210,31 @@ export function* getProductBundleSaga() {
   }
 }
 
+export function* saveProducts(data) {
+  try {
+    console.log('data', data);
+    // const requestURL = 'http://localhost:3000/v1/quote/calculate/1';
+
+    // const options = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(data),
+    // };
+    // const quotes = yield call(request, requestURL, options);
+    yield put(configuredProductsSaveSuccess(data));
+  } catch (err) {
+    yield put(dataLoadingError(err));
+  }
+}
+
+export function* saveConfiguredProducts() {
+  const { data } = yield take(SAVE_CONFIGURE_PRODUCTS_DATA);
+  yield call(saveProducts, data);
+  yield take(LOCATION_CHANGE);
+}
+
 export function* loadProductBundleData() {
   const watcher = yield takeLatest(LOAD_CONFIGURE_PRODUCTS_DATA, getProductBundleSaga);
   // Suspend execution until location changes
@@ -218,17 +243,10 @@ export function* loadProductBundleData() {
 }
 
 // All sagas to be loaded
-export default[loadProductBundleData];
+// export default[loadProductBundleData];
 
-
-// // import { take, call, put, select } from 'redux-saga/effects';
-
-// // Individual exports for testing
-// export function* defaultSaga() {
-//   // See example in containers/HomePage/sagas.js
-// }
-
-// // All sagas to be loaded
-// export default [
-//   defaultSaga,
-// ];
+// All sagas to be loaded
+export default [
+  loadProductBundleData,
+  saveConfiguredProducts,
+];

@@ -22,6 +22,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         addProductsWait={this.addProductsWait}
         checkAll={this.props.checkAll}
         features={item.features}
+        deleteProduct={this.props.deleteProduct}
       />
     </Tab>);
   }
@@ -37,6 +38,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         addProductsWait={this.addProductsWait}
         checkAll={this.props.checkAll}
         features={item}
+        deleteProduct={this.props.deleteProduct}
       />);
   }
 
@@ -82,6 +84,7 @@ ReconfigureProductTab.propTypes = {
   showFilter: PropTypes.any,
   reConfigureData: PropTypes.any,
   dataProd: PropTypes.any,
+  deleteProduct: PropTypes.func,
 };
 
 export default ReconfigureProductTab;

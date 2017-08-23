@@ -41,7 +41,7 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
           </ButtonGroup>
           <ButtonGroup className="margin">
             <Button onClick={() => { browserHistory.push('/EditQuote'); }}>Cancel</Button>
-            <Button bsStyle="primary" onClick={this.props.addProducts}>Save</Button>
+            <Button bsStyle="primary" onClick={this.props.saveProducts}>Save</Button>
           </ButtonGroup>
 
         </Col>
@@ -53,7 +53,7 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
 
 ReconfigureProductHeader.propTypes = {
   // data: PropTypes.any,
-  addProducts: PropTypes.func,
+  saveProducts: PropTypes.func,
 };
 
 export default ReconfigureProductHeader;

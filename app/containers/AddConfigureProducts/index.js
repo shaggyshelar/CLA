@@ -144,7 +144,6 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   render() {
-    console.log('this.props.productsData.products', this.props.productsData.products);
     return (
       <div>
         <div

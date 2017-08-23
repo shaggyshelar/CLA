@@ -43,6 +43,7 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
           checkAll={this.props.checkAll}
           toggleCheckAll={this.props.checkAll}
           feature={feature}
+          deleteProduct={this.props.deleteProduct}
         />
         {addButton}
       </div>);
@@ -70,6 +71,7 @@ ReconfigureFeaturePanel.propTypes = {
   toggleCheckboxChange: PropTypes.func,
   addProductsWait: PropTypes.func,
   features: PropTypes.any,
+  deleteProduct: PropTypes.func,
 };
 
 export default ReconfigureFeaturePanel;

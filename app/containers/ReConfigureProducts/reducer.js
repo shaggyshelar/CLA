@@ -12,6 +12,9 @@ import {
   LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   LOAD_CONFIGURE_PRODUCTS_DATA_ERROR,
   ADD_OPTIONS,
+  SAVE_CONFIGURE_PRODUCTS_DATA,
+  SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS,
+  DELETE_PRODUCT,
 } from './constants';
 
 const initialState = fromJS({
@@ -31,7 +34,6 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('loading', true)
         .set('error', false);
     case LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS: {
-      console.log('fromAddOptions get', state.get('fromAddOptions'));
       const reConfigureProducts = {};
       const productBundelData = action.productBundelData;
       if (!_.isUndefined(action.productBundelData) !== undefined && !_.isUndefined(action.productBundelData)) {
@@ -107,12 +109,13 @@ function reConfigureProductsReducer(state = initialState, action) {
            // For Other tab and Other Options
           if (otherFeatures.length > 0 || otherProducts.length > 0) {
             const otherCategory = {};
-            otherCategory.id = Math.random();
+            otherCategory.id = parseInt(Math.random() * 100000, 0);
             otherCategory.name = 'Other';
             otherCategory.features = otherFeatures;
+            // Create Other Options feature
             if (otherProducts.length > 0) {
               const otherOptions = {};
-              otherOptions.id = Math.random();
+              otherOptions.id = parseInt(Math.random() * 100000, 0);
               otherOptions.categoryId = otherCategory.id;
               otherOptions.name = 'Other Options';
               otherOptions.products = [];
@@ -170,9 +173,9 @@ function reConfigureProductsReducer(state = initialState, action) {
         }
       }
       return state
-        .set('productBundleData', action.productBundelData)
+        .set('productBundleData', fromJS(action.productBundelData))
         .set('loading', false)
-        .set('reConfigureProductData', reConfigureProducts);
+        .set('reConfigureProductData', fromJS(reConfigureProducts));
     }
     case LOAD_CONFIGURE_PRODUCTS_DATA_ERROR: {
       return state
@@ -180,9 +183,36 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('loading', false);
     }
     case ADD_OPTIONS :
-      console.log('fromAddOptions reducer', action.fromAddOptions);
       return state
         .set('fromAddOption', action.fromAddOptions);
+    case SAVE_CONFIGURE_PRODUCTS_DATA:
+      return state
+        .set('loading', true)
+        .set('error', false);
+    case SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS:
+      return state
+      .set('productBundleData', action.data)
+      .set('loading', false);
+    case DELETE_PRODUCT: {
+      const reConfigureProductData = state.get('reConfigureProductData').toJS();
+      if (reConfigureProductData.categories.length > 0) {
+        const category = _.find(reConfigureProductData.categories, { id: action.product.categoryId });
+        if (category) {
+          const feature = _.find(category.features, { id: action.product.featureId });
+          if (feature) {
+            _.remove(feature.products, (currentObject) => currentObject.id === action.product.id);
+          }
+        }
+      } else if (reConfigureProductData.features.length > 0) {
+        const feature = _.find(reConfigureProductData.features, { id: action.product.featureId });
+        if (feature) {
+          _.remove(feature.products, (currentObject) => currentObject.id === action.product.id);
+        }
+      }
+
+      return state
+        .set('reConfigureProductData', fromJS(reConfigureProductData));
+    }
     default:
       return state;
   }

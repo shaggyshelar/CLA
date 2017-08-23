@@ -32,6 +32,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       isVisible: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
+    this.deleteProduct = this.deleteProduct.bind(this);
+    this.renderActionItems = this.renderActionItems.bind(this);
   }
 
   setTableOption(event) {
@@ -64,7 +66,41 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     if (this.props.feature.DynamicAddEnabled) {
       input = (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />);
     } else {
-      input = (<a className="disabledIcon"><Glyphicon glyph="trash" /></a>);
+      input = (<a className="disabledIcon"><Glyphicon glyph="trash" onChange={this.props.toggleCheckboxChange} /></a>);
+    }
+    return input;
+  }
+
+  deleteProduct(product) {
+    const productObj = {
+      id: product.id,
+      featureId: product.featureId,
+      categoryId: product.categoryId,
+    };
+    this.props.deleteProduct(productObj);
+  }
+  renderActionItems(cellInfo) {
+    // const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : '';
+    // const reconfigure = cellInfo.original.canReconfigure ? <a title="Reconfigure Lines" className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push('/reconfigureproducts'); }}><Glyphicon glyph="wrench" /></a> : '';
+    // const bundle = cellInfo.original.isBundled ? <a title={`Required by ${cellInfo.original.name}`}><Glyphicon glyph="info-sign" /></a> : '';
+    // const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
+    // const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment} title="Segment / Desegment"><Glyphicon glyph="transfer" /></a> : '';
+    // return (
+    //   <div className="actionItems" >
+    //     {/* <a><Glyphicon glyph="star-empty" /></a> */}
+    //     {bundle}
+    //     {discount}
+    //     {reconfigure}
+    //     {cellInfo.original.isProductOption ? <span></span> : clone}
+    //     {cellInfo.original.isProductOption ? <span></span> : <a title="Delete Line" onClick={this.deleteLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="trash" /></a>}
+    //     {segment}
+    //   </div>
+    // );
+    let input;
+    if (this.props.feature.DynamicAddEnabled) {
+      input = (<a className="disabledIcon"><Glyphicon glyph="trash" onClick={this.deleteProduct.bind(this, cellInfo.original)} /></a>);
+    } else {
+      input = (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={cellInfo.original.id} />);
     }
     return input;
   }
@@ -77,7 +113,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         sortable: false,
         width: 50,
         style: { textAlign: 'center' },
-        Cell: (props) => this.renderInput(props),
+        Cell: this.renderActionItems,
       },
         {
           Header: 'QUANTITY',
@@ -114,7 +150,6 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
             columns={columns}
             defaultPageSize={this.props.products.length}
             pageSize={this.props.products.length}
-            // style={{ position: 'absolute', width: '100%' }}
             style={{ width: '100%' }}
             {...this.state.tableOptions}
 
@@ -140,6 +175,7 @@ ReconfigureGrid.propTypes = {
   toggleCheckboxChange: React.PropTypes.func,
   toggleFilter: React.PropTypes.func,
   feature: React.PropTypes.any,
+  deleteProduct: React.PropTypes.func,
 };
 
 export default ReconfigureGrid;

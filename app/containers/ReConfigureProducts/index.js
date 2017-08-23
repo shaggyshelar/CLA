@@ -13,7 +13,7 @@ import _ from 'lodash';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
 import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState } from './selectors';
-import { loadReConfigureProductsData } from './actions';
+import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct } from './actions';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -67,16 +67,45 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.checkAll = this.checkAll.bind(this);
+    this.saveProducts = this.saveProducts.bind(this);
   }
 
+
   componentDidMount() {
-    // console.log('fromAddOption', this.props.fromAddOption);
+    console.log('fromAddOption', this.props.fromAddOption);
     if (!this.props.fromAddOption) {
     // console.log('fromAddOption111', this.props.fromAddOption);
       this.props.getProductsData();
     }
   }
 
+  saveProducts() {
+    const updatedProducts = [];
+    const intialProductBundleData = this.props.productBundleData;
+    const updatedProductBundleData = this.props.reConfigureProductData;
+    if (updatedProductBundleData.categories.length > 0) {
+      updatedProductBundleData.categories.forEach((category) => {
+        category.features.forEach((feature) => {
+          feature.products.forEach((product) => {
+            updatedProducts.push(product);
+          }, this);
+        }, this);
+      }, this);
+    } else if (updatedProductBundleData.features.length > 0) {
+      updatedProductBundleData.features.forEach((feature) => {
+        feature.products.forEach((product) => {
+          updatedProducts.push(product);
+        }, this);
+      }, this);
+    }
+    intialProductBundleData.productBundle.products = [];
+    intialProductBundleData.productBundle.products = updatedProducts;
+    this.props.saveConfiguredProducts(intialProductBundleData);
+  }
+
+  deleteProduct(id) {
+    console.log('delete id', id);
+  }
   toggleSidebar() {
     this
       .props
@@ -123,9 +152,10 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             data={this.state.dataProd}
+            saveProducts={this.saveProducts}
           />
           <ReconfigureProductTab
-            reConfigureData={this.props.reConfigureProductData}
+            reConfigureData={this.props.reConfigureProductData.toJS()}
             dataProd={this.state.dataProd}
             products={this.props.dataProd}
             showFilter={this.props.showFilter}
@@ -134,6 +164,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             addProductsWait={this.addProductsWait}
             checkAll={this.state.checkAll}
             toggleCheckAll={this.checkAll}
+            deleteProduct={this.props.deleteProduct}
           />
         </div>
       </div>
@@ -146,8 +177,11 @@ ReConfigureProducts.propTypes = {
   showFilter: PropTypes.any,
   dataProd: PropTypes.any,
   reConfigureProductData: PropTypes.any,
+  productBundleData: PropTypes.any,
   getProductsData: PropTypes.func,
   fromAddOption: PropTypes.any,
+  saveConfiguredProducts: PropTypes.func,
+  deleteProduct: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -162,6 +196,12 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     getProductsData: () => {
       dispatch(loadReConfigureProductsData());
+    },
+    saveConfiguredProducts: (data) => {
+      dispatch(saveConfiguredProductsData(data));
+    },
+    deleteProduct: (product) => {
+      dispatch(deleteProduct(product));
     },
   };
 }
