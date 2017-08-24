@@ -49,6 +49,8 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     this.deleteLine = this.deleteLine.bind(this);
     this.renderChecbox = this.renderChecbox.bind(this);
     this.renderCell = this.renderCell.bind(this);
+    this.calculateTotal = this.calculateTotal.bind(this);
+    this.renderTotal = this.renderTotal.bind(this);
   }
   setTableOption(event) {
     const target = event.target;
@@ -76,6 +78,9 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     return (<OverlayTrigger placement="top" overlay={tooltip}>
       <span>{e.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>
     </OverlayTrigger>);
+  }
+  renderTotal(cellInfo) {
+    return (<span>{this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
   }
   handleToggle(index) {
     const selectedData = this.props.data[index];
@@ -118,10 +123,6 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           paramName="message"
         />
         <Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
-        {/* <div
-          style={{ backgroundColor: '#fafafa', marginLeft: '20px' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
-          }}
-        >{cellInfo.value}</div> */}
       </div>);
     }
   }
@@ -193,6 +194,9 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     return columns;
   }
   seg(cellInfo, e) {
+    if (this.props.data.length === 1) {
+      this.props.selectedTab('');
+    }
     this.props.segment(cellInfo.original.id, false, cellInfo.original.isProductOption, cellInfo.original.parent);
   }
   renderActionItems(cellInfo) {
@@ -213,9 +217,72 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       </div>
     );
   }
+
+  calculateTotal() {
+    const columns = [
+      {
+        width: 35,
+      },
+      {
+        width: 150,
+      },
+      {
+        width: 50,
+      },
+      {
+        width: 50,
+      }, {
+      },
+
+      {
+        style: { textAlign: 'left' },
+        Cell: <span>Sub Total:</span>,
+      }];
+    const total = [{ netTotal: 0 }];
+    const netTotal = 'netTotal';
+    _.forEach(this.props.data, (value) => {
+      _.forEach(value.segmentData.columns, (row) => {
+        if (!total[0][row.name]) {
+          total[0][row.name] = row.netTotal;
+        } else {
+          total[0][row.name] += row.netTotal;
+        }
+      });
+      if (!total[0][netTotal]) {
+        total[0][netTotal] = value.netTotal;
+      } else {
+        total[0][netTotal] += value.netTotal;
+      }
+    });
+    const keys = _.keys(total[0]);
+
+    keys.push(keys.shift());
+    keys.map((i) => (
+      columns.push({
+        accessor: `${i}`,
+        id: `${i}`,
+        style: { textAlign: 'right' },
+        headerStyle: { textAlign: 'right' },
+        Cell: this.renderTotal.bind(this),
+      })
+     ));
+
+    const table = (<ReactTable
+      className="sub-component"
+      data={total}
+      columns={columns}
+      defaultPageSize={1}
+      pageSize={1}
+      style={{ width: '100%' }}
+      {...this.state.tableOptions}
+    />);
+    return table;
+    // return total.map((i) => <div style={{width:'100px',display: 'inline-block'}}>{this.props.currency} {i}</div>);
+  }
   render() {
     const data = this.props.data;
     const columns = this.renderColumns();
+    const total = this.calculateTotal();
     return (
       <div>
         <div className="table-wrap">
@@ -234,7 +301,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
                 updateSeg={this.props.updateSeg}
                 updateSegBundle={this.props.updateSegBundle}
               />
-            )} 
+            )}
           />
         </div>
         <DiscountScheduleEditor
@@ -245,6 +312,10 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           value={this.state.value}
           selectedLine={this.state.selectedLine}
         />
+
+        <div className="sub-footer-seg">
+          {total}
+        </div>
       </div>
     );
   }

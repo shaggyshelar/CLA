@@ -81,7 +81,6 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   segment(id, value, isOption, parent) {
-    console.log(id, value, isOption, parent);
     this.props.segment(id, value, isOption, parent);
   }
 
@@ -260,7 +259,6 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateBundle={this.props.updateBundle}
               updateSeg={this.props.updateSeg}
               updateSegBundle={this.props.updateSegBundle}
-              
             />
             :
             <EditQuoteGrid
@@ -275,13 +273,6 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               update={this.props.update}
               updateBundle={this.props.updateBundle}
             />
-            }
-            {this.props.data.toJS().lines.length > 0 ?
-              <div className="sub-footer">
-                Sub Total : {this.props.data.get('currency')}{this.props.data.get('netAmount')}
-              </div>
-              :
-              <div className="sub-footer"></div>
             }
           </div>
         } 

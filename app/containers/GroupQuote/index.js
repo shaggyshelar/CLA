@@ -228,13 +228,6 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               />
           }
         </div>
-        {groupLines.length > 0 ?
-          <div className="sub-footer">
-                Sub Total : {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })}
-          </div>
-              :
-          <div className="sub-footer"></div>
-            }
       </div>
     );
   }

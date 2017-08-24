@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
 import 'react-table/react-table.css';
 import InlineEdit from 'react-edit-inline';
+import _ from 'lodash';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
 import { browserHistory } from 'react-router';
 
@@ -42,6 +43,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.dataChanged = this.dataChanged.bind(this);
     this.bundleDataChanged = this.bundleDataChanged.bind(this);
     this.checkAll = this.checkAll.bind(this);
+    this.calculateTotal = this.calculateTotal.bind(this);
   }
 
 
@@ -163,8 +165,23 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       </div>
     );
   }
+  calculateTotal() {
+    let total = 0;
+    _.forEach(this.props.data, (value) => {
+      total += value.netTotal;
+      if (value.type === 'Bundle' && value.bundleProducts) {
+        value.bundleProducts.map((i) => {
+          if (!i.isSegmented) {
+            total += value.netTotal;
+          }
+        });
+      }
+    });
+    return total;
+  }
   render() {
     const data = this.renderData();
+    const total = this.calculateTotal();
     const columns = [
       {
         Header: '',
@@ -271,6 +288,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           value={this.state.value}
           selectedLine={this.state.selectedLine}
         />
+        {total > 0 ?
+          <div className="sub-footer">
+          Sub Total : {this.props.currency} {total}
+          </div>
+              :
+          <div className="sub-footer"></div>
+        }
+
       </div>
     );
   }

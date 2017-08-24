@@ -6,6 +6,7 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { Tabs, Tab } from 'react-bootstrap/lib';
@@ -16,6 +17,8 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
   constructor(props) {
     super(props);
     this.renderSegmentData = this.renderSegmentData.bind(this);
+    this.selectTab = this.selectTab.bind(this);
+    this.state = { selectedTab: '' };
   }
   renderSegmentData() {
     const data = {};
@@ -37,15 +40,28 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     data.QuaterlyLines = data.QuaterlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Quaterly' } }));
     return data;
   }
+  selectTab(e) {
+    this.setState({ selectedTab: e });
+  }
   render() {
     const data = this.renderSegmentData();
+    let selected = '';
+    if (data.CustomLines.length > 0 ) {
+      selected = 'custom';
+    } else if (data.MonthlyLines.length > 0) {
+      selected = 'monthly';
+    } else if (data.QuaterlyLines.length > 0) {
+      selected = 'quaterly';
+    } else if (data.YearlyLines.length > 0) {
+      selected = 'yearly';
+    }
     return (
       <div className="qoute-container segmented">
-        <Tabs defaultActiveKey={1} animation id="noanim-tab-example">
+        <Tabs animation={false} defaultActiveKey={1} id="noanim-tab-example">
           <Tab eventKey={1} title="Segmented">
-            <Tabs animation id="inner-tab-example">
+            <Tabs activeKey={this.state.selectedTab === '' ? selected : this.state.selectedTab} onSelect={this.selectTab} animation={false} id="inner-tab-example">
               { data.CustomLines.length > 0 ?
-                <Tab eventKey={'custom'} title="Custom">
+                <Tab eventKey={'custom'} tabClassName={'custom'} title="Custom">
                   <SegmentedEditQuoteGrid
                     data={data.CustomLines}
                     cloneLine={this.props.cloneLine}
@@ -57,13 +73,14 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     segment={this.props.segment}
                     updateSeg={this.props.updateSeg}
                     updateSegBundle={this.props.updateSegBundle}
+                    selectedTab={this.selectTab}
                   />
                 </Tab>
               :
               ''
             }
               { data.MonthlyLines.length > 0 ?
-                <Tab eventKey={'monthly'} title="Monthly">
+                <Tab eventKey={'monthly'} tabClassName={'monthly'} title="Monthly">
                   <SegmentedEditQuoteGrid
                     data={data.MonthlyLines}
                     cloneLine={this.props.cloneLine}
@@ -75,10 +92,11 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     segment={this.props.segment}
                     updateSeg={this.props.updateSeg}
                     updateSegBundle={this.props.updateSegBundle}
+                    selectedTab={this.selectTab}
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
-                <Tab eventKey={'quaterly'} title="Quaterly">
+                <Tab eventKey={'quaterly'} tabClassName={'quaterly'} title="Quaterly">
                   <SegmentedEditQuoteGrid
                     data={data.QuaterlyLines}
                     cloneLine={this.props.cloneLine}
@@ -90,10 +108,11 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     segment={this.props.segment}
                     updateSeg={this.props.updateSeg}
                     updateSegBundle={this.props.updateSegBundle}
+                    selectedTab={this.selectTab}
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
-                <Tab eventKey={'yearly'} title="Yearly">
+                <Tab eventKey={'yearly'} tabClassName={'yearly'} title="Yearly">
                   <SegmentedEditQuoteGrid
                     data={data.YearlyLines}
                     cloneLine={this.props.cloneLine}
@@ -101,10 +120,11 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
                     toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
                     updateProps={this.props.updateProps}
-                    currency={this.props.data.currency}
+                    currency={this.props.currency}
                     segment={this.props.segment}
                     updateSeg={this.props.updateSeg}
                     updateSegBundle={this.props.updateSegBundle}
+                    selectedTab={this.selectTab}
                   />
                 </Tab> : '' }
             </Tabs>
