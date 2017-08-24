@@ -208,10 +208,12 @@ export function updateGroupValue(id, field, data) {
     data,
   };
 }
-export function segment(id, value) {
+export function segment(id, value, isOption, parent) {
   return {
     type: SEGMENT,
     id,
     value,
+    isOption,
+    parent,
   };
 }

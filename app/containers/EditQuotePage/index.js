@@ -27,7 +27,6 @@ import { cloneLine,
   updateGroupData,
   updateGroupValue,
   segment,
-  deSegment,
  } from '../App/actions';
 
 
@@ -81,11 +80,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.props.ungroup(data);
   }
 
-  segment(id, value) {
-    this.props.segment(id, value);
-  }
-  deSegment(id) {
-    this.props.deSegment(id, false);
+  segment(id, value, isOption, parent) {
+    console.log(id, value, isOption, parent);
+    this.props.segment(id, value, isOption, parent);
   }
 
   group() {
@@ -118,6 +115,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
     this.props.group(data);
   }
+
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i += 1) {
@@ -197,7 +195,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   render() {
     const grouped = this.props.data.toJS().linesGrouped;
-    const segmented = _.filter(this.props.data.toJS().lines, { isSegmented: true }).length;
+    const segmented = _.filter(this.props.data.toJS().lines, { isSegmented: true }).length + _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
+    //const segmentedBundle = _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
+
     return (
       <div>
 
@@ -363,8 +363,8 @@ function mapDispatchToProps(dispatch) {
     updateGroupValue: (id, field, data) => {
       dispatch(updateGroupValue(id, field, data));
     },
-    segment: (id, value) => {
-      dispatch(segment(id, value));
+    segment: (id, value, isOption, parent) => {
+      dispatch(segment(id, value, isOption, parent));
     },
   };
 }

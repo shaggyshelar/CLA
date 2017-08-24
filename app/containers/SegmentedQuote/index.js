@@ -26,13 +26,15 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
         bundleLines = bundleLines.concat(a);
       }
     });
-
     data.NormalLines = _.filter(this.props.data, { isSegmented: false });
     data.CustomLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Custom' } });
-    data.CustomLines = data.CustomLines.concat(_.filter(bundleLines, {segmentData: { type: 'Custom' } }));
+    data.CustomLines = data.CustomLines.concat(_.filter(bundleLines, { segmentData: { type: 'Custom' } }));
     data.MonthlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Monthly' } });
+    data.MonthlyLines = data.MonthlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Monthly' } }));
     data.YearlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Yearly' } });
+    data.YearlyLines = data.YearlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Yearly' } }));
     data.QuaterlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Quaterly' } });
+    data.QuaterlyLines = data.QuaterlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Quaterly' } }));
     return data;
   }
   render() {
@@ -115,7 +117,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               toggleAllCheckBox={this.props.toggleAllCheckBox}
               toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
               updateProps={this.props.updateProps}
-              currency={this.props.data.currency}
+              currency={this.props.currency}
               segment={this.props.segment}
               update={this.props.update}
               updateBundle={this.props.updateBundle}

@@ -54,18 +54,19 @@ export function* getData() {
               ],
             },
             bundleProducts: [{
+              parent:'111',
               id: '12456',
               isProductOption: true,
               code: 'Dom154AC',
               name: 'Porche AC',
-              type: 'Product/Bundle',
-              isBundled: true,
+              type: 'Product',
+              isBundled: false,
               isDisableReconfiguration: false,
               groupId: '456',
               markup: 123,
               quantity: {
                 value: 123,
-                isEditable: true,
+                isEditable: false,
                 isVisible: true,
                 dataType: 'text/select/textarea/inputSelect',
                 selectValues: [
@@ -171,10 +172,11 @@ export function* getData() {
             },
               {
                 id: 's',
+                parent:'111',
                 isProductOption: true,
                 code: 'Dom154Stter',
                 name: 'Porche Steering',
-                type: 'Product/Bundle',
+                type: 'Product',
                 isBundled: true,
                 isDisableReconfiguration: false,
                 groupId: '456',
@@ -211,7 +213,22 @@ export function* getData() {
                 canClone: true,
                 canSegment: true,
                 isSegmented: true,
-                segmentData: null,
+                segmentData: {
+                  type: 'Yearly',
+                  columns: [
+                    {
+                      name: 'Year 1',
+                      quantity: 123,
+                      listPrice: 123,
+                      uplift: 123,
+                      startDate: 'Date',
+                      endDate: 'Date',
+                      additionalDiscount: 123,
+                      netunitPrice: 123,
+                      netTotal: 123,
+                    },
+                  ],
+                },
                 canReconfigure: false,
                 canShowDiscountScheduler: false,
                 listPrice: {
@@ -329,6 +346,7 @@ export function* getData() {
           },
           {
             id: '123ass',
+            
             code: 'Car154',
             name: 'Ferrari',
             type: 'Product',
@@ -440,6 +458,7 @@ export function* getData() {
             },
             bundleProducts: [{
               id: '3453453',
+              parent:'222',
               isProductOption: true,
               code: 'LAmbo154AC',
               name: 'Lambo AC',
