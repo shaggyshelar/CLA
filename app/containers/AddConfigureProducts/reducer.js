@@ -28,7 +28,7 @@ function addConfigureProductsReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_PRODUCTS_DATA_SUCCESS: {
       return state
-        .set('productsData', action.productsData)
+        .set('productsData', fromJS(action.productsData))
         .set('loading', false);
     }
     case LOAD_PRODUCTS_DATA_ERROR: {

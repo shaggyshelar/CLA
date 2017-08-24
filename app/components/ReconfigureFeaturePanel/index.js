@@ -20,18 +20,32 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
 
   renderAddButton(feature, index) {
     if (feature.DynamicAddEnabled) {
-      return (<Button key={index} bsStyle="link" onClick={() => { browserHistory.push(`/addConfigureproducts?featureId=${feature.id}`); }} >Add Options</Button>);
+      if (feature.categoryId) {
+        return (<Button key={index} bsStyle="link" onClick={() => { browserHistory.push(`/addConfigureproducts?ids=${feature.id}/${feature.categoryId}`); }} >Add Options</Button>);
+      } else {
+        return (<Button key={index} bsStyle="link" onClick={() => { browserHistory.push(`/addConfigureproducts?ids=${feature.id}`); }} >Add Options</Button>);
+      }
     }
     return (<span></span>);
+  }
+  renderMinMaxMessage(feature) {
+    let text = '';
+    if (feature.minOption && feature.maxOption) {
+      text = `Choose at least ${feature.minOption} but no more than ${feature.maxOption} of the following:`;
+    } else if (feature.minOption && feature.maxOption == null) {
+      text = `Choose at least ${feature.minOption} of the following:`;
+    }
+    return (<div className="minMaxMessage"><span>{text}</span></div>);
   }
 
   renderFeatureGrid(feature, index) {
     let addButton = {};
     if (feature !== undefined) {
       addButton = this.renderAddButton(feature, index);
-      return (<div key={index} className="group">
+      return (<div key={index} className="group panelMargin">
         <div className="group-card">
           <span className="group-header">{feature.name}</span>
+          {this.renderMinMaxMessage(feature)}
         </div>
         <ReconfigureGrid
           products={feature.products.length > 0 ? feature.products : []}
@@ -43,7 +57,9 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
           checkAll={this.props.checkAll}
           toggleCheckAll={this.props.checkAll}
           feature={feature}
+          categoryId={this.props.categoryId}
           deleteProduct={this.props.deleteProduct}
+          updateField={this.props.updateField}
         />
         {addButton}
       </div>);
@@ -72,6 +88,8 @@ ReconfigureFeaturePanel.propTypes = {
   addProductsWait: PropTypes.func,
   features: PropTypes.any,
   deleteProduct: PropTypes.func,
+  updateField: PropTypes.func,
+  categoryId: PropTypes.any,
 };
 
 export default ReconfigureFeaturePanel;

@@ -12,3 +12,4 @@ export const ADD_OPTIONS = 'app/ReConfigureProducts/ADD_OPTIONS';
 export const SAVE_CONFIGURE_PRODUCTS_DATA = 'app/ReConfigureProducts/SAVE_CONFIGURE_PRODUCTS_DATA';
 export const SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS = 'app/ReConfigureProducts/SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS';
 export const DELETE_PRODUCT = 'app/ReConfigureProducts/DELETE_PRODUCT';
+export const UPDATE_PRODUCT = 'app/ReConfigureProducts/UPDATE_PRODUCT';

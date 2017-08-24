@@ -22,7 +22,9 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         addProductsWait={this.addProductsWait}
         checkAll={this.props.checkAll}
         features={item.features}
+        categoryId={item.id}
         deleteProduct={this.props.deleteProduct}
+        updateField={this.props.updateField}
       />
     </Tab>);
   }
@@ -39,6 +41,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         checkAll={this.props.checkAll}
         features={item}
         deleteProduct={this.props.deleteProduct}
+        updateField={this.props.updateField}
       />);
   }
 
@@ -59,11 +62,11 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
       }
     }
     return (
-      <div>
+      <div className="qoute-container">
         <div className="margin-tabs">
           <Row>
             <Col md={12} sm={12} xs={12}>
-              <h1>{this.props.reConfigureData.productBundleName}</h1>
+              <span className="categoryLabel">{this.props.reConfigureData.productBundleName}</span>
             </Col>
           </Row>
         </div>
@@ -85,6 +88,8 @@ ReconfigureProductTab.propTypes = {
   reConfigureData: PropTypes.any,
   dataProd: PropTypes.any,
   deleteProduct: PropTypes.func,
+  updateField: PropTypes.func,
+  checkAll: PropTypes.func,
 };
 
 export default ReconfigureProductTab;

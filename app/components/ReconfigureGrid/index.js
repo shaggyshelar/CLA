@@ -5,7 +5,9 @@
 */
 import ReactTable from 'react-table';
 import React from 'react';
+import _ from 'lodash';
 import 'react-table/react-table.css';
+import InlineEdit from 'react-edit-inline';
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
 
@@ -27,13 +29,15 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         pivot: true,
         expander: true,
         freezeWhenExpanded: true,
-
+        selectedLine: {},
       },
       isVisible: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
     this.renderActionItems = this.renderActionItems.bind(this);
+    this.dataChanged = this.dataChanged.bind(this);
+    this.renderEditable = this.renderEditable.bind(this);
   }
 
   setTableOption(event) {
@@ -47,17 +51,55 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       },
     });
   }
+
+  dataChanged(data) {
+    console.log('data', data);
+    const key = Object.keys(data)[0];
+    const field = key.split('*(&)*');
+    const value = data[key];
+    const productObj = {
+      id: field[0],
+      field: field[1],
+      value: parseFloat(value),
+      categoryId: this.props.categoryId,
+      featureId: this.props.feature.id,
+    };
+    this.props.updateField(productObj);
+  }
+
+  validate(text) {
+    const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
+    return (decimal.test(text) && (parseFloat(text) > 0));
+  }
+
+  deleteProduct(product) {
+    const productObj = {
+      id: product.id,
+      featureId: this.props.feature.id,
+      categoryId: this.props.categoryId,
+    };
+    this.props.deleteProduct(productObj);
+  }
+
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
-      return (<span>{cellInfo.value}</span>);
+      return (<span>{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
     } else {
-      return (<div>
-        <Glyphicon glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
-        <div
-          style={{ backgroundColor: '#fafafa', marginLeft: '20px' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
-          }}
-        >{cellInfo.value}</div>
-      </div>);
+      return (
+        <div>
+          <InlineEdit
+            className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
+            activeClassName="table-edit-input"
+            text={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
+            paramName={`${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+            staticElement="div"
+            change={this.dataChanged}
+            validate={this.validate}
+            title={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
+            id={cellInfo.original.id}
+          />
+          <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+        </div>);
     }
   }
 
@@ -71,34 +113,10 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     return input;
   }
 
-  deleteProduct(product) {
-    const productObj = {
-      id: product.id,
-      featureId: product.featureId,
-      categoryId: product.categoryId,
-    };
-    this.props.deleteProduct(productObj);
-  }
   renderActionItems(cellInfo) {
-    // const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : '';
-    // const reconfigure = cellInfo.original.canReconfigure ? <a title="Reconfigure Lines" className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push('/reconfigureproducts'); }}><Glyphicon glyph="wrench" /></a> : '';
-    // const bundle = cellInfo.original.isBundled ? <a title={`Required by ${cellInfo.original.name}`}><Glyphicon glyph="info-sign" /></a> : '';
-    // const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
-    // const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment} title="Segment / Desegment"><Glyphicon glyph="transfer" /></a> : '';
-    // return (
-    //   <div className="actionItems" >
-    //     {/* <a><Glyphicon glyph="star-empty" /></a> */}
-    //     {bundle}
-    //     {discount}
-    //     {reconfigure}
-    //     {cellInfo.original.isProductOption ? <span></span> : clone}
-    //     {cellInfo.original.isProductOption ? <span></span> : <a title="Delete Line" onClick={this.deleteLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="trash" /></a>}
-    //     {segment}
-    //   </div>
-    // );
     let input;
     if (this.props.feature.DynamicAddEnabled) {
-      input = (<a className="disabledIcon"><Glyphicon glyph="trash" onClick={this.deleteProduct.bind(this, cellInfo.original)} /></a>);
+      input = (<a title="Delete Line" onClick={this.deleteProduct.bind(this, cellInfo.original)} ><Glyphicon glyph="trash" style={{ color: '#C9302C' }} /></a>);
     } else {
       input = (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={cellInfo.original.id} />);
     }
@@ -106,6 +124,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   }
 
   render() {
+    const products = _.filter(this.props.products, { isDeleted: false });
     const columns = [{
       columns: [{
         accessor: 'id',
@@ -116,37 +135,49 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         Cell: this.renderActionItems,
       },
         {
-          Header: 'QUANTITY',
+          Header: () => <span title="QUANTITY">QUANTITY</span>,
           accessor: 'quantity.value',
           id: 'quantity',
-          Cell: this.renderEditable,
-        }, {
-          Header: 'PRODUCT CODE',
-          accessor: 'code',
-        },
-        {
-          Header: 'PRODUCT NAME',
-          accessor: 'name',
-        },
-        {
-          Header: 'PRODUCT DESCRIPTION',
-          // accessor: 'type',
-        },
-        {
-          Header: 'UNIT PRICE',
-          accessor: 'listPrice.value',
+          className: 'table-edit-row',
           style: { textAlign: 'right' },
+          headerStyle: { textAlign: 'right' },
+          Cell: this.renderEditable,
         },
-
-
+        {
+          Header: () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
+          accessor: 'code',
+          style: { textAlign: 'left' },
+          headerStyle: { textAlign: 'left' },
+        },
+        {
+          Header: () => <span title="PRODUCT NAME">PRODUCT NAME</span>,
+          accessor: 'name',
+          style: { textAlign: 'left' },
+          headerStyle: { textAlign: 'left' },
+        },
+        {
+          Header: () => <span title="PRODUCT DESCRIPTION">PRODUCT DESCRIPTION</span>,
+          // accessor: '',
+          style: { textAlign: 'left' },
+          headerStyle: { textAlign: 'left' },
+        },
+        {
+          Header: () => <span title="UNIT PRICE">UNIT PRICE</span>,
+          accessor: 'listPrice.value',
+          id: 'listPrice',
+          style: { textAlign: 'right' },
+          headerStyle: { textAlign: 'right' },
+          Cell: this.renderEditable,
+        },
       ],
     }];
+
     return (
       <div>
         <div className="table-wrap" id="configureGridId">
           <ReactTable
             className="-striped -highlight"
-            data={this.props.products}
+            data={products}
             columns={columns}
             defaultPageSize={this.props.products.length}
             pageSize={this.props.products.length}
@@ -175,7 +206,9 @@ ReconfigureGrid.propTypes = {
   toggleCheckboxChange: React.PropTypes.func,
   toggleFilter: React.PropTypes.func,
   feature: React.PropTypes.any,
+  categoryId: React.PropTypes.any,
   deleteProduct: React.PropTypes.func,
+  updateField: React.PropTypes.func,
 };
 
 export default ReconfigureGrid;

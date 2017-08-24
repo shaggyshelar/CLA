@@ -12,160 +12,22 @@ export function* getProductsSaga() {
     // const requestURL = 'http://192.168.101.162:3000/api/products';
     // const repos = yield call(request, requestURL);
     const productsData = {
-      // products: [
-      //   {
-      //     id: 123,
-      //     type: 'Product/Bundle',
-      //     code: 'P121',
-      //     name: 'ABCD',
-      //     isDependent: true,
-      //     optionSelectionMethod: 123,
-      //     optionLayout: 'wizard/section/tab',
-      //     quantity: {
-      //       value: 123,
-      //       isEditable: true,
-      //       isVisible: true,
-      //       dataType: 'text/select/textarea/inputSelect',
-      //       selectValues: [
-      //         {
-      //           id: 123,
-      //           value: ':List',
-      //           isSelected: true,
-      //         },
-      //       ],
-      //     },
-      //     listPrice: {
-      //       value: 123,
-      //       isEditable: true,
-      //       isVisible: true,
-      //       dataType: 'text/select/textarea/inputSelect',
-      //       selectValues: [
-      //         {
-      //           id: 123,
-      //           value: ':List',
-      //           isSelected: true,
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   {
-      //     id: 234,
-      //     code: 'P122sds',
-      //     name: 'EFGHfsadfad',
-      //     isDependent: true,
-      //     optionSelectionMethod: 456,
-      //     optionLayout: 'wizard/section/tab',
-      //     quantity: {
-      //       value: 565,
-      //       isEditable: true,
-      //       isVisible: true,
-      //       dataType: 'text/select/textarea/inputSelect',
-      //       selectValues: [
-      //         {
-      //           id: 123,
-      //           value: ':List',
-      //           isSelected: true,
-      //         },
-      //       ],
-      //     },
-      //     listPrice: {
-      //       value: 654,
-      //       isEditable: true,
-      //       isVisible: true,
-      //       dataType: 'text/select/textarea/inputSelect',
-      //       selectValues: [
-      //         {
-      //           id: 554,
-      //           value: ':List',
-      //           isSelected: true,
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   {
-      //     id: 145,
-      //     code: 'P122',
-      //     name: 'EFGH',
-      //     isDependent: true,
-      //     optionSelectionMethod: 456,
-      //     optionLayout: 'wizard/section/tab',
-      //     quantity: {
-      //       value: 565,
-      //       isEditable: true,
-      //       isVisible: true,
-      //       dataType: 'text/select/textarea/inputSelect',
-      //       selectValues: [
-      //         {
-      //           id: 123,
-      //           value: ':List',
-      //           isSelected: true,
-      //         },
-      //       ],
-      //     },
-      //     listPrice: {
-      //       value: 654,
-      //       isEditable: true,
-      //       isVisible: true,
-      //       dataType: 'text/select/textarea/inputSelect',
-      //       selectValues: [
-      //         {
-      //           id: 554,
-      //           value: ':List',
-      //           isSelected: true,
-      //         },
-      //       ],
-      //     },
-      //   },
-      //   {
-      //     id: 980,
-      //     code: 'P122dfgsad',
-      //     name: 'EFGHgsdfg',
-      //     isDependent: true,
-      //     optionSelectionMethod: 456,
-      //     optionLayout: 'wizard/section/tab',
-      //     quantity: {
-      //       value: 565,
-      //       isEditable: true,
-      //       isVisible: true,
-      //       dataType: 'text/select/textarea/inputSelect',
-      //       selectValues: [
-      //         {
-      //           id: 123,
-      //           value: ':List',
-      //           isSelected: true,
-      //         },
-      //       ],
-      //     },
-      //     listPrice: {
-      //       value: 654,
-      //       isEditable: true,
-      //       isVisible: true,
-      //       dataType: 'text/select/textarea/inputSelect',
-      //       selectValues: [
-      //         {
-      //           id: 554,
-      //           value: ':List',
-      //           isSelected: true,
-      //         },
-      //       ],
-      //     },
-      //   },
-      // ],
       products: [
         {
-          id: 123,
-          code: 'P121',
-          name: 'ABCD',
+          id: 123353345,
+          code: 'P758',
+          name: 'pqrst',
           featureId: 123,
           categoryId: 123,
               // categoryId: null,
           isDependent: true,
           isSelected: true,
           isRequired: true,
+          isDeleted: false,
           optionSelectionMethod: 123,
           optionLayout: 'wizard/section/tab',
           quantity: {
-            value: 123,
+            value: 890,
             isEditable: true,
             isVisible: true,
             dataType: 'text/select/textarea/inputSelect',
@@ -192,13 +54,14 @@ export function* getProductsSaga() {
           },
         },
         {
-          id: 234,
-          code: 'P122',
-          name: 'EFGH',
+          id: 2349797897,
+          code: 'qw2342',
+          name: 'wyyyr',
           featureId: 123,
           categoryId: 456,
               // categoryId: null,
           isDependent: true,
+          isDeleted: false,
           optionSelectionMethod: 456,
           optionLayout: 'wizard/section/tab',
           quantity: {

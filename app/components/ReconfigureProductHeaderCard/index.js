@@ -15,8 +15,7 @@ class ReconfigureProductHeaderCard extends React.Component { // eslint-disable-l
         <div className="card-icon"><Glyphicon className="cartIcon" glyph="wrench" /></div>
         <div className="card-detail">
           <div>
-            <div className="cartFont" style={{ marginTop: '5px' }}>Q-00116</div>
-            <h1 style={{ margin: '0px' }}>Configure Products</h1>
+            <div className="cartFont">{this.props.quoteName} - <span style={{ marginTop: '0px', fontSize: '20px' }}>Configure Products</span></div>
           </div>
         </div>
       </div>
@@ -25,7 +24,7 @@ class ReconfigureProductHeaderCard extends React.Component { // eslint-disable-l
 }
 
 ReconfigureProductHeaderCard.propTypes = {
-
+  quoteName: React.PropTypes.any,
 };
 
 export default ReconfigureProductHeaderCard;

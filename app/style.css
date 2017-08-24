@@ -618,11 +618,28 @@ padding-bottom: 15px;
     position: inherit;
 }
 
-#configureGridId .ReactTable .rt-noData {
-    top: 185%;
+#configureGridId .filter {
+    height: auto;
 }
 
 .disabledIcon { 
   cursor: default;
   color: grey; 
 }
+
+.panelMargin {
+    margin-top: 10px !important;
+}
+
+.categoryLabel {
+    color: #54698d;
+    font-size: 20px;
+    line-height: 2.5;
+}
+
+.minMaxMessage {
+    color: #54698d; 
+    font-size: 14px;
+    margin: -10px 0px 10px 20px;
+}
+

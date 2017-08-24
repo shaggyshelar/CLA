@@ -32,7 +32,9 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
             ]}
           />
 
-          <ReconfigureProductHeaderCard />
+          <ReconfigureProductHeaderCard
+            quoteName={this.props.quoteName}
+          />
         </Col>
 
         <Col xs={12} md={9} style={{ textAlign: 'right' }}>
@@ -52,8 +54,9 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
 }
 
 ReconfigureProductHeader.propTypes = {
-  // data: PropTypes.any,
   saveProducts: PropTypes.func,
+  quoteName: PropTypes.any,
+  addProducts: PropTypes.any,
 };
 
 export default ReconfigureProductHeader;

@@ -10,16 +10,18 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
 import _ from 'lodash';
+import { browserHistory } from 'react-router';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
 import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState } from './selectors';
-import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct } from './actions';
+import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct } from './actions';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
       selectedProducts: [],
+      quoteName: 'Q-00163',
       dataProd: [
         {
           _id: '596db79f58d3f94623033cd0',
@@ -72,40 +74,63 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
 
 
   componentDidMount() {
-    console.log('fromAddOption', this.props.fromAddOption);
-    if (!this.props.fromAddOption) {
-    // console.log('fromAddOption111', this.props.fromAddOption);
-      this.props.getProductsData();
+    if (this.props.location.query.id) {
+      this.props.getProductsData(this.props.location.query.id);
     }
   }
 
   saveProducts() {
     const updatedProducts = [];
-    const intialProductBundleData = this.props.productBundleData;
-    const updatedProductBundleData = this.props.reConfigureProductData;
+    const intialProductBundleData = this.props.productBundleData.toJS();
+    const updatedProductBundleData = this.props.reConfigureProductData.toJS();
     if (updatedProductBundleData.categories.length > 0) {
       updatedProductBundleData.categories.forEach((category) => {
         category.features.forEach((feature) => {
-          feature.products.forEach((product) => {
+          feature.products.forEach((currrentProduct) => {
+            const product = currrentProduct;
+            if (product.tempId) {
+              product.id = product.tempId;
+              // product = _.omit(product, ['tempId', 'isAdded']);
+            }
+            const index = _.indexOf(this.state.selectedProducts, product.id);
+            if (index !== -1) {
+              product.isSelected = true;
+            }
+            if (category.name === 'Other') {
+              product.categoryId = null;
+            }
+            if (feature.name === 'Other Options') {
+              product.featureId = null;
+            }
             updatedProducts.push(product);
           }, this);
         }, this);
       }, this);
     } else if (updatedProductBundleData.features.length > 0) {
       updatedProductBundleData.features.forEach((feature) => {
-        feature.products.forEach((product) => {
+        feature.products.forEach((currrentProduct) => {
+          const product = currrentProduct;
+          if (product.tempId) {
+            product.id = product.tempId;
+          }
+          const index = _.indexOf(this.state.selectedProducts, product.id);
+          if (index !== -1) {
+            product.isSelected = true;
+          }
+          if (feature.name === 'Other Options') {
+            product.featureId = null;
+          }
           updatedProducts.push(product);
         }, this);
       }, this);
     }
+
     intialProductBundleData.productBundle.products = [];
     intialProductBundleData.productBundle.products = updatedProducts;
     this.props.saveConfiguredProducts(intialProductBundleData);
+    browserHistory.push('/EditQuote');
   }
 
-  deleteProduct(id) {
-    console.log('delete id', id);
-  }
   toggleSidebar() {
     this
       .props
@@ -126,18 +151,14 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
 
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
-    const data = this.state.selectedProducts;
     if (!e.target.checked) {
-      _.remove(data, (n) => n === e.target.value);
+      _.remove(this.state.selectedProducts, (n) => n === e.target.value);
       if (d.checked) {
         d.checked = false;
       }
     } else {
-      data.push(e.target.value);
+      this.state.selectedProducts.push(parseInt(e.target.value));
     }
-    this.setState({
-      selectedProducts: data,
-    });
   }
 
   render() {
@@ -153,6 +174,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             toggleFilter={this.toggleSidebar}
             data={this.state.dataProd}
             saveProducts={this.saveProducts}
+            quoteName={this.state.quoteName}
           />
           <ReconfigureProductTab
             reConfigureData={this.props.reConfigureProductData.toJS()}
@@ -165,6 +187,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             checkAll={this.state.checkAll}
             toggleCheckAll={this.checkAll}
             deleteProduct={this.props.deleteProduct}
+            updateField={this.props.updateField}
           />
         </div>
       </div>
@@ -179,9 +202,10 @@ ReConfigureProducts.propTypes = {
   reConfigureProductData: PropTypes.any,
   productBundleData: PropTypes.any,
   getProductsData: PropTypes.func,
-  fromAddOption: PropTypes.any,
   saveConfiguredProducts: PropTypes.func,
   deleteProduct: PropTypes.func,
+  location: PropTypes.any,
+  updateField: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -194,14 +218,17 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    getProductsData: () => {
-      dispatch(loadReConfigureProductsData());
+    getProductsData: (id) => {
+      dispatch(loadReConfigureProductsData(id));
     },
     saveConfiguredProducts: (data) => {
       dispatch(saveConfiguredProductsData(data));
     },
     deleteProduct: (product) => {
       dispatch(deleteProduct(product));
+    },
+    updateField: (productObj) => {
+      dispatch(updateProduct(productObj));
     },
   };
 }

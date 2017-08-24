@@ -15,6 +15,7 @@ import {
   SAVE_CONFIGURE_PRODUCTS_DATA,
   SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   DELETE_PRODUCT,
+  UPDATE_PRODUCT,
 } from './constants';
 
 const initialState = fromJS({
@@ -155,8 +156,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         // For Other Options
           if (otherProducts.length > 0) {
             const otherOptions = {};
-            otherOptions.id = Math.random();
-            otherOptions.featureId = Math.random();
+            otherOptions.id = parseInt(Math.random() * 100000, 0);
             otherOptions.name = 'Other Options';
             otherOptions.products = [];
             otherOptions.products = otherProducts;
@@ -165,7 +165,6 @@ function reConfigureProductsReducer(state = initialState, action) {
         } else if (categories.length === 0 && features.length === 0 && products.length > 0) { // Only Products are available
           const otherOptions = {};
           otherOptions.id = Math.random();
-          otherOptions.featureId = Math.random();
           otherOptions.name = 'Other Options';
           otherOptions.products = [];
           otherOptions.products = products;
@@ -182,37 +181,108 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('error', action.error)
         .set('loading', false);
     }
-    case ADD_OPTIONS :
+    case ADD_OPTIONS : {
+      const reConfigureProductData = state.get('reConfigureProductData').toJS();
+      if (reConfigureProductData.categories.length > 0) {
+        const category = _.find(reConfigureProductData.categories, { id: action.productObj.categoryId });
+        if (category) {
+          const feature = _.find(category.features, { id: action.productObj.featureId });
+          if (feature) {
+            action.productObj.selectedProducts.forEach((currentProduct) => {
+              const product = currentProduct;
+              product.tempId = product.id;
+              product.id = parseInt(Math.random() * 100000, 0);
+              product.isAdded = true;
+              product.categoryId = action.productObj.categoryId;
+              product.featureId = action.productObj.featureId;
+              feature.products.push(product);
+            }, this);
+          }
+        }
+      } else if (reConfigureProductData.features.length > 0) {
+        const feature = _.find(reConfigureProductData.features, { id: action.product.featureId });
+        if (feature) {
+          action.productObj.selectedProducts.forEach((currentProduct) => {
+            const product = currentProduct;
+            product.tempId = product.id;
+            product.isAdded = true;
+            product.id = parseInt(Math.random() * 100000, 0);
+            product.categoryId = action.productObj.categoryId;
+            product.featureId = action.productObj.featureId;
+            feature.products.push(product);
+          }, this);
+        }
+      }
       return state
-        .set('fromAddOption', action.fromAddOptions);
+        .set('reConfigureProductData', fromJS(reConfigureProductData));
+    }
     case SAVE_CONFIGURE_PRODUCTS_DATA:
       return state
         .set('loading', true)
         .set('error', false);
     case SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS:
       return state
-      .set('productBundleData', action.data)
+      .set('productBundleData', fromJS(action.data))
       .set('loading', false);
     case DELETE_PRODUCT: {
-      const reConfigureProductData = state.get('reConfigureProductData').toJS();
-      if (reConfigureProductData.categories.length > 0) {
-        const category = _.find(reConfigureProductData.categories, { id: action.product.categoryId });
+      const reConfigureProduct = state.get('reConfigureProductData').toJS();
+      if (reConfigureProduct.categories.length > 0) {
+        const category = _.find(reConfigureProduct.categories, { id: action.product.categoryId });
         if (category) {
           const feature = _.find(category.features, { id: action.product.featureId });
           if (feature) {
-            _.remove(feature.products, (currentObject) => currentObject.id === action.product.id);
+            const product = _.find(feature.products, { id: action.product.id });
+            if (product) {
+              if (product.isAdded) {
+                _.remove(feature.products, (currentObject) => currentObject.id === action.product.id);
+              } else {
+                product.isDeleted = true;
+              }
+            }
           }
         }
-      } else if (reConfigureProductData.features.length > 0) {
-        const feature = _.find(reConfigureProductData.features, { id: action.product.featureId });
+      } else if (reConfigureProduct.features.length > 0) {
+        const feature = _.find(reConfigureProduct.features, { id: action.product.featureId });
         if (feature) {
-          _.remove(feature.products, (currentObject) => currentObject.id === action.product.id);
+          const product = _.find(feature.products, { id: action.product.id });
+          if (product) {
+            if (product.isAdded) {
+              _.remove(feature.products, (currentObject) => currentObject.id === action.product.id);
+            } else {
+              product.isDeleted = true;
+            }
+          }
         }
       }
-
       return state
-        .set('reConfigureProductData', fromJS(reConfigureProductData));
+        .set('reConfigureProductData', fromJS(reConfigureProduct));
     }
+    case UPDATE_PRODUCT:
+      {
+        const reConfigureProduct = state.get('reConfigureProductData').toJS();
+        if (reConfigureProduct.categories.length > 0) {
+          const category = _.find(reConfigureProduct.categories, { id: action.productObj.categoryId });
+          if (category) {
+            const feature = _.find(category.features, { id: action.productObj.featureId });
+            if (feature) {
+              const product = _.find(feature.products, { id: parseInt(action.productObj.id) });
+              if (product) {
+                product[action.productObj.field].value = action.productObj.value;
+              }
+            }
+          }
+        } else if (reConfigureProduct.features.length > 0) {
+          const feature = _.find(reConfigureProduct.features, { id: action.product.featureId });
+          if (feature) {
+            const product = _.find(feature.products, { id: parseInt(action.productObj.id) });
+            if (product) {
+              product[action.productObj.field].value = action.productObj.value;
+            }
+          }
+        }
+        return state
+        .set('reConfigureProductData', fromJS(reConfigureProduct));
+      }
     default:
       return state;
   }

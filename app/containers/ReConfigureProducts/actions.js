@@ -13,6 +13,7 @@ import {
   SAVE_CONFIGURE_PRODUCTS_DATA,
   SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   DELETE_PRODUCT,
+  UPDATE_PRODUCT,
 } from './constants';
 
 export function defaultAction() {
@@ -21,9 +22,10 @@ export function defaultAction() {
   };
 }
 
-export function loadReConfigureProductsData() {
+export function loadReConfigureProductsData(id) {
   return {
     type: LOAD_CONFIGURE_PRODUCTS_DATA,
+    id,
   };
 }
 export function loadReConfigureProductsDataSuccess(productBundelData) {
@@ -46,10 +48,10 @@ export function loadProductsData() {
   };
 }
 
-export function addOptions(value) {
+export function addOptions(productObj) {
   return {
     type: ADD_OPTIONS,
-    fromAddOptions: value,
+    productObj,
   };
 }
 
@@ -71,5 +73,12 @@ export function deleteProduct(product) {
   return {
     type: DELETE_PRODUCT,
     product,
+  };
+}
+
+export function updateProduct(productObj) {
+  return {
+    type: UPDATE_PRODUCT,
+    productObj,
   };
 }

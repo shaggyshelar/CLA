@@ -31,8 +31,9 @@ export function dataLoadingError(error) {
   };
 }
 
-export function loadProductsData() {
+export function loadProductsData(featureId) {
   return {
     type: LOAD_PRODUCTS_DATA,
+    featureId,
   };
 }

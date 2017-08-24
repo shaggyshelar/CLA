@@ -18,13 +18,16 @@ export function* getProductBundleSaga() {
         name: 'Meal',
         products: [
           {
-            id: 123,
+            id: 12311,
             code: 'P121',
             name: 'ABCD',
             featureId: 123,
             categoryId: 123,
            // categoryId: null,
             isDependent: true,
+            isSelected: true,
+            isRequired: true,
+            isDeleted: false,
             optionSelectionMethod: 123,
             optionLayout: 'wizard/section/tab',
             quantity: {
@@ -62,6 +65,9 @@ export function* getProductBundleSaga() {
             categoryId: 456,
             // categoryId: null,
             isDependent: true,
+            isSelected: true,
+            isRequired: true,
+            isDeleted: false,
             optionSelectionMethod: 456,
             optionLayout: 'wizard/section/tab',
             quantity: {
@@ -100,6 +106,9 @@ export function* getProductBundleSaga() {
             // featureId: null,
            // categoryId: null,
             isDependent: true,
+            isSelected: true,
+            isRequired: true,
+            isDeleted: false,
             optionSelectionMethod: 456,
             optionLayout: 'wizard/section/tab',
             quantity: {
@@ -138,6 +147,9 @@ export function* getProductBundleSaga() {
            // categoryId: 456,
             categoryId: null,
             isDependent: true,
+            isSelected: true,
+            isRequired: true,
+            isDeleted: false,
             optionSelectionMethod: 456,
             optionLayout: 'wizard/section/tab',
             quantity: {
@@ -185,6 +197,8 @@ export function* getProductBundleSaga() {
           //  categoryId: null,
             name: 'Drinks',
             DynamicAddEnabled: true,
+            minOption: 1,
+            maxOption: 2,
           },
           {
             id: 456,
@@ -212,8 +226,7 @@ export function* getProductBundleSaga() {
 
 export function* saveProducts(data) {
   try {
-    console.log('data', data);
-    // const requestURL = 'http://localhost:3000/v1/quote/calculate/1';
+    // const requestURL = 'http://localhost:3000/v1/product/save/1';
 
     // const options = {
     //   method: 'POST',
@@ -222,7 +235,7 @@ export function* saveProducts(data) {
     //   },
     //   body: JSON.stringify(data),
     // };
-    // const quotes = yield call(request, requestURL, options);
+    // const products = yield call(request, requestURL, options);
     yield put(configuredProductsSaveSuccess(data));
   } catch (err) {
     yield put(dataLoadingError(err));
@@ -241,9 +254,6 @@ export function* loadProductBundleData() {
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);
 }
-
-// All sagas to be loaded
-// export default[loadProductBundleData];
 
 // All sagas to be loaded
 export default [
