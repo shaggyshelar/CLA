@@ -45,24 +45,25 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const data1 = data[key];
-    // this.props.updateBundle(field[0], field[1], field[2], parseFloat(data1) );
+    this.props.updateSegBundle(field[0], field[1], field[2], field[3], parseFloat(data1));
   }
   validate(text) {
     const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
     return (decimal.test(text) && (parseFloat(text) > 0));
   }
   renderEditable(cellInfo) {
+    console.log(this.props)
     if (cellInfo.original.editable === false) {
-      return (<span> {this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
+      return (<span> {cellInfo.original.prop === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
     } else {
       const col = cellInfo.column.id.split('.')[0];
       return (<div>
         <InlineEdit
-          className="table-edit"
+          className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
           activeClassName="table-edit-input"
           text={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
           paramName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
-          change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
+          change={cellInfo.original.isProductOption ? this.bundleDataChanged : this.dataChanged}
           validate={this.validate}
         />
         <Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
@@ -140,6 +141,8 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           data.segmentData.columns.map((j) => {
             dataSet[i][j.name] = { id: data.id, value: j.quantity };
             dataSet[i].editable = data.quantity.isEditable;
+            dataSet[i].isProductOption = data.isProductOption;
+            dataSet[i].parent = data.parent;
             return this;
           });
           break;
@@ -147,6 +150,8 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           data.segmentData.columns.map((j) => {
             dataSet[i][j.name] = { id: data.id, value: j.listPrice };
             dataSet[i].editable = data.listPrice.isEditable;
+            dataSet[i].isProductOption = data.isProductOption;
+            dataSet[i].parent = data.parent;
             return this;
           });
           break;
@@ -154,6 +159,8 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           data.segmentData.columns.map((j) => {
             dataSet[i][j.name] = { id: data.id, value: j.uplift };
             dataSet[i].editable = false;
+            dataSet[i].isProductOption = data.isProductOption;
+            dataSet[i].parent = data.parent;
             return this;
           });
           break;
@@ -161,6 +168,8 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           data.segmentData.columns.map((j) => {
             dataSet[i][j.name] = { id: data.id, value: j.additionalDiscount };
             dataSet[i].editable = data.listPrice.isEditable;
+            dataSet[i].isProductOption = data.isProductOption;
+            dataSet[i].parent = data.parent;
             return this;
           });
           break;
@@ -168,6 +177,8 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           data.segmentData.columns.map((j) => {
             dataSet[i][j.name] = { id: data.id, value: j.netunitPrice };
             dataSet[i].editable = false;
+            dataSet[i].isProductOption = data.isProductOption;
+            dataSet[i].parent = data.parent;
             return this;
           });
           break;
