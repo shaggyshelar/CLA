@@ -30,13 +30,14 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         showPageJump: false,
         collapseOnSortingChange: false,
         collapseOnPageChange: true,
-        collapseOnDataChange: true,
+        collapseOnDataChange: false,
         filterable: false,
         sortable: true,
         resizable: false,
         pivot: true,
         expander: true,
-        freezeWhenExpanded: true,
+        defaultExpanded: {},
+        freezeWhenExpanded: false,
         selectedLine: {},
       },
       data: this.props.data,
@@ -191,13 +192,15 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     });
     return columns;
   }
-
+  seg(cellInfo, e) {
+    this.props.segment(cellInfo.original.id, false, cellInfo.original.isProductOption, cellInfo.original.parent);
+  }
   renderActionItems(cellInfo) {
     const discount = cellInfo.original.canShowDiscountScheduler ? <a><Glyphicon glyph="calendar" onClick={this.handleToggle.bind(this, cellInfo.index)} /></a> : '';
     const reconfigure = cellInfo.original.canReconfigure ? <a className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push('/reconfigureproducts'); }}><Glyphicon glyph="wrench" /></a> : '';
-    const bundle = cellInfo.original.isBundled ? <a><Glyphicon glyph="info-sign" /></a> : '';
+    const bundle = cellInfo.original.isProductOption ? <a><Glyphicon glyph="info-sign" /></a> : '';
     const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
-    const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, false)} title="segment/desegment"><Glyphicon glyph="transfer" /></a> : '';
+    const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Desegment"><Glyphicon glyph="transfer" /></a> : '';
     return (
       <div className="actionItems" >
         {/* <a><Glyphicon glyph="star-empty" /></a> */}
@@ -210,7 +213,6 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       </div>
     );
   }
-
   render() {
     const data = this.props.data;
     const columns = this.renderColumns();
@@ -228,11 +230,11 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
             SubComponent={(row) => (
               <SegmentSubComponent
                 data={_.filter(this.props.data, { id: row.original.id })[0]}
-                currency= {this.props.currency}
+                currency={this.props.currency}
                 updateSeg={this.props.updateSeg}
                 updateSegBundle={this.props.updateSegBundle}
               />
-            )}
+            )} 
           />
         </div>
         <DiscountScheduleEditor
