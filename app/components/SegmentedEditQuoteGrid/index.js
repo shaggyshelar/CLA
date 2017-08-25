@@ -63,9 +63,9 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       },
     });
   }
-
   renderCell(index, e) {
     const data = e.original.segmentData.columns[index];
+    
     const tooltip = (
       <Tooltip id={`${e.original.id}-${e.original.segmentData.columns[index].name}`} bsClass="tooltip" className="hover-tip">
         <span className="lab">QUANTITY</span><span className="val">{data.quantity}</span><br />
@@ -200,7 +200,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   renderActionItems(cellInfo) {
     const discount = cellInfo.original.canShowDiscountScheduler ? <a><Glyphicon glyph="calendar" onClick={this.handleToggle.bind(this, cellInfo.index)} /></a> : '';
     const reconfigure = cellInfo.original.canReconfigure ? <a className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : '';
-    const bundle = cellInfo.original.isProductOption ? <a><Glyphicon glyph="info-sign" /></a> : '';
+    const bundle = cellInfo.original.isProductOption ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
     const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
     const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Desegment"><Glyphicon glyph="transfer" /></a> : '';
     return (

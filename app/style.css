@@ -21,7 +21,7 @@
     display: inline;
 }
  .rt-tr:hover .inline-edit{
-     display : inline !important;
+     display : inline;
  }
 .table-edit-quantity, .table-edit {
     cursor:pointer;
@@ -31,12 +31,26 @@
     white-space: nowrap;
     overflow: hidden
 }
- 
-
+.inline-select {
+     z-index: '9999';
+     height:22px;
+     padding:0px 1px 0px 2px !important;
+}
+.table-edit-input .inline-edit {
+     display:none !important;
+}
+.table-edit-input +.inline-select {
+     display: inline-block;
+}
+    
+.table-edit +.inline-select {
+     display: none;
+}
 .table-edit-input{
     text-align: right;
     height:22px;
     width: 80%;
+    padding:50px
 }
   
 #inner-tab-example > ul{

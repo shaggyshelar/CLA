@@ -13,6 +13,7 @@ import { SegmentedQuote } from '../SegmentedQuote';
 import { cloneLine,
   deleteLine,
   deleteMultipleLines,
+  cloneMultipleLines,
   calculateSelectedData,
   quickSaveQuotes,
   updateProps,
@@ -42,6 +43,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.deleteCheckedLines = this.deleteCheckedLines.bind(this);
+    this.cloneCheckedLines = this.cloneCheckedLines.bind(this);
     this.checkAll = this.checkAll.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.quickSaveQuotes = this.quickSaveQuotes.bind(this);
@@ -56,7 +58,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     const segLines = _.filter(this.props.data.toJS().lines, { isSegmented: true });
     if (segLines.length) {
       this.setState({
-        segmented: true 
+        segmented: true,
       });
     }
     if (window.parent.Xrm !== undefined) {
@@ -119,45 +121,52 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i += 1) {
       if (!d[i].checked && e.target.checked) {
-        d[i].click();
+        d[i].checked = true;
       } else if (d[i].checked && !e.target.checked) {
-        d[i].click();
+        d[i].checked = false;
       }
     }
   }
 
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
-    // const data = this.state.selectedQuotes;
     if (!e.target.checked) {
-      _.remove(this.state.selectedQuotes, (n) => n === e.target.value);
       if (d.checked) {
         d.checked = false;
       }
-    } else {
-      this.state.selectedQuotes.push(e.target.value);
     }
   }
 
   deleteCheckedLines() {
-    const dataObj = this.props.data.toJS();
-    let indexArr = [];
-    indexArr = dataObj.lines.map((item, index) => {
-      if (this.state.selectedQuotes.includes(item.id)) {
-        return index;
+    const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    if (d1.length) {
+      const selectedLines = _.map(d1, (i) => { if (i.checked) return i.value; });
+      this.props.deleteSelectedLines(selectedLines);
+      if (ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked) {
+        ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked = false;
       }
-      return undefined;
-    }).filter((item) => item !== undefined);
-    indexArr.sort((a, b) => b - a);
-    indexArr.forEach((item) => {
-      dataObj.lines.splice(item, 1);
-    }, this);
-    this.props.deleteSelectedLines(dataObj.lines);
+      const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+      for (let i = 0; i < d.length; i += 1) {
+        if (d[i].checked) {
+          d[i].click();
+        }
+      }
+    }
+  }
 
-    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-    for (let i = 0; i < d.length; i += 1) {
-      if (d[i].checked) {
-        d[i].click();
+  cloneCheckedLines() {
+    const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    if (d1.length) {
+      const selectedLines = _.map(d1, (i) => { if (i.checked) return i.value; });
+      this.props.cloneSelectedLines(selectedLines);
+      if (ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked) {
+        ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked = false;
+      }
+      const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+      for (let i = 0; i < d.length; i += 1) {
+        if (d[i].checked) {
+          d[i].click();
+        }
       }
     }
   }
@@ -193,7 +202,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   render() {
     const grouped = this.props.data.toJS().linesGrouped;
     const segmented = _.filter(this.props.data.toJS().lines, { isSegmented: true }).length + _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
-    //const segmentedBundle = _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
+    // const segmentedBundle = _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
 
     return (
       <div>
@@ -209,14 +218,16 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             data={this.props.data ? this.props.data.toJS() : []}
             cloneLine={this.props.cloneLine}
             deleteLine={this.deleteCheckedLines}
+            cloneLine={this.cloneCheckedLines}
+            clone={this.cloneCheckedLines}
             calculateTotal={this.calculateTotal}
             quickSave={this.quickSaveQuotes}
             ungroup={this.ungroup}
             group={this.group}
-            grouped= {grouped}
+            grouped={grouped}
           />
         </div>
-         {grouped ?
+        {grouped ?
 
           <div className="qoute-container">
             <GroupQuote
@@ -244,36 +255,36 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         :
           <div className="qoute-container">
             {segmented ?
-            <SegmentedQuote
-              data={this.props.data ? this.props.data.toJS().lines : []}
-              cloneLine={this.props.cloneLine}
-              deleteLine={this.props.deleteLine}
-              toggleAllCheckBox={this.checkAll}
-              toggleQuoteCheckbox={this.toggleCheckboxChange}
-              updateProps={this.updateProps}
-              currency={this.props.data.get('currency')}
-              segment={this.segment}
-              update={this.props.update}
-              updateBundle={this.props.updateBundle}
-              updateSeg={this.props.updateSeg}
-              updateSegBundle={this.props.updateSegBundle}
-            />
+              <SegmentedQuote
+                 data={this.props.data ? this.props.data.toJS().lines : []}
+                 cloneLine={this.props.cloneLine}
+                 deleteLine={this.props.deleteLine}
+                 toggleAllCheckBox={this.checkAll}
+                 toggleQuoteCheckbox={this.toggleCheckboxChange}
+                 updateProps={this.updateProps}
+                 currency={this.props.data.get('currency')}
+                 segment={this.segment}
+                 update={this.props.update}
+                 updateBundle={this.props.updateBundle}
+                 updateSeg={this.props.updateSeg}
+                 updateSegBundle={this.props.updateSegBundle}
+               />
             :
-            <EditQuoteGrid
-              data={this.props.data ? this.props.data.toJS().lines : []}
-              cloneLine={this.props.cloneLine}
-              deleteLine={this.props.deleteLine}
-              toggleAllCheckBox={this.checkAll}
-              toggleQuoteCheckbox={this.toggleCheckboxChange}
-              updateProps={this.updateProps}
-              currency={this.props.data.get('currency')}
-              segment={this.segment}
-              update={this.props.update}
-              updateBundle={this.props.updateBundle}
-            />
+                <EditQuoteGrid
+                  data={this.props.data ? this.props.data.toJS().lines : []}
+                  cloneLine={this.props.cloneLine}
+                  deleteLine={this.props.deleteLine}
+                  toggleAllCheckBox={this.checkAll}
+                  toggleQuoteCheckbox={this.toggleCheckboxChange}
+                  updateProps={this.updateProps}
+                  currency={this.props.data.get('currency')}
+                  segment={this.segment}
+                  update={this.props.update}
+                  updateBundle={this.props.updateBundle}
+                />
             }
           </div>
-        } 
+        }
       </div>
     );
   }
@@ -312,6 +323,9 @@ function mapDispatchToProps(dispatch) {
     },
     deleteSelectedLines: (data) => {
       dispatch(deleteMultipleLines(data));
+    },
+    cloneSelectedLines: (data) => {
+      dispatch(cloneMultipleLines(data));
     },
     calculateSelected: (data) => {
       dispatch(calculateSelectedData(data));
