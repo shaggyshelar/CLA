@@ -16,10 +16,31 @@ const selectReConfigureProductsDomain = () => (state) => state.get('reConfigureP
 
 const makeSelectReConfigureProducts = () => createSelector(
   selectReConfigureProductsDomain(),
-  (substate) => substate.toJS()
+  (homeState) => homeState.toJS()
 );
 
-export default makeSelectReConfigureProducts;
+const getProductBundle = () =>
+ createSelector(
+  selectReConfigureProductsDomain(),
+  (homeState) => homeState.get('productBundleData')
+);
+
+const getReConfigureProductData = () =>
+ createSelector(
+  selectReConfigureProductsDomain(),
+  (homeState) => homeState.get('reConfigureProductData')
+);
+
+const getAddOptionState = () =>
+ createSelector(
+  selectReConfigureProductsDomain(),
+  (homeState) => homeState.get('fromAddOptions')
+);
+
 export {
   selectReConfigureProductsDomain,
+  makeSelectReConfigureProducts,
+  getProductBundle,
+  getReConfigureProductData,
+  getAddOptionState,
 };

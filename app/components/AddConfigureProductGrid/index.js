@@ -26,6 +26,7 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
       isVisible: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
+    this.renderCheckbox = this.renderCheckbox.bind(this);
   }
 
   setTableOption(event) {
@@ -54,40 +55,38 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
     }
   }
 
-  renderInput(props) {
-    return (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />);
+  renderCheckbox(cellInfo) {
+    return (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={cellInfo.original.id} />);
   }
   render() {
     const columns = [{
-      columns: [{
-        Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
-        accessor: 'id',
-        id: 'id',
-        sortable: false,
-        width: 50,
-        style: { textAlign: 'center' },
-        Cell: (props) => this.renderInput(props),
-      },
+      columns: [
         {
-          Header: 'PRODUCT CODE',
+          Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
+          accessor: 'id',
+          id: 'id',
+          sortable: false,
+          width: 50,
+          style: { textAlign: 'center' },
+          Cell: this.renderCheckbox,
+        },
+        {
+          Header: () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
           accessor: 'code',
+          style: { textAlign: 'left' },
+          headerStyle: { textAlign: 'left' },
         },
         {
-          Header: 'PRODUCT NAME',
+          Header: () => <span title="PRODUCT NAME">PRODUCT NAME</span>,
           accessor: 'name',
+          style: { textAlign: 'left' },
+          headerStyle: { textAlign: 'left' },
         },
         {
-          Header: 'PRODUCT FAMILY',
-          // accessor: 'type',
-        },
-        {
-          Header: 'PRODUCT DESCRIPTION',
-          // accessor: 'type',
-        },
-        {
-          Header: 'LIST PRICE',
-          accessor: 'listPrice.value',
-          style: { textAlign: 'right' },
+          Header: () => <span title="PRODUCT DESCRIPTION">PRODUCT DESCRIPTION</span>,
+          // accessor: '',
+          style: { textAlign: 'left' },
+          headerStyle: { textAlign: 'left' },
         },
       ],
     }];

@@ -5,6 +5,7 @@
 */
 
 import React, { PropTypes } from 'react';
+import _ from 'lodash';
 import { Button } from 'react-bootstrap/lib';
 import ReconfigureGrid from 'components/ReconfigureGrid';
 import { browserHistory } from 'react-router';
@@ -17,92 +18,59 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
     };
   }
 
-  componentDidMount() {
-
-  }
-
-  setProductsForFeature(featureId) {
-    if (this.props.productBundle.products !== undefined) {
-      this.state.products = this.props.productBundle.products.filter((item, index) => (item.featureId === featureId
-        //  &&
-        //   ((this.props.categoryId !== null && item.categoryId === this.props.categoryId)
-        //       || this.props.categoryId === null)
-        ));
-    } else {
-      // this.state.products = [];
-    }
-  }
-
   renderAddButton(feature, index) {
     if (feature.DynamicAddEnabled) {
-      return (<Button key={index} bsStyle="link" onClick={() => { browserHistory.push(`/addConfigureproducts?featureId=${feature.id}`); }} >Add Options</Button>);
+      if (feature.categoryId) {
+        return (<Button key={index} bsStyle="link" onClick={() => { browserHistory.push(`/addConfigureproducts?ids=${feature.id}/${feature.categoryId}`); }} >Add Options</Button>);
+      } else {
+        return (<Button key={index} bsStyle="link" onClick={() => { browserHistory.push(`/addConfigureproducts?ids=${feature.id}`); }} >Add Options</Button>);
+      }
+    }
+    return (<span></span>);
+  }
+  renderMinMaxMessage(feature) {
+    let text = '';
+    if (feature.minOption && feature.maxOption) {
+      text = `Choose at least ${feature.minOption} but no more than ${feature.maxOption} of the following:`;
+    } else if (feature.minOption && feature.maxOption == null) {
+      text = `Choose at least ${feature.minOption} of the following:`;
+    }
+    return (<div className="minMaxMessage"><span>{text}</span></div>);
+  }
+
+  renderFeatureGrid(feature, index) {
+    let addButton = {};
+    if (feature !== undefined) {
+      addButton = this.renderAddButton(feature, index);
+      return (<div key={index} className="group panelMargin">
+        <div className="group-card">
+          <span className="group-header">{feature.name}</span>
+          {this.renderMinMaxMessage(feature)}
+        </div>
+        <ReconfigureGrid
+          products={feature.products.length > 0 ? feature.products : []}
+          showFilter={this.props.showFilter}
+          toggleFilter={this.props.toggleSidebar}
+          toggleCheckboxChange={this.props.toggleCheckboxChange}
+          data={feature.products.length > 0 ? feature.products : []}
+          addProductsWait={this.props.addProductsWait}
+          checkAll={this.props.checkAll}
+          toggleCheckAll={this.props.checkAll}
+          feature={feature}
+          categoryId={this.props.categoryId}
+          deleteProduct={this.props.deleteProduct}
+          updateField={this.props.updateField}
+        />
+        {addButton}
+      </div>);
     }
     return (<span></span>);
   }
 
-  renderFeatureGrid(feature, index) {
-    if (this.props.featureId !== null && this.props.featureId !== undefined) {
-      this.setProductsForFeature(this.props.featureId);
-    } else {
-      this.setProductsForFeature(feature.id);
-    }
-    let addButton = {};
-    if ((this.props.categoryId !== null && feature.categoryId === this.props.categoryId)) {
-      addButton = this.renderAddButton(feature, index);
-      return (<div key={index} className="group">
-        <div className="group-card">
-          <span className="group-header">{feature.name}</span>
-        </div>
-        <ReconfigureGrid
-          products={this.state.products}
-          showFilter={this.props.showFilter}
-          toggleFilter={this.props.toggleSidebar}
-          toggleCheckboxChange={this.props.toggleCheckboxChange}
-          data={this.state.products}
-          addProductsWait={this.props.addProductsWait}
-          checkAll={this.props.checkAll}
-          toggleCheckAll={this.props.checkAll}
-          feature={feature}
-        />
-        {addButton}
-      </div>);
-    } if ((this.props.categoryId === null && feature.id === this.props.featureId)) {
-      addButton = this.renderAddButton(feature, index);
-      return (<div key={index} className="group">
-        <div className="group-card">
-          <span className="group-header">{feature.name}</span>
-        </div>
-        <ReconfigureGrid
-          products={this.state.products}
-          showFilter={this.props.showFilter}
-          toggleFilter={this.props.toggleSidebar}
-          toggleCheckboxChange={this.props.toggleCheckboxChange}
-          data={this.state.products}
-          addProductsWait={this.props.addProductsWait}
-          checkAll={this.props.checkAll}
-          toggleCheckAll={this.props.checkAll}
-          feature={feature}
-        />
-        {addButton}
-      </div>);
-    }
-    // else {
-    //   jsxData = (<div key={index} className="group">
-    //     <div className="group-card">
-    //       <span className="group-header">No records found</span>
-    //     </div>
-    //   </div>
-    //   );
-    // }
-    // return jsxData;
-  }
-
   render() {
     const panel = [];
-    if (this.props.productBundle !== undefined) {
-      if (this.props.productBundle.features !== undefined && this.props.productBundle.features.length > 0) {
-        panel.push(this.props.productBundle.features.map((item, index) => this.renderFeatureGrid(item, index)));
-      }
+    if (!_.isUndefined(this.props.features) && this.props.features.length > 0) {
+      panel.push(this.props.features.map((item, index) => this.renderFeatureGrid(item, index)));
     }
     return (
       <div>
@@ -113,14 +81,16 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
 }
 
 ReconfigureFeaturePanel.propTypes = {
-  categoryId: PropTypes.any,
   showFilter: PropTypes.func,
   checkAll: PropTypes.func,
   toggleSidebar: PropTypes.func,
   toggleCheckboxChange: PropTypes.func,
   addProductsWait: PropTypes.func,
-  productBundle: PropTypes.object,
-  featureId: PropTypes.any,
+  features: PropTypes.any,
+  deleteProduct: PropTypes.func,
+  updateField: PropTypes.func,
+  categoryId: PropTypes.any,
 };
 
 export default ReconfigureFeaturePanel;
+

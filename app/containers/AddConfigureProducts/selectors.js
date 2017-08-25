@@ -19,7 +19,14 @@ const makeSelectAddConfigureProducts = () => createSelector(
   (substate) => substate.toJS()
 );
 
-export default makeSelectAddConfigureProducts;
+const makeProductsData = () =>
+ createSelector(
+  selectAddConfigureProductsDomain(),
+  (homeState) => homeState.get('productsData')
+);
+
 export {
   selectAddConfigureProductsDomain,
+  makeSelectAddConfigureProducts,
+  makeProductsData,
 };

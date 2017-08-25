@@ -1,3 +1,4 @@
+
 /*
  *
  * ReConfigureProducts
@@ -6,19 +7,21 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Col, Row } from 'react-bootstrap/lib';
 import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
+import _ from 'lodash';
+import { browserHistory } from 'react-router';
+import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
-import ReconfigureGrid from 'components/ReconfigureGrid';
-import makeSelectReConfigureProducts from './selectors';
-import loadConfigureProductsData from './actions';
-import ReconfigureProductTab from 'components//ReconfigureProductTab';
+import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState } from './selectors';
+import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct } from './actions';
+
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
       selectedProducts: [],
+      quoteName: 'Q-00163',
       dataProd: [
         {
           _id: '596db79f58d3f94623033cd0',
@@ -61,127 +64,71 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
           unitPrice: '$ 230.653',
         },
       ],
-      products: {
-        productBundle: {
-          id: 1,
-          quoteId: 123,
-          name: 'Meal',
-          products: [
-            {
-              id: 123,
-              code: 'P121',
-              name: 'ABCD',
-              featureId: 123,
-              categoryId: 123,
-              // categoryId: null,
-              isDependent: true,
-              optionSelectionMethod: 123,
-              optionLayout: 'wizard/section/tab',
-              quantity: {
-                value: 123,
-                isEditable: true,
-                isVisible: true,
-                dataType: 'text/select/textarea/inputSelect',
-                selectValues: [
-                  {
-                    id: 123,
-                    value: ':List',
-                    isSelected: true,
-                  },
-                ],
-              },
-              listPrice: {
-                value: 123,
-                isEditable: true,
-                isVisible: true,
-                dataType: 'text/select/textarea/inputSelect',
-                selectValues: [
-                  {
-                    id: 123,
-                    value: ':List',
-                    isSelected: true,
-                  },
-                ],
-              },
-            },
-            {
-              id: 234,
-              code: 'P122',
-              name: 'EFGH',
-              featureId: 456,
-              categoryId: 456,
-              // categoryId: null,
-              isDependent: true,
-              optionSelectionMethod: 456,
-              optionLayout: 'wizard/section/tab',
-              quantity: {
-                value: 565,
-                isEditable: true,
-                isVisible: true,
-                dataType: 'text/select/textarea/inputSelect',
-                selectValues: [
-                  {
-                    id: 123,
-                    value: ':List',
-                    isSelected: true,
-                  },
-                ],
-              },
-              listPrice: {
-                value: 654,
-                isEditable: true,
-                isVisible: true,
-                dataType: 'text/select/textarea/inputSelect',
-                selectValues: [
-                  {
-                    id: 554,
-                    value: ':List',
-                    isSelected: true,
-                  },
-                ],
-              },
-            },
-          ],
-          categories: [
-            {
-              id: 123,
-              name: 'Hardware',
-            },
-            {
-              id: 456,
-              name: 'Software',
-            },
-          ],
-          features: [
-            {
-              id: 123,
-              categoryId: 123,
-              // categoryId: null,
-              name: 'Drinks',
-              DynamicAddEnabled: true,
-            },
-            {
-              id: 456,
-              categoryId: 456,
-              // categoryId: null,
-              name: 'Mc Meal',
-              DynamicAddEnabled: false,
-            },
-          ],
-        },
-        config: {},
-      },
+      reConfigureData: {},
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.checkAll = this.checkAll.bind(this);
+    this.saveProducts = this.saveProducts.bind(this);
   }
-  componentWillMount() {
 
-  }
 
   componentDidMount() {
-    // this.props.getProductsData();
+    if (this.props.location.query.id) {
+      this.props.getProductsData(this.props.location.query.id);
+    }
+  }
+
+  saveProducts() {
+    const updatedProducts = [];
+    const intialProductBundleData = this.props.productBundleData.toJS();
+    const updatedProductBundleData = this.props.reConfigureProductData.toJS();
+    if (updatedProductBundleData.categories.length > 0) {
+      updatedProductBundleData.categories.forEach((category) => {
+        category.features.forEach((feature) => {
+          feature.products.forEach((currrentProduct) => {
+            const product = currrentProduct;
+            if (product.tempId) {
+              product.id = product.tempId;
+              // product = _.omit(product, ['tempId', 'isAdded']);
+            }
+            const index = _.indexOf(this.state.selectedProducts, product.id);
+            if (index !== -1) {
+              product.isSelected = true;
+            }
+            if (category.name === 'Other') {
+              product.categoryId = null;
+            }
+            if (feature.name === 'Other Options') {
+              product.featureId = null;
+            }
+            updatedProducts.push(product);
+          }, this);
+        }, this);
+      }, this);
+    } else if (updatedProductBundleData.features.length > 0) {
+      updatedProductBundleData.features.forEach((feature) => {
+        feature.products.forEach((currrentProduct) => {
+          const product = currrentProduct;
+          if (product.tempId) {
+            product.id = product.tempId;
+          }
+          const index = _.indexOf(this.state.selectedProducts, product.id);
+          if (index !== -1) {
+            product.isSelected = true;
+          }
+          if (feature.name === 'Other Options') {
+            product.featureId = null;
+          }
+          updatedProducts.push(product);
+        }, this);
+      }, this);
+    }
+
+    intialProductBundleData.productBundle.products = [];
+    intialProductBundleData.productBundle.products = updatedProducts;
+    this.props.saveConfiguredProducts(intialProductBundleData);
+    browserHistory.push('/EditQuote');
   }
 
   toggleSidebar() {
@@ -204,20 +151,15 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
 
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
-    const data = this.state.selectedProducts;
     if (!e.target.checked) {
-      _.remove(data, (n) => n === e.target.value);
+      _.remove(this.state.selectedProducts, (n) => n === e.target.value);
       if (d.checked) {
         d.checked = false;
       }
     } else {
-      data.push(e.target.value);
+      this.state.selectedProducts.push(parseInt(e.target.value));
     }
-    this.setState({
-      selectedProducts: data,
-    });
   }
-
 
   render() {
     return (
@@ -231,9 +173,11 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             data={this.state.dataProd}
+            saveProducts={this.saveProducts}
+            quoteName={this.state.quoteName}
           />
           <ReconfigureProductTab
-            productBundle={this.state.products ? this.state.products.productBundle : {}}
+            reConfigureData={this.props.reConfigureProductData.toJS()}
             dataProd={this.state.dataProd}
             products={this.props.dataProd}
             showFilter={this.props.showFilter}
@@ -242,6 +186,8 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             addProductsWait={this.addProductsWait}
             checkAll={this.state.checkAll}
             toggleCheckAll={this.checkAll}
+            deleteProduct={this.props.deleteProduct}
+            updateField={this.props.updateField}
           />
         </div>
       </div>
@@ -253,20 +199,36 @@ ReConfigureProducts.propTypes = {
   toggleFilter: PropTypes.func,
   showFilter: PropTypes.any,
   dataProd: PropTypes.any,
-  // data: PropTypes.any,
-  // products: PropTypes.any,
-  // getProductsData: PropTypes.func,
+  reConfigureProductData: PropTypes.any,
+  productBundleData: PropTypes.any,
+  getProductsData: PropTypes.func,
+  saveConfiguredProducts: PropTypes.func,
+  deleteProduct: PropTypes.func,
+  location: PropTypes.any,
+  updateField: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   ReConfigureProducts: makeSelectReConfigureProducts(),
+  productBundleData: getProductBundle(),
+  reConfigureProductData: getReConfigureProductData(),
+  fromAddOption: getAddOptionState(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    // dispatch,
-    getProductsData: () => {
-      dispatch(loadConfigureProductsData());
+    dispatch,
+    getProductsData: (id) => {
+      dispatch(loadReConfigureProductsData(id));
+    },
+    saveConfiguredProducts: (data) => {
+      dispatch(saveConfiguredProductsData(data));
+    },
+    deleteProduct: (product) => {
+      dispatch(deleteProduct(product));
+    },
+    updateField: (productObj) => {
+      dispatch(updateProduct(productObj));
     },
   };
 }

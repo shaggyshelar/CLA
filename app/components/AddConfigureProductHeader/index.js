@@ -33,7 +33,7 @@ class AddConfigureProductHeader extends React.Component { // eslint-disable-line
           </ButtonGroup>
           <ButtonGroup className="margin">
             <Button onClick={() => { browserHistory.push('/reconfigureproducts'); }}>Cancel</Button>
-            <Button bsStyle="primary" onClick={this.props.addProducts}>Add</Button>
+            <Button bsStyle="primary" onClick={this.props.addOptions}>Add</Button>
           </ButtonGroup>
         </Col>
       </Row>
@@ -43,6 +43,7 @@ class AddConfigureProductHeader extends React.Component { // eslint-disable-line
 
 AddConfigureProductHeader.propTypes = {
   addProducts: PropTypes.func,
+  addOptions: PropTypes.func,
 };
 
 export default AddConfigureProductHeader;

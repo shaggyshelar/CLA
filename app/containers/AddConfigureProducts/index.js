@@ -1,10 +1,14 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+import _ from 'lodash';
 import AddConfigureProductHeader from 'components/AddConfigureProductHeader';
 import AddConfigureProductGrid from 'components/AddConfigureProductGrid';
 import { createStructuredSelector } from 'reselect';
-import makeSelectAddConfigureProducts from './selectors';
+import { makeSelectAddConfigureProducts, makeProductsData } from './selectors';
+import { loadProductsData } from './actions';
+import { addOptions } from '../ReConfigureProducts/actions';
 
 export class AddConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -94,6 +98,39 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.checkAll = this.checkAll.bind(this);
+    this.addOptions = this.addOptions.bind(this);
+  }
+
+  componentDidMount() {
+    let featureId = '';
+    const params = _.split(this.props.location.query.ids, '/');
+    if (params.length > 0) {
+      featureId = parseInt(params[0]);
+    }
+    this.props.getProductsData(featureId);
+  }
+
+  addOptions() {
+    const params = _.split(this.props.location.query.ids, '/');
+    const products = this.props.productsData.toJS().products ? this.props.productsData.toJS().products : [];
+    const productObj = {
+      selectedProducts: [],
+    };
+
+    if (params.length === 1) {
+      productObj.featureId = parseInt(params[0]);
+    } else if (params.length === 2) {
+      productObj.featureId = parseInt(params[0]);
+      productObj.categoryId = parseInt(params[1]);
+    }
+
+    this.state.selectedProducts.forEach((currentProductId) => {
+      const productIndex = _.findIndex(products, { id: parseInt(currentProductId) });
+      productObj.selectedProducts.push(products[productIndex]);
+    }, this);
+
+    this.props.addOptions(productObj);
+    browserHistory.push('/reconfigureproducts');
   }
 
   toggleSidebar() {
@@ -116,18 +153,15 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
 
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
-    const data = this.state.selectedProducts;
+    // const data = this.state.selectedQuotes;
     if (!e.target.checked) {
-      _.remove(data, (n) => n === e.target.value);
+      _.remove(this.state.selectedProducts, (n) => n === e.target.value);
       if (d.checked) {
         d.checked = false;
       }
     } else {
-      data.push(e.target.value);
+      this.state.selectedProducts.push(e.target.value);
     }
-    this.setState({
-      selectedProducts: data,
-    });
   }
 
   render() {
@@ -142,16 +176,19 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             data={this.state.dataProd}
+            addOptions={this.addOptions}
           />
-          <AddConfigureProductGrid
-            products={this.state.products}
-            showFilter={this.props.showFilter}
-            toggleSidebar={this.toggleSidebar}
-            toggleCheckboxChange={this.toggleCheckboxChange}
-            addProductsWait={this.addProductsWait}
-            checkAll={this.state.checkAll}
-            toggleCheckAll={this.checkAll}
-          />
+          <div className="qoute-container">
+            <AddConfigureProductGrid
+              products={this.props.productsData.toJS().products ? this.props.productsData.toJS().products : []}
+              showFilter={this.props.showFilter}
+              toggleSidebar={this.toggleSidebar}
+              toggleCheckboxChange={this.toggleCheckboxChange}
+              addProductsWait={this.addProductsWait}
+              checkAll={this.state.checkAll}
+              toggleCheckAll={this.checkAll}
+            />
+          </div>
         </div>
       </div>
     );
@@ -159,18 +196,28 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
 }
 
 AddConfigureProducts.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
   toggleFilter: PropTypes.func,
   showFilter: PropTypes.any,
+  getProductsData: PropTypes.func,
+  productsData: PropTypes.any,
+  addOptions: PropTypes.func,
+  location: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   AddConfigureProducts: makeSelectAddConfigureProducts(),
+  productsData: makeProductsData(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    getProductsData: (featureId) => {
+      dispatch(loadProductsData(featureId));
+    },
+    addOptions: (productObj) => {
+      dispatch(addOptions(productObj));
+    },
   };
 }
 
