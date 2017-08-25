@@ -1,7 +1,7 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import InlineEdit from '../index';
+// import { RIEInput } from '../index';
 
 describe('<InlineEdit />', () => {
   it('Expect to have unit tests specified', () => {

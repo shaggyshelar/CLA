@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Glyphicon } from 'react-bootstrap/lib';
 import { browserHistory } from 'react-router';
 import 'react-table/react-table.css';
-import InlineEdit from 'react-edit-inline';
+import { RIENumber, RIESelect } from 'riek';
 import _ from 'lodash';
 import InlineEditCustom from 'components/InlineEdit';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
@@ -13,7 +13,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   constructor(props) {
     super(props);
     this.renderEditable = this.renderEditable.bind(this);
-    //this.renderDiscount = this.renderDiscount.bind(this);
+    this.renderDiscount = this.renderDiscount.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.renderData = this.renderData.bind(this);
     this.validate = this.validate.bind(this);
@@ -102,9 +102,10 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     const data1 = data[key];
     this.props.updateBundle(field[0], field[1], field[2], parseFloat(data1));
   }
-  validate(text) {
-    const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
-    return (decimal.test(text) && (parseFloat(text) > 0));
+  validate(string) {
+    const number = parseFloat(string);
+    if (isNaN(number) || !isFinite(number)) return false;
+    return !isNaN(number);
   }
   calculateTotal() {
     let total = 0;
@@ -139,25 +140,53 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       </div>
     );
   }
-  // renderDiscount(cellInfo) {
-  //   console.log("asdas",cellInfo);
-  //   return (
-  //     <InlineEditCustom
-  //       class="jaja"
-  //       value={cellInfo.value}
-  //       select={cellInfo.original[cellInfo.column.id].selectValues}
-  //     />
-  //   );
+  renderDiscount(cellInfo) {
+    console.log('asdas', cellInfo);
+    const selected = cellInfo.original[cellInfo.column.id].selectValues;
+    const options = [];
+    const selectedOption = {};
+    selected.map((i) => {
+      options.push({ id: i.id, text: i.value });
+      if (i.isSelected) {
+        selectedOption.id = i.id;
+        selectedOption.text = i.value;
+      }
+    });
+    console.log('asdas', options,selectedOption);
+    return (
+      <div>
+        <RIENumber
+          className={'table-edit'}
+          classEditing="table-edit-input"
+          value={cellInfo.value}
+          propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+          format={this.formatt}
+          change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
+          validate={this.validate}
+          classInvalid="invalid"
+        />
+        <RIESelect
+          className={'inline-select'}
+          classEditing="inline-select-edit"
+          value={selectedOption}
+          options={options}
+          propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+          change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
+          validate={this.validate}
+          classInvalid="invalid"
+        />
+        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+      </div>);
     // if (cellInfo.original[cellInfo.column.id].isEditable === false) {
     //   return (<span>{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
     // } else {
     //   return (
     //     <div>
-    //       <InlineEdit
+    //       <RIEInput
     //         className={'table-edit'}
-    //         activeClassName="table-edit-input"
-    //         text={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
-    //         paramName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+    //         classEditing="table-edit-input"
+    //         value={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
+    //         propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
     //         staticElement="div"
     //         change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
     //         validate={this.validate}
@@ -171,23 +200,25 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     //       <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
     //     </div>);
     // }
-  //}
+  }
+  formatt(e) {
+    return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
+  }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (<span>{cellInfo.column.id === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
     } else {
       return (
         <div>
-          <InlineEdit
+          <RIENumber
             className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
-            activeClassName="table-edit-input"
-            text={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
-            paramName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-            staticElement="div"
+            classEditing="table-edit-input"
+            value={cellInfo.value}
+            propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+            format={this.formatt}
             change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
             validate={this.validate}
-            title={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
-            id={cellInfo.original.isProductOption ? cellInfo.original.parent : cellInfo.original.id}
+            classInvalid="invalid"
           />
           <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         </div>);
@@ -279,7 +310,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         id: 'additionalDiscount',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
-        Cell: (props) => this.renderEditable,
+        Cell: this.renderDiscount,
       },
       {
         Header: () => <span title="MARKUP">MARKUP</span>,

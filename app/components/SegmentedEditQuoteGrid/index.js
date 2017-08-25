@@ -8,7 +8,7 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
 import 'react-table/react-table.css';
-import InlineEdit from 'react-edit-inline';
+import { RIEInput } from 'riek';
 import _ from 'lodash';
 import SegmentSubComponent from 'components/SegmentSubComponent';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
@@ -117,11 +117,11 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       return (<span> {this.props.currency} {cellInfo.value}</span>);
     } else {
       return (<div>
-        <InlineEdit
+        <RIEInput
           className="table-edit"
-          activeClassName="table-edit-input"
-          text={cellInfo.value}
-          paramName="message"
+          classEditing="table-edit-input"
+          value={cellInfo.value}
+          propName="message"
         />
         <Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
       </div>);

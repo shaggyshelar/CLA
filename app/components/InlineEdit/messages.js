@@ -1,7 +1,7 @@
 /*
- * InlineEdit Messages
+ * { RIEInput } Messages
  *
- * This contains all the text for the InlineEdit component.
+ * This contains all the text for the { RIEInput } component.
  */
 import { defineMessages } from 'react-intl';
 
