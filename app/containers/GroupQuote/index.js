@@ -8,12 +8,11 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import InlineEdit from 'react-edit-inline';
+import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import { Button, Glyphicon, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import { SegmentedQuote } from '../SegmentedQuote';
-import { browserHistory } from 'react-router';
-import { updateGroupData, updateGroupValue } from '../App/actions';
 export class GroupQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -28,11 +27,11 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.deleteGroupIn = this.deleteGroupIn.bind(this);
   }
   componentWillMount() {
-    const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId) });
+    const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId, 0) });
 
     if (this.state.selectedGroup === null) {
       this.props.location.query.groupId && groupLen ?
-       this.setState({ selectedGroup: parseInt(this.props.location.query.groupId) }) :
+       this.setState({ selectedGroup: parseInt(this.props.location.query.groupId, 0) }) :
        this.setState({ selectedGroup: this.props.groups[0].id });
     }
   }
@@ -81,7 +80,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     }
   }
   changeOptional(e) {
-    this.props.updateGroupData( e.target.name, e.target.id, e.target.checked);
+    this.props.updateGroupData(e.target.name, e.target.id, e.target.checked);
   }
   validate(text) {
     const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
@@ -158,7 +157,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   <InlineEdit
                     className="group-input"
                     activeClassName="input-group input-text"
-                    text={group.additionaldiscount===""?"0.00":group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 2 })}
+                    text={group.additionaldiscount === '' ? '0.00' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 2 })}
                     paramName={`${group.id}*($)*additionaldiscount`}
                     change={this.dataChanged}
                     validate={this.validate}
@@ -175,13 +174,13 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 </Col>
                 <Col md={4} sm={4} xs={4}>
                   <InlineEdit
-                  className="group-input"
-                  activeClassName="input-group input-text"
-                  text={group.subscriptionTerm===""?"0.00":group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2 })}
-                  paramName={`${group.id}*($)*subscriptionTerm`}
-                  change={this.dataChanged}
-                  validate={this.validate}
-                /><Glyphicon glyph="pencil" className="inline-edit" />
+                    className="group-input"
+                    activeClassName="input-group input-text"
+                    text={group.subscriptionTerm === '' ? '0.00' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2 })}
+                    paramName={`${group.id}*($)*subscriptionTerm`}
+                    change={this.dataChanged}
+                    validate={this.validate}
+                  /><Glyphicon glyph="pencil" className="inline-edit" />
                   {/* <input className="input-group input-text" onChange={this.valueChanged} id="subscriptionTerm" type="text" name={group.id} value={group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2 })} /> */}
                 </Col>
               </Row>
@@ -243,7 +242,14 @@ GroupQuote.propTypes = {
   lines: PropTypes.any,
   toggleAllCheckBox: PropTypes.func,
   updateProps: PropTypes.func,
-  addProducts: PropTypes.func,
+  toggleQuoteCheckbox: PropTypes.func,
+  updateBundle: PropTypes.func,
+  update: PropTypes.func,
+  segment: PropTypes.func,
+  updateSegBundle: PropTypes.func,
+  updateSeg: PropTypes.func,
+  updateGroupData: PropTypes.func,
+  location: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({

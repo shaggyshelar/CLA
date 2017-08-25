@@ -63,6 +63,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       },
     });
   }
+
   renderCell(index, e) {
     const data = e.original.segmentData.columns[index];
     const tooltip = (
@@ -194,9 +195,6 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     return columns;
   }
   seg(cellInfo, e) {
-    if (this.props.data.length === 1) {
-      this.props.selectedTab('');
-    }
     this.props.segment(cellInfo.original.id, false, cellInfo.original.isProductOption, cellInfo.original.parent);
   }
   renderActionItems(cellInfo) {
@@ -326,8 +324,10 @@ SegmentedEditQuoteGrid.propTypes = {
   currency: PropTypes.any,
   deleteLine: PropTypes.func,
   cloneLine: PropTypes.func,
-  toggleAllCheckBox: PropTypes.func,
   toggleQuoteCheckbox: PropTypes.func,
+  segment: PropTypes.func,
+  updateSegBundle: PropTypes.func,
+  updateSeg: PropTypes.func,
 };
 
 export default SegmentedEditQuoteGrid;

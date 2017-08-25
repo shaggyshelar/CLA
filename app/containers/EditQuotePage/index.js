@@ -141,8 +141,6 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   deleteCheckedLines() {
     const dataObj = this.props.data.toJS();
-
-    // let allProducts=this.props.data.get('lines').toJS();
     let indexArr = [];
     indexArr = dataObj.lines.map((item, index) => {
       if (this.state.selectedQuotes.includes(item.id)) {

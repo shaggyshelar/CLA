@@ -37,7 +37,6 @@ import {
   UPDATE_GROUP_DATA,
   UPDATE_GROUP_VAL,
   SEGMENT,
-  DESEGMENT,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -141,7 +140,7 @@ function appReducer(state = initialState, action) {
         return state.setIn(['data', 'lines'], fromJS(linesBundle));
       }
     case UPDATE_SEG:
-      {        
+      {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
         const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
