@@ -52,7 +52,6 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     return (decimal.test(text) && (parseFloat(text) > 0));
   }
   renderEditable(cellInfo) {
-    console.log(this.props)
     if (cellInfo.original.editable === false) {
       return (<span> {cellInfo.original.prop === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
     } else {
