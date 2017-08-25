@@ -34,7 +34,12 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
           <ProductSelectionHeaderCard />
         </Col>
         <Col xs={12} md={4} style={{ textAlign: 'left' }}>
-          <SearchProductAutocomplete data={this.props.data} />
+          <SearchProductAutocomplete
+            data={this.props.data}
+            searchInputChange={this.props.searchInputChange}
+            onSearchClick={this.props.onSearchClick}
+            onSearchItemSelected={this.props.onSearchItemSelected}
+          />
         </Col>
         <Col xs={12} md={5} style={{ textAlign: 'right' }}>
           <ButtonGroup className="margin">
@@ -59,5 +64,8 @@ ProductSelectionHeader.propTypes = {
   data: PropTypes.array,
   addProducts: PropTypes.func,
   addProductsWait: PropTypes.func,
+  searchInputChange: React.PropTypes.func,
+  onSearchClick: React.PropTypes.func,
+  onSearchItemSelected: React.PropTypes.func,
 };
 export default ProductSelectionHeader;
