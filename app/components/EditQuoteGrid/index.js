@@ -1,11 +1,12 @@
 import ReactTable from 'react-table';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
+import { Glyphicon } from 'react-bootstrap/lib';
+import { browserHistory } from 'react-router';
 import 'react-table/react-table.css';
 import InlineEdit from 'react-edit-inline';
+import _ from 'lodash';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
-import { browserHistory } from 'react-router';
 
 class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -42,6 +43,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.dataChanged = this.dataChanged.bind(this);
     this.bundleDataChanged = this.bundleDataChanged.bind(this);
     this.checkAll = this.checkAll.bind(this);
+    this.calculateTotal = this.calculateTotal.bind(this);
   }
 
 
@@ -86,27 +88,6 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   deleteLine(id) {
     this.props.deleteLine(id);
   }
-  renderData() {
-    const data = Object.assign([], this.props.data);
-    data.map((item, index) => {
-      if (item.type === 'Bundle' && item.bundleProducts) {
-        item.bundleProducts.map((i, index1) => {
-          if (!i.isSegmented) {
-            data.splice(index + 1 + index1, 0, i);
-          }
-          return this;
-        });
-      }
-      return this;
-    });
-    return data;
-  }
-  renderChecbox(cellInfo) {
-    if (!cellInfo.original.isProductOption) {
-      return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original.id} />);
-    }
-    return (<span></span>);
-  }
   dataChanged(data) {
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
@@ -122,6 +103,39 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   validate(text) {
     const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
     return (decimal.test(text) && (parseFloat(text) > 0));
+  }
+  calculateTotal() {
+    let total = 0;
+    _.forEach(this.props.data, (value) => {
+      total += value.netTotal;
+      if (value.type === 'Bundle' && value.bundleProducts) {
+        value.bundleProducts.map((i) => {
+          if (!i.isSegmented) {
+            total += value.netTotal;
+          }
+        });
+      }
+    });
+    return total;
+  }
+  renderActionItems(cellInfo) {
+    const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : <span className="blank"></span>;
+    const reconfigure = cellInfo.original.canReconfigure ? <a title="Reconfigure Lines" className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
+    const bundle = cellInfo.original.isProductOption ? <a title={`Required by ${cellInfo.original.name}`}><Glyphicon glyph="info-sign" /></a> : <span className="blank"></span>;
+    const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" style={{ color: '#449D44' }} /></a> : <span className="blank"></span>;
+    const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isProductOption, cellInfo.original.parent)} title="Segment / Desegment"><Glyphicon glyph="transfer" style={{ color: '#31B0D5' }} /></a> : <span className="blank"></span>;
+    return (
+      <div className="actionItems" >
+        {bundle}
+        {discount}
+        {reconfigure}
+        {segment}
+        {cellInfo.original.isProductOption ? <span></span> : clone}
+        {cellInfo.original.isProductOption ? <span className="blank"></span> : <a title="Delete Line" onClick={this.deleteLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="trash" style={{ color: '#C9302C' }} /></a>}
+
+        {/* <a><Glyphicon glyph="star-empty" /></a> */}
+      </div>
+    );
   }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
@@ -144,27 +158,30 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         </div>);
     }
   }
-  renderActionItems(cellInfo) {
-    const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : <span className="blank"></span>;
-    const reconfigure = cellInfo.original.canReconfigure ? <a title="Reconfigure Lines" className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
-    const bundle = cellInfo.original.isProductOption ? <a title={`Required by ${cellInfo.original.name}`}><Glyphicon glyph="info-sign" /></a> : <span className="blank"></span>;
-    const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" style={{ color: '#449D44' }} /></a> : <span className="blank"></span>;
-    const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isProductOption, cellInfo.original.parent)} title="Segment / Desegment"><Glyphicon glyph="transfer" style={{ color: '#31B0D5' }} /></a> : <span className="blank"></span>;
-    return (
-      <div className="actionItems" >
-        {bundle}
-        {discount}
-        {reconfigure}
-        {segment}
-        {cellInfo.original.isProductOption ? <span></span> : clone}
-        {cellInfo.original.isProductOption ? <span className="blank"></span> : <a title="Delete Line" onClick={this.deleteLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="trash" style={{ color: '#C9302C' }} /></a>}
-
-        {/* <a><Glyphicon glyph="star-empty" /></a> */}
-      </div>
-    );
+  renderChecbox(cellInfo) {
+    if (!cellInfo.original.isProductOption) {
+      return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original.id} />);
+    }
+    return (<span></span>);
+  }
+  renderData() {
+    const data = Object.assign([], this.props.data);
+    data.map((item, index) => {
+      if (item.type === 'Bundle' && item.bundleProducts) {
+        item.bundleProducts.map((i, index1) => {
+          if (!i.isSegmented) {
+            data.splice(index + 1 + index1, 0, i);
+          }
+          return this;
+        });
+      }
+      return this;
+    });
+    return data;
   }
   render() {
     const data = this.renderData();
+    const total = this.calculateTotal();
     const columns = [
       {
         Header: '',
@@ -271,6 +288,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           value={this.state.value}
           selectedLine={this.state.selectedLine}
         />
+        {total > 0 ?
+          <div className="sub-footer">
+          Sub Total : {this.props.currency} {total}
+          </div>
+              :
+          <div className="sub-footer"></div>
+        }
+
       </div>
     );
   }
@@ -281,9 +306,10 @@ EditQuoteGrid.propTypes = {
   currency: PropTypes.any,
   deleteLine: PropTypes.func,
   cloneLine: PropTypes.func,
-  toggleAllCheckBox: PropTypes.func,
   toggleQuoteCheckbox: PropTypes.func,
   update: PropTypes.func,
+  updateBundle: PropTypes.func,
+  segment: PropTypes.func,
 };
 
 
