@@ -165,6 +165,13 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   render() {
+    let quoteName = '';
+    const params = _.split(this.props.location.query.ids, '/');
+    if (params.length === 2) {
+      quoteName = params[1];
+    } else if (params.length === 3) {
+      quoteName = params[2];
+    }
     return (
       <div>
         <div
@@ -177,6 +184,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
             toggleFilter={this.toggleSidebar}
             data={this.state.dataProd}
             addOptions={this.addOptions}
+            quoteName={quoteName}
           />
           <div className="qoute-container">
             <AddConfigureProductGrid

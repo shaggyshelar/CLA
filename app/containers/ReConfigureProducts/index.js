@@ -14,14 +14,13 @@ import { browserHistory } from 'react-router';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
 import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState } from './selectors';
-import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct } from './actions';
+import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange } from './actions';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
       selectedProducts: [],
-      quoteName: 'Q-00163',
       dataProd: [
         {
           _id: '596db79f58d3f94623033cd0',
@@ -68,7 +67,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
-    this.checkAll = this.checkAll.bind(this);
     this.saveProducts = this.saveProducts.bind(this);
   }
 
@@ -113,10 +111,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
           if (product.tempId) {
             product.id = product.tempId;
           }
-          const index = _.indexOf(this.state.selectedProducts, product.id);
-          if (index !== -1) {
-            product.isSelected = true;
-          }
           if (feature.name === 'Other Options') {
             product.featureId = null;
           }
@@ -138,27 +132,9 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     this.forceUpdate();
   }
 
-  checkAll(e) {
-    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-    for (let i = 0; i < d.length; i++) {
-      if (!d[i].checked && e.target.checked) {
-        d[i].click();
-      } else if (d[i].checked && !e.target.checked) {
-        d[i].click();
-      }
-    }
-  }
 
-  toggleCheckboxChange(e) {
-    const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
-    if (!e.target.checked) {
-      _.remove(this.state.selectedProducts, (n) => n === e.target.value);
-      if (d.checked) {
-        d.checked = false;
-      }
-    } else {
-      this.state.selectedProducts.push(parseInt(e.target.value));
-    }
+  toggleCheckboxChange(productObj) {
+    this.props.toggleCheckboxChange(productObj);
   }
 
   render() {
@@ -174,7 +150,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             toggleFilter={this.toggleSidebar}
             data={this.state.dataProd}
             saveProducts={this.saveProducts}
-            quoteName={this.state.quoteName}
+            quoteName={this.props.reConfigureProductData.toJS().productBundleQuoteName}
           />
           <ReconfigureProductTab
             reConfigureData={this.props.reConfigureProductData.toJS()}
@@ -188,6 +164,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             toggleCheckAll={this.checkAll}
             deleteProduct={this.props.deleteProduct}
             updateField={this.props.updateField}
+            quoteName={this.props.reConfigureProductData.toJS().productBundleQuoteName}
           />
         </div>
       </div>
@@ -206,6 +183,7 @@ ReConfigureProducts.propTypes = {
   deleteProduct: PropTypes.func,
   location: PropTypes.any,
   updateField: PropTypes.func,
+  toggleCheckboxChange: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -229,6 +207,9 @@ function mapDispatchToProps(dispatch) {
     },
     updateField: (productObj) => {
       dispatch(updateProduct(productObj));
+    },
+    toggleCheckboxChange: (productObj) => {
+      dispatch(toggleCheckboxChange(productObj));
     },
   };
 }

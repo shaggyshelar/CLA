@@ -16,6 +16,7 @@ import {
   SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
+  TOGGLE_CHECKBOX_CHANGE,
 } from './constants';
 
 const initialState = fromJS({
@@ -49,6 +50,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         reConfigureProducts.productBundleId = productBundelData.productBundle.id;
         reConfigureProducts.productBundleName = productBundelData.productBundle.name;
         reConfigureProducts.productBundleQuoteId = productBundelData.productBundle.quoteId;
+        reConfigureProducts.productBundleQuoteName = productBundelData.productBundle.quoteName;
         reConfigureProducts.categories = [];
         reConfigureProducts.features = [];
         // Categories are available
@@ -283,6 +285,31 @@ function reConfigureProductsReducer(state = initialState, action) {
         return state
         .set('reConfigureProductData', fromJS(reConfigureProduct));
       }
+    case TOGGLE_CHECKBOX_CHANGE: {
+      const reConfigureProduct = state.get('reConfigureProductData').toJS();
+      if (reConfigureProduct.categories.length > 0) {
+        const category = _.find(reConfigureProduct.categories, { id: action.product.categoryId });
+        if (category) {
+          const feature = _.find(category.features, { id: action.product.featureId });
+          if (feature) {
+            const product = _.find(feature.products, { id: action.product.id });
+            if (product) {
+              product.isSelected = !product.isSelected;
+            }
+          }
+        }
+      } else if (reConfigureProduct.features.length > 0) {
+        const feature = _.find(reConfigureProduct.features, { id: action.product.featureId });
+        if (feature) {
+          const product = _.find(feature.products, { id: action.product.id });
+          if (product) {
+            product.isSelected = !product.isSelected;
+          }
+        }
+      }
+      return state
+        .set('reConfigureProductData', fromJS(reConfigureProduct));
+    }
     default:
       return state;
   }

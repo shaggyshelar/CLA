@@ -18,13 +18,14 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         dataProd={this.props.dataProd}
         showFilter={this.props.showFilter}
         toggleSidebar={this.toggleSidebar}
-        toggleCheckboxChange={this.toggleCheckboxChange}
+        toggleCheckboxChange={this.props.toggleCheckboxChange}
         addProductsWait={this.addProductsWait}
         checkAll={this.props.checkAll}
         features={item.features}
         categoryId={item.id}
         deleteProduct={this.props.deleteProduct}
         updateField={this.props.updateField}
+        quoteName={this.props.quoteName}
       />
     </Tab>);
   }
@@ -36,12 +37,13 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         dataProd={this.props.dataProd}
         showFilter={this.props.showFilter}
         toggleSidebar={this.toggleSidebar}
-        toggleCheckboxChange={this.toggleCheckboxChange}
+        toggleCheckboxChange={this.props.toggleCheckboxChange}
         addProductsWait={this.addProductsWait}
         checkAll={this.props.checkAll}
         features={item}
         deleteProduct={this.props.deleteProduct}
         updateField={this.props.updateField}
+        quoteName={this.props.quoteName}
       />);
   }
 
@@ -90,6 +92,8 @@ ReconfigureProductTab.propTypes = {
   deleteProduct: PropTypes.func,
   updateField: PropTypes.func,
   checkAll: PropTypes.func,
+  toggleCheckboxChange: PropTypes.func,
+  quoteName: PropTypes.any,
 };
 
 export default ReconfigureProductTab;
