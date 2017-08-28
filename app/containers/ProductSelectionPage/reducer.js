@@ -40,7 +40,7 @@ function productSelectionPageReducer(state = initialState, action) {
     case LOAD_PRODUCTS_DATA_SUCCESS:
       return state
         .set('products', action.products)
-        .set('searchedProducts', [])
+        .set('searchedProducts', action.products)
         .set('loading', false);
     case LOAD_DATA_ERROR:
       return state
@@ -51,20 +51,16 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('loading', true)
         .set('error', false);
     case LOAD_SEARCH_DATA_SUCCESS:
-      console.log('searchedProducts SUCCESS', action.searchedProducts);
       return state
         .set('searchedProducts', action.searchedProducts)
         .set('loading', false);
-
     case LOAD_SEARCH_BTN_DATA_SUCCESS:
-      console.log('LOAD_SEARCH_BTN_DATA_SUCCESS', action.searchedProducts);
       return state
         .set('searchedProducts', [])
         .set('products', action.searchedProducts)
         .set('loading', false);
     case LOAD_SEARCH_ITEM_SELECTED: {
       const searchedProducts = state.get('searchedProducts');
-      console.log('searchedProducts', searchedProducts);
       let selectedProducts = [];
       if (searchedProducts && searchedProducts.length > 0) {
         const product = _.find(searchedProducts, { name: action.name });
@@ -72,7 +68,6 @@ function productSelectionPageReducer(state = initialState, action) {
       } else {
         selectedProducts = state.get('products');
       }
-      console.log('selectedProducts', selectedProducts);
       return state
         .set('searchedProducts', [])
         .set('products', selectedProducts)

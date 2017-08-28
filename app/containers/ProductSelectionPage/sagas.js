@@ -299,8 +299,8 @@ export function* searchedProducts(data) {
     const repos = [
       {
         id: '123',
-        code: 'P121345345',
-        name: 'ab',
+        code: 'P121',
+        name: 'ABCD',
         type: 'Product/Bundle',
         isBundled: true,
         isDisableReconfiguration: true,
@@ -387,7 +387,7 @@ export function* searchedProducts(data) {
       },
       {
         id: '1234',
-        code: 'P121jghjghj',
+        code: 'P121',
         name: 'xyz',
         type: 'Product/Bundle',
         isBundled: true,
@@ -475,7 +475,7 @@ export function* searchedProducts(data) {
       },
       {
         id: '1235',
-        code: 'P121reyry',
+        code: 'P121',
         name: 'pqr',
         type: 'Product/Bundle',
         isBundled: true,
@@ -564,7 +564,6 @@ export function* searchedProducts(data) {
     ];
 
     const updatedRecord = _.filter(repos, { name: data.searchObj.searchValue });
-    console.log('updatedRecord',updatedRecord);
     if (!data.searchObj.fromSearch) {
       yield put(searchedDataLoaded(updatedRecord));
     } else {

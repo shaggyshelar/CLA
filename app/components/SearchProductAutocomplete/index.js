@@ -18,7 +18,6 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.convertValue = this.convertValue.bind(this);
     this.onSearchClick = this.onSearchClick.bind(this);
   }
 
@@ -36,10 +35,7 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
       this.state.selectedValue = selection;
       this.props.searchInputChange(this.state.selectedValue);
     }
-  }
-
-  convertValue() {
-
+    this.state.onChange = false;
   }
 
   render() {
@@ -56,24 +52,6 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
       </ButtonGroup>
     );
   }
-
-  // render() {
-  //   return (
-  //     <ButtonGroup className="margin" style={{ display: 'inline-flex', width: '90%' }}>
-  //       <Typeahead
-  //         labelKey="name"
-  //         bsSize="small"
-  //         onChange={this.handleChange}
-  //         onInputChange={this.handleInputChange}
-  //         options={this.props.data.map((item) => item.name)}
-  //         placeholder="Search Products"
-  //         className="autoCompleteWidth"
-  //         clearButton
-  //       />
-  //       <Button bsStyle="primary" onClick={this.onSearchClick}><Glyphicon glyph="search" /></Button>
-  //     </ButtonGroup>
-  //   );
-  // }
 }
 
 SearchProductAutocomplete.propTypes = {

@@ -98,14 +98,29 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   onSearch(value) {
+    if (this.state.selectedProducts.length > 0) {
+      this.setState({
+        selectedProducts: [],
+      });
+    }
     this.props.onSearch(value);
   }
 
   onSearchItemSelected(value) {
+    if (this.state.selectedProducts.length > 0) {
+      this.setState({
+        selectedProducts: [],
+      });
+    }
     this.props.onSearchItemSelected(value);
   }
 
   searchInputChange(value) {
+    if (this.state.selectedProducts.length > 0) {
+      this.setState({
+        selectedProducts: [],
+      });
+    }
     this.props.searchInputChange(value);
   }
   checkAll(e) {
@@ -172,6 +187,12 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   render() {
+    let data = [];
+    if (_.isArray(this.props.searchedProducts) && this.props.searchedProducts.length > 0) {
+      data = this.props.searchedProducts;
+    } else if (_.isArray(this.props.products)) {
+      data = this.props.products;
+    }
     return (
       <div>
         <Helmet
@@ -192,7 +213,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             toggleFilter={this.toggleSidebar}
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
-            data={_.isArray(this.props.searchedProducts) ? this.props.searchedProducts : []}
+            data={data}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
             onSearchItemSelected={this.onSearchItemSelected}
