@@ -14,6 +14,7 @@ import {
   SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
+  TOGGLE_CHECKBOX_CHANGE,
 } from './constants';
 
 export function defaultAction() {
@@ -80,5 +81,12 @@ export function updateProduct(productObj) {
   return {
     type: UPDATE_PRODUCT,
     productObj,
+  };
+}
+
+export function toggleCheckboxChange(product) {
+  return {
+    type: TOGGLE_CHECKBOX_CHANGE,
+    product,
   };
 }

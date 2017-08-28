@@ -24,7 +24,9 @@ class AddConfigureProductHeader extends React.Component { // eslint-disable-line
               { name: 'description', content: 'Description of ProductSelectionHeader' },
             ]}
           />
-          <ReconfigureProductHeaderCard />
+          <ReconfigureProductHeaderCard
+            quoteName={this.props.quoteName}
+          />
         </Col>
 
         <Col xs={12} md={9} style={{ textAlign: 'right' }}>
@@ -44,6 +46,7 @@ class AddConfigureProductHeader extends React.Component { // eslint-disable-line
 AddConfigureProductHeader.propTypes = {
   addProducts: PropTypes.func,
   addOptions: PropTypes.func,
+  quoteName: PropTypes.any,
 };
 
 export default AddConfigureProductHeader;

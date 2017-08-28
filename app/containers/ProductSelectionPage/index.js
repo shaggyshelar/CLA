@@ -11,9 +11,9 @@ import Helmet from 'react-helmet';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { makeSelectProductSelectionPage, showFilter, getQuoteLines, makeProductsData } from './selectors';
+import { makeSelectProductSelectionPage, makeSearchedProductsData, showFilter, getQuoteLines, makeProductsData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
-import { loadProductsData, showFilteredData } from './actions';
+import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -83,6 +83,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.addProductsWait = this.addProductsWait.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.checkAll = this.checkAll.bind(this);
+    this.onSearchItemSelected = this.onSearchItemSelected.bind(this);
+    this.searchInputChange = this.searchInputChange.bind(this);
+    this.onSearch = this.onSearch.bind(this);
   }
 
   componentWillMount() {
@@ -92,6 +95,33 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
   componentDidMount() {
     this.props.getProductsData();
+  }
+
+  onSearch(value) {
+    if (this.state.selectedProducts.length > 0) {
+      this.setState({
+        selectedProducts: [],
+      });
+    }
+    this.props.onSearch(value);
+  }
+
+  onSearchItemSelected(value) {
+    if (this.state.selectedProducts.length > 0) {
+      this.setState({
+        selectedProducts: [],
+      });
+    }
+    this.props.onSearchItemSelected(value);
+  }
+
+  searchInputChange(value) {
+    if (this.state.selectedProducts.length > 0) {
+      this.setState({
+        selectedProducts: [],
+      });
+    }
+    this.props.searchInputChange(value);
   }
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
@@ -157,6 +187,12 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   render() {
+    let data = [];
+    if (_.isArray(this.props.searchedProducts) && this.props.searchedProducts.length > 0) {
+      data = this.props.searchedProducts;
+    } else if (_.isArray(this.props.products)) {
+      data = this.props.products;
+    }
     return (
       <div>
         <Helmet
@@ -177,7 +213,10 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             toggleFilter={this.toggleSidebar}
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
-            data={this.state.dataProd}
+            data={data}
+            searchInputChange={this.searchInputChange}
+            onSearchClick={this.onSearch}
+            onSearchItemSelected={this.onSearchItemSelected}
           />
         </div>
         <div>
@@ -192,7 +231,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             checkAll={this.state.checkAll}
             toggleCheckAll={this.checkAll}
           />
-
         </div>
       </div>
     );
@@ -207,6 +245,10 @@ ProductSelectionPage.propTypes = {
   getProductsData: PropTypes.func,
   location: PropTypes.any,
   addProductsToQuote: PropTypes.func,
+  searchInputChange: PropTypes.func,
+  onSearch: PropTypes.func,
+  searchedProducts: PropTypes.any,
+  onSearchItemSelected: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -214,6 +256,7 @@ const mapStateToProps = createStructuredSelector({
   showFilter: showFilter(),
   data: getQuoteLines(),
   products: makeProductsData(),
+  searchedProducts: makeSearchedProductsData(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -227,6 +270,15 @@ function mapDispatchToProps(dispatch) {
     },
     addProductsToQuote: (value) => {
       dispatch(addProducts(value));
+    },
+    searchInputChange: (value) => {
+      dispatch(loadSearchData(value, false));
+    },
+    onSearch: (value) => {
+      dispatch(loadSearchData(value, true));
+    },
+    onSearchItemSelected: (value) => {
+      dispatch(onSearchItemSelected(value));
     },
   };
 }

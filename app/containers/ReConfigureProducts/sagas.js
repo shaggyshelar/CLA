@@ -15,6 +15,7 @@ export function* getProductBundleSaga() {
       productBundle: {
         id: 1,
         quoteId: 123,
+        quoteName: 'Q-00163',
         name: 'Meal',
         products: [
           {
@@ -106,7 +107,7 @@ export function* getProductBundleSaga() {
             // featureId: null,
            // categoryId: null,
             isDependent: true,
-            isSelected: true,
+            isSelected: false,
             isRequired: true,
             isDeleted: false,
             optionSelectionMethod: 456,

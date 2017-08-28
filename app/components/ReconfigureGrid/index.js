@@ -38,6 +38,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     this.renderActionItems = this.renderActionItems.bind(this);
     this.dataChanged = this.dataChanged.bind(this);
     this.renderEditable = this.renderEditable.bind(this);
+    this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
   }
 
   setTableOption(event) {
@@ -81,10 +82,17 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     this.props.deleteProduct(productObj);
   }
 
+  toggleCheckboxChange(product) {
+    const productObj = {
+      id: product.id,
+      featureId: this.props.feature.id,
+      categoryId: this.props.categoryId,
+    };
+    this.props.toggleCheckboxChange(productObj);
+  }
+
   renderEditable(cellInfo) {
-    if (cellInfo.original[cellInfo.column.id].isEditable === false) {
-      return (<span>{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
-    } else {
+    if (this.props.feature.DynamicAddEnabled || cellInfo.original.isSelected) {
       return (
         <div>
           <RIEInput
@@ -100,25 +108,18 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           />
           <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         </div>);
+    } else {
+      return (<span>{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
     }
   }
 
-  renderInput(props) {
-    let input;
-    if (this.props.feature.DynamicAddEnabled) {
-      input = (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />);
-    } else {
-      input = (<a className="disabledIcon"><Glyphicon glyph="trash" onChange={this.props.toggleCheckboxChange} /></a>);
-    }
-    return input;
-  }
 
   renderActionItems(cellInfo) {
     let input;
     if (this.props.feature.DynamicAddEnabled) {
       input = (<a title="Delete Line" onClick={this.deleteProduct.bind(this, cellInfo.original)} ><Glyphicon glyph="trash" style={{ color: '#C9302C' }} /></a>);
     } else {
-      input = (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={cellInfo.original.id} />);
+      input = (<input type="checkbox" className="check" defaultChecked={cellInfo.original.isSelected} onChange={this.toggleCheckboxChange.bind(this, cellInfo.original)} value={cellInfo.original.id} />);
     }
     return input;
   }
@@ -167,7 +168,6 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           id: 'listPrice',
           style: { textAlign: 'right' },
           headerStyle: { textAlign: 'right' },
-          Cell: this.renderEditable,
         },
       ],
     }];

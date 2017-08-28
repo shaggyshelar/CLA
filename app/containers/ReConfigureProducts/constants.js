@@ -13,3 +13,4 @@ export const SAVE_CONFIGURE_PRODUCTS_DATA = 'app/ReConfigureProducts/SAVE_CONFIG
 export const SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS = 'app/ReConfigureProducts/SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS';
 export const DELETE_PRODUCT = 'app/ReConfigureProducts/DELETE_PRODUCT';
 export const UPDATE_PRODUCT = 'app/ReConfigureProducts/UPDATE_PRODUCT';
+export const TOGGLE_CHECKBOX_CHANGE = 'app/ReConfigurtion/TOGGLE_CHECKBOX_CHANGE';

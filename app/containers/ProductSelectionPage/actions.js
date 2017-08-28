@@ -10,6 +10,10 @@ import {
   LOAD_DATA_ERROR,
   LOAD_PRODUCTS_DATA,
   LOAD_PRODUCTS_DATA_SUCCESS,
+  LOAD_SEARCH_DATA,
+  LOAD_SEARCH_DATA_SUCCESS,
+  LOAD_SEARCH_BTN_DATA_SUCCESS,
+  LOAD_SEARCH_ITEM_SELECTED,
 } from './constants';
 
 export function defaultAction() {
@@ -45,3 +49,34 @@ export function dataLoadingError(error) {
   };
 }
 
+export function loadSearchData(searchValue, fromSearch) {
+  const searchObj = {
+    searchValue,
+    fromSearch,
+  };
+  return {
+    type: LOAD_SEARCH_DATA,
+    searchObj,
+  };
+}
+
+export function searchedDataLoaded(searchedProducts) {
+  return {
+    type: LOAD_SEARCH_DATA_SUCCESS,
+    searchedProducts,
+  };
+}
+
+export function searchBtnDataLoaded(searchedProducts) {
+  return {
+    type: LOAD_SEARCH_BTN_DATA_SUCCESS,
+    searchedProducts,
+  };
+}
+
+export function onSearchItemSelected(name) {
+  return {
+    type: LOAD_SEARCH_ITEM_SELECTED,
+    name,
+  };
+}
