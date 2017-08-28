@@ -24,6 +24,7 @@ import {
   LOAD_XRM_DATA_SUCCESS,
   ADD_PRODUCTS,
   DELETE_MULTIPLE_LINES,
+  CLONE_MULTIPLE_LINES,
   UPDTATE_PROPS,
   CALCULATE_SELECTED,
   CLONE_GROUP,
@@ -80,8 +81,22 @@ function appReducer(state = initialState, action) {
       return state.setIn(['data', 'lines'], fromJS(data));
 
     case DELETE_MULTIPLE_LINES:
-      data = state.getIn(['data', 'lines']);
-      return state.setIn(['data', 'lines'], fromJS(action.data));
+      data = state.getIn(['data', 'lines']).toJS();
+      action.data.forEach((item) => {
+        _.remove(data, { id: item });
+      }, this);
+      return state.setIn(['data', 'lines'], fromJS(data));
+    case CLONE_MULTIPLE_LINES:
+      {
+        data = state.getIn(['data', 'lines']).toJS();
+        action.data.forEach((item) => {
+          const index = _.findIndex(data, { id: item });
+          const cloneData = Object.assign({}, data[index]);
+          cloneData.id = parseInt(Math.random() * 100000, 0).toString();
+          data.splice(index, 0, cloneData);
+        }, this);
+        return state.setIn(['data', 'lines'], fromJS(data));
+      }
     case LOAD_XRM_DATA:
       return state
         .set('loading', true)

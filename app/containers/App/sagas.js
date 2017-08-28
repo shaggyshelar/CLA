@@ -55,6 +55,7 @@ export function* getData() {
             },
             bundleProducts: [{
               parent:'111',
+              parentName:'Porche',
               id: '12456',
               isProductOption: true,
               code: 'Dom154AC',
@@ -143,11 +144,16 @@ export function* getData() {
                 value: 123,
                 isEditable: true,
                 isVisible: true,
-                dataType: 'text/select/textarea/inputSelect',
+                dataType: 'select',
                 selectValues: [
                   {
-                    id: 123,
-                    value: 'List',
+                    id: '123',
+                    value: '%',
+                    isSelected: false,
+                  },
+                  {
+                    id: '124',
+                    value: 'INR',
                     isSelected: true,
                   },
                 ],
@@ -172,7 +178,8 @@ export function* getData() {
             },
               {
                 id: 's',
-                parent:'111',
+                parent: '111',
+                parentName: 'Porche',
                 isProductOption: true,
                 code: 'Dom154Stter',
                 name: 'Porche Steering',
@@ -249,11 +256,16 @@ export function* getData() {
                   value: 123,
                   isEditable: true,
                   isVisible: true,
-                  dataType: 'text/select/textarea/inputSelect',
+                  dataType: 'select',
                   selectValues: [
                     {
-                      id: 123,
-                      value: 'List',
+                      id: '123',
+                      value: '%',
+                      isSelected: false,
+                    },
+                    {
+                      id: '124',
+                      value: 'INR',
                       isSelected: true,
                     },
                   ],
@@ -317,11 +329,16 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
+                  isSelected: false,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
                   isSelected: true,
                 },
               ],
@@ -407,11 +424,16 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
+                  isSelected: false,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
                   isSelected: true,
                 },
               ],
@@ -459,6 +481,7 @@ export function* getData() {
             bundleProducts: [{
               id: '3453453',
               parent:'222',
+              parentName: 'Lamborghini',
               isProductOption: true,
               code: 'LAmbo154AC',
               name: 'Lambo AC',
@@ -546,11 +569,16 @@ export function* getData() {
                 value: 123,
                 isEditable: true,
                 isVisible: true,
-                dataType: 'text/select/textarea/inputSelect',
+                dataType: 'select',
                 selectValues: [
                   {
-                    id: 123,
-                    value: 'List',
+                    id: '123',
+                    value: '%',
+                    isSelected: false,
+                  },
+                  {
+                    id: '124',
+                    value: 'INR',
                     isSelected: true,
                   },
                 ],
@@ -639,11 +667,16 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
+                  isSelected: false,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
                   isSelected: true,
                 },
               ],
@@ -765,12 +798,17 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
                   isSelected: true,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
+                  isSelected: false,
                 },
               ],
             },
@@ -880,11 +918,16 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
+                  isSelected: false,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
                   isSelected: true,
                 },
               ],
@@ -995,12 +1038,17 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
                   isSelected: true,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
+                  isSelected: false,
                 },
               ],
             },
@@ -1121,11 +1169,16 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
+                  isSelected: false,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
                   isSelected: true,
                 },
               ],
@@ -1225,11 +1278,16 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
+                  isSelected: false,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
                   isSelected: true,
                 },
               ],
@@ -1329,11 +1387,16 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
+                  isSelected: false,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
                   isSelected: true,
                 },
               ],
@@ -1455,11 +1518,16 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
+                  isSelected: false,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
                   isSelected: true,
                 },
               ],
@@ -1570,11 +1638,16 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
+                  isSelected: false,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
                   isSelected: true,
                 },
               ],
@@ -1696,11 +1769,16 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
+                  isSelected: false,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
                   isSelected: true,
                 },
               ],
@@ -1822,12 +1900,17 @@ export function* getData() {
               value: 123,
               isEditable: true,
               isVisible: true,
-              dataType: 'text/select/textarea/inputSelect',
+              dataType: 'select',
               selectValues: [
                 {
-                  id: 123,
-                  value: 'List',
+                  id: '123',
+                  value: '%',
                   isSelected: true,
+                },
+                {
+                  id: '124',
+                  value: 'INR',
+                  isSelected: false,
                 },
               ],
             },

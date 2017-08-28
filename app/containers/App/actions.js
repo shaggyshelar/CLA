@@ -16,6 +16,7 @@ import {
   LOAD_XRM_DATA_SUCCESS,
   ADD_PRODUCTS,
   DELETE_MULTIPLE_LINES,
+  CLONE_MULTIPLE_LINES,
   CALCULATE_SELECTED,
   QUICK_SAVE_QUOTES,
   UPDTATE_PROPS,
@@ -94,6 +95,13 @@ export function deleteLine(data) {
 export function deleteMultipleLines(data) {
   return {
     type: DELETE_MULTIPLE_LINES,
+    data,
+  };
+}
+
+export function cloneMultipleLines(data) {
+  return {
+    type: CLONE_MULTIPLE_LINES,
     data,
   };
 }

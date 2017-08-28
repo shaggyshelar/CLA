@@ -14,7 +14,7 @@ const loadModule = (cb) => (componentModule) => {
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
-
+  const appHomeRoute = location.pathname;
   return {
     getComponent(nextState, cb) {
       const importModules = Promise.all([
@@ -32,7 +32,7 @@ export default function createRoutes(store) {
       importModules.catch(errorLoading);
     },
     childRoutes: [{
-      path: '/',
+      path: appHomeRoute,
       name: 'home',
       getComponent(nextState, cb) {
         // const importModules = Promise.all([
