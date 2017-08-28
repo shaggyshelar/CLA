@@ -18,7 +18,7 @@ export function* getProductsSaga() {
       {
         id: '123',
         code: 'P121',
-        name: 'ABCD',
+        name: 'abcd',
         type: 'Product/Bundle',
         isBundled: true,
         isDisableReconfiguration: true,
@@ -300,7 +300,7 @@ export function* searchedProducts(data) {
       {
         id: '123',
         code: 'P121',
-        name: 'ABCD',
+        name: 'abcd',
         type: 'Product/Bundle',
         isBundled: true,
         isDisableReconfiguration: true,
@@ -562,7 +562,6 @@ export function* searchedProducts(data) {
         },
       },
     ];
-
     const updatedRecord = _.filter(repos, { name: data.searchObj.searchValue });
     if (!data.searchObj.fromSearch) {
       yield put(searchedDataLoaded(updatedRecord));
