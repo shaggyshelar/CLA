@@ -7,7 +7,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import InlineEdit from 'react-edit-inline';
+import { RIEInput } from 'riek';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import { Button, Glyphicon, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
@@ -86,7 +86,6 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
     return (decimal.test(text) && (parseFloat(text) > 0));
   }
-
   render() {
     let group = {};
     let groupLines = [];
@@ -107,11 +106,11 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
         <div className="group-card">
           <Row>
             <Col md={4} sm={6} xs={12} className="containers">
-              <InlineEdit
+              <RIEInput
                 className="group-header group-edit"
-                activeClassName="group-edit-on"
-                text={group.name}
-                paramName={`${group.id}*($)*name`}
+                classEditing="group-edit-on"
+                value={group.name}
+                propName={`${group.id}*($)*name`}
                 change={this.dataChanged}
               /><Glyphicon glyph="pencil" className="inline-edit" />
               <span>
@@ -125,11 +124,11 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
 
               </span>
               <span className="group-header" >Subtotal: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })} </span><br />
-              <InlineEdit
+              <RIEInput
                 className="group-description"
-                activeClassName="group-desc-edit-on"
-                text={group.description === '' ? 'Click here to edit description ' : group.description}
-                paramName={`${group.id}*($)*description`}
+                classEditing="group-desc-edit-on"
+                value={group.description === '' ? 'Click here to edit description ' : group.description}
+                propName={`${group.id}*($)*description`}
                 change={this.dataChanged}
               /><Glyphicon glyph="pencil" className="inline-edit" />
             </Col>
@@ -154,11 +153,11 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   </OverlayTrigger>
                 </Col>
                 <Col md={4} sm={4} xs={4}>
-                  <InlineEdit
+                  <RIEInput
                     className="group-input"
-                    activeClassName="input-group input-text"
-                    text={group.additionaldiscount === '' ? '0.00' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 2 })}
-                    paramName={`${group.id}*($)*additionaldiscount`}
+                    classEditing="input-group input-text"
+                    value={group.additionaldiscount === '' ? '0.00' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 2 })}
+                    propName={`${group.id}*($)*additionaldiscount`}
                     change={this.dataChanged}
                     validate={this.validate}
                   /><Glyphicon glyph="pencil" className="inline-edit" />
@@ -173,11 +172,11 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   </OverlayTrigger>
                 </Col>
                 <Col md={4} sm={4} xs={4}>
-                  <InlineEdit
+                  <RIEInput
                     className="group-input"
-                    activeClassName="input-group input-text"
-                    text={group.subscriptionTerm === '' ? '0.00' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2 })}
-                    paramName={`${group.id}*($)*subscriptionTerm`}
+                    classEditing="input-group input-text"
+                    value={group.subscriptionTerm === '' ? '0.00' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2 })}
+                    propName={`${group.id}*($)*subscriptionTerm`}
                     change={this.dataChanged}
                     validate={this.validate}
                   /><Glyphicon glyph="pencil" className="inline-edit" />

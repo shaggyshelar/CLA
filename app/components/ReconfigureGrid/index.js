@@ -7,7 +7,7 @@ import ReactTable from 'react-table';
 import React from 'react';
 import _ from 'lodash';
 import 'react-table/react-table.css';
-import InlineEdit from 'react-edit-inline';
+import { RIEInput } from 'riek';
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
 
@@ -87,11 +87,11 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     } else {
       return (
         <div>
-          <InlineEdit
+          <RIEInput
             className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
-            activeClassName="table-edit-input"
-            text={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
-            paramName={`${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+            classEditing="table-edit-input"
+            value={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
+            propName={`${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
             staticElement="div"
             change={this.dataChanged}
             validate={this.validate}

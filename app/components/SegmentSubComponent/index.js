@@ -6,7 +6,7 @@
 
 import React from 'react';
 import ReactTable from 'react-table';
-import InlineEdit from 'react-edit-inline';
+import { RIEInput } from 'riek';
 import { Glyphicon } from 'react-bootstrap/lib';
 class SegmentSubComponent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -57,11 +57,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     } else {
       const col = cellInfo.column.id.split('.')[0];
       return (<div>
-        <InlineEdit
+        <RIEInput
           className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
-          activeClassName="table-edit-input"
-          text={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
-          paramName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
+          classEditing="table-edit-input"
+          value={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
+          propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
           change={cellInfo.original.isProductOption ? this.bundleDataChanged : this.dataChanged}
           validate={this.validate}
         />

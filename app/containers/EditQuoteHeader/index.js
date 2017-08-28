@@ -48,6 +48,7 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
 
           }
           <ButtonGroup className="margin">
+            <Button title="Clone Selected Lines" onClick={this.props.cloneLine} >Clone Lines</Button>
             <Button title="Delete Selected Lines" onClick={this.props.deleteLine} bsStyle="danger">Delete Lines</Button>
             <Button title="Cancel" >Cancel</Button>
           </ButtonGroup>
