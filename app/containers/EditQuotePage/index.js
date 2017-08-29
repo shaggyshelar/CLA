@@ -77,7 +77,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   ungroup() {
     this.setState({ loading: true });
     const data = this.props.data.toJS();
-    data.lines.forEach((i, index) => { data[index].groupId = ''; });
+    data.lines.forEach((i, index) => { data.lines[index].groupId = ''; });
     data.groups = [];
     data.linesGrouped = false;
     this.setState({ loading: true });
@@ -105,7 +105,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         netTotal: this.props.data.toJS().netAmount,
       });
     } else {
-      data.lines.forEach((i, index) => { data[index].groupId = randomID; });
+      data.lines.forEach((i, index) => { data.lines[index].groupId = randomID; });
       data.groups.push({
         id: randomID,
         name: 'Group1',

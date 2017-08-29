@@ -120,7 +120,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       <RIENumber
         className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
         classEditing="table-edit-input"
-        value={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
+        value={cellInfo.value}
         propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
         change={cellInfo.original.isProductOption ? this.bundleDataChanged : this.dataChanged}
         validate={this.validate}
