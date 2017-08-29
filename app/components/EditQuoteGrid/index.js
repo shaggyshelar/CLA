@@ -5,8 +5,10 @@ import { Glyphicon } from 'react-bootstrap/lib';
 import { browserHistory } from 'react-router';
 import 'react-table/react-table.css';
 import { RIENumber, RIESelect } from 'riek';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import _ from 'lodash';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
+import messages from './messages';
 
 class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -142,10 +144,10 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
   renderActionItems(cellInfo) {
     // const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : <span className="blank"></span>;
-    const reconfigure = cellInfo.original.canReconfigure ? <a title="Reconfigure Lines" className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
+    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.recongifure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
     // const bundle = cellInfo.original.isProductOption ? <a title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : <span className="blank"></span>;
     // const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" style={{ color: '#449D44' }} /></a> : <span className="blank"></span>;
-    const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isProductOption, cellInfo.original.parent)} title="Segment / Desegment"><Glyphicon glyph="transfer" style={{ color: '#31B0D5' }} /></a> : <span className="blank"></span>;
+    const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isProductOption, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" style={{ color: '#31B0D5' }} /></a> : <span className="blank"></span>;
     return (
       <div className="actionItems" >
         {reconfigure}
@@ -260,22 +262,22 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: ({ index }) => <span>{index + 1}</span>,
 
       }, {
-        Header: () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
+        Header: () => <span title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
         accessor: 'code',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title="View Discount Schedule"><Glyphicon glyph="calendar" /></a> <span className="pro-name">{cellInfo.original.code}</span></div> : <span className="pro-name">{cellInfo.original.code}</span>),
+        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <span className="pro-name">{cellInfo.original.code}</span></div> : <span className="pro-name">{cellInfo.original.code}</span>),
       },
 
       {
-        Header: () => <span title="PRODUCT NAME">PRODUCT NAME</span>,
+        Header: () => <span title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isProductOption ? <div><a className="pro-icon" title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
+        Cell: (cellInfo) => (cellInfo.original.isProductOption ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
       },
       {
-        Header: () => <span title="QUANTITY">QUANTITY</span>,
+        Header: () => <span title={this.context.intl.formatMessage({ ...messages.quantity })}>{this.context.intl.formatMessage({ ...messages.quantity })}</span>,
         accessor: 'quantity.value',
         id: 'quantity',
         className: 'table-edit-row',
@@ -285,7 +287,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
 
       },
       {
-        Header: () => <span title="LIST UNIT PRICE">LIST UNIT PRICE</span>,
+        Header: () => <span title={this.context.intl.formatMessage({ ...messages.listPrice })}>{this.context.intl.formatMessage({ ...messages.listPrice })}</span>,
         accessor: 'listPrice.value',
         id: 'listPrice',
         style: { textAlign: 'right' },
@@ -293,7 +295,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: this.renderEditable,
       },
       {
-        Header: () => <span title="ADDITIONAL DISC.">ADDITIONAL DISC.</span>,
+        Header: () => <span title={this.context.intl.formatMessage({ ...messages.additionalDiscount })}>{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</span>,
         accessor: 'additionalDiscount.value',
         id: 'additionalDiscount',
         style: { textAlign: 'right' },
@@ -301,20 +303,20 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: this.renderDiscount,
       },
       {
-        Header: () => <span title="MARKUP">MARKUP</span>,
+        Header: () => <span title={this.context.intl.formatMessage({ ...messages.markup })}>{this.context.intl.formatMessage({ ...messages.markup })}</span>,
         accessor: 'markup',
         style: { textAlign: 'right' },
         Cell: (props) => <span>{props.value.toLocaleString('en', { minimumFractionDigits: 2 })} %</span>,
       },
       {
-        Header: () => <span title="NET UNIT PRICE">NET UNIT PRICE</span>,
+        Header: () => <span title={this.context.intl.formatMessage({ ...messages.netPrice })}>{this.context.intl.formatMessage({ ...messages.netPrice })}</span>,
         accessor: 'netUnitPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,
       },
       {
-        Header: () => <span title="NET TOTAL">NET TOTAL</span>,
+        Header: () => <span title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
         accessor: 'totalPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
@@ -344,7 +346,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         />
         {total > 0 ?
           <div className="sub-footer">
-          Sub Total : {this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2 })}
+            {this.context.intl.formatMessage({ ...messages.subTotal })} : {this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2 })}
           </div>
               :
           <div className="sub-footer"></div>
@@ -354,7 +356,9 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     );
   }
 }
-
+EditQuoteGrid.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 EditQuoteGrid.propTypes = {
   data: PropTypes.any,
   currency: PropTypes.any,
