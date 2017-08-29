@@ -185,8 +185,10 @@ SegmentedQuote.propTypes = {
   updateSegBundle: PropTypes.func.isRequired,
   updateSeg: PropTypes.func.isRequired,
   toggleQuoteCheckbox: PropTypes.func.isRequired,
-
-
+  updateSegSelect: PropTypes.func.isRequired,
+  updateSegBundleSelect: PropTypes.func.isRequired,
+  updateSelect: PropTypes.func.isRequired,
+  updateSelectBundle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

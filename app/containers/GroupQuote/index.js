@@ -30,7 +30,6 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.toggleEditor = this.toggleEditor.bind(this);
     this.editorTextChange = this.editorTextChange.bind(this);
     this.descUpdate = this.descUpdate.bind(this);
-    
   }
   componentWillMount() {
     const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId, 0) });
@@ -282,6 +281,10 @@ GroupQuote.propTypes = {
   updateSeg: PropTypes.func,
   updateGroupData: PropTypes.func,
   location: PropTypes.any,
+  updateSelectBundle: PropTypes.func,
+  updateSegSelect: PropTypes.func,
+  updateSegBundleSelect: PropTypes.func,
+  updateSelect: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

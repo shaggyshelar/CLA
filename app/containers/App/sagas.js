@@ -7,7 +7,7 @@ import {
   EntityURLs,
   LOAD_DATA,
   LOAD_XRM_DATA,
-  DELETE_MULTIPLE_LINES,
+  // DELETE_MULTIPLE_LINES,
   CALCULATE_SELECTED,
   QUICK_SAVE_QUOTES,
 } from '../App/constants';
@@ -54,8 +54,8 @@ export function* getData() {
               ],
             },
             bundleProducts: [{
-              parent:'111',
-              parentName:'Porche',
+              parent: '111',
+              parentName: 'Porche',
               id: '12456',
               isProductOption: true,
               code: 'Dom154AC',
@@ -363,7 +363,7 @@ export function* getData() {
           },
           {
             id: '123ass',
-            
+
             code: 'Car154',
             name: 'Ferrari',
             type: 'Product',
@@ -480,7 +480,7 @@ export function* getData() {
             },
             bundleProducts: [{
               id: '3453453',
-              parent:'222',
+              parent: '222',
               parentName: 'Lamborghini',
               isProductOption: true,
               code: 'LAmbo154AC',

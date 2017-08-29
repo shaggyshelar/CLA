@@ -67,5 +67,6 @@ ProductSelectionHeader.propTypes = {
   searchInputChange: React.PropTypes.func,
   onSearchClick: React.PropTypes.func,
   onSearchItemSelected: React.PropTypes.func,
+  toggleFilter: React.PropTypes.any,
 };
 export default ProductSelectionHeader;

@@ -11,7 +11,7 @@ import Helmet from 'react-helmet';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
+import { makeSelectProductSelectionPage, makeSearchedProductsData, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
@@ -88,7 +88,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.onSearch = this.onSearch.bind(this);
   }
 
-    componentWillMount() {
+  componentWillMount() {
     this.props.getProductsData();
   }
 
@@ -154,9 +154,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       this.state.selectedProducts.includes(o.id)
     );
     if (this.props.location.query.groupId) {
-      data.forEach((i) => {
-        i.groupId = parseInt(this.props.location.query.groupId, 0);
-        i.id = parseInt(Math.random() * 100000, 0).toString();
+      data.forEach((i, index) => {
+        data[index].groupId = parseInt(this.props.location.query.groupId, 0);
+        data[index].id = parseInt(Math.random() * 100000, 0).toString();
       });
       this.props.addProductsToQuote(data);
     } else {
@@ -169,9 +169,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       this.state.selectedProducts.includes(o.id)
     );
     if (this.props.location.query.groupId) {
-      data.forEach((i) => {
-        i.groupId = parseInt(this.props.location.query.groupId, 0);
-        i.id = parseInt(Math.random() * 100000, 0).toString();
+      data.forEach((i, index) => {
+        data[index].groupId = parseInt(this.props.location.query.groupId, 0);
+        data[index].id = parseInt(Math.random() * 100000, 0).toString();
       });
       this.props.addProductsToQuote(data);
       browserHistory.push(`/EditQuote?groupId=${this.props.location.query.groupId}`);
@@ -247,6 +247,7 @@ ProductSelectionPage.propTypes = {
   onSearch: PropTypes.func,
   searchedProducts: PropTypes.any,
   onSearchItemSelected: PropTypes.func,
+  loading: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({

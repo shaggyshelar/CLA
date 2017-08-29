@@ -2,12 +2,12 @@ import { createSelector } from 'reselect';
 
 const selectGlobal = (state) => state.get('global');
 
-const getGroups = () => 
+const getGroups = () =>
  createSelector(
   selectGlobal,
   (homeState) => homeState.getIn(['data', 'groups'])
 );
-const getLines = () => 
+const getLines = () =>
  createSelector(
   selectGlobal,
   (homeState) => homeState.getIn(['data', 'lines'])

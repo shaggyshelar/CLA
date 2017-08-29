@@ -68,7 +68,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       });
     }
     if (window.parent.Xrm !== undefined) {
-      console.log(Xrm.Page.getAttribute('').getValue());
+      console.log(window.parent.Xrm.Page.getAttribute('').getValue());
       console.log(window.parent.Xrm.Page.data.entity.getId().replace('{', '').replace('}', ''));
       console.log(window.parent.Xrm.Page.data.entity.getEntityName());
     }
@@ -77,7 +77,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   ungroup() {
     this.setState({ loading: true });
     const data = this.props.data.toJS();
-    data.lines.forEach((i) => { i.groupId = ''; });
+    data.lines.forEach((i, index) => { data[index].groupId = ''; });
     data.groups = [];
     data.linesGrouped = false;
     this.setState({ loading: true });
@@ -105,7 +105,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         netTotal: this.props.data.toJS().netAmount,
       });
     } else {
-      data.lines.forEach((i) => { i.groupId = randomID; });
+      data.lines.forEach((i, index) => { data[index].groupId = randomID; });
       data.groups.push({
         id: randomID,
         name: 'Group1',
@@ -226,7 +226,6 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             data={this.props.data ? this.props.data.toJS() : []}
             cloneLine={this.props.cloneLine}
             deleteLine={this.deleteCheckedLines}
-            cloneLine={this.cloneCheckedLines}
             clone={this.cloneCheckedLines}
             calculateTotal={this.calculateTotal}
             quickSave={this.quickSaveQuotes}
@@ -321,6 +320,20 @@ EditQuotePage.propTypes = {
   cloneGroup: PropTypes.func,
   ungroup: PropTypes.func,
   group: PropTypes.func,
+  segment: PropTypes.any,
+  update: PropTypes.func,
+  updateBundle: PropTypes.func,
+  updateSeg: PropTypes.func,
+  updateSegBundle: PropTypes.func,
+  loading: PropTypes.any,
+  location: PropTypes.any,
+  updateGroupData: PropTypes.func,
+  updateGroupValue: PropTypes.func,
+  updateSelect: PropTypes.func,
+  updateSelectBundle: PropTypes.func,
+  updateSegSelect: PropTypes.func,
+  updateSegBundleSelect: PropTypes.func,
+  cloneSelectedLines: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

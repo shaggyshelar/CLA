@@ -1,12 +1,11 @@
-import request from 'utils/request';
-import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import _ from 'lodash';
-// import { LOAD_REPOS } from 'containers/App/constants';
+import { take, put, cancel, takeLatest } from 'redux-saga/effects';
 import { LOAD_PRODUCTS_DATA, LOAD_SEARCH_DATA } from './constants';
 import { productsDataLoaded, dataLoadingError, searchedDataLoaded, searchBtnDataLoaded } from './actions';
-import { SERVER_URL, EntityURLs } from '../App/constants';
-
+// import { LOAD_REPOS } from 'containers/App/constants';
+// import { SERVER_URL, EntityURLs } from '../App/constants';
+// import request from 'utils/request';
 // Individual exports for testing
 export function* getProductsSaga() {
   // See example in containers/HomePage/sagas.js
@@ -295,7 +294,6 @@ export function* productsData() {
 }
 
 export function* searchedProducts(data) {
-  console.log('datagsdg', data);
   try {
     const repos = [
       {

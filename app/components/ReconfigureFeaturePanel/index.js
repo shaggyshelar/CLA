@@ -22,9 +22,8 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
     if (feature.DynamicAddEnabled) {
       if (feature.categoryId) {
         return (<Button key={index} bsStyle="link" onClick={() => { browserHistory.push(`/addConfigureproducts?ids=${feature.id}/${feature.categoryId}/${this.props.quoteName}`); }} >Add Options</Button>);
-      } else {
-        return (<Button key={index} bsStyle="link" onClick={() => { browserHistory.push(`/addConfigureproducts?ids=${feature.id}/${this.props.quoteName}`); }} >Add Options</Button>);
       }
+      return (<Button key={index} bsStyle="link" onClick={() => { browserHistory.push(`/addConfigureproducts?ids=${feature.id}/${this.props.quoteName}`); }} >Add Options</Button>);
     }
     return (<span></span>);
   }

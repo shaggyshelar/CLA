@@ -71,6 +71,7 @@ EditQuoteHeader.propTypes = {
   quickSave: React.PropTypes.func,
   group: React.PropTypes.func,
   ungroup: React.PropTypes.func,
+  cloneLine: React.PropTypes.func,
 };
 
 

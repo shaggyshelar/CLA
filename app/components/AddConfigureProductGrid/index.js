@@ -44,15 +44,13 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (<span>{cellInfo.value}</span>);
-    } else {
-      return (<div>
-        <Glyphicon glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
-        <div
-          style={{ backgroundColor: '#fafafa', marginLeft: '20px' }} contentEditable suppressContentEditableWarning onBlur={(e) => {
-          }}
-        >{cellInfo.value}</div>
-      </div>);
     }
+    return (<div>
+      <Glyphicon glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
+      <div
+        style={{ backgroundColor: '#fafafa', marginLeft: '20px' }} contentEditable suppressContentEditableWarning
+      >{cellInfo.value}</div>
+    </div>);
   }
 
   renderCheckbox(cellInfo) {

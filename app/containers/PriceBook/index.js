@@ -21,7 +21,7 @@ export class PriceBook extends React.Component { // eslint-disable-line react/pr
     this.save = this.save.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  save(value) {
+  save() {
     this.props.saveAction(this.state.selectValue);
     browserHistory.push('/EditQuote');
   }
@@ -71,7 +71,7 @@ export class PriceBook extends React.Component { // eslint-disable-line react/pr
 }
 
 PriceBook.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  saveAction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
