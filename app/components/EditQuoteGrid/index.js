@@ -44,6 +44,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.renderChecbox = this.renderChecbox.bind(this);
     this.dataChanged = this.dataChanged.bind(this);
     this.bundleDataChanged = this.bundleDataChanged.bind(this);
+    this.selectDataChanged = this.selectDataChanged.bind(this);
+    this.selectBundleDataChanged = this.selectBundleDataChanged.bind(this);
     this.checkAll = this.checkAll.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
   }
@@ -96,11 +98,25 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     const data1 = data[key];
     this.props.update(field[1], parseFloat(data1), field[2]);
   }
+
   bundleDataChanged(data) {
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const data1 = data[key];
     this.props.updateBundle(field[0], field[1], field[2], parseFloat(data1));
+  }
+  selectDataChanged(data) {
+    const key = Object.keys(data)[0];
+    const field = key.split('*(&)*');
+    const data1 = data[key];
+    this.props.updateSelect(field[1], data1.id, field[2]);
+  }
+
+  selectBundleDataChanged(data) {
+    const key = Object.keys(data)[0];
+    const field = key.split('*(&)*');
+    const data1 = data[key];
+    this.props.updateSelectBundle(field[0], field[1], field[2], data1.id);
   }
   validate(string) {
     const number = parseFloat(string);
@@ -129,19 +145,13 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isProductOption, cellInfo.original.parent)} title="Segment / Desegment"><Glyphicon glyph="transfer" style={{ color: '#31B0D5' }} /></a> : <span className="blank"></span>;
     return (
       <div className="actionItems" >
-        {bundle}
-        {discount}
         {reconfigure}
         {segment}
-        {cellInfo.original.isProductOption ? <span></span> : clone}
-        {cellInfo.original.isProductOption ? <span className="blank"></span> : <a title="Delete Line" onClick={this.deleteLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="trash" style={{ color: '#C9302C' }} /></a>}
-
         {/* <a><Glyphicon glyph="star-empty" /></a> */}
       </div>
     );
   }
   renderDiscount(cellInfo) {
-    console.log('asdas', cellInfo);
     const selected = cellInfo.original[cellInfo.column.id].selectValues;
     const options = [];
     const selectedOption = {};
@@ -152,11 +162,10 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         selectedOption.text = i.value;
       }
     });
-    console.log('asdas', options,selectedOption);
     return (
       <div>
         <RIENumber
-          className={'table-edit'}
+          className={'table-edit-quantity'}
           classEditing="table-edit-input"
           value={cellInfo.value}
           propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
@@ -171,35 +180,11 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           value={selectedOption}
           options={options}
           propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-          change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
-          validate={this.validate}
+          change={cellInfo.original.isProductOption ? this.selectBundleDataChanged.bind(this) : this.selectDataChanged}
           classInvalid="invalid"
         />
         <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
       </div>);
-    // if (cellInfo.original[cellInfo.column.id].isEditable === false) {
-    //   return (<span>{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
-    // } else {
-    //   return (
-    //     <div>
-    //       <RIEInput
-    //         className={'table-edit'}
-    //         classEditing="table-edit-input"
-    //         value={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
-    //         propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-    //         staticElement="div"
-    //         change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
-    //         validate={this.validate}
-    //         title={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
-    //         id={cellInfo.original.isProductOption ? cellInfo.original.parent : cellInfo.original.id}
-    //       />
-    //       <select className="inline-select">
-    //         {cellInfo.original[cellInfo.column.id].selectValues.map((i) => (<option value={i.id} selected={i.isSelected}>{i.value}</option>)
-    //         )}
-    //       </select>
-    //       <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
-    //     </div>);
-    // }
   }
   formatt(e) {
     return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
@@ -253,7 +238,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Header: '',
         style: { textAlign: 'left' },
         sortable: false,
-        width: 150,
+        width: 60,
         Cell: this.renderActionItems,
       },
       {
@@ -278,6 +263,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'code',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
+        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title="View Discount Schedule"><Glyphicon glyph="calendar" /></a> <span className="pro-name">{cellInfo.original.code}</span></div> : <span className="pro-name">{cellInfo.original.code}</span>),
       },
 
       {
@@ -285,6 +271,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
+        Cell: (cellInfo) => (cellInfo.original.isProductOption ? <div><a className="pro-icon" title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
       },
       {
         Header: () => <span title="QUANTITY">QUANTITY</span>,

@@ -280,6 +280,7 @@ export function* getProductsSaga() {
         },
       },
     ];
+
     yield put(productsDataLoaded(repos));
   } catch (error) {
     yield put(dataLoadingError(error));

@@ -6,7 +6,7 @@
 
 import React from 'react';
 import ReactTable from 'react-table';
-import { RIEInput } from 'riek';
+import { RIENumber, RIESelect } from 'riek';
 import { Glyphicon } from 'react-bootstrap/lib';
 class SegmentSubComponent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -14,7 +14,10 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     this.renderColumns = this.renderColumns.bind(this);
     this.renderEditable = this.renderEditable.bind(this);
     this.dataChanged = this.dataChanged.bind(this);
+    this.selectDataChanged = this.selectDataChanged.bind(this);
+    this.selectBundleDataChanged = this.selectBundleDataChanged.bind(this);
     this.bundleDataChanged = this.bundleDataChanged.bind(this);
+    this.renderDiscount = this.renderDiscount.bind(this);
     this.state = {
       tableOptions: {
         loading: false,
@@ -39,7 +42,55 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     const field = key.split('*(&)*');
     const data1 = data[key];
     this.props.updateSeg(field[1], field[2], field[3], parseFloat(data1));
-    this.forceUpdate();
+  }
+  selectDataChanged(data) {
+    const key = Object.keys(data)[0];
+    const field = key.split('*(&)*');
+    const data1 = data[key];
+    this.props.updateSegSelect(field[1], field[2], field[3], data1.id);
+  }
+
+  selectBundleDataChanged(data) {
+    const key = Object.keys(data)[0];
+    const field = key.split('*(&)*');
+    const data1 = data[key];
+    this.props.updateSegBundleSelect(field[0], field[1], field[2], field[3], data1.id);
+  }
+  renderDiscount(cellInfo) {
+    const col = cellInfo.column.id.split('.')[0];
+    const selected = cellInfo.original.selectValues;
+    const options = [];
+    const selectedOption = {};
+    selected.map((i) => {
+      options.push({ id: i.id, text: i.value });
+      if (i.isSelected) {
+        selectedOption.id = i.id;
+        selectedOption.text = i.value;
+      }
+    });
+    return (
+      <div>
+        <RIENumber
+          className={'table-edit-quantity'}
+          classEditing="table-edit-input"
+          value={cellInfo.value}
+          propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
+          format={this.formatt}
+          change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
+          validate={this.validate}
+          classInvalid="invalid"
+        />
+        <RIESelect
+          className={'inline-select'}
+          classEditing="inline-select-edit"
+          value={selectedOption}
+          options={options}
+          propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
+          change={cellInfo.original.isProductOption ? this.selectBundleDataChanged.bind(this) : this.selectDataChanged}
+          classInvalid="invalid"
+        />
+        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+      </div>);
   }
   bundleDataChanged(data) {
     const key = Object.keys(data)[0];
@@ -47,23 +98,32 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     const data1 = data[key];
     this.props.updateSegBundle(field[0], field[1], field[2], field[3], parseFloat(data1));
   }
+  formatt(e) {
+    return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
+  }
   validate(text) {
     const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
     return (decimal.test(text) && (parseFloat(text) > 0));
   }
   renderEditable(cellInfo) {
+   
     if (cellInfo.original.editable === false) {
       return (<span> {cellInfo.original.prop === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
     } else {
+       if (cellInfo.original.prop === 'additionalDiscount') {
+         return this.renderDiscount(cellInfo);
+       }
       const col = cellInfo.column.id.split('.')[0];
       return (<div>
-        <RIEInput
+        <RIENumber
           className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
           classEditing="table-edit-input"
           value={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
           propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
           change={cellInfo.original.isProductOption ? this.bundleDataChanged : this.dataChanged}
           validate={this.validate}
+          format={this.formatt}
+          classInvalid="invalid"
         />
         <Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
       </div>);
@@ -169,6 +229,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             dataSet[i].editable = data.listPrice.isEditable;
             dataSet[i].isProductOption = data.isProductOption;
             dataSet[i].parent = data.parent;
+            dataSet[i].selectValues = data.additionalDiscount.selectValues;
             return this;
           });
           break;

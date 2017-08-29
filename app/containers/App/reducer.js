@@ -33,8 +33,12 @@ import {
   GROUP,
   UPDATE,
   UPDATE_BUNDLE,
+  UPDATE_SELECT,
+  UPDATE_SELECT_BUNDLE,
   UPDATE_SEG,
   UPDATE_SEG_BUNDLE,
+  UPDATE_SEG_SELECT,
+  UPDATE_SEG_BUNDLE_SELECT,
   UPDATE_GROUP_DATA,
   UPDATE_GROUP_VAL,
   SEGMENT,
@@ -154,6 +158,35 @@ function appReducer(state = initialState, action) {
         bundleLine[0][action.field].value = action.data;
         return state.setIn(['data', 'lines'], fromJS(linesBundle));
       }
+    case UPDATE_SELECT:
+      {
+        const lines = state.getIn(['data', 'lines']).toJS();
+        const line = _.filter(lines, { id: action.id });
+        _.map(line[0][action.field].selectValues, (i, index) => {
+          if (i.id === action.data && !i.isSelected) {
+            line[0][action.field].selectValues[index].isSelected = true;
+          }
+          if (i.id !== action.data && i.isSelected) {
+            line[0][action.field].selectValues[index].isSelected = false;
+          }
+        });
+        return state.setIn(['data', 'lines'], fromJS(lines));
+      }
+    case UPDATE_SELECT_BUNDLE:
+      {
+        const linesBundle = state.getIn(['data', 'lines']).toJS();
+        const lineBundle = _.filter(linesBundle, { id: action.parentId });
+        const bundleLine = _.filter(lineBundle[0].bundleProducts, { id: action.id });
+        _.map(bundleLine[0][action.field].selectValues, (i, index) => {
+          if (i.id === action.data && !i.isSelected) {
+            bundleLine[0][action.field].selectValues[index].isSelected = true;
+          }
+          if (i.id !== action.data && i.isSelected) {
+            bundleLine[0][action.field].selectValues[index].isSelected = false;
+          }
+        });
+        return state.setIn(['data', 'lines'], fromJS(linesBundle));
+      }
     case UPDATE_SEG:
       {
         const lines = state.getIn(['data', 'lines']).toJS();
@@ -170,6 +203,24 @@ function appReducer(state = initialState, action) {
         const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
         segLine[0][action.field] = action.data;
         return state.setIn(['data', 'lines'], fromJS(lines));
+      }
+    case UPDATE_SEG_SELECT:
+      {
+        const lines = state.getIn(['data', 'lines']).toJS();
+        const line = _.filter(lines, { id: action.id });
+        const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
+        segLine[0][action.field] = action.data;
+        
+        //return state.setIn(['data', 'lines'], fromJS(lines));
+      }
+    case UPDATE_SEG_BUNDLE_SELECT:
+      {
+        const lines = state.getIn(['data', 'lines']).toJS();
+        const line = _.filter(lines, { id: action.parentId });
+        const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
+        const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
+        segLine[0][action.field] = action.data;
+        //return state.setIn(['data', 'lines'], fromJS(lines));
       }
     case SEGMENT:
       {
