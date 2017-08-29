@@ -46,7 +46,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
             <Button onClick={this.props.toggleFilter}><Glyphicon glyph="filter" /></Button>
             <Button onClick={() => { browserHistory.push('/favourites'); }} ><Glyphicon glyph="star" /></Button>
           </ButtonGroup>
-          <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button>
+          {/* <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
           <ButtonGroup className="margin">
             <Button onClick={this.props.addProducts}>Select</Button>
             <Button onClick={this.props.addProductsWait}>Select and Add More</Button>

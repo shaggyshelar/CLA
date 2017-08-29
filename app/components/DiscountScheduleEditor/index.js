@@ -122,7 +122,7 @@ class DiscountScheduleEditor extends React.Component { // eslint-disable-line re
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.handleToggle} >Cancel</Button>
+            <Button onClick={this.props.onHide} >Cancel</Button>
           </Modal.Footer>
         </Modal.Dialog>
       </Modal>
