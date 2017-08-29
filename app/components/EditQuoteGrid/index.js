@@ -164,6 +164,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     });
     return (
       <div>
+        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         <RIENumber
           className={'table-edit-quantity'}
           classEditing="table-edit-input"
@@ -183,7 +184,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           change={cellInfo.original.isProductOption ? this.selectBundleDataChanged.bind(this) : this.selectDataChanged}
           classInvalid="invalid"
         />
-        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+        
       </div>);
   }
   formatt(e) {
@@ -195,6 +196,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     } else {
       return (
         <div>
+          <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
           <RIENumber
             className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
             classEditing="table-edit-input"
@@ -205,7 +207,6 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             validate={this.validate}
             classInvalid="invalid"
           />
-          <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         </div>);
     }
   }
@@ -322,7 +323,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     ];
     return (
       <div>
-        <div className="table-wrap">
+        <div className="table-wrap edit-grid-quote">
           <ReactTable
             className="-striped -highlight"
             data={data}
