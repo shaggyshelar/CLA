@@ -4,8 +4,10 @@ import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { Tabs, Tab } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import SegmentedEditQuoteGrid from 'components/SegmentedEditQuoteGrid';
 import makeSelectSegmentedQuote from './selectors';
+import messages from './messages';
 export class SegmentedQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -71,10 +73,10 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     return (
       <div className="qoute-container segmented">
         <Tabs animation={false} defaultActiveKey={1} id="noanim-tab-example">
-          <Tab unmountOnExit eventKey={1} title="Segmented">
+          <Tab unmountOnExit eventKey={1} title={this.context.intl.formatMessage({ ...messages.segment })}>
             <Tabs activeKey={this.state.selectedTab === '' ? selected : this.state.selectedTab} onSelect={this.selectTab} animation={false} id="inner-tab-example">
               { data.CustomLines.length > 0 ?
-                <Tab unmountOnExit eventKey={'custom'} tabClassName={'custom'} title="Custom">
+                <Tab unmountOnExit eventKey={'custom'} tabClassName={'custom'} title={this.context.intl.formatMessage({ ...messages.custom })}>
                   <SegmentedEditQuoteGrid
                     data={data.CustomLines}
                     cloneLine={this.props.cloneLine}
@@ -95,7 +97,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               ''
             }
               { data.MonthlyLines.length > 0 ?
-                <Tab unmountOnExit eventKey={'monthly'} tabClassName={'monthly'} title="Monthly">
+                <Tab unmountOnExit eventKey={'monthly'} tabClassName={'monthly'} title={this.context.intl.formatMessage({ ...messages.monthly })}>
                   <SegmentedEditQuoteGrid
                     data={data.MonthlyLines}
                     cloneLine={this.props.cloneLine}
@@ -113,7 +115,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
-                <Tab unmountOnExit eventKey={'quaterly'} tabClassName={'quaterly'} title="Quaterly">
+                <Tab unmountOnExit eventKey={'quaterly'} tabClassName={'quaterly'} title={this.context.intl.formatMessage({ ...messages.quaterly })}>
                   <SegmentedEditQuoteGrid
                     data={data.QuaterlyLines}
                     cloneLine={this.props.cloneLine}
@@ -131,7 +133,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
-                <Tab unmountOnExit eventKey={'yearly'} tabClassName={'yearly'} title="Yearly">
+                <Tab unmountOnExit eventKey={'yearly'} tabClassName={'yearly'} title={this.context.intl.formatMessage({ ...messages.yearly })}>
                   <SegmentedEditQuoteGrid
                     data={data.YearlyLines}
                     cloneLine={this.props.cloneLine}
@@ -150,7 +152,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                 </Tab> : '' }
             </Tabs>
           </Tab>
-          <Tab unmountOnExit eventKey={2} title="Standard">
+          <Tab unmountOnExit eventKey={2} title={this.context.intl.formatMessage({ ...messages.standard })}>
             <EditQuoteGrid
               data={data.NormalLines}
               cloneLine={this.props.cloneLine}
@@ -190,7 +192,9 @@ SegmentedQuote.propTypes = {
   updateSelect: PropTypes.func.isRequired,
   updateSelectBundle: PropTypes.func.isRequired,
 };
-
+SegmentedQuote.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 const mapStateToProps = createStructuredSelector({
   SegmentedQuote: makeSelectSegmentedQuote(),
 });

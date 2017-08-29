@@ -9,7 +9,7 @@ import screenfull from 'screenfull';
 import Helmet from 'react-helmet';
 import { browserHistory } from 'react-router';
 import { Button, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import messages from './messages';
 
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
@@ -76,9 +76,9 @@ EditQuoteHeader.propTypes = {
   ungroup: React.PropTypes.func,
   cloneLine: React.PropTypes.func,
 };
-EditQuoteHeader.contextTypes= {
-    intl: React.PropTypes.object.isRequired,
-}
+EditQuoteHeader.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 
 
 export default injectIntl(EditQuoteHeader);
