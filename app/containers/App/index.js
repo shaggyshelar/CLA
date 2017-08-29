@@ -1,47 +1,66 @@
-/**
- *
- * App
- *
- * This component is the skeleton around the actual pages, and should only
- * contain code that should be seen on all pages. (e.g. navigation bar)
- */
-
 import React from 'react';
-import Helmet from 'react-helmet';
-import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { loadData } from './actions';
+import { changeLocale } from '../LanguageProvider/actions';
+import { makeSelectData, getLanguage } from './selectors';
+export class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
-import Header from 'components/Header';
-import Footer from 'components/Footer';
-import withProgressBar from 'components/ProgressBar';
-
-const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
-  display: flex;
-  min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
-`;
-
-export function App(props) {
-  return (
-    <AppWrapper>
-      <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
-        meta={[
-          { name: 'description', content: 'A React.js Boilerplate application' },
-        ]}
-      />
-      <Header />
-      {React.Children.toArray(props.children)}
-      <Footer />
-    </AppWrapper>
-  );
+  static propTypes = {
+    children: React.PropTypes.node,
+  };
+  constructor(props) {
+    super(props);
+    this.languageChange = this.languageChange.bind(this);
+  }
+  componentWillMount() {
+    this.props.getAllData();
+    // this.props.getXrmData();
+  }
+  languageChange(e) {
+    this.props.changeLocale(e.target.value);
+  }
+  render() {
+    const currency = this.props.data.toJS().currency;
+    return (
+      <div>
+        <select onChange={this.languageChange} value={this.props.language}>
+          <option value="en">English</option>
+          <option value="fr">French</option>
+        </select>
+        <style
+          dangerouslySetInnerHTML={{ __html: `.table-edit:before { content:  "${currency} " }` }}
+        />
+        {React.Children.toArray(this.props.children)}
+      </div>
+    );
+  }
 }
 
 App.propTypes = {
   children: React.PropTypes.node,
+  getAllData: React.PropTypes.func,
+  data: React.PropTypes.any,
+  language: React.PropTypes.any,
+  changeLocale: React.PropTypes.func,
 };
 
-export default withProgressBar(App);
+const mapStateToProps = createStructuredSelector({
+  data: makeSelectData(),
+  language: getLanguage(),
+
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    getAllData: () => {
+      dispatch(loadData());
+    },
+    changeLocale: (locale) => {
+      dispatch(changeLocale(locale));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

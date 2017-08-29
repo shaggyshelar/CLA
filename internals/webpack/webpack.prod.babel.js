@@ -12,8 +12,9 @@ module.exports = require('./webpack.base.babel')({
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
   output: {
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].chunk.js',
+    filename: 'p2qes_[name].js',
+    chunkFilename: 'p2qes_[name].chunk.js',
+    publicPath: '/WebResources/',
   },
 
   plugins: [
