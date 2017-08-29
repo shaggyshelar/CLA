@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
-import { Tabs, Tab } from 'react-bootstrap/lib';
+import { Tabs, Tab, Button } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import SegmentedEditQuoteGrid from 'components/SegmentedEditQuoteGrid';
@@ -13,7 +13,11 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     super(props);
     this.renderSegmentData = this.renderSegmentData.bind(this);
     this.selectTab = this.selectTab.bind(this);
-    this.state = { selectedTab: '' };
+    this.state = {
+      selectedTab: '',
+      isCustomModalOpen: false,
+    };
+    this.handleCustomModalToggle = this.handleCustomModalToggle.bind(this);
   }
 
   componentWillReceiveProps() {
@@ -58,6 +62,11 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     data.QuaterlyLines = data.QuaterlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Quaterly' } }));
     return data;
   }
+  handleCustomModalToggle() {
+    this.setState({
+      isCustomModalOpen: !this.state.isCustomModalOpen,
+    });
+  }
   render() {
     const data = this.renderSegmentData();
     let selected = '';
@@ -74,6 +83,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
       <div className="qoute-container segmented">
         <Tabs animation={false} defaultActiveKey={1} id="noanim-tab-example">
           <Tab unmountOnExit eventKey={1} title={this.context.intl.formatMessage({ ...messages.segment })}>
+            <Button onClick={this.handleCustomModalToggle} >Custom Edit</Button>
             <Tabs activeKey={this.state.selectedTab === '' ? selected : this.state.selectedTab} onSelect={this.selectTab} animation={false} id="inner-tab-example">
               { data.CustomLines.length > 0 ?
                 <Tab unmountOnExit eventKey={'custom'} tabClassName={'custom'} title={this.context.intl.formatMessage({ ...messages.custom })}>
@@ -91,6 +101,17 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     selectedTab={this.selectTab}
                     updateSegSelect={this.props.updateSegSelect}
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
+                    currentTab={this.state.selectedTab}
+                    isCustomModalOpen={this.state.isCustomModalOpen}
+                    handleCustomModalToggle={this.handleCustomModalToggle}
+                    loadCustomSegmentsData={this.props.loadCustomSegmentsData}
+                    addCustomSegmentData={this.props.addCustomSegmentData}
+                    deleteCustomSegmentData={this.props.deleteCustomSegmentData}
+                    changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
+                    saveCustomSegmentData={this.props.saveCustomSegmentData}
+                    checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
+                    checkCustomSegmentData={this.props.checkCustomSegmentData}
+                    customSegments={this.props.customSegments}
                   />
                 </Tab>
               :
@@ -191,6 +212,14 @@ SegmentedQuote.propTypes = {
   updateSegBundleSelect: PropTypes.func.isRequired,
   updateSelect: PropTypes.func.isRequired,
   updateSelectBundle: PropTypes.func.isRequired,
+  loadCustomSegmentsData: PropTypes.func,
+  addCustomSegmentData: PropTypes.func,
+  deleteCustomSegmentData: PropTypes.func,
+  changeCustomSegmentFieldData: PropTypes.func,
+  saveCustomSegmentData: PropTypes.func,
+  checkAllCustomSegmentData: PropTypes.func,
+  checkCustomSegmentData: PropTypes.func,
+  customSegments: PropTypes.any,
 };
 SegmentedQuote.contextTypes = {
   intl: React.PropTypes.object.isRequired,

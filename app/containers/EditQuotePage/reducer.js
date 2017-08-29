@@ -14,10 +14,17 @@ DEFAULT_ACTION,
 //   LOAD_DATA_ERROR,
 //   LOAD_XRM_DATA,
 //   LOAD_XRM_DATA_SUCCESS,
+  LOAD_CUSTOM_SEGMENT_DATA,
+  ADD_CUSTOM_SEGMENT_DATA,
+  DELETE_CUSTOM_SEGMENT_DATA,
+  SAVE_CUSTOM_SEGMENT_DATA,
+  CHANGE_CUSTOM_SEGMENT_FIELD_DATA,
+  CHECK_ALL_CUSTOM_SEGMENT_DATA,
+  CHECK_CUSTOM_SEGMENT_DATA,
  } from './constants';
 
 const initialState = fromJS({
-
+  customSegments: [],
 });
 
 function editQuoteReducer(state = initialState, action) {
@@ -53,8 +60,31 @@ function editQuoteReducer(state = initialState, action) {
   //       .set('loading', false);
   //   default:
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case LOAD_CUSTOM_SEGMENT_DATA: {
+      const customSegments = [];
+      action.customSegments.forEach((item) => {
+        const rec = item;
+        rec.id = (Math.random() * 100000);
+        rec.isSelected = false;
+        customSegments.push(rec);
+      }, this);
+
+      return state
+        .set('customSegments', customSegments);
+    }
+    case ADD_CUSTOM_SEGMENT_DATA: {
+      const customSegments = state.get('customSegments');
+      const customSegement = {
+        id: (Math.random() * 100000),
+        name: '',
+        startDate: '',
+        endDate: '',
+        isSelected: false,
+      };
+      customSegments.push(customSegement);
+      return state
+        .set('customSegments', customSegments);
+    }
     default:
       return state;
   }

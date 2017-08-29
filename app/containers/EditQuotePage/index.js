@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
+import { makeSelectData, makeSelectError, makeSelectLoading, getCustomSegments } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import { GroupQuote } from '../GroupQuote';
 import { SegmentedQuote } from '../SegmentedQuote';
@@ -34,6 +34,8 @@ import { cloneLine,
 
   segment,
  } from '../App/actions';
+
+ import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData } from './actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -261,6 +263,14 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateSelectBundle={this.props.updateSelectBundle}
               updateSegSelect={this.props.updateSegSelect}
               updateSegBundleSelect={this.props.updateSegBundleSelect}
+              loadCustomSegmentsData={this.props.loadCustomSegmentsData}
+              addCustomSegmentData={this.props.addCustomSegmentData}
+              deleteCustomSegmentData={this.props.deleteCustomSegmentData}
+              changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
+              saveCustomSegmentData={this.props.saveCustomSegmentData}
+              checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
+              checkCustomSegmentData={this.props.checkCustomSegmentData}
+              customSegments={this.props.customSegments}
             />
           </div>
         :
@@ -283,6 +293,14 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                 updateSegBundle={this.props.updateSegBundle}
                 updateSegSelect={this.props.updateSegSelect}
                 updateSegBundleSelect={this.props.updateSegBundleSelect}
+                loadCustomSegmentsData={this.props.loadCustomSegmentsData}
+                addCustomSegmentData={this.props.addCustomSegmentData}
+                deleteCustomSegmentData={this.props.deleteCustomSegmentData}
+                changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
+                saveCustomSegmentData={this.props.saveCustomSegmentData}
+                checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
+                checkCustomSegmentData={this.props.checkCustomSegmentData}
+                customSegments={this.props.customSegments}
               />
             :
                 <EditQuoteGrid
@@ -334,13 +352,21 @@ EditQuotePage.propTypes = {
   updateSegSelect: PropTypes.func,
   updateSegBundleSelect: PropTypes.func,
   cloneSelectedLines: PropTypes.func,
+  loadCustomSegmentsData: PropTypes.func,
+  addCustomSegmentData: PropTypes.func,
+  deleteCustomSegmentData: PropTypes.func,
+  changeCustomSegmentFieldData: PropTypes.func,
+  saveCustomSegmentData: PropTypes.func,
+  checkAllCustomSegmentData: PropTypes.func,
+  checkCustomSegmentData: PropTypes.func,
+  customSegments: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
-
+  customSegments: getCustomSegments(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -412,7 +438,27 @@ function mapDispatchToProps(dispatch) {
     segment: (id, value, isOption, parent) => {
       dispatch(segment(id, value, isOption, parent));
     },
-
+    loadCustomSegmentsData: (customSegments) => {
+      dispatch(loadCustomSegmentsData(customSegments));
+    },
+    addCustomSegmentData: () => {
+      dispatch(addCustomSegmentData());
+    },
+    deleteCustomSegmentData: () => {
+      dispatch(deleteCustomSegmentData());
+    },
+    changeCustomSegmentFieldData: (field, value, id) => {
+      dispatch(changeCustomSegmentFieldData(field, value, id));
+    },
+    saveCustomSegmentData: (segments) => {
+      dispatch(saveCustomSegmentData(segments));
+    },
+    checkAllCustomSegmentData: () => {
+      dispatch(checkAllCustomSegmentData());
+    },
+    checkCustomSegmentData: () => {
+      dispatch(checkCustomSegmentData());
+    },
   };
 }
 

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 // const selectEditQuote = (state) => state.get('editQuote');
+const selectEditQuoteDomain = () => (state) => state.get('editQuote');
 const global = (state) => state.get('global');
 const makeSelectLoading = () => createSelector(
   global,
@@ -25,12 +26,18 @@ const updateProductState = () => {
   );
 };
 
+const getCustomSegments = () =>
+ createSelector(
+  selectEditQuoteDomain(),
+  (homeState) => homeState.get('customSegments')
+);
 
 export {
-  // selectEditQuote,
+  selectEditQuoteDomain,
   makeSelectData,
   makeSelectError,
   makeSelectLoading,
   updateProductState,
   global,
+  getCustomSegments,
 };

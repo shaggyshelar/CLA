@@ -22,15 +22,15 @@
 // }/*
 
 
-import {
-  DEFAULT_ACTION,
-} from './constants';
+// import {
+//   DEFAULT_ACTION,
+// } from './constants';
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
+// export function defaultAction() {
+//   return {
+//     type: DEFAULT_ACTION,
+//   };
+// }
 
 
 // export function loadXrmData() {
@@ -87,3 +87,69 @@ export function defaultAction() {
 //     type: DEFAULT_ACTION,
 //   };
 // }
+
+import {
+  DEFAULT_ACTION,
+  //
+  LOAD_CUSTOM_SEGMENT_DATA,
+  ADD_CUSTOM_SEGMENT_DATA,
+  DELETE_CUSTOM_SEGMENT_DATA,
+  SAVE_CUSTOM_SEGMENT_DATA,
+  CHANGE_CUSTOM_SEGMENT_FIELD_DATA,
+  CHECK_ALL_CUSTOM_SEGMENT_DATA,
+  CHECK_CUSTOM_SEGMENT_DATA,
+} from './constants';
+
+export function defaultAction() {
+  return {
+    type: DEFAULT_ACTION,
+  };
+}
+//
+export function loadCustomSegmentsData(customSegments) {
+  console.log('loadCustomSegmentsData', customSegments);
+  return {
+    type: LOAD_CUSTOM_SEGMENT_DATA,
+    customSegments,
+  };
+}
+
+export function addCustomSegmentData() {
+  return {
+    type: ADD_CUSTOM_SEGMENT_DATA,
+  };
+}
+
+export function deleteCustomSegmentData() {
+  return {
+    type: DELETE_CUSTOM_SEGMENT_DATA,
+  };
+}
+
+export function changeCustomSegmentFieldData(field, value, id) {
+  return {
+    type: CHANGE_CUSTOM_SEGMENT_FIELD_DATA,
+    field,
+    value,
+    id,
+  };
+}
+
+export function saveCustomSegmentData(segments) {
+  return {
+    type: SAVE_CUSTOM_SEGMENT_DATA,
+    segments,
+  };
+}
+
+export function checkAllCustomSegmentData() {
+  return {
+    type: CHECK_ALL_CUSTOM_SEGMENT_DATA,
+  };
+}
+
+export function checkCustomSegmentData() {
+  return {
+    type: CHECK_CUSTOM_SEGMENT_DATA,
+  };
+}
