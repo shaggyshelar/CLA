@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 const selectGlobal = (state) => state.get('global');
+const language = (state) => state.get('language');
 const makeSelectLocationState = () => {
   let prevRoutingState;
   let prevRoutingStateJS;
@@ -21,9 +22,14 @@ const makeSelectData = () =>
   selectGlobal,
   (homeState) => homeState.getIn(['data'])
 );
+const getLanguage = () =>
+ createSelector(
+  language,
+  (homeState) => homeState.getIn('locale')
+);
 export {
   makeSelectData,
   selectGlobal,
   makeSelectLocationState,
-
+  getLanguage,
 };

@@ -8,7 +8,10 @@ import React from 'react';
 import screenfull from 'screenfull';
 import Helmet from 'react-helmet';
 import { browserHistory } from 'react-router';
-import { Button, Glyphicon, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
+import { Button, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import messages from './messages';
+
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
 
 export class EditQuoteHeader extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -36,26 +39,26 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
           {this.props.grouped ?
             ''
             :
-            <Button title="Add products" className="margin" onClick={() => { browserHistory.push('/ProductSelection'); }}>Add Products</Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.addProducts })} className="margin" onClick={() => { browserHistory.push('/ProductSelection'); }}><FormattedMessage {...messages.addProducts} /></Button>
           }
           {(!this.props.grouped && this.props.data.groups.length === 0) ?
-            <Button title="Add group" className="margin" onClick={this.props.group}>Add Group</Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.addGroup })} className="margin" onClick={this.props.group}><FormattedMessage {...messages.addGroup} /></Button>
             :
             <ButtonGroup className="margin">
-              <Button title="Ungroup" onClick={this.props.ungroup}>Ungroup</Button>
-              <Button title="Add Group" onClick={this.props.group}>Add Group</Button>
+              <Button title={this.context.intl.formatMessage({ ...messages.ungroup })} onClick={this.props.ungroup}><FormattedMessage {...messages.ungroup} /></Button>
+              <Button title={this.context.intl.formatMessage({ ...messages.addGroup })} onClick={this.props.group}><FormattedMessage {...messages.addGroup} /></Button>
             </ButtonGroup>
 
           }
           <ButtonGroup className="margin">
-            <Button title="Clone Selected Lines" onClick={this.props.cloneLine} >Clone Lines</Button>
-            <Button title="Delete Selected Lines" onClick={this.props.deleteLine} bsStyle="danger">Delete Lines</Button>
-            <Button title="Cancel" >Cancel</Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.cloneLines })} onClick={this.props.cloneLine} ><FormattedMessage {...messages.cloneLines} /></Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.deleteLines })} onClick={this.props.deleteLine} bsStyle="danger"><FormattedMessage {...messages.deleteLines} /></Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.cancel })} ><FormattedMessage {...messages.cancel} /></Button>
           </ButtonGroup>
-          <Button title="Go to Full Screen" className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button>
+          {/* <Button title="Go to Full Screen" className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
           <ButtonGroup className="margin">
-            <Button title="Calculate" onClick={this.props.calculateTotal}>Calculate</Button>
-            <Button title="Save" bsStyle="primary" onClick={this.props.quickSave}>Save</Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.calculate })} onClick={this.props.calculateTotal}><FormattedMessage {...messages.calculate} /></Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.save })} onClick={this.props.quickSave}><FormattedMessage {...messages.save} /></Button>
           </ButtonGroup>
         </Col>
       </Row>
@@ -73,6 +76,9 @@ EditQuoteHeader.propTypes = {
   ungroup: React.PropTypes.func,
   cloneLine: React.PropTypes.func,
 };
+EditQuoteHeader.contextTypes= {
+    intl: React.PropTypes.object.isRequired,
+}
 
 
-export default (EditQuoteHeader);
+export default injectIntl(EditQuoteHeader);
