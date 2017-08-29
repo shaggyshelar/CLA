@@ -117,13 +117,13 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       return (<span> {this.props.currency} {cellInfo.value}</span>);
     } else {
       return (<div>
+        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         <RIEInput
           className="table-edit"
           classEditing="table-edit-input"
           value={cellInfo.value}
           propName="message"
         />
-        <Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
       </div>);
     }
   }
@@ -280,7 +280,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     const total = this.calculateTotal();
     return (
       <div>
-        <div className="table-wrap">
+        <div className="table-wrap edit-grid-segment">
           <ReactTable
             className="-striped -highlight"
             data={data}

@@ -70,6 +70,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     });
     return (
       <div>
+        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         <RIENumber
           className={'table-edit-quantity'}
           classEditing="table-edit-input"
@@ -89,7 +90,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           change={cellInfo.original.isProductOption ? this.selectBundleDataChanged.bind(this) : this.selectDataChanged}
           classInvalid="invalid"
         />
-        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+        
       </div>);
   }
   bundleDataChanged(data) {
@@ -115,6 +116,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
        }
       const col = cellInfo.column.id.split('.')[0];
       return (<div>
+        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         <RIENumber
           className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
           classEditing="table-edit-input"
@@ -125,7 +127,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           format={this.formatt}
           classInvalid="invalid"
         />
-        <Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} />
+        
       </div>);
     }
   }
