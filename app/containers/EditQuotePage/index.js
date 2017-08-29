@@ -25,8 +25,13 @@ import { cloneLine,
   updateBundle,
   updateSeg,
   updateSegBundle,
+  updateSegSelect,
+  updateSegBundleSelect,
   updateGroupData,
   updateGroupValue,
+  updateSelect,
+  updateSelectBundle,
+
   segment,
  } from '../App/actions';
 
@@ -39,6 +44,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       selectedQuotes: [],
       segmented: false,
       segLines: [],
+      loading: false,
     };
 
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
@@ -62,31 +68,29 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       });
     }
     if (window.parent.Xrm !== undefined) {
-      console.log(window.parent.Xrm.Page.context.getClientUrl());
+      console.log(Xrm.Page.getAttribute('').getValue());
       console.log(window.parent.Xrm.Page.data.entity.getId().replace('{', '').replace('}', ''));
       console.log(window.parent.Xrm.Page.data.entity.getEntityName());
     }
   }
 
-  componentDidMount() {
-    // if (!this.props.data.get('priceList')) {
-    //   browserHistory.push('/PriceBook');
-    // }
-  }
-
   ungroup() {
+    this.setState({ loading: true });
     const data = this.props.data.toJS();
     data.lines.forEach((i) => { i.groupId = ''; });
     data.groups = [];
     data.linesGrouped = false;
+    this.setState({ loading: true });
     this.props.ungroup(data);
   }
 
   segment(id, value, isOption, parent) {
+    this.setState({ loading: true });
     this.props.segment(id, value, isOption, parent);
   }
 
   group() {
+    this.setState({ loading: true });
     const data = this.props.data.toJS();
     const randomID = parseInt(Math.random() * 100000, 0).toString();
     if (data.linesGrouped) {
@@ -138,6 +142,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   deleteCheckedLines() {
+    this.setState({ loading: true });
     const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     if (d1.length) {
       const selectedLines = _.map(d1, (i) => { if (i.checked) return i.value; });
@@ -155,6 +160,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   cloneCheckedLines() {
+    this.setState({ loading: true });
     const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     if (d1.length) {
       const selectedLines = _.map(d1, (i) => { if (i.checked) return i.value; });
@@ -191,11 +197,13 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   updateProps(updatedData) {
+    this.setState({ loading: true });
     this.props.updateProps(updatedData);
   }
 
 
   quickSaveQuotes() {
+    this.setState({ loading: true });
     this.props.quickSaveQuote(this.props.data.toJS());
   }
 
@@ -203,10 +211,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     const grouped = this.props.data.toJS().linesGrouped;
     const segmented = _.filter(this.props.data.toJS().lines, { isSegmented: true }).length + _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
     // const segmentedBundle = _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
-
+    const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
-
+        <div className="loader" style={style}></div>
         <Helmet
           title="EditQuotePage"
           meta={[
@@ -250,25 +258,33 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               location={this.props.location}
               updateGroupData={this.props.updateGroupData}
               updateGroupValue={this.props.updateGroupValue}
+              updateSelect={this.props.updateSelect}
+              updateSelectBundle={this.props.updateSelectBundle}
+              updateSegSelect={this.props.updateSegSelect}
+              updateSegBundleSelect={this.props.updateSegBundleSelect}
             />
           </div>
         :
           <div className="qoute-container">
             {segmented ?
               <SegmentedQuote
-                 data={this.props.data ? this.props.data.toJS().lines : []}
-                 cloneLine={this.props.cloneLine}
-                 deleteLine={this.props.deleteLine}
-                 toggleAllCheckBox={this.checkAll}
-                 toggleQuoteCheckbox={this.toggleCheckboxChange}
-                 updateProps={this.updateProps}
-                 currency={this.props.data.get('currency')}
-                 segment={this.segment}
-                 update={this.props.update}
-                 updateBundle={this.props.updateBundle}
-                 updateSeg={this.props.updateSeg}
-                 updateSegBundle={this.props.updateSegBundle}
-               />
+                data={this.props.data ? this.props.data.toJS().lines : []}
+                cloneLine={this.props.cloneLine}
+                deleteLine={this.props.deleteLine}
+                toggleAllCheckBox={this.checkAll}
+                toggleQuoteCheckbox={this.toggleCheckboxChange}
+                updateProps={this.updateProps}
+                currency={this.props.data.get('currency')}
+                segment={this.segment}
+                update={this.props.update}
+                updateBundle={this.props.updateBundle}
+                updateSelect={this.props.updateSelect}
+                updateSelectBundle={this.props.updateSelectBundle}
+                updateSeg={this.props.updateSeg}
+                updateSegBundle={this.props.updateSegBundle}
+                updateSegSelect={this.props.updateSegSelect}
+                updateSegBundleSelect={this.props.updateSegBundleSelect}
+              />
             :
                 <EditQuoteGrid
                   data={this.props.data ? this.props.data.toJS().lines : []}
@@ -281,6 +297,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                   segment={this.segment}
                   update={this.props.update}
                   updateBundle={this.props.updateBundle}
+                  updateSelect={this.props.updateSelect}
+                  updateSelectBundle={this.props.updateSelectBundle}
                 />
             }
           </div>
@@ -351,6 +369,12 @@ function mapDispatchToProps(dispatch) {
     update: (id, data, field) => {
       dispatch(update(id, data, field));
     },
+    updateSelectBundle: (parentId, id, field, data) => {
+      dispatch(updateSelectBundle(parentId, id, field, data));
+    },
+    updateSelect: (id, data, field) => {
+      dispatch(updateSelect(id, data, field));
+    },
     updateBundle: (parentId, id, field, data) => {
       dispatch(updateBundle(parentId, id, field, data));
     },
@@ -359,6 +383,12 @@ function mapDispatchToProps(dispatch) {
     },
     updateSegBundle: (parentId, id, name, field, data) => {
       dispatch(updateSegBundle(parentId, id, name, field, data));
+    },
+    updateSegSelect: (id, name, field, data) => {
+      dispatch(updateSegSelect(id, name, field, data));
+    },
+    updateSegBundleSelect: (parentId, id, name, field, data) => {
+      dispatch(updateSegBundleSelect(parentId, id, name, field, data));
     },
     updateGroupData: (id, field, data) => {
       dispatch(updateGroupData(id, field, data));
@@ -369,6 +399,7 @@ function mapDispatchToProps(dispatch) {
     segment: (id, value, isOption, parent) => {
       dispatch(segment(id, value, isOption, parent));
     },
+
   };
 }
 

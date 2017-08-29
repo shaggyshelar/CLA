@@ -1,3 +1,16 @@
+.loader {
+    position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+    background: #EEE;
+    background-image:url(loading-dots.gif); 
+    background-repeat: no-repeat;
+    background-position: 50%; 
+    opacity: .7;
+    z-index: 999;
+}
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none;
@@ -23,6 +36,7 @@ input[type=number]::-webkit-outer-spin-button {
   pointer-events: none;
   cursor: pointer;
   opacity: .7;
+  color: gray;
 }
 .edit-icon {
     display: inline;
@@ -49,6 +63,7 @@ input[type=number]::-webkit-outer-spin-button {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    
 }
 .table-edit-input .inline-edit {
      display:none !important;
@@ -414,6 +429,21 @@ padding-bottom: 15px;
 }
 .modal-table tr td {
   color: #3C3D3E;
+}
+.pro-name {
+    display: inline-block;
+    overflow: hidden;
+    width: 90%;
+    text-overflow: ellipsis;
+}
+
+.pro-icon {
+    display: inline-block;
+    float: right;
+    cursor:pointer;
+}
+.group-des-edit{
+    padding:0px !important;
 }
 .modal-table tr th {
   padding-top: 20px;

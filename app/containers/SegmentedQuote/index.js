@@ -87,6 +87,8 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSeg={this.props.updateSeg}
                     updateSegBundle={this.props.updateSegBundle}
                     selectedTab={this.selectTab}
+                    updateSegSelect={this.props.updateSegSelect}
+                    updateSegBundleSelect={this.props.updateSegBundleSelect}
                   />
                 </Tab>
               :
@@ -106,6 +108,8 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSeg={this.props.updateSeg}
                     updateSegBundle={this.props.updateSegBundle}
                     selectedTab={this.selectTab}
+                    updateSegSelect={this.props.updateSegSelect}
+                    updateSegBundleSelect={this.props.updateSegBundleSelect}
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
@@ -122,6 +126,8 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSeg={this.props.updateSeg}
                     updateSegBundle={this.props.updateSegBundle}
                     selectedTab={this.selectTab}
+                    updateSegSelect={this.props.updateSegSelect}
+                    updateSegBundleSelect={this.props.updateSegBundleSelect}
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
@@ -138,6 +144,8 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSeg={this.props.updateSeg}
                     updateSegBundle={this.props.updateSegBundle}
                     selectedTab={this.selectTab}
+                    updateSegSelect={this.props.updateSegSelect}
+                    updateSegBundleSelect={this.props.updateSegBundleSelect}
                   />
                 </Tab> : '' }
             </Tabs>
@@ -154,6 +162,8 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               segment={this.props.segment}
               update={this.props.update}
               updateBundle={this.props.updateBundle}
+              updateSelect={this.props.updateSelect}
+              updateSelectBundle={this.props.updateSelectBundle}
             />
           </Tab>
         </Tabs>

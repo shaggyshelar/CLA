@@ -27,10 +27,14 @@ import {
   UPDATE,
   UPDATE_BUNDLE,
   UPDATE_SEG,
+  UPDATE_SEG_SELECT,
+  UPDATE_SEG_BUNDLE_SELECT,
   UPDATE_SEG_BUNDLE,
   UPDATE_GROUP_DATA,
   UPDATE_GROUP_VAL,
   SEGMENT,
+  UPDATE_SELECT,
+  UPDATE_SELECT_BUNDLE,
 } from './constants';
 
 export function defaultAction() {
@@ -180,6 +184,25 @@ export function updateBundle(parentId, id, field, data) {
   };
 }
 
+export function updateSelect(id, data, field) {
+  return {
+    type: UPDATE_SELECT,
+    data,
+    id,
+    field,
+  };
+}
+
+export function updateSelectBundle(parentId, id, field, data) {
+  return {
+    type: UPDATE_SELECT_BUNDLE,
+    parentId,
+    data,
+    id,
+    field,
+  };
+}
+
 export function updateSeg(id, name, field, data) {
   return {
     type: UPDATE_SEG,
@@ -192,6 +215,25 @@ export function updateSeg(id, name, field, data) {
 export function updateSegBundle(parentId, id, name, field, data) {
   return {
     type: UPDATE_SEG_BUNDLE,
+    parentId,
+    data,
+    id,
+    field,
+    name,
+  };
+}
+export function updateSegSelect(id, name, field, data) {
+  return {
+    type: UPDATE_SEG_SELECT,
+    data,
+    id,
+    field,
+    name,
+  };
+}
+export function updateSegBundleSelect(parentId, id, name, field, data) {
+  return {
+    type: UPDATE_SEG_BUNDLE_SELECT,
     parentId,
     data,
     id,

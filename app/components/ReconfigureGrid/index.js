@@ -54,7 +54,6 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   }
 
   dataChanged(data) {
-    console.log('data', data);
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const value = data[key];

@@ -5,12 +5,13 @@
  */
 
 import React, { PropTypes } from 'react';
+import CKEditor from 'react-ckeditor-component';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { RIEInput } from 'riek';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
-import { Button, Glyphicon, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
+import { Button, Glyphicon, Modal, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import { SegmentedQuote } from '../SegmentedQuote';
 export class GroupQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -19,12 +20,17 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
 
     this.state = {
       selectedGroup: null,
+      showEditor: false,
     };
     this.changeGroup = this.changeGroup.bind(this);
     this.dataChanged = this.dataChanged.bind(this);
     this.changeOptional = this.changeOptional.bind(this);
     this.cloneGroupIn = this.cloneGroupIn.bind(this);
     this.deleteGroupIn = this.deleteGroupIn.bind(this);
+    this.toggleEditor = this.toggleEditor.bind(this);
+    this.editorTextChange = this.editorTextChange.bind(this);
+    this.descUpdate = this.descUpdate.bind(this);
+    
   }
   componentWillMount() {
     const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId, 0) });
@@ -39,7 +45,9 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   changeGroup(e) {
     this.setState({ selectedGroup: e });
   }
-
+  toggleEditor() {
+    this.setState({ showEditor: !this.state.showEditor });
+  }
   cloneGroupIn() {
     const groupLines = Object.assign([],
       _.filter(this.props.lines, { groupId: this.state.selectedGroup }));
@@ -70,7 +78,10 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.setState({ selectedGroup: this.props.groups[0].id });
     this.props.deleteGroup(lines, groups);
   }
-
+  descUpdate() {
+    this.toggleEditor();
+    this.props.updateGroupData(this.state.selectedGroup, 'description', this.state.desc);
+  }
   dataChanged(e) {
     const key = Object.keys(e)[0];
     const value = isNaN(parseFloat(e[key])) ? e[key] : parseFloat(e[key]);
@@ -85,6 +96,9 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   validate(text) {
     const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
     return (decimal.test(text) && (parseFloat(text) > 0));
+  }
+  editorTextChange(e) {
+    this.setState({ desc: e });
   }
   render() {
     let group = {};
@@ -103,6 +117,22 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     const segmented = _.filter(groupLines, { isSegmented: true }).length;
     return (
       <div className="group">
+        <Modal
+          show={this.state.showEditor}
+          onHide={this.toggleEditor}
+          aria-labelledby="contained-modal-title"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title" style={{ textAlign: 'center' }}>Edit Description for {group.name} </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="group-des-edit">
+            <CKEditor content={group.description} onChange={this.editorTextChange}></CKEditor>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.toggleEditor}>Close</Button>
+            <Button onClick={this.descUpdate} bsStyle="primary">Save</Button>
+          </Modal.Footer>
+        </Modal>
         <div className="group-card">
           <Row>
             <Col md={4} sm={6} xs={12} className="containers">
@@ -124,13 +154,10 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
 
               </span>
               <span className="group-header" >Subtotal: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })} </span><br />
-              <RIEInput
+              <span
                 className="group-description"
-                classEditing="group-desc-edit-on"
-                value={group.description === '' ? 'Click here to edit description ' : group.description}
-                propName={`${group.id}*($)*description`}
-                change={this.dataChanged}
-              /><Glyphicon glyph="pencil" className="inline-edit" />
+                onClick={this.toggleEditor}
+              >{'Click here to edit description'}</span><Glyphicon glyph="pencil" className="inline-edit" />
             </Col>
             <Col md={4} sm={6} xs={12} className="containers">
               <Row>
@@ -210,6 +237,10 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               updateBundle={this.props.updateBundle}
               updateSeg={this.props.updateSeg}
               updateSegBundle={this.props.updateSegBundle}
+              updateSelect={this.props.updateSelect}
+              updateSelectBundle={this.props.updateSelectBundle}
+              updateSegSelect={this.props.updateSegSelect}
+              updateSegBundleSelect={this.props.updateSegBundleSelect}
             />
           :
               <EditQuoteGrid
@@ -223,6 +254,8 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 segment={this.props.segment}
                 update={this.props.update}
                 updateBundle={this.props.updateBundle}
+                updateSelect={this.props.updateSelect}
+                updateSelectBundle={this.props.updateSelectBundle}
               />
           }
         </div>
