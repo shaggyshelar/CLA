@@ -96,7 +96,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
             columns={columns}
             defaultPageSize={this.props.products.length}
             pageSize={this.props.products.length}
-            style={{ width: '100%', position: 'fixed' }}
+            style={{ width: '100%'}}
             {...this.state.tableOptions}
 
           />

@@ -11,7 +11,7 @@ import Helmet from 'react-helmet';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { makeSelectProductSelectionPage, showFilter, getQuoteLines, makeProductsData } from './selectors';
+import { makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadProductsData, showFilteredData } from './actions';
 import { addProducts } from '../App/actions';
@@ -85,12 +85,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.checkAll = this.checkAll.bind(this);
   }
 
-  componentWillMount() {
-    // if (!this.props.data.get('priceList')) {
-    //   browserHistory.push('/PriceBook');
-    // }
-  }
-  componentDidMount() {
+    componentWillMount() {
     this.props.getProductsData();
   }
   checkAll(e) {
@@ -157,8 +152,10 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   render() {
+    const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
+        <div className="loader" style={style}></div>
         <Helmet
           title="ProductSelectionPage"
           meta={[{
@@ -214,6 +211,7 @@ const mapStateToProps = createStructuredSelector({
   showFilter: showFilter(),
   data: getQuoteLines(),
   products: makeProductsData(),
+  loading: makeSelectLoading(),
 });
 
 function mapDispatchToProps(dispatch) {

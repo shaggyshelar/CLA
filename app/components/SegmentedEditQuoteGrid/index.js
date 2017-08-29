@@ -139,7 +139,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         Header: '',
         style: { textAlign: 'left' },
         sortable: false,
-        width: 150,
+        width: 60,
 
         Cell: this.renderActionItems,
       },
@@ -165,6 +165,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         accessor: 'code',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
+        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title="View Discount Schedule"><Glyphicon glyph="calendar" /></a> <span className="pro-name">{cellInfo.original.code}</span></div> : <span className="pro-name">{cellInfo.original.code}</span>),
       },
 
       {
@@ -172,6 +173,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
+        Cell: (cellInfo) => (cellInfo.original.isProductOption ? <div><a className="pro-icon" title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
       }];
     const data = Object.assign({}, this.props.data[0]);
     data.segmentData.columns.map((i, index) => (
@@ -205,12 +207,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Desegment"><Glyphicon glyph="transfer" /></a> : '';
     return (
       <div className="actionItems" >
-        {/* <a><Glyphicon glyph="star-empty" /></a> */}
-        {bundle}
-        {discount}
         {reconfigure}
-        {cellInfo.original.isProductOption ? <span></span> : clone}
-        {cellInfo.original.isProductOption ? <span></span> : <a onClick={this.deleteLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="trash" /></a>}
         {segment}
       </div>
     );
@@ -222,7 +219,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         width: 35,
       },
       {
-        width: 150,
+        width: 60,
       },
       {
         width: 50,
@@ -298,6 +295,8 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
                 currency={this.props.currency}
                 updateSeg={this.props.updateSeg}
                 updateSegBundle={this.props.updateSegBundle}
+                updateSegSelect={this.props.updateSegSelect}
+                updateSegBundleSelect={this.props.updateSegBundleSelect}
               />
             )}
           />
