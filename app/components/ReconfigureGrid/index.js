@@ -107,9 +107,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           />
           <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         </div>);
-    } else {
-      return (<span>{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
     }
+    return (<span>{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
   }
 
 
@@ -117,9 +116,9 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     let input;
     if (this.props.feature.DynamicAddEnabled) {
       input = (<a title="Delete Line" onClick={this.deleteProduct.bind(this, cellInfo.original)} ><Glyphicon glyph="trash" style={{ color: '#C9302C' }} /></a>);
-    } else {
-      input = (<input type="checkbox" className="check" defaultChecked={cellInfo.original.isSelected} onChange={this.toggleCheckboxChange.bind(this, cellInfo.original)} value={cellInfo.original.id} />);
+      return input;
     }
+    input = (<input type="checkbox" className="check" defaultChecked={cellInfo.original.isSelected} onChange={this.toggleCheckboxChange.bind(this, cellInfo.original)} value={cellInfo.original.id} />);
     return input;
   }
 

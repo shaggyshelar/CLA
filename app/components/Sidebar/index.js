@@ -1,15 +1,6 @@
-/**
-*
-* Sidebar
-*
-*/
-
 import React from 'react';
-// import styled from 'styled-components';
 import { Modal } from 'react-bootstrap/lib';
-
-
-class Sidebar extends React.Component {
+class Sidebar extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <Modal
@@ -17,18 +8,22 @@ class Sidebar extends React.Component {
         autoFocus keyboard
       >
         <Modal.Header closeButton>
-        <Modal.Title>{this.props.title}</Modal.Title>
-      </Modal.Header>
+          <Modal.Title>{this.props.title}</Modal.Title>
+        </Modal.Header>
         <Modal.Body>
-        {this.props.children}
-      </Modal.Body>
+          {this.props.children}
+        </Modal.Body>
       </Modal>
     );
   }
 }
 
 Sidebar.propTypes = {
-
+  title: React.PropTypes.any,
+  children: React.PropTypes.any,
+  container: React.PropTypes.any,
+  isVisible: React.PropTypes.any,
+  onHide: React.PropTypes.any,
 };
 
 export default Sidebar;

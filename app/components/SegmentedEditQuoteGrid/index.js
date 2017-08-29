@@ -1,18 +1,13 @@
-/**
-*
-* SegmentedSegmentedEditQuoteGrid
-*
-*/
 import ReactTable from 'react-table';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
+import { browserHistory } from 'react-router';
+import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
 import 'react-table/react-table.css';
 import { RIEInput } from 'riek';
 import _ from 'lodash';
 import SegmentSubComponent from 'components/SegmentSubComponent';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
-import { browserHistory } from 'react-router';
 
 class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -63,26 +58,6 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       },
     });
   }
-  renderCell(index, e) {
-    const data = e.original.segmentData.columns[index];
-    
-    const tooltip = (
-      <Tooltip id={`${e.original.id}-${e.original.segmentData.columns[index].name}`} bsClass="tooltip" className="hover-tip">
-        <span className="lab">QUANTITY</span><span className="val">{data.quantity}</span><br />
-        <span className="lab">LIST PRICE</span><span className="val">{this.props.currency} {data.listPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">UPLIFT</span><span className="val">{this.props.currency} {data.uplift.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">ADD. DISC.</span><span className="val">{data.additionalDiscount.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">UNIT PRICE</span><span className="val">{this.props.currency} {data.netunitPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">TOTAL</span><span className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-      </Tooltip>
-    );
-    return (<OverlayTrigger placement="top" overlay={tooltip}>
-      <span>{e.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>
-    </OverlayTrigger>);
-  }
-  renderTotal(cellInfo) {
-    return (<span>{this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
-  }
   handleToggle(index) {
     const selectedData = this.props.data[index];
     if (selectedData !== undefined) {
@@ -112,20 +87,97 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       }
     }
   }
+  seg(cellInfo) {
+    this.props.segment(cellInfo.original.id, false, cellInfo.original.isProductOption, cellInfo.original.parent);
+  }
+  calculateTotal() {
+    const columns = [
+      {
+        width: 35,
+      },
+      {
+        width: 60,
+      },
+      {
+        width: 50,
+      },
+      {
+        width: 50,
+      }, {
+      },
+
+      {
+        style: { textAlign: 'left' },
+        Cell: <span>Sub Total:</span>,
+      }];
+    const total = [{ netTotal: 0 }];
+    const netTotal = 'netTotal';
+    _.forEach(this.props.data, (value) => {
+      _.forEach(value.segmentData.columns, (row) => {
+        if (!total[0][row.name]) {
+          total[0][row.name] = row.netTotal;
+        } else {
+          total[0][row.name] += row.netTotal;
+        }
+      });
+      if (!total[0][netTotal]) {
+        total[0][netTotal] = value.netTotal;
+      } else {
+        total[0][netTotal] += value.netTotal;
+      }
+    });
+    const keys = _.keys(total[0]);
+
+    keys.push(keys.shift());
+    keys.map((i) => (
+      columns.push({
+        accessor: `${i}`,
+        id: `${i}`,
+        style: { textAlign: 'right' },
+        headerStyle: { textAlign: 'right' },
+        Cell: this.renderTotal.bind(this),
+      })
+     ));
+
+    const table = (<ReactTable
+      className="sub-component"
+      data={total}
+      columns={columns}
+      defaultPageSize={1}
+      pageSize={1}
+      style={{ width: '100%' }}
+      {...this.state.tableOptions}
+    />);
+    return table;
+    // return total.map((i) => <div style={{width:'100px',display: 'inline-block'}}>{this.props.currency} {i}</div>);
+  }
+  renderActionItems(cellInfo) {
+    // const discount = cellInfo.original.canShowDiscountScheduler ? <a><Glyphicon glyph="calendar" onClick={this.handleToggle.bind(this, cellInfo.index)} /></a> : '';
+    const reconfigure = cellInfo.original.canReconfigure ? <a className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : '';
+    // const bundle = cellInfo.original.isProductOption ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
+    // const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
+    const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Desegment"><Glyphicon glyph="transfer" /></a> : '';
+    return (
+      <div className="actionItems" >
+        {reconfigure}
+        {segment}
+      </div>
+    );
+  }
+
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (<span> {this.props.currency} {cellInfo.value}</span>);
-    } else {
-      return (<div>
-        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
-        <RIEInput
-          className="table-edit"
-          classEditing="table-edit-input"
-          value={cellInfo.value}
-          propName="message"
-        />
-      </div>);
-    }
+    } 
+    return (<div>
+      <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+      <RIEInput
+        className="table-edit"
+        classEditing="table-edit-input"
+        value={cellInfo.value}
+        propName="message"
+      />
+    </div>);
   }
   renderChecbox(cellInfo) {
     if (!cellInfo.original.isProductOption) {
@@ -196,83 +248,24 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     });
     return columns;
   }
-  seg(cellInfo, e) {
-    this.props.segment(cellInfo.original.id, false, cellInfo.original.isProductOption, cellInfo.original.parent);
-  }
-  renderActionItems(cellInfo) {
-    const discount = cellInfo.original.canShowDiscountScheduler ? <a><Glyphicon glyph="calendar" onClick={this.handleToggle.bind(this, cellInfo.index)} /></a> : '';
-    const reconfigure = cellInfo.original.canReconfigure ? <a className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : '';
-    const bundle = cellInfo.original.isProductOption ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
-    const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
-    const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Desegment"><Glyphicon glyph="transfer" /></a> : '';
-    return (
-      <div className="actionItems" >
-        {reconfigure}
-        {segment}
-      </div>
+  renderCell(index, e) {
+    const data = e.original.segmentData.columns[index];
+    const tooltip = (
+      <Tooltip id={`${e.original.id}-${e.original.segmentData.columns[index].name}`} bsClass="tooltip" className="hover-tip">
+        <span className="lab">QUANTITY</span><span className="val">{data.quantity}</span><br />
+        <span className="lab">LIST PRICE</span><span className="val">{this.props.currency} {data.listPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">UPLIFT</span><span className="val">{this.props.currency} {data.uplift.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">ADD. DISC.</span><span className="val">{data.additionalDiscount.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">UNIT PRICE</span><span className="val">{this.props.currency} {data.netunitPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">TOTAL</span><span className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+      </Tooltip>
     );
+    return (<OverlayTrigger placement="top" overlay={tooltip}>
+      <span>{e.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>
+    </OverlayTrigger>);
   }
-
-  calculateTotal() {
-    const columns = [
-      {
-        width: 35,
-      },
-      {
-        width: 60,
-      },
-      {
-        width: 50,
-      },
-      {
-        width: 50,
-      }, {
-      },
-
-      {
-        style: { textAlign: 'left' },
-        Cell: <span>Sub Total:</span>,
-      }];
-    const total = [{ netTotal: 0 }];
-    const netTotal = 'netTotal';
-    _.forEach(this.props.data, (value) => {
-      _.forEach(value.segmentData.columns, (row) => {
-        if (!total[0][row.name]) {
-          total[0][row.name] = row.netTotal;
-        } else {
-          total[0][row.name] += row.netTotal;
-        }
-      });
-      if (!total[0][netTotal]) {
-        total[0][netTotal] = value.netTotal;
-      } else {
-        total[0][netTotal] += value.netTotal;
-      }
-    });
-    const keys = _.keys(total[0]);
-
-    keys.push(keys.shift());
-    keys.map((i) => (
-      columns.push({
-        accessor: `${i}`,
-        id: `${i}`,
-        style: { textAlign: 'right' },
-        headerStyle: { textAlign: 'right' },
-        Cell: this.renderTotal.bind(this),
-      })
-     ));
-
-    const table = (<ReactTable
-      className="sub-component"
-      data={total}
-      columns={columns}
-      defaultPageSize={1}
-      pageSize={1}
-      style={{ width: '100%' }}
-      {...this.state.tableOptions}
-    />);
-    return table;
-    // return total.map((i) => <div style={{width:'100px',display: 'inline-block'}}>{this.props.currency} {i}</div>);
+  renderTotal(cellInfo) {
+    return (<span>{this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
   }
   render() {
     const data = this.props.data;
@@ -327,6 +320,8 @@ SegmentedEditQuoteGrid.propTypes = {
   segment: PropTypes.func,
   updateSegBundle: PropTypes.func,
   updateSeg: PropTypes.func,
+  updateSegSelect: PropTypes.func,
+  updateSegBundleSelect: PropTypes.func,
 };
 
 export default SegmentedEditQuoteGrid;

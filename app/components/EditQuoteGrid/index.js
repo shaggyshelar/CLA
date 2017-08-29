@@ -6,7 +6,6 @@ import { browserHistory } from 'react-router';
 import 'react-table/react-table.css';
 import { RIENumber, RIESelect } from 'riek';
 import _ from 'lodash';
-import InlineEditCustom from 'components/InlineEdit';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
 
 class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -132,16 +131,20 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           if (!i.isSegmented) {
             total += value.netTotal;
           }
+          return this;
         });
       }
     });
     return total;
   }
+  formatt(e) {
+    return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
+  }
   renderActionItems(cellInfo) {
-    const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : <span className="blank"></span>;
+    // const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : <span className="blank"></span>;
     const reconfigure = cellInfo.original.canReconfigure ? <a title="Reconfigure Lines" className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
-    const bundle = cellInfo.original.isProductOption ? <a title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : <span className="blank"></span>;
-    const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" style={{ color: '#449D44' }} /></a> : <span className="blank"></span>;
+    // const bundle = cellInfo.original.isProductOption ? <a title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : <span className="blank"></span>;
+    // const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" style={{ color: '#449D44' }} /></a> : <span className="blank"></span>;
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isProductOption, cellInfo.original.parent)} title="Segment / Desegment"><Glyphicon glyph="transfer" style={{ color: '#31B0D5' }} /></a> : <span className="blank"></span>;
     return (
       <div className="actionItems" >
@@ -161,6 +164,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         selectedOption.id = i.id;
         selectedOption.text = i.value;
       }
+      return this;
     });
     return (
       <div>
@@ -184,31 +188,27 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           change={cellInfo.original.isProductOption ? this.selectBundleDataChanged.bind(this) : this.selectDataChanged}
           classInvalid="invalid"
         />
-        
+
       </div>);
-  }
-  formatt(e) {
-    return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
   }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (<span>{cellInfo.column.id === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
-    } else {
-      return (
-        <div>
-          <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
-          <RIENumber
-            className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
-            classEditing="table-edit-input"
-            value={cellInfo.value}
-            propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-            format={this.formatt}
-            change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
-            validate={this.validate}
-            classInvalid="invalid"
-          />
-        </div>);
     }
+    return (
+      <div>
+        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+        <RIENumber
+          className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
+          classEditing="table-edit-input"
+          value={cellInfo.value}
+          propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+          format={this.formatt}
+          change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
+          validate={this.validate}
+          classInvalid="invalid"
+        />
+      </div>);
   }
   renderChecbox(cellInfo) {
     if (!cellInfo.original.isProductOption) {
@@ -364,6 +364,8 @@ EditQuoteGrid.propTypes = {
   update: PropTypes.func,
   updateBundle: PropTypes.func,
   segment: PropTypes.func,
+  updateSelect: PropTypes.func,
+  updateSelectBundle: PropTypes.func,
 };
 
 

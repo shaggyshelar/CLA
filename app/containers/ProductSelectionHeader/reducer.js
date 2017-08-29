@@ -7,11 +7,11 @@
 import { fromJS } from 'immutable';
 import {
   DEFAULT_ACTION,
-  SHOW_FILTER
+  SHOW_FILTER,
 } from './constants';
 
 const initialState = fromJS({
-  showFilter:false
+  showFilter: false,
 });
 
 function productSelectionHeaderReducer(state = initialState, action) {
@@ -20,7 +20,7 @@ function productSelectionHeaderReducer(state = initialState, action) {
       return state;
     case SHOW_FILTER:
       return state
-        .set('showFilter',action.showFIlter);
+        .set('showFilter', action.showFIlter);
     default:
       return state;
   }

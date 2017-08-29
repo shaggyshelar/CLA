@@ -105,7 +105,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
     let featureId = '';
     const params = _.split(this.props.location.query.ids, '/');
     if (params.length > 0) {
-      featureId = parseInt(params[0]);
+      featureId = parseInt(params[0], 0);
     }
     this.props.getProductsData(featureId);
   }
@@ -118,14 +118,14 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
     };
 
     if (params.length === 1) {
-      productObj.featureId = parseInt(params[0]);
+      productObj.featureId = parseInt(params[0], 0);
     } else if (params.length === 2) {
-      productObj.featureId = parseInt(params[0]);
-      productObj.categoryId = parseInt(params[1]);
+      productObj.featureId = parseInt(params[0], 0);
+      productObj.categoryId = parseInt(params[1], 0);
     }
 
     this.state.selectedProducts.forEach((currentProductId) => {
-      const productIndex = _.findIndex(products, { id: parseInt(currentProductId) });
+      const productIndex = _.findIndex(products, { id: parseInt(currentProductId, 0) });
       productObj.selectedProducts.push(products[productIndex]);
     }, this);
 
@@ -142,7 +142,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
 
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-    for (let i = 0; i < d.length; i++) {
+    for (let i = 0; i < d.length; i += 1) {
       if (!d[i].checked && e.target.checked) {
         d[i].click();
       } else if (d[i].checked && !e.target.checked) {

@@ -56,6 +56,19 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     const data1 = data[key];
     this.props.updateSegBundleSelect(field[0], field[1], field[2], field[3], data1.id);
   }
+  bundleDataChanged(data) {
+    const key = Object.keys(data)[0];
+    const field = key.split('*(&)*');
+    const data1 = data[key];
+    this.props.updateSegBundle(field[0], field[1], field[2], field[3], parseFloat(data1));
+  }
+  formatt(e) {
+    return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
+  }
+  validate(text) {
+    const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
+    return (decimal.test(text) && (parseFloat(text) > 0));
+  }
   renderDiscount(cellInfo) {
     const col = cellInfo.column.id.split('.')[0];
     const selected = cellInfo.original.selectValues;
@@ -67,6 +80,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         selectedOption.id = i.id;
         selectedOption.text = i.value;
       }
+      return this;
     });
     return (
       <div>
@@ -90,46 +104,31 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           change={cellInfo.original.isProductOption ? this.selectBundleDataChanged.bind(this) : this.selectDataChanged}
           classInvalid="invalid"
         />
-        
+
       </div>);
-  }
-  bundleDataChanged(data) {
-    const key = Object.keys(data)[0];
-    const field = key.split('*(&)*');
-    const data1 = data[key];
-    this.props.updateSegBundle(field[0], field[1], field[2], field[3], parseFloat(data1));
-  }
-  formatt(e) {
-    return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
-  }
-  validate(text) {
-    const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
-    return (decimal.test(text) && (parseFloat(text) > 0));
   }
   renderEditable(cellInfo) {
-   
     if (cellInfo.original.editable === false) {
       return (<span> {cellInfo.original.prop === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
-    } else {
-       if (cellInfo.original.prop === 'additionalDiscount') {
-         return this.renderDiscount(cellInfo);
-       }
-      const col = cellInfo.column.id.split('.')[0];
-      return (<div>
-        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
-        <RIENumber
-          className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
-          classEditing="table-edit-input"
-          value={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
-          propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
-          change={cellInfo.original.isProductOption ? this.bundleDataChanged : this.dataChanged}
-          validate={this.validate}
-          format={this.formatt}
-          classInvalid="invalid"
-        />
-        
-      </div>);
     }
+    if (cellInfo.original.prop === 'additionalDiscount') {
+      return this.renderDiscount(cellInfo);
+    }
+    const col = cellInfo.column.id.split('.')[0];
+    return (<div>
+      <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+      <RIENumber
+        className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
+        classEditing="table-edit-input"
+        value={cellInfo.value}
+        propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
+        change={cellInfo.original.isProductOption ? this.bundleDataChanged : this.dataChanged}
+        validate={this.validate}
+        format={this.formatt}
+        classInvalid="invalid"
+      />
+
+    </div>);
   }
   renderColumns(data) {
     const columns = [
@@ -161,7 +160,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         accessor: 'prop',
         sortable: false,
         style: { textAlign: 'left' },
-        Cell: (props) => <span><strong> {props.value.replace(/([A-Z])/g, ' $1').toUpperCase()}</strong></span>
+        Cell: (props) => <span><strong> {props.value.replace(/([A-Z])/g, ' $1').toUpperCase()}</strong></span>,
       },
     ];
     data.segmentData.columns.map((i) => (
@@ -278,7 +277,12 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
 }
 
 SegmentSubComponent.propTypes = {
-
+  data: React.PropTypes.any,
+  updateSeg: React.PropTypes.func,
+  updateSegSelect: React.PropTypes.func,
+  updateSegBundleSelect: React.PropTypes.func,
+  updateSegBundle: React.PropTypes.func,
+  currency: React.PropTypes.any,
 };
 
 export default SegmentSubComponent;

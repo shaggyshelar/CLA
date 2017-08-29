@@ -31,5 +31,6 @@ export {
   makeSelectData,
   makeSelectError,
   makeSelectLoading,
+  updateProductState,
   global,
 };

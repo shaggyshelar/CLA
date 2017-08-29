@@ -267,7 +267,7 @@ function reConfigureProductsReducer(state = initialState, action) {
           if (category) {
             const feature = _.find(category.features, { id: action.productObj.featureId });
             if (feature) {
-              const product = _.find(feature.products, { id: parseInt(action.productObj.id) });
+              const product = _.find(feature.products, { id: parseInt(action.productObj.id, 0) });
               if (product) {
                 product[action.productObj.field].value = action.productObj.value;
               }
@@ -276,7 +276,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         } else if (reConfigureProduct.features.length > 0) {
           const feature = _.find(reConfigureProduct.features, { id: action.product.featureId });
           if (feature) {
-            const product = _.find(feature.products, { id: parseInt(action.productObj.id) });
+            const product = _.find(feature.products, { id: parseInt(action.productObj.id, 0) });
             if (product) {
               product[action.productObj.field].value = action.productObj.value;
             }

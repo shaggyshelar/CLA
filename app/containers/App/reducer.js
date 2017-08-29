@@ -210,8 +210,7 @@ function appReducer(state = initialState, action) {
         const line = _.filter(lines, { id: action.id });
         const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
         segLine[0][action.field] = action.data;
-        
-        //return state.setIn(['data', 'lines'], fromJS(lines));
+        // return state.setIn(['data', 'lines'], fromJS(lines));
       }
     case UPDATE_SEG_BUNDLE_SELECT:
       {
@@ -220,7 +219,7 @@ function appReducer(state = initialState, action) {
         const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
         const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
         segLine[0][action.field] = action.data;
-        //return state.setIn(['data', 'lines'], fromJS(lines));
+        // return state.setIn(['data', 'lines'], fromJS(lines));
       }
     case SEGMENT:
       {

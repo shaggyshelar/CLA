@@ -6,7 +6,7 @@
 
 import {
   DEFAULT_ACTION,
-  SHOW_FILTER
+  SHOW_FILTER,
 } from './constants';
 
 export function defaultAction() {
@@ -18,6 +18,6 @@ export function defaultAction() {
 export function showFilter(value) {
   return {
     type: SHOW_FILTER,
-    showFilter:value
+    showFilter: value,
   };
 }

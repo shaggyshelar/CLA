@@ -18,7 +18,7 @@ class AddProductsDropdown extends React.PureComponent { // eslint-disable-line r
     return (
       <SplitButton title="Add Products" key="0" id={'split-button-basic-0'} onClick={() => { browserHistory.push('/ProductSelection'); }}>
         {options.map((c) => (
-          <MenuItem key="{c.key}"  onClick={() => { browserHistory.push('/favourites'); }} eventKey="1">{c.text}</MenuItem>
+          <MenuItem key="{c.key}" onClick={() => { browserHistory.push('/favourites'); }} eventKey="1">{c.text}</MenuItem>
         ))}
       </SplitButton>
     );

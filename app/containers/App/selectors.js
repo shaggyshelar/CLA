@@ -16,7 +16,7 @@ const makeSelectLocationState = () => {
     return prevRoutingStateJS;
   };
 };
-const makeSelectData = () => 
+const makeSelectData = () =>
  createSelector(
   selectGlobal,
   (homeState) => homeState.getIn(['data'])

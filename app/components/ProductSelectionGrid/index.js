@@ -1,8 +1,8 @@
 import ReactTable from 'react-table';
-import React, { Component } from 'react';
+import React from 'react';
 import 'react-table/react-table.css';
 import Sidebar from 'components/Sidebar';
-import { Button, Glyphicon, Row, Col, ButtonGroup, FormControl } from 'react-bootstrap/lib';
+import { Button, FormControl } from 'react-bootstrap/lib';
 class ProductSelectionGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -50,7 +50,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
         style: { textAlign: 'center' },
         headerStyle: { textAlign: 'center' },
         Cell: (props) => <input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />,
-      }, 
+      },
         {
           Header: () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
           accessor: 'code',
@@ -81,7 +81,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
           accessor: 'netUnitPrice',
           style: { textAlign: 'right' },
           headerStyle: { textAlign: 'right' },
-          Cell: (props) => <span>₹ {props.value.toLocaleString('en', {     minimumFractionDigits: 2 })}</span>,
+          Cell: (props) => <span>₹ {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,
         },
 
 
@@ -96,18 +96,18 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
             columns={columns}
             defaultPageSize={this.props.products.length}
             pageSize={this.props.products.length}
-            style={{ width: '100%'}}
+            style={{ width: '100%' }}
             {...this.state.tableOptions}
 
           />
           <div className="filter">
-          <Sidebar container={this} title="Product Filter" side="left" isVisible={this.props.showFilter} onHide={this.props.toggleFilter}>
-            <h4>FG</h4>
-            <FormControl type="text" placeholder="" style={{ width: '80%' }} />
-            <br /> <br /> <br />
-            <Button bsStyle="primary">Apply</Button>
-            <a className="clear">Clear Fields</a>
-          </Sidebar>
+            <Sidebar container={this} title="Product Filter" side="left" isVisible={this.props.showFilter} onHide={this.props.toggleFilter}>
+              <h4>FG</h4>
+              <FormControl type="text" placeholder="" style={{ width: '80%' }} />
+              <br /> <br /> <br />
+              <Button bsStyle="primary">Apply</Button>
+              <a className="clear">Clear Fields</a>
+            </Sidebar>
           </div>
         </div>
       </div>
@@ -116,8 +116,11 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
 }
 
 ProductSelectionGrid.propTypes = {
-  data: React.PropTypes.any,
   products: React.PropTypes.any,
+  showFilter: React.PropTypes.any,
+  toggleFilter: React.PropTypes.any,
+  toggleCheckAll: React.PropTypes.any,
+  toggleCheckboxChange: React.PropTypes.any,
 };
 
 export default ProductSelectionGrid;
