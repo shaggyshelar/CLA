@@ -8,6 +8,7 @@ import { RIEInput } from 'riek';
 import _ from 'lodash';
 import SegmentSubComponent from 'components/SegmentSubComponent';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
+import messages from './messages';
 
 class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -108,7 +109,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
 
       {
         style: { textAlign: 'left' },
-        Cell: <span>Sub Total:</span>,
+        Cell: <span>{this.context.intl.formatMessage({ ...messages.subTotal })}:</span>,
       }];
     const total = [{ netTotal: 0 }];
     const netTotal = 'netTotal';
@@ -213,19 +214,21 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         Cell: ({ index }) => <span>{index + 1}</span>,
 
       }, {
-        Header: () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
+        Header: () => <span title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
         accessor: 'code',
+        width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
         Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title="View Discount Schedule"><Glyphicon glyph="calendar" /></a> <span className="pro-name">{cellInfo.original.code}</span></div> : <span className="pro-name">{cellInfo.original.code}</span>),
       },
 
       {
-        Header: () => <span title="PRODUCT NAME">PRODUCT NAME</span>,
+        Header: () => <span title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
         accessor: 'name',
+        width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isProductOption ? <div><a className="pro-icon" title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
+        Cell: (cellInfo) => (cellInfo.original.isProductOption ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
       }];
     const data = Object.assign({}, this.props.data[0]);
     data.segmentData.columns.map((i, index) => (
@@ -239,7 +242,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       })
     ));
     columns.push({
-      Header: () => <span className="upper-case" title="NET TOTAL">NET TOTAL</span>,
+      Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
       accessor: 'netTotal',
       id: 'netTotal',
       style: { textAlign: 'right' },
@@ -252,12 +255,12 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     const data = e.original.segmentData.columns[index];
     const tooltip = (
       <Tooltip id={`${e.original.id}-${e.original.segmentData.columns[index].name}`} bsClass="tooltip" className="hover-tip">
-        <span className="lab">QUANTITY</span><span className="val">{data.quantity}</span><br />
-        <span className="lab">LIST PRICE</span><span className="val">{this.props.currency} {data.listPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">UPLIFT</span><span className="val">{this.props.currency} {data.uplift.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">ADD. DISC.</span><span className="val">{data.additionalDiscount.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">UNIT PRICE</span><span className="val">{this.props.currency} {data.netunitPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">TOTAL</span><span className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">{this.context.intl.formatMessage({ ...messages.quantity })}</span><span className="val">{data.quantity}</span><br />
+        <span className="lab">{this.context.intl.formatMessage({ ...messages.listPrice })}</span><span className="val">{this.props.currency} {data.listPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">{this.context.intl.formatMessage({ ...messages.uplift })}</span><span className="val">{this.props.currency} {data.uplift.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</span><span className="val">{data.additionalDiscount.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">{this.context.intl.formatMessage({ ...messages.netunitPrice })}</span><span className="val">{this.props.currency} {data.netunitPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <span className="lab">{this.context.intl.formatMessage({ ...messages.netTotal })}</span><span className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
       </Tooltip>
     );
     return (<OverlayTrigger placement="top" overlay={tooltip}>
@@ -310,7 +313,9 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     );
   }
 }
-
+SegmentedEditQuoteGrid.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 SegmentedEditQuoteGrid.propTypes = {
   data: PropTypes.any,
   currency: PropTypes.any,
