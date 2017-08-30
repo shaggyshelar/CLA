@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
-import { Tabs, Tab, Button } from 'react-bootstrap/lib';
+import { Tabs, Tab, Button, Glyphicon } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import SegmentedEditQuoteGrid from 'components/SegmentedEditQuoteGrid';
@@ -102,7 +102,10 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
       <div className="qoute-container segmented">
         <Tabs animation={false} defaultActiveKey={1} id="noanim-tab-example">
           <Tab unmountOnExit eventKey={1} title={this.context.intl.formatMessage({ ...messages.segment })}>
-            <Button onClick={this.showCustomModal} >Custom Edit</Button>
+            { data.CustomLines.length > 0 ?
+              <Button onClick={this.showCustomModal} >Custom <Glyphicon glyph="pencil" /></Button>
+            : ''
+          }
             <Tabs activeKey={this.state.selectedTab === '' ? selected : this.state.selectedTab} onSelect={this.selectTab} animation={false} id="inner-tab-example">
               { data.CustomLines.length > 0 ?
                 <Tab unmountOnExit eventKey={'custom'} tabClassName={'custom'} title={this.context.intl.formatMessage({ ...messages.custom })}>

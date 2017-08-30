@@ -7,8 +7,10 @@
 import React from 'react';
 // import styled from 'styled-components';
 import DatePicker from 'react-bootstrap-date-picker';
+import { toast } from 'react-toastify';
+import _ from 'lodash';
 
-import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
+import { Modal, Button, Glyphicon, Row, FormControl, Table } from 'react-bootstrap/lib';
 
 class CustomSegmentsModal extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -44,11 +46,61 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
   }
 
   saveCustomSegments() {
-    const segment = {
-      type: 'Custom',
-      columns: this.props.customSegments.toJS(),
-    };
-    this.props.saveCustomSegmentData(segment);
+    const customSegments = this.props.customSegments.toJS();
+    const nameArray = customSegments.map((item) => item.name);
+    const isDuplicate = nameArray.some((item, id) => nameArray.indexOf(item) !== id);
+    const currentIndex = _.findIndex(customSegments, { name: '' });
+    let startDateEndDateError = false;
+    let dateError = false;
+    let isDateNull = false;
+    for (let index = 0; index <= customSegments.length - 1; index++) {
+      if (customSegments[index].startDate == null || customSegments[index].endDate == null) {
+        isDateNull = true;
+        break;
+      }
+      const currentStartDate = new Date(customSegments[index].startDate);
+      const currentEndDate = new Date(customSegments[index].endDate);
+      if (currentStartDate.getTime() > currentEndDate.getTime()) {
+        startDateEndDateError = true;
+        break;
+      }
+      if (index !== customSegments.length - 1) {
+        const endDate = new Date(customSegments[index].endDate);
+        endDate.setDate(endDate.getDate() + 1);
+        const startDate = new Date(customSegments[index + 1].startDate);
+        if (endDate.getTime() !== startDate.getTime()) {
+          dateError = true;
+          break;
+        }
+      }
+    }
+    if (isDateNull) {
+      toast.error('Date Should not be Empty. ', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if (startDateEndDateError) {
+      toast.error('End Date should be greater than or equal to start date.', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if ((currentIndex > -1 || isDuplicate) && dateError) {
+      toast.error('Start Date of next record should be one day more to end date of previous record. Segment Label should not be empty or duplicate.', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if ((currentIndex > -1 || isDuplicate)) {
+      toast.error('Segment Label should not be empty or duplicate.', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else if (dateError) {
+      toast.error('Start Date of next record should be one day more to end date of previous record.', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else {
+      const segment = {
+        type: 'Custom',
+        columns: this.props.customSegments.toJS(),
+      };
+      this.props.saveCustomSegmentData(segment);
+    }
   }
 
   handleChangeDate(item, field, value) {
