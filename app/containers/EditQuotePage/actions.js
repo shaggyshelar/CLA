@@ -135,7 +135,6 @@ export function changeCustomSegmentFieldData(item) {
 }
 
 export function saveCustomSegmentData(segment) {
-  console.log('segment345345', segment);
   return {
     type: SAVE_CUSTOM_SEGMENT_DATA,
     segment,

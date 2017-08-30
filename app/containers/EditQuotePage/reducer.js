@@ -15,6 +15,7 @@ import {
   CHECK_ALL_CUSTOM_SEGMENT_DATA,
   CHECK_CUSTOM_SEGMENT_DATA,
   CLEAR_CUSTOM_SEGMENT_DATA,
+  SAVE_CUSTOM_SEGMENT_DATA,
  } from './constants';
 
 const initialState = fromJS({
@@ -30,10 +31,11 @@ function editQuoteReducer(state = initialState, action) {
         action.customSegments.forEach((item) => {
           const rec = item;
           rec.id = (Math.random() * 100000).toString();
-          rec.startDate = item.startDate; // new Date().toISOString();
-          rec.endDate = item.endDate;
+          // rec.startDate = item.startDate;
+          // rec.endDate = item.endDate;
+          rec.startDate = '2017-08-23T06:30:00.000Z';
+          rec.endDate = '2017-08-24T06:30:00.000Z';
           rec.isSelected = false;
-          console.log('recerfaew', rec);
           customSegments.push(rec);
         }, this);
       }
@@ -89,6 +91,11 @@ function editQuoteReducer(state = initialState, action) {
         .set('customSegments', fromJS(customSegments));
     }
     case CLEAR_CUSTOM_SEGMENT_DATA: {
+      const updatedSegments = state.get('updatedSegments').toJS();
+      return state
+        .set('customSegments', fromJS(updatedSegments));
+    }
+    case SAVE_CUSTOM_SEGMENT_DATA : {
       const updatedSegments = state.get('updatedSegments').toJS();
       return state
         .set('customSegments', fromJS(updatedSegments));
