@@ -305,7 +305,8 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           selectedLine={this.state.selectedLine}
         />
         <CustomSegmentsModal
-          showModal={this.props.isCustomModalOpen} onHide={this.props.handleCustomModalToggle}
+          showModal={this.props.isCustomModalOpen}
+          onHide={this.props.handleCustomModalToggle}
           style={{
             display: 'inline-flex',
           }}
@@ -347,6 +348,7 @@ SegmentedEditQuoteGrid.propTypes = {
   checkAllCustomSegmentData: PropTypes.func,
   checkCustomSegmentData: PropTypes.func,
   customSegments: PropTypes.any,
+  handleCustomModalToggle: PropTypes.func,
 };
 
 export default SegmentedEditQuoteGrid;

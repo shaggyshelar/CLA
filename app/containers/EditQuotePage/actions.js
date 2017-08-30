@@ -98,6 +98,7 @@ import {
   CHANGE_CUSTOM_SEGMENT_FIELD_DATA,
   CHECK_ALL_CUSTOM_SEGMENT_DATA,
   CHECK_CUSTOM_SEGMENT_DATA,
+  CLEAR_CUSTOM_SEGMENT_DATA,
 } from './constants';
 
 export function defaultAction() {
@@ -126,30 +127,37 @@ export function deleteCustomSegmentData() {
   };
 }
 
-export function changeCustomSegmentFieldData(field, value, id) {
+export function changeCustomSegmentFieldData(item) {
   return {
     type: CHANGE_CUSTOM_SEGMENT_FIELD_DATA,
-    field,
-    value,
+    item,
+  };
+}
+
+export function saveCustomSegmentData(segment) {
+  console.log('segment345345', segment);
+  return {
+    type: SAVE_CUSTOM_SEGMENT_DATA,
+    segment,
+  };
+}
+
+export function checkAllCustomSegmentData(isCheckAll) {
+  return {
+    type: CHECK_ALL_CUSTOM_SEGMENT_DATA,
+    isCheckAll,
+  };
+}
+
+export function checkCustomSegmentData(id) {
+  return {
+    type: CHECK_CUSTOM_SEGMENT_DATA,
     id,
   };
 }
 
-export function saveCustomSegmentData(segments) {
+export function clearCustomSegmentsData() {
   return {
-    type: SAVE_CUSTOM_SEGMENT_DATA,
-    segments,
-  };
-}
-
-export function checkAllCustomSegmentData() {
-  return {
-    type: CHECK_ALL_CUSTOM_SEGMENT_DATA,
-  };
-}
-
-export function checkCustomSegmentData() {
-  return {
-    type: CHECK_CUSTOM_SEGMENT_DATA,
+    type: CLEAR_CUSTOM_SEGMENT_DATA,
   };
 }

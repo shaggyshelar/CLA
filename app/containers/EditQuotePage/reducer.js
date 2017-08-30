@@ -5,85 +5,93 @@
  */
 
 import { fromJS } from 'immutable';
+import _ from 'lodash';
 
 import {
-DEFAULT_ACTION,
-//   LOAD_DATA,
-//   CLONE_LINE,
-//   DELETE_LINE,
-//   LOAD_DATA_ERROR,
-//   LOAD_XRM_DATA,
-//   LOAD_XRM_DATA_SUCCESS,
   LOAD_CUSTOM_SEGMENT_DATA,
   ADD_CUSTOM_SEGMENT_DATA,
   DELETE_CUSTOM_SEGMENT_DATA,
-  SAVE_CUSTOM_SEGMENT_DATA,
   CHANGE_CUSTOM_SEGMENT_FIELD_DATA,
   CHECK_ALL_CUSTOM_SEGMENT_DATA,
   CHECK_CUSTOM_SEGMENT_DATA,
+  CLEAR_CUSTOM_SEGMENT_DATA,
  } from './constants';
 
 const initialState = fromJS({
   customSegments: [],
+  updatedSegments: [],
 });
 
 function editQuoteReducer(state = initialState, action) {
-  // let data = state.get('data');
-  // switch (action.type) {
-  //   case LOAD_DATA:
-  //     return state
-  //       .set('loading', true)
-  //       .set('error', false)
-  //       .setIn('data', false);
-  //   case LOAD_DATA_SUCCESS:
-  //     return state
-  //       .set('data', action.data)
-  //       .set('loading', false);
-  //   case LOAD_DATA_ERROR:
-  //     return state
-  //       .set('error', action.error)
-  //       .set('loading', false);
-  //   case CLONE_LINE:
-  //     data = state.get('data');
-  //     return state.set('data', data.splice(0, data.products.length).concat(action.data.products));
-  //   case DELETE_LINE:
-  //     data = state.get('data');
-  //     return state.set('data', data.splice(0, data.products.length).concat(action.data.products));
-  //   case LOAD_XRM_DATA:
-  //     return state
-  //       .set('loading', true)
-  //       .set('error', false)
-  //       .setIn('xrmData', false);
-  //   case LOAD_XRM_DATA_SUCCESS:
-  //     return state
-  //       .set('xrmData', action.xrmData)
-  //       .set('loading', false);
-  //   default:
   switch (action.type) {
     case LOAD_CUSTOM_SEGMENT_DATA: {
-      const customSegments = [];
-      action.customSegments.forEach((item) => {
-        const rec = item;
-        rec.id = (Math.random() * 100000);
-        rec.isSelected = false;
-        customSegments.push(rec);
-      }, this);
-
+      const customSegments = state.get('customSegments').toJS();
+      if (action && customSegments) {
+        action.customSegments.forEach((item) => {
+          const rec = item;
+          rec.id = (Math.random() * 100000).toString();
+          rec.startDate = item.startDate; // new Date().toISOString();
+          rec.endDate = item.endDate;
+          rec.isSelected = false;
+          console.log('recerfaew', rec);
+          customSegments.push(rec);
+        }, this);
+      }
+      console.log('customSegments', customSegments);
       return state
-        .set('customSegments', customSegments);
+        .set('customSegments', fromJS(customSegments));
     }
     case ADD_CUSTOM_SEGMENT_DATA: {
-      const customSegments = state.get('customSegments');
+      const customSegments = state.get('customSegments').toJS();
       const customSegement = {
-        id: (Math.random() * 100000),
+        id: (Math.random() * 100000).toString(),
         name: '',
         startDate: '',
         endDate: '',
         isSelected: false,
+        isDefault: false,
       };
       customSegments.push(customSegement);
       return state
-        .set('customSegments', customSegments);
+        .set('customSegments', fromJS(customSegments));
+    }
+    case DELETE_CUSTOM_SEGMENT_DATA: {
+      const customSegments = state.get('customSegments').toJS();
+      const updatedSegments = _.filter(customSegments, { isSelected: false });
+      return state
+        .set('customSegments', fromJS(updatedSegments));
+    }
+    case CHECK_CUSTOM_SEGMENT_DATA: {
+      const customSegments = state.get('customSegments').toJS();
+      const selectedSegment = _.find(customSegments, { id: action.id });
+      selectedSegment.isSelected = !selectedSegment.isSelected;
+      return state
+        .set('customSegments', fromJS(customSegments));
+    }
+    case CHECK_ALL_CUSTOM_SEGMENT_DATA: {
+      const customSegments = state.get('customSegments').toJS();
+      const updatedSegments = [];
+      customSegments.forEach((item) => {
+        const data = Object.assign({}, item);
+        if (!data.isDefault) {
+          data.isSelected = action.isCheckAll;
+        }
+        updatedSegments.push(data);
+      }, this);
+      return state
+        .set('customSegments', fromJS(updatedSegments));
+    }
+    case CHANGE_CUSTOM_SEGMENT_FIELD_DATA: {
+      const customSegments = state.get('customSegments').toJS();
+      const selectedSegment = _.find(customSegments, { id: action.item.id });
+      selectedSegment[action.item.field] = action.item.value;
+      return state
+        .set('customSegments', fromJS(customSegments));
+    }
+    case CLEAR_CUSTOM_SEGMENT_DATA: {
+      const updatedSegments = state.get('updatedSegments').toJS();
+      return state
+        .set('customSegments', fromJS(updatedSegments));
     }
     default:
       return state;

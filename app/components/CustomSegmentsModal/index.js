@@ -6,6 +6,7 @@
 
 import React from 'react';
 // import styled from 'styled-components';
+import DatePicker from 'react-bootstrap-date-picker';
 
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
 
@@ -21,54 +22,63 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     // this.checkAll = this.checkAll.bind(this);
     this.toggleCheckAll = this.toggleCheckAll.bind(this);
+    this.handleChangeDate = this.handleChangeDate.bind(this);
   }
 
-  componentDidMount() {
-    console.log('this.props.selectedLine.segmentData.columns', this.props.selectedLine.segmentData.columns);
-    this.props.loadCustomSegmentsData(this.props.selectedLine.segmentData.columns);
-  }
-  handleChange(item, e) {
-    this.props.changeCustomSegmentFieldData();
+  handleChange(e) {
+    const item = {
+      field: e.target.name,
+      value: e.target.value,
+      id: e.target.id,
+    };
+    this.props.changeCustomSegmentFieldData(item);
   }
 
-  toggleCheckboxChange(e, item) {
-    this.props.checkCustomSegmentData(item);
+  toggleCheckboxChange(e) {
+    this.props.checkCustomSegmentData(e.target.id);
   }
 
   toggleCheckAll() {
-    this.setState({ isCheckAll: !this.state.isCheckAll });
+    this.state.isCheckAll = !this.state.isCheckAll;
     this.props.checkAllCustomSegmentData(this.state.isCheckAll);
   }
 
   saveCustomSegments() {
-    this.props.saveCustomSegmentData(this.props.customSegments);
+    const segment = {
+      type: 'Custom',
+      columns: this.props.customSegments.toJS(),
+    };
+    this.props.saveCustomSegmentData(segment);
   }
 
+  handleChangeDate(item, field, value) {
+    const obj = {
+      field,
+      value,
+      id: item.id,
+    };
+    this.props.changeCustomSegmentFieldData(obj);
+  }
   render() {
-    console.log('this.props.customSegments', this.props.customSegments);
     let rows = [];
+    // <input className="input-group" value={group.isOptional} id="isOptional" onChange={this.changeOptional} name={group.id} type="checkbox" checked={group.isOptional} />
     if (this.props.customSegments !== undefined) {
-      console.log('this.props.customSegments', this.props.customSegments);
-      rows = this.props.customSegments.map((item, index) => (<tr key={index}>
-        <td>{<input type="checkbox" className="check" defaultChecked={item.isSelected} onChange={this.toggleCheckboxChange.bind(this, item)} />}</td>
+      rows = this.props.customSegments.toJS().map((item, index) => (<tr key={index}>
+        <td>{!item.isDefault ? <input type="checkbox" className="check checkboxWidth" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check checkboxWidth hideSpan" />}</td>
         <td>
           <FormControl
             type="text"
+            id={item.id}
+            name="name"
             value={item.name}
-            onChange={this.handleChange.bind(this, item)}
+            onChange={this.handleChange}
           />
         </td>
-        <td>
-          <FormControl
-            type="text"
-            value={item.startDate}
-          />
+        <td id="datePicker">
+          <DatePicker onChange={this.handleChangeDate.bind(this, item, 'startDate')} dateFormat="MM/DD/YYYY" value={item.startDate} />
         </td>
-        <td>
-          <FormControl
-            type="text"
-            value={item.endDate}
-          />
+        <td id="datePicker">
+          <DatePicker onChange={this.handleChangeDate.bind(this, item, 'endDate')} dateFormat="MM/DD/YYYY" value={item.endDate} />
         </td>
       </tr>));
     }
@@ -88,7 +98,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
               <Table responsive bsClass="modal-table">
                 <thead>
                   <tr>
-                    <th>{<input type="checkbox" className="check" defaultChecked={this.state.isCheckAll} onChange={this.toggleCheckAll.bind(this)} />}</th>
+                    <th>{<input type="checkbox" className="check checkboxWidth" defaultChecked={this.state.isCheckAll} onChange={this.toggleCheckAll} />}</th>
                     <th>SEGMENT LABEL</th>
                     <th>START DATE</th>
                     <th>END DATE</th>
@@ -104,7 +114,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.handleToggle} >Cancel</Button>
+            <Button onClick={this.props.onHide} >Cancel</Button>
             <Button onClick={this.props.addCustomSegmentData} >Add</Button>
             <Button onClick={this.props.deleteCustomSegmentData} >Delete</Button>
             <Button onClick={this.saveCustomSegments} >Save</Button>

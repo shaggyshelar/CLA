@@ -714,3 +714,14 @@ padding-bottom: 15px;
     margin: -10px 0px 10px 20px;
 }
 
+  .hideSpan{
+    visibility: hidden !important;
+} 
+
+.checkboxWidth{
+    width : 15% !important;
+} 
+
+#datePicker .input-group {
+    border: none;
+}   

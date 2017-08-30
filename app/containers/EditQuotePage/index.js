@@ -2,6 +2,7 @@
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ReactDOM from 'react-dom';
@@ -35,7 +36,7 @@ import { cloneLine,
   segment,
  } from '../App/actions';
 
- import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData } from './actions';
+import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData, clearCustomSegmentsData } from './actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -59,6 +60,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.ungroup = this.ungroup.bind(this);
     this.group = this.group.bind(this);
     this.segment = this.segment.bind(this);
+    this.saveCustomSegmentData = this.saveCustomSegmentData.bind(this);
   }
   componentWillMount() {
     // this.props.getAllData();
@@ -203,7 +205,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.props.updateProps(updatedData);
   }
 
-
+  saveCustomSegmentData(segmentData) {
+    this.props.saveCustomSegmentData(segmentData);
+    browserHistory.push('/EditQuote');
+  }
   quickSaveQuotes() {
     this.setState({ loading: true });
     this.props.quickSaveQuote(this.props.data.toJS());
@@ -267,10 +272,11 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               addCustomSegmentData={this.props.addCustomSegmentData}
               deleteCustomSegmentData={this.props.deleteCustomSegmentData}
               changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
-              saveCustomSegmentData={this.props.saveCustomSegmentData}
+              saveCustomSegmentData={this.saveCustomSegmentData}
               checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
               checkCustomSegmentData={this.props.checkCustomSegmentData}
               customSegments={this.props.customSegments}
+              clearCustomSegmentsData={this.props.clearCustomSegmentsData}
             />
           </div>
         :
@@ -297,10 +303,11 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                 addCustomSegmentData={this.props.addCustomSegmentData}
                 deleteCustomSegmentData={this.props.deleteCustomSegmentData}
                 changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
-                saveCustomSegmentData={this.props.saveCustomSegmentData}
+                saveCustomSegmentData={this.saveCustomSegmentData}
                 checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
                 checkCustomSegmentData={this.props.checkCustomSegmentData}
                 customSegments={this.props.customSegments}
+                clearCustomSegmentsData={this.props.clearCustomSegmentsData}
               />
             :
                 <EditQuoteGrid
@@ -360,6 +367,7 @@ EditQuotePage.propTypes = {
   checkAllCustomSegmentData: PropTypes.func,
   checkCustomSegmentData: PropTypes.func,
   customSegments: PropTypes.any,
+  clearCustomSegmentsData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -447,17 +455,20 @@ function mapDispatchToProps(dispatch) {
     deleteCustomSegmentData: () => {
       dispatch(deleteCustomSegmentData());
     },
-    changeCustomSegmentFieldData: (field, value, id) => {
-      dispatch(changeCustomSegmentFieldData(field, value, id));
+    changeCustomSegmentFieldData: (item) => {
+      dispatch(changeCustomSegmentFieldData(item));
     },
-    saveCustomSegmentData: (segments) => {
-      dispatch(saveCustomSegmentData(segments));
+    saveCustomSegmentData: (segmentData) => {
+      dispatch(saveCustomSegmentData(segmentData));
     },
-    checkAllCustomSegmentData: () => {
-      dispatch(checkAllCustomSegmentData());
+    checkAllCustomSegmentData: (isCheckAll) => {
+      dispatch(checkAllCustomSegmentData(isCheckAll));
     },
-    checkCustomSegmentData: () => {
-      dispatch(checkCustomSegmentData());
+    checkCustomSegmentData: (id) => {
+      dispatch(checkCustomSegmentData(id));
+    },
+    clearCustomSegmentsData: (id) => {
+      dispatch(clearCustomSegmentsData(id));
     },
   };
 }
