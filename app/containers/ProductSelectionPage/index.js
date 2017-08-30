@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
 import { makeSelectProductSelectionPage, makeSearchedProductsData, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
@@ -104,6 +105,14 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       this.props.addProductsToQuote(data);
     } else {
       this.props.addProductsToQuote(data);
+    }
+   
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
+    if (d.checked) {
+      d.click();
+      toast.success(' Products Added', {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }
   addProducts() {
