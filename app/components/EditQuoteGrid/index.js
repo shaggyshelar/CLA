@@ -188,6 +188,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
           change={cellInfo.original.isProductOption ? this.selectBundleDataChanged.bind(this) : this.selectDataChanged}
           classInvalid="invalid"
+          editProps={{ width: '40px' }}
         />
 
       </div>);
@@ -261,7 +262,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: ({ index }) => <span>{index + 1}</span>,
 
       }, {
-        Header: () => <span title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
         accessor: 'code',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
@@ -269,14 +270,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       },
 
       {
-        Header: () => <span title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
         Cell: (cellInfo) => (cellInfo.original.isProductOption ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
       },
       {
-        Header: () => <span title={this.context.intl.formatMessage({ ...messages.quantity })}>{this.context.intl.formatMessage({ ...messages.quantity })}</span>,
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.quantity })}>{this.context.intl.formatMessage({ ...messages.quantity })}</span>,
         accessor: 'quantity.value',
         id: 'quantity',
         className: 'table-edit-row',
@@ -286,7 +287,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
 
       },
       {
-        Header: () => <span title={this.context.intl.formatMessage({ ...messages.listPrice })}>{this.context.intl.formatMessage({ ...messages.listPrice })}</span>,
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.listPrice })}>{this.context.intl.formatMessage({ ...messages.listPrice })}</span>,
         accessor: 'listPrice.value',
         id: 'listPrice',
         style: { textAlign: 'right' },
@@ -294,7 +295,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: this.renderEditable,
       },
       {
-        Header: () => <span title={this.context.intl.formatMessage({ ...messages.additionalDiscount })}>{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</span>,
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.additionalDiscount })}>{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</span>,
         accessor: 'additionalDiscount.value',
         id: 'additionalDiscount',
         style: { textAlign: 'right' },
@@ -302,20 +303,20 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: this.renderDiscount,
       },
       {
-        Header: () => <span title={this.context.intl.formatMessage({ ...messages.markup })}>{this.context.intl.formatMessage({ ...messages.markup })}</span>,
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.markup })}>{this.context.intl.formatMessage({ ...messages.markup })}</span>,
         accessor: 'markup',
         style: { textAlign: 'right' },
         Cell: (props) => <span>{props.value.toLocaleString('en', { minimumFractionDigits: 2 })} %</span>,
       },
       {
-        Header: () => <span title={this.context.intl.formatMessage({ ...messages.netPrice })}>{this.context.intl.formatMessage({ ...messages.netPrice })}</span>,
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netPrice })}>{this.context.intl.formatMessage({ ...messages.netPrice })}</span>,
         accessor: 'netUnitPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,
       },
       {
-        Header: () => <span title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
         accessor: 'totalPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
@@ -344,7 +345,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           selectedLine={this.state.selectedLine}
         />
         {total > 0 ?
-          <div className="sub-footer">
+          <div className="sub-footer upper-case">
             {this.context.intl.formatMessage({ ...messages.subTotal })} : {this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2 })}
           </div>
               :
