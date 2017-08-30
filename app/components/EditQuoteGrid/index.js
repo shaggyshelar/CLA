@@ -5,7 +5,6 @@ import { Glyphicon } from 'react-bootstrap/lib';
 import { browserHistory } from 'react-router';
 import 'react-table/react-table.css';
 import { RIENumber, RIESelect } from 'riek';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import _ from 'lodash';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
 import messages from './messages';

@@ -56,8 +56,7 @@ function appReducer(state = initialState, action) {
     case SAVE_ACTION:
       return state.setIn(['data', 'priceList'], fromJS(action.data));
     case LOAD_DATA:
-      return state
-        .set('loading', true)
+      return state.set('loading', true)
         .set('error', false);
     case LOAD_DATA_SUCCESS:
       return state

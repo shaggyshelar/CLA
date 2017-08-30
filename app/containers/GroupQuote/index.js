@@ -14,6 +14,8 @@ import _ from 'lodash';
 import { Button, Glyphicon, Modal, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import { SegmentedQuote } from '../SegmentedQuote';
+import messages from './messages';
+
 export class GroupQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -105,13 +107,13 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     groupLines = _.filter(this.props.lines, { groupId: this.state.selectedGroup });
     group = _.filter(this.props.groups, { id: this.state.selectedGroup })[0];
     const optionalTooltip = (
-      <Tooltip id="tooltip" bsClass="tooltip"><strong>Marks the entire group as optional.</strong></Tooltip>
+      <Tooltip id="tooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.optionalTT })}</strong></Tooltip>
     );
     const discountTooltip = (
-      <Tooltip id="dtooltip" bsClass="tooltip"><strong>Default additional discount rate applied to line items in this group.</strong></Tooltip>
+      <Tooltip id="dtooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.addDiscountTT })}</strong></Tooltip>
     );
     const subscriptionTooltip = (
-      <Tooltip id="stooltip" bsClass="tooltip"><strong>Subscription term used to prorate eligible products in this group.</strong></Tooltip>
+      <Tooltip id="stooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.subTermTT })}</strong></Tooltip>
     );
     const segmented = _.filter(groupLines, { isSegmented: true }).length;
     return (
@@ -263,6 +265,9 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   }
 }
 
+GroupQuote.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 GroupQuote.propTypes = {
   cloneLine: PropTypes.func,
   deleteLine: PropTypes.func,
@@ -286,7 +291,6 @@ GroupQuote.propTypes = {
   updateSegBundleSelect: PropTypes.func,
   updateSelect: PropTypes.func,
 };
-
 const mapStateToProps = createStructuredSelector({
 });
 

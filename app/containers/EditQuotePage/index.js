@@ -208,6 +208,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   render() {
+    if (this.props.loading) {
+     return (<div className="loader" style={style}></div>)
+    }
+    console.log("render",this.props.data);
     const grouped = this.props.data.toJS().linesGrouped;
     const segmented = _.filter(this.props.data.toJS().lines, { isSegmented: true }).length + _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
     // const segmentedBundle = _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
@@ -221,7 +225,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             { name: 'description', content: 'Description of EditQuotePage' },
           ]}
         />
-        <div>
+        <div className="header-container">
           <EditQuoteHeader
             data={this.props.data ? this.props.data.toJS() : []}
             cloneLine={this.props.cloneLine}
@@ -236,7 +240,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         </div>
         {grouped ?
 
-          <div className="qoute-container">
+          <div className="qoute-container table-container">
             <GroupQuote
               data={this.props.data ? this.props.data.toJS() : []}
               groups={this.props.data ? this.props.data.toJS().groups : []}
@@ -264,7 +268,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             />
           </div>
         :
-          <div className="qoute-container">
+          <div className="qoute-container table-container">
             {segmented ?
               <SegmentedQuote
                 data={this.props.data ? this.props.data.toJS().lines : []}
