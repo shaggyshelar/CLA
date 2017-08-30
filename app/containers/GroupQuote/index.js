@@ -146,7 +146,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               /><Glyphicon glyph="pencil" className="inline-edit" />
               <span>
                 <Badge pullRight>{this.props.groups.length}</Badge>
-                <DropdownButton title="Change Group " bsStyle="primary" id="bg-nested-dropdown" >
+                <DropdownButton title={this.context.intl.formatMessage({ ...messages.changeGroup })} bsStyle="primary" id="bg-nested-dropdown" >
                   {this.props.groups.map((item, index) => (
                     <MenuItem onSelect={this.changeGroup} key={index} eventKey={item.id} value={item.id}>{item.name}</MenuItem>
                   ))
@@ -154,17 +154,17 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 </DropdownButton><br />
 
               </span>
-              <span className="group-header" >Subtotal: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })} </span><br />
+              <span className="group-header" >{this.context.intl.formatMessage({ ...messages.subTotal })}: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })} </span><br />
               <span
                 className="group-description"
                 onClick={this.toggleEditor}
-              >{'Click here to edit description'}</span><Glyphicon glyph="pencil" className="inline-edit" />
+              >{this.context.intl.formatMessage({ ...messages.editDesc })}</span><Glyphicon glyph="pencil" className="inline-edit" />
             </Col>
             <Col md={4} sm={6} xs={12} className="containers">
               <Row>
                 <Col md={8} sm={8} xs={8}>
 
-                  <span className="group-label" >Optional</span>
+                  <span className="group-label" >{this.context.intl.formatMessage({ ...messages.optional })}</span>
                   <OverlayTrigger placement="top" overlay={optionalTooltip}>
                     <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
@@ -175,7 +175,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               </Row>
               <Row>
                 <Col md={8} sm={8} xs={8}>
-                  <span className="group-label" >Additional Disc. (%)</span>
+                  <span className="group-label" >{this.context.intl.formatMessage({ ...messages.addDiscount })}</span>
                   <OverlayTrigger placement="top" overlay={discountTooltip}>
                     <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
@@ -194,7 +194,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               </Row>
               <Row>
                 <Col md={8} sm={8} xs={8}>
-                  <span className="group-label" >Subscription Term</span>
+                  <span className="group-label" >{this.context.intl.formatMessage({ ...messages.subTerm })}</span>
                   <OverlayTrigger placement="top" overlay={subscriptionTooltip}>
                     <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
@@ -214,10 +214,10 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             </Col>
             <Col md={4} sm={6} xs={12} className="containers">
               <div>
-                <Button className="margin" title="Add Products Group" onClick={() => { browserHistory.push(`/ProductSelection?groupId=${group.id}`); }}>Add Products</Button>
+                <Button className="margin" title={this.context.intl.formatMessage({ ...messages.addProducts })} onClick={() => { browserHistory.push(`/ProductSelection?groupId=${group.id}`); }}>{this.context.intl.formatMessage({ ...messages.addProducts })}</Button>
                 <ButtonGroup className="margin">
-                  <Button onClick={this.cloneGroupIn} title="Clone Group">Clone Group</Button>
-                  <Button onClick={this.deleteGroupIn} title="Delete Group" disabled={this.props.groups.length === 1}>Delete Group</Button>
+                  <Button onClick={this.cloneGroupIn} title={this.context.intl.formatMessage({ ...messages.cloneGroup })}>{this.context.intl.formatMessage({ ...messages.cloneGroup })}</Button>
+                  <Button onClick={this.deleteGroupIn} bsStyle="danger" title={this.context.intl.formatMessage({ ...messages.deleteGroup })} disabled={this.props.groups.length === 1}>{this.context.intl.formatMessage({ ...messages.deleteGroup })}</Button>
                 </ButtonGroup>
               </div>
             </Col>
