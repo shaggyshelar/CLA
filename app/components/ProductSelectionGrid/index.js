@@ -3,6 +3,7 @@ import React from 'react';
 import 'react-table/react-table.css';
 import Sidebar from 'components/Sidebar';
 import { Button, FormControl } from 'react-bootstrap/lib';
+import messages from './messages';
 class ProductSelectionGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -52,32 +53,32 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
         Cell: (props) => <input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />,
       },
         {
-          Header: () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
           accessor: 'code',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
         },
 
         {
-          Header: () => <span title="PRODUCT NAME">PRODUCT NAME</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
           accessor: 'name',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
         },
         {
-          Header: () => <span title="PRODUCT FAMILY">PRODUCT FAMILY</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productFamily })}>{this.context.intl.formatMessage({ ...messages.productFamily })}</span>,
           accessor: 'type',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
         },
         {
-          Header: () => <span title="PRODUCT DESCRIPTION">PRODUCT DESCRIPTION</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
           style: { textAlign: 'left' },
           accessor: 'description',
           headerStyle: { textAlign: 'left', title: 'PRODUCT DESCRIPTION' },
         },
         {
-          Header: () => <span title="LIST PRICE">LIST PRICE</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.listPrice })}>{this.context.intl.formatMessage({ ...messages.listPrice })}</span>,
           accessor: 'netUnitPrice',
           style: { textAlign: 'right' },
           headerStyle: { textAlign: 'right' },
@@ -114,7 +115,9 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
     );
   }
 }
-
+ProductSelectionGrid.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 ProductSelectionGrid.propTypes = {
   products: React.PropTypes.any,
   showFilter: React.PropTypes.any,

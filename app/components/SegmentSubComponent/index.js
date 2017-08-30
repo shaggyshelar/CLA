@@ -8,6 +8,7 @@ import React from 'react';
 import ReactTable from 'react-table';
 import { RIENumber, RIESelect } from 'riek';
 import { Glyphicon } from 'react-bootstrap/lib';
+import messages from './messages';
 class SegmentSubComponent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -140,7 +141,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       {
         accessor: 'qwe',
         style: { textAlign: 'left', maxWidth: '35px' },
-        width: 150,
+        width: 60,
       },
       {
         accessor: 'qweeqwe',
@@ -155,12 +156,14 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       {
         accessor: 'name',
         style: { textAlign: 'left' },
+        width: 200,
       },
       {
         accessor: 'prop',
+        width: 200,
         sortable: false,
         style: { textAlign: 'left' },
-        Cell: (props) => <span><strong> {props.value.replace(/([A-Z])/g, ' $1').toUpperCase()}</strong></span>,
+        Cell: (props) => <span><strong> {this.context.intl.formatMessage({ ...messages[props.value] }).replace(/([A-Z])/g, ' $1').toUpperCase()}</strong></span>,
       },
     ];
     data.segmentData.columns.map((i) => (
@@ -255,7 +258,6 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       }
     }
 
-
     return { columns, dataSet };
   }
   render() {
@@ -266,8 +268,8 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           className="sub-component"
           data={data.dataSet}
           columns={data.columns}
-          defaultPageSize={data.length}
-          pageSize={data.length}
+          defaultPageSize={data.dataSet.length}
+          pageSize={data.dataSet.length}
           style={{ width: '100%' }}
           {...this.state.tableOptions}
         />
@@ -275,7 +277,9 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     );
   }
 }
-
+SegmentSubComponent.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 SegmentSubComponent.propTypes = {
   data: React.PropTypes.any,
   updateSeg: React.PropTypes.func,

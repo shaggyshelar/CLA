@@ -44,7 +44,7 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
         <Typeahead
           onChange={this.handleChange}
           onInputChange={this.handleInputChange}
-          placeholder="Search Products"
+          placeholder={this.props.place}
           options={this.props.data.map((item) => item.name)}
           clearButton
         />
@@ -56,6 +56,7 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
 
 SearchProductAutocomplete.propTypes = {
   data: React.PropTypes.array,
+  place: React.PropTypes.any,
   searchInputChange: React.PropTypes.func,
   onSearchClick: React.PropTypes.func,
   onSearchItemSelected: React.PropTypes.func,

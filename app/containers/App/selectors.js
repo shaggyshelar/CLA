@@ -25,7 +25,7 @@ const makeSelectData = () =>
 const getLanguage = () =>
  createSelector(
   language,
-  (homeState) => homeState.getIn('locale')
+  (homeState) => homeState.get('locale')
 );
 export {
   makeSelectData,

@@ -12,6 +12,7 @@
 
 import { fromJS } from 'immutable';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
 // The initial state of the App
 import {
   SAVE_ACTION,
@@ -56,10 +57,12 @@ function appReducer(state = initialState, action) {
     case SAVE_ACTION:
       return state.setIn(['data', 'priceList'], fromJS(action.data));
     case LOAD_DATA:
-      return state
-        .set('loading', true)
+      return state.set('loading', true)
         .set('error', false);
     case LOAD_DATA_SUCCESS:
+      toast.success(' Data Loaded !', {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return state
         .set('data', fromJS(action.data.quote))
         .set('loading', false);

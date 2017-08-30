@@ -11,7 +11,7 @@ import { browserHistory } from 'react-router';
 import ProductSelectionHeaderCard from 'components/ProductSelectionHeaderCard';
 import SearchProductAutocomplete from 'components/SearchProductAutocomplete';
 import { Button, Glyphicon, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
-
+import messages from './messages';
 export class ProductSelectionHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props, context) {
     super(props, context);
@@ -39,18 +39,19 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
             searchInputChange={this.props.searchInputChange}
             onSearchClick={this.props.onSearchClick}
             onSearchItemSelected={this.props.onSearchItemSelected}
+            place={this.context.intl.formatMessage({ ...messages.searchProducts })}
           />
         </Col>
         <Col xs={12} md={5} style={{ textAlign: 'right' }}>
           <ButtonGroup className="margin">
-            <Button onClick={this.props.toggleFilter}><Glyphicon glyph="filter" /></Button>
-            <Button onClick={() => { browserHistory.push('/favourites'); }} ><Glyphicon glyph="star" /></Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.filter })} onClick={this.props.toggleFilter}><Glyphicon glyph="filter" /></Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.favourites })} onClick={() => { browserHistory.push('/favourites'); }} ><Glyphicon glyph="star" /></Button>
           </ButtonGroup>
           {/* <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
           <ButtonGroup className="margin">
-            <Button onClick={this.props.addProducts}>Select</Button>
-            <Button onClick={this.props.addProductsWait}>Select and Add More</Button>
-            <Button onClick={() => { browserHistory.push('/EditQuote'); }}>Cancel</Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.select })} onClick={this.props.addProducts}>{this.context.intl.formatMessage({ ...messages.select })}</Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.selectMore })} onClick={this.props.addProductsWait}>{this.context.intl.formatMessage({ ...messages.selectMore })}</Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.cancel })} onClick={() => { browserHistory.push('/EditQuote'); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
           </ButtonGroup>
 
         </Col>
@@ -59,7 +60,9 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
     );
   }
 }
-
+ProductSelectionHeader.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 ProductSelectionHeader.propTypes = {
   data: PropTypes.array,
   addProducts: PropTypes.func,

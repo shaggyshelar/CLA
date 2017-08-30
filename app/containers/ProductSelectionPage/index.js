@@ -9,6 +9,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
 import { makeSelectProductSelectionPage, makeSearchedProductsData, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
@@ -20,63 +21,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     super(props);
     this.state = {
       selectedProducts: [],
-      dataProd: [
-        {
-          _id: '596db79f58d3f94623033cd0',
-          'PRODUCT CODE': 'Tillman',
-          'PRODUCT NAME': 'Bradley',
-          'LIST PRICE': '$ 332.9494',
-          'PRODUCT FAMILY': '',
-          'PRODUCT DESCRIPTION': '',
-          'NET UNIT PRICE': '$ 625.0061',
-          'NET TOTAL': '$ 25.9874',
-          QUANTITY: 14.7428,
-        },
-        {
-          _id: '596db79f34ec0f84605ca6a1',
-          'PRODUCT CODE': 'Hernandez',
-          'PRODUCT NAME': 'Holman',
-          'LIST PRICE': '$ 700.7878',
-          'PRODUCT FAMILY': '',
-          'PRODUCT DESCRIPTION': '',
-          'NET UNIT PRICE': '$ 506.595',
-          'NET TOTAL': '$ 502.2979',
-          QUANTITY: 50.8204,
-        },
-        {
-          _id: '596db79f10b858fe71591077',
-          'PRODUCT CODE': 'Burch',
-          'PRODUCT NAME': 'Collins',
-          'LIST PRICE': '$ 964.9937',
-          'PRODUCT FAMILY': '',
-          'PRODUCT DESCRIPTION': '',
-          'NET UNIT PRICE': '$ 269.6924',
-          'NET TOTAL': '$ 305.6421',
-          QUANTITY: 47.5805,
-        },
-        {
-          _id: '596db79f90613ebdf6dc2b7c',
-          'PRODUCT CODE': 'Coleman',
-          'PRODUCT NAME': 'Hunter',
-          'LIST PRICE': '$ 833.9739',
-          'PRODUCT FAMILY': '',
-          'PRODUCT DESCRIPTION': '',
-          'NET UNIT PRICE': '$ 942.7997',
-          'NET TOTAL': '$ 72.1729',
-          QUANTITY: 82.5088,
-        },
-        {
-          _id: '596db79f94800616a15f5ed5',
-          'PRODUCT CODE': 'Lorene',
-          'PRODUCT NAME': 'Brennan',
-          'LIST PRICE': '$ 804.2955',
-          'PRODUCT FAMILY': '',
-          'PRODUCT DESCRIPTION': '',
-          'NET UNIT PRICE': '$ 121.7662',
-          'NET TOTAL': '$ 487.7556',
-          QUANTITY: 77.3144,
-        },
-      ],
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.addProducts = this.addProducts.bind(this);
@@ -155,12 +99,20 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     );
     if (this.props.location.query.groupId) {
       data.forEach((i, index) => {
-        data[index].groupId = parseInt(this.props.location.query.groupId, 0);
+        data[index].groupId = this.props.location.query.groupId;
         data[index].id = parseInt(Math.random() * 100000, 0).toString();
       });
       this.props.addProductsToQuote(data);
     } else {
       this.props.addProductsToQuote(data);
+    }
+   
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
+    if (d.checked) {
+      d.click();
+      toast.success(' Products Added', {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }
   addProducts() {
@@ -170,7 +122,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     );
     if (this.props.location.query.groupId) {
       data.forEach((i, index) => {
-        data[index].groupId = parseInt(this.props.location.query.groupId, 0);
+        data[index].groupId = this.props.location.query.groupId;
         data[index].id = parseInt(Math.random() * 100000, 0).toString();
       });
       this.props.addProductsToQuote(data);
