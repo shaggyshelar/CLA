@@ -72,7 +72,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
   }
   renderDiscount(cellInfo) {
     const col = cellInfo.column.id.split('.')[0];
-    const selected = cellInfo.original.selectValues;
+    const selected = cellInfo.original[col].selectValues;
     const options = [];
     const selectedOption = {};
     selected.map((i) => {
@@ -90,9 +90,9 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           className={'table-edit-quantity'}
           classEditing="table-edit-input"
           value={cellInfo.value}
-          propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
+          propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
           format={this.formatt}
-          change={cellInfo.original.isProductOption ? this.bundleDataChanged.bind(this) : this.dataChanged}
+          change={this.dataChanged}
           validate={this.validate}
           classInvalid="invalid"
         />
@@ -101,8 +101,8 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           classEditing="inline-select-edit"
           value={selectedOption}
           options={options}
-          propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
-          change={cellInfo.original.isProductOption ? this.selectBundleDataChanged.bind(this) : this.selectDataChanged}
+          propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
+          change={this.selectDataChanged}
           classInvalid="invalid"
         />
 
@@ -122,8 +122,8 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
         classEditing="table-edit-input"
         value={cellInfo.value}
-        propName={`${cellInfo.original.isProductOption ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
-        change={cellInfo.original.isProductOption ? this.bundleDataChanged : this.dataChanged}
+        propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
+        change={this.dataChanged}
         validate={this.validate}
         format={this.formatt}
         classInvalid="invalid"
@@ -204,7 +204,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           data.segmentData.columns.map((j) => {
             dataSet[i][j.name] = { id: data.id, value: j.quantity };
             dataSet[i].editable = data.quantity.isEditable;
-            dataSet[i].isProductOption = data.isProductOption;
+            dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parent;
             return this;
           });
@@ -213,7 +213,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           data.segmentData.columns.map((j) => {
             dataSet[i][j.name] = { id: data.id, value: j.listPrice };
             dataSet[i].editable = data.listPrice.isEditable;
-            dataSet[i].isProductOption = data.isProductOption;
+            dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parent;
             return this;
           });
@@ -222,18 +222,18 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           data.segmentData.columns.map((j) => {
             dataSet[i][j.name] = { id: data.id, value: j.uplift };
             dataSet[i].editable = false;
-            dataSet[i].isProductOption = data.isProductOption;
+            dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parent;
             return this;
           });
           break;
         case 'additionalDiscount':
-          data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.additionalDiscount };
-            dataSet[i].editable = data.listPrice.isEditable;
-            dataSet[i].isProductOption = data.isProductOption;
-            dataSet[i].parent = data.parent;
-            dataSet[i].selectValues = data.additionalDiscount.selectValues;
+          data.segmentData.columns.map((j, index) => {
+            dataSet[i][j.name] = { id: data.id, value: j.additionalDiscount.value, selectValues: data.segmentData.columns[index].additionalDiscount.selectValues };
+            dataSet[i].editable = j.additionalDiscount.isEditable;
+            dataSet[i].isBundled = data.isBundled;
+            dataSet[i].parent = data.parentId;
+            dataSet[i].selectValues = data.segmentData.columns[index].additionalDiscount.selectValues;
             return this;
           });
           break;
@@ -241,7 +241,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           data.segmentData.columns.map((j) => {
             dataSet[i][j.name] = { id: data.id, value: j.netunitPrice };
             dataSet[i].editable = false;
-            dataSet[i].isProductOption = data.isProductOption;
+            dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parent;
             return this;
           });

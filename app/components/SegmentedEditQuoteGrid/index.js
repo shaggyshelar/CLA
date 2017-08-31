@@ -91,7 +91,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     }
   }
   seg(cellInfo) {
-    this.props.segment(cellInfo.original.id, false, cellInfo.original.isProductOption, cellInfo.original.parent);
+    this.props.segment(cellInfo.original.id, false, cellInfo.original.isBundled, cellInfo.original.parent);
   }
   calculateTotal() {
     const columns = [
@@ -157,7 +157,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   renderActionItems(cellInfo) {
     // const discount = cellInfo.original.canShowDiscountScheduler ? <a><Glyphicon glyph="calendar" onClick={this.handleToggle.bind(this, cellInfo.index)} /></a> : '';
     const reconfigure = cellInfo.original.canReconfigure ? <a className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : '';
-    // const bundle = cellInfo.original.isProductOption ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
+    // const bundle = cellInfo.original.isBundled ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
     // const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
     const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Desegment"><Glyphicon glyph="transfer" /></a> : '';
     return (
@@ -183,7 +183,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     </div>);
   }
   renderChecbox(cellInfo) {
-    if (!cellInfo.original.isProductOption) {
+    if (!cellInfo.original.isBundled) {
       return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original.id} />);
     }
     return (<span></span>);
@@ -230,7 +230,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isProductOption ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
+        Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
       }];
     const data = Object.assign({}, this.props.data[0]);
     data.segmentData.columns.map((i, index) => (
@@ -257,12 +257,12 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     const data = e.original.segmentData.columns[index];
     const tooltip = (
       <Tooltip id={`${e.original.id}-${e.original.segmentData.columns[index].name}`} bsClass="tooltip" className="hover-tip">
-        <span className="lab">{this.context.intl.formatMessage({ ...messages.quantity })}</span><span className="val">{data.quantity}</span><br />
-        <span className="lab">{this.context.intl.formatMessage({ ...messages.listPrice })}</span><span className="val">{this.props.currency} {data.listPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">{this.context.intl.formatMessage({ ...messages.uplift })}</span><span className="val">{this.props.currency} {data.uplift.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</span><span className="val">{data.additionalDiscount.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">{this.context.intl.formatMessage({ ...messages.netunitPrice })}</span><span className="val">{this.props.currency} {data.netunitPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
-        <span className="lab">{this.context.intl.formatMessage({ ...messages.netTotal })}</span><span className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })}</span><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.quantity })}</div><div className="val">{data.quantity.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.listPrice })}</div><div className="val">{this.props.currency} {data.listPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.uplift })}</div><div className="val">{this.props.currency} {data.uplift.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</div><div className="val">{data.additionalDiscount.value.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.netunitPrice })}</div><div className="val">{this.props.currency} {data.netunitPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.netTotal })}</div><div className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
       </Tooltip>
     );
     return (<OverlayTrigger placement="top" overlay={tooltip}>
