@@ -33,13 +33,13 @@ function editQuoteReducer(state = initialState, action) {
           rec.id = (Math.random() * 100000).toString();
           // rec.startDate = item.startDate;
           // rec.endDate = item.endDate;
+          // TODO : Need to update
           rec.startDate = '2017-08-23T06:30:00.000Z';
           rec.endDate = '2017-08-24T06:30:00.000Z';
           rec.isSelected = false;
           customSegments.push(rec);
         }, this);
       }
-      console.log('customSegments', customSegments);
       return state
         .set('customSegments', fromJS(customSegments));
     }
@@ -66,7 +66,9 @@ function editQuoteReducer(state = initialState, action) {
     case CHECK_CUSTOM_SEGMENT_DATA: {
       const customSegments = state.get('customSegments').toJS();
       const selectedSegment = _.find(customSegments, { id: action.id });
-      selectedSegment.isSelected = !selectedSegment.isSelected;
+      if (selectedSegment) {
+        selectedSegment.isSelected = !selectedSegment.isSelected;
+      }
       return state
         .set('customSegments', fromJS(customSegments));
     }
@@ -86,7 +88,9 @@ function editQuoteReducer(state = initialState, action) {
     case CHANGE_CUSTOM_SEGMENT_FIELD_DATA: {
       const customSegments = state.get('customSegments').toJS();
       const selectedSegment = _.find(customSegments, { id: action.item.id });
-      selectedSegment[action.item.field] = action.item.value;
+      if (selectedSegment) {
+        selectedSegment[action.item.field] = action.item.value;
+      }
       return state
         .set('customSegments', fromJS(customSegments));
     }

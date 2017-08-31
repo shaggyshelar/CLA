@@ -106,9 +106,8 @@ export function defaultAction() {
     type: DEFAULT_ACTION,
   };
 }
-//
+
 export function loadCustomSegmentsData(customSegments) {
-  console.log('loadCustomSegmentsData', customSegments);
   return {
     type: LOAD_CUSTOM_SEGMENT_DATA,
     customSegments,
