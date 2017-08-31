@@ -8,6 +8,7 @@ import { RIEInput } from 'riek';
 import _ from 'lodash';
 import SegmentSubComponent from 'components/SegmentSubComponent';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
+import CustomSegmentsModal from '../CustomSegmentsModal';
 import messages from './messages';
 
 class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -38,6 +39,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       },
       data: this.props.data,
       isModalOpen: false,
+      isCustomModalOpen: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
     this.cloneLine = this.cloneLine.bind(this);
@@ -169,7 +171,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (<span> {this.props.currency} {cellInfo.value}</span>);
-    } 
+    }
     return (<div>
       <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
       <RIEInput
@@ -305,7 +307,22 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           value={this.state.value}
           selectedLine={this.state.selectedLine}
         />
-
+        <CustomSegmentsModal
+          showModal={this.props.isCustomModalOpen}
+          onHide={this.props.handleCustomModalToggle}
+          style={{
+            display: 'inline-flex',
+          }}
+          selectedLine={this.props.data[0]}
+          loadCustomSegmentsData={this.props.loadCustomSegmentsData}
+          addCustomSegmentData={this.props.addCustomSegmentData}
+          deleteCustomSegmentData={this.props.deleteCustomSegmentData}
+          changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
+          saveCustomSegmentData={this.props.saveCustomSegmentData}
+          checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
+          checkCustomSegmentData={this.props.checkCustomSegmentData}
+          customSegments={this.props.customSegments}
+        />
         <div className="sub-footer-seg upper-case">
           {total}
         </div>
@@ -327,6 +344,16 @@ SegmentedEditQuoteGrid.propTypes = {
   updateSeg: PropTypes.func,
   updateSegSelect: PropTypes.func,
   updateSegBundleSelect: PropTypes.func,
+  isCustomModalOpen: PropTypes.any,
+  loadCustomSegmentsData: PropTypes.func,
+  addCustomSegmentData: PropTypes.func,
+  deleteCustomSegmentData: PropTypes.func,
+  changeCustomSegmentFieldData: PropTypes.func,
+  saveCustomSegmentData: PropTypes.func,
+  checkAllCustomSegmentData: PropTypes.func,
+  checkCustomSegmentData: PropTypes.func,
+  customSegments: PropTypes.any,
+  handleCustomModalToggle: PropTypes.func,
 };
 
 export default SegmentedEditQuoteGrid;

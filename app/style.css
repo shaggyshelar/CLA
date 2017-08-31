@@ -1256,3 +1256,15 @@ strong {
 /*.qoute-container.segmented{
 	padding-top:65px;
 }*/
+
+.hideSpan{
+    visibility: hidden !important;
+} 
+
+.checkboxWidth{
+    width : 15% !important;
+} 
+
+#datePicker .input-group {
+    border: none;
+}

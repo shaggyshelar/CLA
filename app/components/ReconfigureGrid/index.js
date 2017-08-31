@@ -10,6 +10,7 @@ import 'react-table/react-table.css';
 import { RIEInput } from 'riek';
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
+import messages from './messages';
 
 class ReconfigureGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -134,7 +135,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         Cell: this.renderActionItems,
       },
         {
-          Header: () => <span title="QUANTITY">QUANTITY</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.quantity })}>{this.context.intl.formatMessage({ ...messages.quantity })}</span>,
           accessor: 'quantity.value',
           id: 'quantity',
           className: 'table-edit-row',
@@ -143,25 +144,25 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           Cell: this.renderEditable,
         },
         {
-          Header: () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
           accessor: 'code',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
         },
         {
-          Header: () => <span title="PRODUCT NAME">PRODUCT NAME</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
           accessor: 'name',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
         },
         {
-          Header: () => <span title="PRODUCT DESCRIPTION">PRODUCT DESCRIPTION</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
           // accessor: '',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
         },
         {
-          Header: () => <span title="UNIT PRICE">UNIT PRICE</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.unitPrice })}>{this.context.intl.formatMessage({ ...messages.unitPrice })}</span>,
           accessor: 'listPrice.value',
           id: 'listPrice',
           style: { textAlign: 'right' },
@@ -197,6 +198,10 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     );
   }
 }
+
+ReconfigureGrid.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 
 ReconfigureGrid.propTypes = {
   products: React.PropTypes.any,

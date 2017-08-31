@@ -10,4 +10,8 @@ export default defineMessages({
     id: 'app.components.ReconfigureProductHeaderCard.header',
     defaultMessage: 'This is the ReconfigureProductHeaderCard component !',
   },
+  configureProducts: {
+    id: 'app.components.ReconfigureProductHeaderCard.configureProducts',
+    defaultMessage: 'Configure Products',
+  },
 });

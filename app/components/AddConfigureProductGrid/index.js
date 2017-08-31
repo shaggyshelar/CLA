@@ -3,6 +3,7 @@ import React from 'react';
 import 'react-table/react-table.css';
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
+import messages from './messages';
 
 class AddConfigureProductGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -69,19 +70,19 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
           Cell: this.renderCheckbox,
         },
         {
-          Header: () => <span title="PRODUCT CODE">PRODUCT CODE</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
           accessor: 'code',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
         },
         {
-          Header: () => <span title="PRODUCT NAME">PRODUCT NAME</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
           accessor: 'name',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
         },
         {
-          Header: () => <span title="PRODUCT DESCRIPTION">PRODUCT DESCRIPTION</span>,
+          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
           // accessor: '',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
@@ -115,6 +116,10 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
     );
   }
 }
+
+AddConfigureProductGrid.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 
 AddConfigureProductGrid.propTypes = {
   products: React.PropTypes.any,

@@ -242,6 +242,15 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               updateSelectBundle={this.props.updateSelectBundle}
               updateSegSelect={this.props.updateSegSelect}
               updateSegBundleSelect={this.props.updateSegBundleSelect}
+              loadCustomSegmentsData={this.props.loadCustomSegmentsData}
+              addCustomSegmentData={this.props.addCustomSegmentData}
+              deleteCustomSegmentData={this.props.deleteCustomSegmentData}
+              changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
+              saveCustomSegmentData={this.props.saveCustomSegmentData}
+              checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
+              checkCustomSegmentData={this.props.checkCustomSegmentData}
+              customSegments={this.props.customSegments}
+              clearCustomSegmentsData={this.props.clearCustomSegmentsData}
             />
           :
               <EditQuoteGrid
@@ -290,6 +299,15 @@ GroupQuote.propTypes = {
   updateSegSelect: PropTypes.func,
   updateSegBundleSelect: PropTypes.func,
   updateSelect: PropTypes.func,
+  loadCustomSegmentsData: PropTypes.func,
+  addCustomSegmentData: PropTypes.func,
+  deleteCustomSegmentData: PropTypes.func,
+  changeCustomSegmentFieldData: PropTypes.func,
+  saveCustomSegmentData: PropTypes.func,
+  checkAllCustomSegmentData: PropTypes.func,
+  checkCustomSegmentData: PropTypes.func,
+  customSegments: PropTypes.any,
+  clearCustomSegmentsData: PropTypes.any,
 };
 const mapStateToProps = createStructuredSelector({
 });

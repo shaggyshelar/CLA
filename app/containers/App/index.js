@@ -37,7 +37,7 @@ export class App extends React.Component { // eslint-disable-line react/prefer-s
           newestOnTop={false}
           closeOnClick
           pauseOnHover
-          style = {{ zIndex:9999999 }}
+          style={{ zIndex: 9999999 }}
         />
         {React.Children.toArray(this.props.children)}
         <select onChange={this.languageChange} value={this.props.language}>

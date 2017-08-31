@@ -2,11 +2,12 @@
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectData, makeSelectError, makeSelectLoading } from './selectors';
+import { makeSelectData, makeSelectError, makeSelectLoading, getCustomSegments } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import { GroupQuote } from '../GroupQuote';
 import { SegmentedQuote } from '../SegmentedQuote';
@@ -35,6 +36,8 @@ import { cloneLine,
   segment,
  } from '../App/actions';
 
+import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData, clearCustomSegmentsData } from './actions';
+
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -57,6 +60,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.ungroup = this.ungroup.bind(this);
     this.group = this.group.bind(this);
     this.segment = this.segment.bind(this);
+    this.saveCustomSegmentData = this.saveCustomSegmentData.bind(this);
   }
   componentWillMount() {
     // this.props.getAllData();
@@ -201,7 +205,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.props.updateProps(updatedData);
   }
 
-
+  saveCustomSegmentData(segmentData) {
+    this.props.saveCustomSegmentData(segmentData);
+    browserHistory.push('/EditQuote');
+  }
   quickSaveQuotes() {
     this.setState({ loading: true });
     this.props.quickSaveQuote(this.props.data.toJS());
@@ -209,9 +216,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   render() {
     if (this.props.loading) {
-     return (<div className="loader" style={style}></div>)
+      return (<div className="loader" style={style}></div>);
     }
-    console.log("render",this.props.data);
     const grouped = this.props.data.toJS().linesGrouped;
     const segmented = _.filter(this.props.data.toJS().lines, { isSegmented: true }).length + _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
     // const segmentedBundle = _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
@@ -265,6 +271,15 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               updateSelectBundle={this.props.updateSelectBundle}
               updateSegSelect={this.props.updateSegSelect}
               updateSegBundleSelect={this.props.updateSegBundleSelect}
+              loadCustomSegmentsData={this.props.loadCustomSegmentsData}
+              addCustomSegmentData={this.props.addCustomSegmentData}
+              deleteCustomSegmentData={this.props.deleteCustomSegmentData}
+              changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
+              saveCustomSegmentData={this.saveCustomSegmentData}
+              checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
+              checkCustomSegmentData={this.props.checkCustomSegmentData}
+              customSegments={this.props.customSegments}
+              clearCustomSegmentsData={this.props.clearCustomSegmentsData}
             />
           </div>
         :
@@ -287,6 +302,15 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                 updateSegBundle={this.props.updateSegBundle}
                 updateSegSelect={this.props.updateSegSelect}
                 updateSegBundleSelect={this.props.updateSegBundleSelect}
+                loadCustomSegmentsData={this.props.loadCustomSegmentsData}
+                addCustomSegmentData={this.props.addCustomSegmentData}
+                deleteCustomSegmentData={this.props.deleteCustomSegmentData}
+                changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
+                saveCustomSegmentData={this.saveCustomSegmentData}
+                checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
+                checkCustomSegmentData={this.props.checkCustomSegmentData}
+                customSegments={this.props.customSegments}
+                clearCustomSegmentsData={this.props.clearCustomSegmentsData}
               />
             :
                 <EditQuoteGrid
@@ -338,13 +362,22 @@ EditQuotePage.propTypes = {
   updateSegSelect: PropTypes.func,
   updateSegBundleSelect: PropTypes.func,
   cloneSelectedLines: PropTypes.func,
+  loadCustomSegmentsData: PropTypes.func,
+  addCustomSegmentData: PropTypes.func,
+  deleteCustomSegmentData: PropTypes.func,
+  changeCustomSegmentFieldData: PropTypes.func,
+  saveCustomSegmentData: PropTypes.func,
+  checkAllCustomSegmentData: PropTypes.func,
+  checkCustomSegmentData: PropTypes.func,
+  customSegments: PropTypes.any,
+  clearCustomSegmentsData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
-
+  customSegments: getCustomSegments(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -416,7 +449,30 @@ function mapDispatchToProps(dispatch) {
     segment: (id, value, isOption, parent) => {
       dispatch(segment(id, value, isOption, parent));
     },
-
+    loadCustomSegmentsData: (customSegments) => {
+      dispatch(loadCustomSegmentsData(customSegments));
+    },
+    addCustomSegmentData: () => {
+      dispatch(addCustomSegmentData());
+    },
+    deleteCustomSegmentData: () => {
+      dispatch(deleteCustomSegmentData());
+    },
+    changeCustomSegmentFieldData: (item) => {
+      dispatch(changeCustomSegmentFieldData(item));
+    },
+    saveCustomSegmentData: (segmentData) => {
+      dispatch(saveCustomSegmentData(segmentData));
+    },
+    checkAllCustomSegmentData: (isCheckAll) => {
+      dispatch(checkAllCustomSegmentData(isCheckAll));
+    },
+    checkCustomSegmentData: (id) => {
+      dispatch(checkCustomSegmentData(id));
+    },
+    clearCustomSegmentsData: (id) => {
+      dispatch(clearCustomSegmentsData(id));
+    },
   };
 }
 
