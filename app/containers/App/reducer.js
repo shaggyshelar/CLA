@@ -67,12 +67,16 @@ function appReducer(state = initialState, action) {
         .set('data', fromJS(action.data.quote))
         .set('loading', false);
     case LOAD_DATA_ERROR:
+      toast.error('Error Loading Data!', {
+        position: toast.POSITION.TOP_CENTER,
+      });
       return state
         .set('error', action.error)
         .set('loading', false);
     case CLONE_LINE:
       {
         data = state.getIn(['data', 'lines']).toJS();
+
         const index = _.findIndex(data, { id: action.data });
         const cloneData = Object.assign({}, data[index]);
         cloneData.id = parseInt(Math.random() * 100000, 0).toString();
@@ -85,22 +89,31 @@ function appReducer(state = initialState, action) {
     case DELETE_LINE:
       data = state.getIn(['data', 'lines']).toJS();
       _.remove(data, (n) => n.id === action.data);
+      _.remove(data, (n) => n.parentId === action.data);
       return state.setIn(['data', 'lines'], fromJS(data));
 
     case DELETE_MULTIPLE_LINES:
       data = state.getIn(['data', 'lines']).toJS();
       action.data.forEach((item) => {
         _.remove(data, { id: item });
+        _.remove(data, { parentId: item });
       }, this);
       return state.setIn(['data', 'lines'], fromJS(data));
     case CLONE_MULTIPLE_LINES:
       {
         data = state.getIn(['data', 'lines']).toJS();
+
         action.data.forEach((item) => {
+          const bundleProducts = _.filter(data, { parentId: item });
           const index = _.findIndex(data, { id: item });
           const cloneData = Object.assign({}, data[index]);
           cloneData.id = parseInt(Math.random() * 100000, 0).toString();
           data.splice(index, 0, cloneData);
+          for (let i = 0; i < bundleProducts.length; i += 1) {
+            const cloneBundleLine = Object.assign({}, bundleProducts[i]);
+            cloneBundleLine.id = parseInt(Math.random() * 100000, 0).toString();
+            data.splice(index + i + 1, 0, cloneBundleLine);
+          }
         }, this);
         return state.setIn(['data', 'lines'], fromJS(data));
       }
@@ -195,7 +208,11 @@ function appReducer(state = initialState, action) {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
         const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
-        segLine[0][action.field] = action.data;
+        if (action.field === 'additionalDiscount') {
+          segLine[0][action.field].value = action.data;
+        } else {
+          segLine[0][action.field] = action.data;
+        }
         return state.setIn(['data', 'lines'], fromJS(lines));
       }
     case UPDATE_SEG_BUNDLE:
@@ -212,8 +229,15 @@ function appReducer(state = initialState, action) {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
         const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
-        segLine[0][action.field] = action.data;
-        // return state.setIn(['data', 'lines'], fromJS(lines));
+        _.map(segLine[0][action.field].selectValues, (i, index) => {
+          if (i.id === action.data && !i.isSelected) {
+            segLine[0][action.field].selectValues[index].isSelected = true;
+          }
+          if (i.id !== action.data && i.isSelected) {
+            segLine[0][action.field].selectValues[index].isSelected = false;
+          }
+        });
+        return state.setIn(['data', 'lines'], fromJS(lines));
       }
     case UPDATE_SEG_BUNDLE_SELECT:
       {
@@ -222,19 +246,13 @@ function appReducer(state = initialState, action) {
         const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
         const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
         segLine[0][action.field] = action.data;
-        // return state.setIn(['data', 'lines'], fromJS(lines));
+        return state.setIn(['data', 'lines'], fromJS(lines));
       }
     case SEGMENT:
       {
         const lines = state.getIn(['data', 'lines']).toJS();
-        if (action.isOption) {
-          const bundleLine = _.filter(lines, { id: action.parent })[0];
-          const line = _.filter(bundleLine.bundleProducts, { id: action.id })[0];
-          line.isSegmented = action.value;
-        } else {
-          const line = _.filter(lines, { id: action.id });
-          line[0].isSegmented = action.value;
-        }
+        const line = _.filter(lines, { id: action.id });
+        line[0].isSegmented = action.value;
         return state.setIn(['data', 'lines'], fromJS(lines));
       }
     default:

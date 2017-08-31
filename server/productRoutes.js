@@ -5,6 +5,10 @@ const productRouter = express.Router();
 // A GET to the root of a resource returns a list of that resource
 productRouter.get('/', (req, res) => {
   // res.json({ FirstName: 'Sagar122', LastName: 'Shelar444' });
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
   res.json(
     [
       {

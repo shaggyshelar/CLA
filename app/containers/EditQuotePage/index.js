@@ -79,22 +79,19 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   ungroup() {
-    this.setState({ loading: true });
     const data = this.props.data.toJS();
     data.lines.forEach((i, index) => { data.lines[index].groupId = ''; });
     data.groups = [];
     data.linesGrouped = false;
-    this.setState({ loading: true });
+
     this.props.ungroup(data);
   }
 
-  segment(id, value, isOption, parent) {
-    this.setState({ loading: true });
-    this.props.segment(id, value, isOption, parent);
+  segment(id, value) {
+    this.props.segment(id, value);
   }
 
   group() {
-    this.setState({ loading: true });
     const data = this.props.data.toJS();
     const randomID = parseInt(Math.random() * 100000, 0).toString();
     if (data.linesGrouped) {
@@ -146,7 +143,6 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   deleteCheckedLines() {
-    this.setState({ loading: true });
     const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     if (d1.length) {
       const selectedLines = _.map(d1, (i) => { if (i.checked) return i.value; });
@@ -164,20 +160,30 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   cloneCheckedLines() {
-    this.setState({ loading: true });
     const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     if (d1.length) {
-      const selectedLines = _.map(d1, (i) => { if (i.checked) return i.value; });
-      this.props.cloneSelectedLines(selectedLines);
-      if (ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked) {
-        ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked = false;
-      }
-      const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-      for (let i = 0; i < d.length; i += 1) {
-        if (d[i].checked) {
-          d[i].click();
+      // const selectedLines = _.map(d1, (i) => { if (i.checked) return i.value; });
+      const selectedLines = _.reduce(d1, (results, i) => {
+        if (i.checked) {
+          results.push(i.value);
+        }
+        return results;
+      }, []);
+      console.log('checked Lines', selectedLines);
+      const d2 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+      for (let i = 0; i < d2.length; i += 1) {
+        if (d2[i].checked) {
+          d2[i].checked = false;
         }
       }
+      const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
+      if (d.checked) {
+        d.checked = false;
+      }
+      this.props.cloneSelectedLines(selectedLines);
+      // if (ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked) {
+      //   ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked = false;
+      // }
     }
   }
 
@@ -201,7 +207,6 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   updateProps(updatedData) {
-    this.setState({ loading: true });
     this.props.updateProps(updatedData);
   }
 
@@ -210,10 +215,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     browserHistory.push('/EditQuote');
   }
   quickSaveQuotes() {
-    this.setState({ loading: true });
     this.props.quickSaveQuote(this.props.data.toJS());
   }
-
   render() {
     if (this.props.loading) {
       return (<div className="loader" style={style}></div>);
@@ -234,7 +237,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         <div className="header-container">
           <EditQuoteHeader
             data={this.props.data ? this.props.data.toJS() : []}
-            cloneLine={this.props.cloneLine}
+            cloneLine={this.cloneCheckedLines}
             deleteLine={this.deleteCheckedLines}
             clone={this.cloneCheckedLines}
             calculateTotal={this.calculateTotal}
@@ -446,8 +449,8 @@ function mapDispatchToProps(dispatch) {
     updateGroupValue: (id, field, data) => {
       dispatch(updateGroupValue(id, field, data));
     },
-    segment: (id, value, isOption, parent) => {
-      dispatch(segment(id, value, isOption, parent));
+    segment: (id, value) => {
+      dispatch(segment(id, value));
     },
     loadCustomSegmentsData: (customSegments) => {
       dispatch(loadCustomSegmentsData(customSegments));
