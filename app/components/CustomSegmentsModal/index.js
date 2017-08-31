@@ -9,8 +9,8 @@ import React from 'react';
 import DatePicker from 'react-bootstrap-date-picker';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
-
 import { Modal, Button, Glyphicon, Row, FormControl, Table } from 'react-bootstrap/lib';
+import messages from './messages';
 
 class CustomSegmentsModal extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -22,7 +22,6 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     this.handleChange = this.handleChange.bind(this);
     this.saveCustomSegments = this.saveCustomSegments.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
-    // this.checkAll = this.checkAll.bind(this);
     this.toggleCheckAll = this.toggleCheckAll.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
   }
@@ -75,23 +74,23 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
       }
     }
     if (isDateNull) {
-      toast.error('Date Should not be Empty. ', {
+      toast.error(this.context.intl.formatMessage({ ...messages.dateEmptyValidation }), {
         position: toast.POSITION.TOP_CENTER,
       });
     } else if (startDateEndDateError) {
-      toast.error('End Date should be greater than or equal to start date.', {
+      toast.error(this.context.intl.formatMessage({ ...messages.startDateEndDateError }), {
         position: toast.POSITION.TOP_CENTER,
       });
     } else if ((currentIndex > -1 || isDuplicate) && dateError) {
-      toast.error('Start Date of next record should be one day more to end date of previous record. Segment Label should not be empty or duplicate.', {
+      toast.error(this.context.intl.formatMessage({ ...messages.startDateSegementLabelError }), {
         position: toast.POSITION.TOP_CENTER,
       });
     } else if ((currentIndex > -1 || isDuplicate)) {
-      toast.error('Segment Label should not be empty or duplicate.', {
+      toast.error(this.context.intl.formatMessage({ ...messages.segmentLabelError }), {
         position: toast.POSITION.TOP_CENTER,
       });
     } else if (dateError) {
-      toast.error('Start Date of next record should be one day more to end date of previous record.', {
+      toast.error(this.context.intl.formatMessage({ ...messages.startDateError }), {
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
@@ -113,7 +112,6 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
   }
   render() {
     let rows = [];
-    // <input className="input-group" value={group.isOptional} id="isOptional" onChange={this.changeOptional} name={group.id} type="checkbox" checked={group.isOptional} />
     if (this.props.customSegments !== undefined) {
       rows = this.props.customSegments.toJS().map((item, index) => (<tr key={index}>
         <td>{!item.isDefault ? <input type="checkbox" className="check checkboxWidth" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check checkboxWidth hideSpan" />}</td>
@@ -142,7 +140,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
       >
         <Modal.Dialog >
           <Modal.Header closeButton>
-            <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="pencil" /> <strong> Custom Segments </strong></Modal.Title>
+            <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="pencil" /> <strong> {this.context.intl.formatMessage({ ...messages.customSegments })} </strong></Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -151,9 +149,9 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
                 <thead>
                   <tr>
                     <th>{<input type="checkbox" className="check checkboxWidth" defaultChecked={this.state.isCheckAll} onChange={this.toggleCheckAll} />}</th>
-                    <th>SEGMENT LABEL</th>
-                    <th>START DATE</th>
-                    <th>END DATE</th>
+                    <th className="upper-case">{this.context.intl.formatMessage({ ...messages.segmentLabel })}</th>
+                    <th className="upper-case">{this.context.intl.formatMessage({ ...messages.startDate })}</th>
+                    <th className="upper-case">{this.context.intl.formatMessage({ ...messages.endDate })}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -166,10 +164,10 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.props.onHide} >Cancel</Button>
-            <Button onClick={this.props.addCustomSegmentData} >Add</Button>
-            <Button onClick={this.props.deleteCustomSegmentData} >Delete</Button>
-            <Button onClick={this.saveCustomSegments} >Save</Button>
+            <Button onClick={this.props.onHide} >{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
+            <Button onClick={this.props.addCustomSegmentData} >{this.context.intl.formatMessage({ ...messages.add })}</Button>
+            <Button onClick={this.props.deleteCustomSegmentData} >{this.context.intl.formatMessage({ ...messages.delete })}</Button>
+            <Button onClick={this.saveCustomSegments} >{this.context.intl.formatMessage({ ...messages.save })}</Button>
           </Modal.Footer>
         </Modal.Dialog>
       </Modal>
@@ -177,11 +175,13 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
   }
 }
 
+CustomSegmentsModal.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
+
 CustomSegmentsModal.propTypes = {
-  selectedLine: React.PropTypes.any,
   onHide: React.PropTypes.func,
   showModal: React.PropTypes.bool,
-  loadCustomSegmentsData: React.PropTypes.func,
   addCustomSegmentData: React.PropTypes.func,
   deleteCustomSegmentData: React.PropTypes.func,
   changeCustomSegmentFieldData: React.PropTypes.func,

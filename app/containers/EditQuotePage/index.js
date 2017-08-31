@@ -216,9 +216,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   render() {
     if (this.props.loading) {
-     return (<div className="loader" style={style}></div>)
+      return (<div className="loader" style={style}></div>);
     }
-    console.log("render",this.props.data);
     const grouped = this.props.data.toJS().linesGrouped;
     const segmented = _.filter(this.props.data.toJS().lines, { isSegmented: true }).length + _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
     // const segmentedBundle = _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;

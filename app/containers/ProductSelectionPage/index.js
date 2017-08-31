@@ -106,7 +106,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     } else {
       this.props.addProductsToQuote(data);
     }
-   
+
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
     if (d.checked) {
       d.click();

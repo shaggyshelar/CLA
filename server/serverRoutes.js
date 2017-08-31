@@ -5,7 +5,6 @@ const serverRouter = express.Router();
 // A GET to the root of a resource returns a list of that resource
 serverRouter.get('/', (req, res) => {
   // res.json({ FirstName: 'Sagar122', LastName: 'Shelar444' });
-  console.log("callled")
   res.json(
     [
       {

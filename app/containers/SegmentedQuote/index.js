@@ -4,7 +4,6 @@ import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { Tabs, Tab, Button, Glyphicon } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import SegmentedEditQuoteGrid from 'components/SegmentedEditQuoteGrid';
 import makeSelectSegmentedQuote from './selectors';
 import messages from './messages';
@@ -45,26 +44,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
   selectTab(e) {
     this.setState({ selectedTab: e });
   }
-  renderSegmentData() {
-    const data = {};
-    let bundleLines = [];
-    _.map(this.props.data, (e) => {
-      const a = _.filter(e.bundleProducts, { isSegmented: true });
-      if (a.length) {
-        bundleLines = bundleLines.concat(a);
-      }
-    });
-    data.NormalLines = _.filter(this.props.data, { isSegmented: false });
-    data.CustomLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Custom' } });
-    data.CustomLines = data.CustomLines.concat(_.filter(bundleLines, { segmentData: { type: 'Custom' } }));
-    data.MonthlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Monthly' } });
-    data.MonthlyLines = data.MonthlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Monthly' } }));
-    data.YearlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Yearly' } });
-    data.YearlyLines = data.YearlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Yearly' } }));
-    data.QuaterlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Quaterly' } });
-    data.QuaterlyLines = data.QuaterlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Quaterly' } }));
-    return data;
-  }
+
   showCustomModal() {
     this.setState({
       isCustomModalOpen: !this.state.isCustomModalOpen,
@@ -84,6 +64,27 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
       isCustomModalOpen: !this.state.isCustomModalOpen,
     });
     this.props.saveCustomSegmentData(item);
+  }
+
+  renderSegmentData() {
+    const data = {};
+    let bundleLines = [];
+    _.map(this.props.data, (e) => {
+      const a = _.filter(e.bundleProducts, { isSegmented: true });
+      if (a.length) {
+        bundleLines = bundleLines.concat(a);
+      }
+    });
+    data.NormalLines = _.filter(this.props.data, { isSegmented: false });
+    data.CustomLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Custom' } });
+    data.CustomLines = data.CustomLines.concat(_.filter(bundleLines, { segmentData: { type: 'Custom' } }));
+    data.MonthlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Monthly' } });
+    data.MonthlyLines = data.MonthlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Monthly' } }));
+    data.YearlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Yearly' } });
+    data.YearlyLines = data.YearlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Yearly' } }));
+    data.QuaterlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Quaterly' } });
+    data.QuaterlyLines = data.QuaterlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Quaterly' } }));
+    return data;
   }
   render() {
     const data = this.renderSegmentData();

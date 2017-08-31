@@ -1,11 +1,20 @@
-import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
+import { take, call } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
 // import { LOAD_REPOS } from 'containers/App/constants';
 import { SAVE_CUSTOM_SEGMENT_DATA } from './constants';
 // import { loadReConfigureProductsDataSuccess, dataLoadingError, configuredProductsSaveSuccess } from './actions';
 
-export function* saveSegmentData(segment) {
-  console.log('data', segment);
+export function* saveSegmentData() {
+  // const requestURL = '';
+
+  // const options = {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify(segment),
+  // };
+  // yield call(request, requestURL, options);
 }
 
 export function* saveCustomSegmentData() {
