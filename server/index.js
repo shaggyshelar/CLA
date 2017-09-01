@@ -16,9 +16,9 @@ const quoteRoutes = require('./quoteRoutes');
 const productRoutes = require('./productRoutes');
 // If you need a backend, e.g. an API, add your custom backend-specific
 // middleware here app.use('/api', myApi);
-app.use('/api/quote', quoteRoutes.quoteRouter);
-app.use('/v1/quote', quoteRoutes.quoteRouter);
-app.use('/api/products', productRoutes.productRouter);
+app.use('/api/QuoteProduct', quoteRoutes.quoteRouter);
+app.use('/v1/QuoteProduct', quoteRoutes.quoteRouter);
+app.use('/api/Product', productRoutes.productRouter);
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),

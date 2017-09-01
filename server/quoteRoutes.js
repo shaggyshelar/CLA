@@ -10,7 +10,7 @@ quoteRouter.use(bodyParser.urlencoded({
 quoteRouter.use(bodyParser.json());
 
 // A GET to the root of a resource returns a list of that resource
-quoteRouter.get('/', (req, res) => {
+quoteRouter.get('/EditQuote', (req, res) => {
   // const quoteResponse = quotes.quotes.filter((item) => (parseInt(item.id, 10) === parseInt(req.params.id, 10)));
   // if (quoteResponse !== undefined) {
   //   const response = {};
