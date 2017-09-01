@@ -740,7 +740,7 @@ padding-bottom: 15px;
 .group-card .badge {
     position: absolute!important;
     right: 0!important;
-    z-index: 99999!important;
+    z-index: 999!important;
     margin-right: 8px!important;
     margin-top: 4px!important;
     height: 20px!important;
@@ -1303,6 +1303,98 @@ strong {
     border: none;
 }
 
+
+/***** D. 1 Sep 2017 *****/
+.custom-edit-button{
+	float: right;
+    margin-right: 3px;
+    margin-top: 3px;
+}
+.modal-backdrop.in {
+    position: absolute!important;
+    z-index: 999999999!important;
+}
+.modal-open .modal {  
+    z-index: 9999999999999!important;
+}
+.tab-pane .table-wrap {
+    /* min-height: 55vh; 
+    height: 48vh;*/
+}
+@media (max-width: 1400px) and (min-width: 1300px)
+{
+	.qoute-container .group #inner-tab-example-pane-custom .table-wrap {
+		min-height: 48vh;
+		height: 48vh;
+		overflow-y: auto;
+	}
+}
+.edit-grid-quote .table-wrap{
+	min-height: 60vh;
+	height: 60vh;
+}
+.checkboxWidth{
+	height:auto!important;
+}
+.customModal .modal-dialog .modal-body{
+	max-height:38vh!important;
+	height:38vh!important;
+	overflow-y:auto;
+}
+.input-group-addon:last-child {
+    border-left: 0!important;
+    padding-left: 20px!important;
+}
+.language-dropdown{
+	padding: 1px 5px;
+    border: 1px solid #ddd;
+    position: absolute;
+    top: 0;
+    z-index: 9999999;
+    background: #fff;
+    margin: 0 auto;
+    left: 23%;
+    margin-top: 18px;
+    font-size: 13px;
+	cursor:pointer;
+}
+@media (min-width:1401px) and (max-width: 1500px){
+	.language-dropdown{
+	    left: 25%;
+	}
+}
+@media (min-width:1301px) and (max-width: 1400px){
+	.language-dropdown{
+	    left: 26%;
+	}
+}
+@media (min-width:1201px) and (max-width: 1300px){
+	.language-dropdown{
+	    left: 28%;
+	}
+}
+.bg-primary {
+    color: #fff!important;
+    background-color: #337ab7;
+}
+.popover-content {
+    padding: 0px 14px;
+    font-size: 13px;
+}
+.qoute-container .group #inner-tab-example-tab-monthly .table-wrap {
+	min-height: 48vh!important;
+	height: 48vh!important;
+	overflow-y: auto;
+}
+.qoute-container .group #inner-tab-example-tab-monthly .table-wrap {
+    min-height: 52vh;
+    height: 52vh;
+    overflow-y: auto;
+}
+.tab-pane .table-wrap {
+    min-height: 48vh;
+}
+
 .customPencilIcon {
    margin-left: 8px;
    color :grey; 
@@ -1310,4 +1402,11 @@ strong {
 
 .customPencilIcon:hover {
     color: #166bbf;
+}
+#inner-tab-example-tab-custom {
+    cursor: pointer; 
+}
+#configureGridId {
+    height: auto !important;
+    min-height: auto !important;
 }

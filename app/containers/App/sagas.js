@@ -13,7 +13,7 @@ import {
 } from '../App/constants';
 
 export function* getData() {
-  const requestURL = `${SERVER_URL + EntityURLs.QUOTE}`;
+  const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/EditQuote`}`;
   // const requestURL = 'http://192.168.101.162:3000/api/products';
   try {
     // Call our request helper (see 'utils/request') let repos = yield call(request,

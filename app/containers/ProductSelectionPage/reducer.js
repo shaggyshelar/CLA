@@ -39,8 +39,8 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_PRODUCTS_DATA_SUCCESS:
       return state
-        .set('products', action.products)
-        .set('searchedProducts', action.products)
+        .set('products', action.products.products)
+        .set('searchedProducts', action.products.products)
         .set('loading', false);
     case LOAD_DATA_ERROR:
       return state
