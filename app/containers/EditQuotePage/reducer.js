@@ -31,11 +31,6 @@ function editQuoteReducer(state = initialState, action) {
         action.customSegments.forEach((item) => {
           const rec = item;
           rec.id = (Math.random() * 100000).toString();
-          // rec.startDate = item.startDate;
-          // rec.endDate = item.endDate;
-          // TODO : Need to update
-          rec.startDate = '2017-08-23T06:30:00.000Z';
-          rec.endDate = '2017-08-24T06:30:00.000Z';
           rec.isSelected = false;
           customSegments.push(rec);
         }, this);

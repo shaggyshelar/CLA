@@ -86,6 +86,12 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     data.QuaterlyLines = data.QuaterlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Quaterly' } }));
     return data;
   }
+  renderButton() {
+    return (<div>
+      <span>Custom</span>
+      <Glyphicon className="customPencilIcon" glyph="pencil" onClick={this.showCustomModal} />
+    </div>);
+  }
   render() {
     const data = this.renderSegmentData();
     this.state.data = data;
@@ -99,17 +105,15 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     } else if (data.YearlyLines.length > 0) {
       selected = 'yearly';
     }
+
     return (
       <div className="qoute-container segmented">
         <Tabs animation={false} defaultActiveKey={1} id="noanim-tab-example">
           <Tab unmountOnExit eventKey={1} title={this.context.intl.formatMessage({ ...messages.segment })}>
-            { data.CustomLines.length > 0 ?
-              <Button onClick={this.showCustomModal} >Custom <Glyphicon glyph="pencil" /></Button>
-            : ''
-          }
+
             <Tabs activeKey={this.state.selectedTab === '' ? selected : this.state.selectedTab} onSelect={this.selectTab} animation={false} id="inner-tab-example">
               { data.CustomLines.length > 0 ?
-                <Tab unmountOnExit eventKey={'custom'} tabClassName={'custom'} title={this.context.intl.formatMessage({ ...messages.custom })}>
+                <Tab unmountOnExit eventKey={'custom'} tabClassName={'custom'} title={this.renderButton()}>
                   <SegmentedEditQuoteGrid
                     data={data.CustomLines}
                     cloneLine={this.props.cloneLine}

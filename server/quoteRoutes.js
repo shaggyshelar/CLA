@@ -1973,11 +1973,12 @@ quoteRouter.get('/', (req, res) => {
             columns: [
               {
                 name: 'Custom',
+                isDefault: true,
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
-                startDate: 'Date',
-                endDate: 'Date',
+                startDate: new Date().toISOString(),
+                endDate: new Date().toISOString(),
                 additionalDiscount: {
                   value: 123,
                   isEditable: true,
@@ -2001,11 +2002,12 @@ quoteRouter.get('/', (req, res) => {
               },
               {
                 name: 'Custom 1',
+                isDefault: false,
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
-                startDate: 'Date',
-                endDate: 'Date',
+                startDate: new Date().toISOString(),
+                endDate: new Date().toISOString(),
                 additionalDiscount: {
                   value: 123,
                   isEditable: true,
