@@ -52,12 +52,12 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_SEARCH_DATA_SUCCESS:
       return state
-        .set('searchedProducts', action.searchedProducts)
+        .set('searchedProducts', action.searchedProducts.products)
         .set('loading', false);
     case LOAD_SEARCH_BTN_DATA_SUCCESS:
       return state
         .set('searchedProducts', [])
-        .set('products', action.searchedProducts)
+        .set('products', action.searchedProducts.products)
         .set('loading', false);
     case LOAD_SEARCH_ITEM_SELECTED: {
       const searchedProducts = state.get('searchedProducts');

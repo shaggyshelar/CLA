@@ -31,7 +31,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
       netAmount: 15000,
       customerAmount: 123,
       paymentTerms: 123,
-      priceBookId: '',
+      priceBookId: '123',
       linesGrouped: true,
       expirationDate: 'Date',
       currency: '₹',

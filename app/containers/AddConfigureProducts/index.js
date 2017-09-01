@@ -15,86 +15,8 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
     super(props);
     this.state = {
       selectedProducts: [],
-      products: [
-        {
-          id: 123,
-          code: 'P121',
-          name: 'ABCD',
-          featureId: 123,
-          categoryId: 123,
-              // categoryId: null,
-          isDependent: true,
-          isSelected: true,
-          isRequired: true,
-          optionSelectionMethod: 123,
-          optionLayout: 'wizard/section/tab',
-          quantity: {
-            value: 123,
-            isEditable: true,
-            isVisible: true,
-            dataType: 'text/select/textarea/inputSelect',
-            selectValues: [
-              {
-                id: 123,
-                value: ':List',
-                isSelected: true,
-              },
-            ],
-          },
-          listPrice: {
-            value: 123,
-            isEditable: true,
-            isVisible: true,
-            dataType: 'text/select/textarea/inputSelect',
-            selectValues: [
-              {
-                id: 123,
-                value: ':List',
-                isSelected: true,
-              },
-            ],
-          },
-        },
-        {
-          id: 234,
-          code: 'P122',
-          name: 'EFGH',
-          featureId: 123,
-          categoryId: 456,
-              // categoryId: null,
-          isDependent: true,
-          optionSelectionMethod: 456,
-          optionLayout: 'wizard/section/tab',
-          quantity: {
-            value: 565,
-            isEditable: true,
-            isVisible: true,
-            dataType: 'text/select/textarea/inputSelect',
-            selectValues: [
-              {
-                id: 123,
-                value: ':List',
-                isSelected: true,
-              },
-            ],
-          },
-          listPrice: {
-            value: 654,
-            isEditable: true,
-            isVisible: true,
-            dataType: 'text/select/textarea/inputSelect',
-            selectValues: [
-              {
-                id: 554,
-                value: ':List',
-                isSelected: true,
-              },
-            ],
-          },
-        },
-      ],
+      products: [],
     };
-
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.checkAll = this.checkAll.bind(this);

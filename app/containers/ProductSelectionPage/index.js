@@ -33,7 +33,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   componentWillMount() {
-    this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.priceBookId);
+    this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId);
   }
 
   onSearch(value) {
@@ -42,7 +42,14 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         selectedProducts: [],
       });
     }
-    this.props.onSearch(value);
+    const searchObj = {
+      searchValue: value,
+      fromSearch: true,
+      groupId: this.props.location.query.groupId,
+      priceBookId: this.props.location.query.PriceBookId,
+    };
+    console.log('onSearchsearchObj', searchObj);
+    this.props.onSearch(searchObj);
   }
 
   onSearchItemSelected(value) {
@@ -60,7 +67,14 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         selectedProducts: [],
       });
     }
-    this.props.searchInputChange(value);
+    const searchObj = {
+      searchValue: value,
+      fromSearch: false,
+      groupId: this.props.location.query.groupId,
+      priceBookId: this.props.location.query.PriceBookId,
+    };
+    console.log('onSearchonSearchInputChange', searchObj);
+    this.props.searchInputChange(searchObj);
   }
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
@@ -226,8 +240,8 @@ function mapDispatchToProps(dispatch) {
     searchInputChange: (value) => {
       dispatch(loadSearchData(value, false));
     },
-    onSearch: (value) => {
-      dispatch(loadSearchData(value, true));
+    onSearch: (searchObj) => {
+      dispatch(loadSearchData(searchObj));
     },
     onSearchItemSelected: (value) => {
       dispatch(onSearchItemSelected(value));
