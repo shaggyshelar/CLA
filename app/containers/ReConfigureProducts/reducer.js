@@ -195,6 +195,7 @@ function reConfigureProductsReducer(state = initialState, action) {
               product.tempId = product.id;
               product.id = parseInt(Math.random() * 100000, 0);
               product.isAdded = true;
+              product.isRequired = false;
               product.categoryId = action.productObj.categoryId;
               product.featureId = action.productObj.featureId;
               feature.products.push(product);
@@ -202,12 +203,13 @@ function reConfigureProductsReducer(state = initialState, action) {
           }
         }
       } else if (reConfigureProductData.features.length > 0) {
-        const feature = _.find(reConfigureProductData.features, { id: action.product.featureId });
+        const feature = _.find(reConfigureProductData.features, { id: action.productObj.featureId });
         if (feature) {
           action.productObj.selectedProducts.forEach((currentProduct) => {
             const product = currentProduct;
             product.tempId = product.id;
             product.isAdded = true;
+            product.isRequired = false;
             product.id = parseInt(Math.random() * 100000, 0);
             product.categoryId = action.productObj.categoryId;
             product.featureId = action.productObj.featureId;

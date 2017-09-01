@@ -1302,3 +1302,12 @@ strong {
 #datePicker .input-group {
     border: none;
 }
+
+.customPencilIcon {
+   margin-left: 8px;
+   color :grey; 
+}
+
+.customPencilIcon:hover {
+    color: #166bbf;
+}

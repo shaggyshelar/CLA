@@ -48,6 +48,7 @@
   "app.components.ProductSelectionGrid.productName": "Nom du produit",
   "app.components.ProductSelectionHeaderCard.header": "",
   "app.components.ReconfigureFeaturePanel.header": "",
+  "app.components.ReconfigureGrid.deleteLine": "Supprimer la ligne",
   "app.components.ReconfigureGrid.header": "",
   "app.components.ReconfigureGrid.productCode": "Code produit",
   "app.components.ReconfigureGrid.productDescription": "Description du produit",

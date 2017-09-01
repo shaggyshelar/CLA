@@ -30,4 +30,8 @@ export default defineMessages({
     id: 'app.components.ReconfigureGrid.unitPrice',
     defaultMessage: 'Unit Price',
   },
+  deleteLine: {
+    id: 'app.components.ReconfigureGrid.deleteLine',
+    defaultMessage: 'Delete Line',
+  },
 });

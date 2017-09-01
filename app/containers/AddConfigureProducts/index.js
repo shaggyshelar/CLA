@@ -123,12 +123,11 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
       productObj.featureId = parseInt(params[0], 0);
       productObj.categoryId = parseInt(params[1], 0);
     }
-
+    this.state.selectedProducts = _.uniq(this.state.selectedProducts);
     this.state.selectedProducts.forEach((currentProductId) => {
       const productIndex = _.findIndex(products, { id: parseInt(currentProductId, 0) });
       productObj.selectedProducts.push(products[productIndex]);
     }, this);
-
     this.props.addOptions(productObj);
     browserHistory.push('/reconfigureproducts');
   }
