@@ -9,8 +9,8 @@ productRouter.get('/', (req, res) => {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
 
-  res.json(
-    [
+  res.json({
+    products: [
       {
         id: '123',
         code: 'P121',
@@ -278,7 +278,9 @@ productRouter.get('/', (req, res) => {
           ],
         },
       },
-    ]
+    ],
+    config: {},
+  }
   );
 });
 // A POST to the root of a resource should create a new object
