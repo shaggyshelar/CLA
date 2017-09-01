@@ -60,15 +60,13 @@ function appReducer(state = initialState, action) {
       return state.set('loading', true)
         .set('error', false);
     case LOAD_DATA_SUCCESS:
-      toast.success(' Data Loaded !', {
-        position: toast.POSITION.TOP_CENTER,
-      });
       return state
         .set('data', fromJS(action.data.quote))
         .set('loading', false);
     case LOAD_DATA_ERROR:
-      toast.error('Error Loading Data!', {
+      toast.error('Server connection problem ! Please try again later', {
         position: toast.POSITION.TOP_CENTER,
+        autoClose: 500000,
       });
       return state
         .set('error', action.error)
