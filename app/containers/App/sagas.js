@@ -12,8 +12,8 @@ import {
   QUICK_SAVE_QUOTES,
 } from '../App/constants';
 
-export function* getData() {
-  const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/EditQuote`}`;
+export function* getData(action) {
+  const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/EditQuote?QuoteId=${action.quoteId}`}`;
   // const requestURL = 'http://192.168.101.162:3000/api/products';
   try {
     // Call our request helper (see 'utils/request') let repos = yield call(request,

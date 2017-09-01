@@ -3,7 +3,7 @@ const express = require('express');
 // Create the express router object for Photos
 const productRouter = express.Router();
 // A GET to the root of a resource returns a list of that resource
-productRouter.get('/', (req, res) => {
+productRouter.get('/GetProducts', (req, res) => {
   // res.json({ FirstName: 'Sagar122', LastName: 'Shelar444' });
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');

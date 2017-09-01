@@ -39,7 +39,7 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
           {this.props.grouped ?
             ''
             :
-            <Button title={this.context.intl.formatMessage({ ...messages.addProducts })} className="margin" onClick={() => { browserHistory.push('/ProductSelection'); }}><FormattedMessage {...messages.addProducts} /></Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.addProducts })} className="margin" onClick={() => { browserHistory.push(`/ProductSelection?PriceBookId=${this.props.data.priceBookId}`); }}><FormattedMessage {...messages.addProducts} /></Button>
           }
           {(!this.props.grouped && this.props.data.groups.length === 0) ?
             <Button title={this.context.intl.formatMessage({ ...messages.addGroup })} className="margin" onClick={this.props.group}><FormattedMessage {...messages.addGroup} /></Button>

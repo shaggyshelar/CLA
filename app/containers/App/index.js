@@ -16,8 +16,16 @@ export class App extends React.Component { // eslint-disable-line react/prefer-s
     this.languageChange = this.languageChange.bind(this);
   }
   componentWillMount() {
-    this.props.getAllData();
-    // this.props.getXrmData();
+    let quoteId = '';
+    if (process.env.NODE_ENV === 'production') {
+      if (window.parent.Xrm !== undefined) {
+        quoteId = window.parent.Xrm.Page.data.entity.getId().replace('{', '').replace('}', '');
+      }
+    }
+    if (process.env.NODE_ENV === 'development') {
+      quoteId = 'EE8EAC6F-0F78-E711-811F-C4346BDC0E01';
+    }
+    this.props.getAllData(quoteId);
   }
   languageChange(e) {
     this.props.changeLocale(e.target.value);
@@ -66,8 +74,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    getAllData: () => {
-      dispatch(loadData());
+    getAllData: (quoteId) => {
+      dispatch(loadData(quoteId));
     },
     changeLocale: (locale) => {
       dispatch(changeLocale(locale));
