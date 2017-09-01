@@ -29,9 +29,11 @@ export function showFilteredData(data) {
   };
 }
 
-export function loadProductsData() {
+export function loadProductsData(groupId, priceBookId) {
   return {
     type: LOAD_PRODUCTS_DATA,
+    groupId,
+    priceBookId,
   };
 }
 

@@ -7,10 +7,10 @@ import { productsDataLoaded, dataLoadingError, searchedDataLoaded, searchBtnData
 // import { LOAD_REPOS } from 'containers/App/constants';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 // Individual exports for testing
-export function* getProductsSaga() {
+export function* getProductsSaga(action) {
   // See example in containers/HomePage/sagas.js
   try {
-    const requestURL = `${SERVER_URL + EntityURLs.PRODUCTS}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${action.groupId}&PriceListId=${action.priceBookId}`}`;
     const repos = yield call(request, requestURL);
     yield put(productsDataLoaded(repos));
   } catch (error) {

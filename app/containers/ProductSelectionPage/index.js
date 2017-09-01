@@ -33,7 +33,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   componentWillMount() {
-    this.props.getProductsData();
+    this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.priceBookId);
   }
 
   onSearch(value) {

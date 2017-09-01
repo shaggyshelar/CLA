@@ -17,17 +17,17 @@ if (process.env.NODE_ENV === 'production') {
   // serverUrl = window.parent.Xrm.Page.context.getClientUrl();
   serverUrl = 'http://192.168.101.162:3000/api';
   entityUrls = {
-    PRODUCTS: '/products',
-    QUOTE: '/quote',
+    PRODUCTS: '/Product',
+    QUOTE: '/QuoteProduct',
     COUNTRIES: '/countries',
   };
 }
 
 if (process.env.NODE_ENV === 'development') {
-  serverUrl = 'http://192.168.101.162:3000/api';
+  serverUrl = 'http://192.168.100.130:1825/api';
   entityUrls = {
-    PRODUCTS: '/products',
-    QUOTE: '/quote',
+    PRODUCTS: '/Product',
+    QUOTE: '/QuoteProduct',
     COUNTRIES: '/countries',
   };
 }

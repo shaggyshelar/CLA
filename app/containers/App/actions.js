@@ -54,9 +54,10 @@ export function loadXrmData() {
   };
 }
 
-export function loadData() {
+export function loadData(quoteId) {
   return {
     type: LOAD_DATA,
+    quoteId,
   };
 }
 export function cloneLine(data) {
