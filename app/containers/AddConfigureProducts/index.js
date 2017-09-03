@@ -24,27 +24,16 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   componentDidMount() {
-    let featureId = '';
-    const params = _.split(this.props.location.query.ids, '/');
-    if (params.length > 0) {
-      featureId = parseInt(params[0], 0);
-    }
-    this.props.getProductsData(featureId);
+    this.props.getProductsData(parseInt(this.props.location.query.featureId, 0));
   }
 
   addOptions() {
-    const params = _.split(this.props.location.query.ids, '/');
     const products = this.props.productsData.toJS().products ? this.props.productsData.toJS().products : [];
     const productObj = {
       selectedProducts: [],
+      featureId: parseInt(this.props.location.query.featureId, 0),
+      categoryId: parseInt(this.props.location.query.categoryId, 0),
     };
-
-    if (params.length === 1) {
-      productObj.featureId = parseInt(params[0], 0);
-    } else if (params.length === 2) {
-      productObj.featureId = parseInt(params[0], 0);
-      productObj.categoryId = parseInt(params[1], 0);
-    }
     this.state.selectedProducts = _.uniq(this.state.selectedProducts);
     this.state.selectedProducts.forEach((currentProductId) => {
       const productIndex = _.findIndex(products, { id: parseInt(currentProductId, 0) });
@@ -86,13 +75,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   render() {
-    let quoteName = '';
-    const params = _.split(this.props.location.query.ids, '/');
-    if (params.length === 2) {
-      quoteName = params[1];
-    } else if (params.length === 3) {
-      quoteName = params[2];
-    }
+    const quoteName = this.props.location.query.quoteName;
     return (
       <div>
         <div

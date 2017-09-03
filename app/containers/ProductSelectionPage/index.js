@@ -48,7 +48,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       groupId: this.props.location.query.groupId,
       priceBookId: this.props.location.query.PriceBookId,
     };
-    console.log('onSearchsearchObj', searchObj);
     this.props.onSearch(searchObj);
   }
 
@@ -73,7 +72,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       groupId: this.props.location.query.groupId,
       priceBookId: this.props.location.query.PriceBookId,
     };
-    console.log('onSearchonSearchInputChange', searchObj);
     this.props.searchInputChange(searchObj);
   }
   checkAll(e) {
@@ -149,12 +147,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
 
   render() {
     let data = [];
-    if (_.isArray(this.props.searchedProducts) && this.props.searchedProducts.length > 0) {
-      data = this.props.searchedProducts;
-    } else if (_.isArray(this.props.products)) {
-      data = this.props.products;
-    }
-
+    data = this.props.searchedProducts.toJS();
     const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
@@ -185,7 +178,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         </div>
         <div>
           <ProductSelectionGrid
-            products={this.props.products}
+            products={this.props.products.toJS()}
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             toggleCheckboxChange={this.toggleCheckboxChange}
@@ -231,14 +224,14 @@ function mapDispatchToProps(dispatch) {
     toggleFilter: (value) => {
       dispatch(showFilteredData(value));
     },
-    getProductsData: () => {
-      dispatch(loadProductsData());
+    getProductsData: (groupId, priceBookId) => {
+      dispatch(loadProductsData(groupId, priceBookId));
     },
     addProductsToQuote: (value) => {
       dispatch(addProducts(value));
     },
-    searchInputChange: (value) => {
-      dispatch(loadSearchData(value, false));
+    searchInputChange: (searchObj) => {
+      dispatch(loadSearchData(searchObj));
     },
     onSearch: (searchObj) => {
       dispatch(loadSearchData(searchObj));

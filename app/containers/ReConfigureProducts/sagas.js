@@ -18,17 +18,16 @@ export function* getProductBundleSaga(action) {
 
 export function* saveProducts(data) {
   try {
-    // const requestURL = 'http://localhost:3000/v1/product/save/1';
-
-    // const options = {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // };
-    // const products = yield call(request, requestURL, options);
-    yield put(configuredProductsSaveSuccess(data));
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/SaveReconfigureProduct`}`;
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    const products = yield call(request, requestURL, options);
+    yield put(configuredProductsSaveSuccess(products));
   } catch (err) {
     yield put(dataLoadingError(err));
   }

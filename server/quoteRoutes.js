@@ -2519,6 +2519,10 @@ quoteRouter.post('/SavePriceBook', (req, res) => {
   }
 });
 
+quoteRouter.post('/SaveCustomSegments', (req, res) => {
+  res.json(req.body);
+});
+
 // /v1/quote/save/{QuoteID}
 quoteRouter.post('/save/:QuoteID', (req, res) => {
   // req.params.QuoteID;

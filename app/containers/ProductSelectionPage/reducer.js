@@ -37,11 +37,12 @@ function productSelectionPageReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false);
-    case LOAD_PRODUCTS_DATA_SUCCESS:
+    case LOAD_PRODUCTS_DATA_SUCCESS: {
       return state
-        .set('products', action.products.products)
-        .set('searchedProducts', action.products.products)
+        .set('products', fromJS(action.products.products))
+        .set('searchedProducts', fromJS(action.products.products))
         .set('loading', false);
+    }
     case LOAD_DATA_ERROR:
       return state
         .set('error', action.error)
@@ -52,25 +53,28 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_SEARCH_DATA_SUCCESS:
       return state
-        .set('searchedProducts', action.searchedProducts.products)
+        .set('searchedProducts', fromJS(action.searchedProducts.products))
         .set('loading', false);
-    case LOAD_SEARCH_BTN_DATA_SUCCESS:
+    case LOAD_SEARCH_BTN_DATA_SUCCESS: {
       return state
-        .set('searchedProducts', [])
-        .set('products', action.searchedProducts.products)
+        .set('searchedProducts', fromJS(action.searchedProducts.products))
+        .set('products', fromJS(action.searchedProducts.products))
         .set('loading', false);
+    }
     case LOAD_SEARCH_ITEM_SELECTED: {
-      const searchedProducts = state.get('searchedProducts');
+      const searchedProducts = state.get('searchedProducts').toJS();
       let selectedProducts = [];
       if (searchedProducts && searchedProducts.length > 0) {
         const product = _.find(searchedProducts, { name: action.name });
-        selectedProducts.push(product);
+        if (product) {
+          selectedProducts.push(product);
+        }
       } else {
-        selectedProducts = state.get('products');
+        selectedProducts = state.get('products').toJS();
       }
       return state
-        .set('searchedProducts', [])
-        .set('products', selectedProducts)
+        .set('searchedProducts', fromJS(selectedProducts))
+        .set('products', fromJS(selectedProducts))
         .set('loading', false);
     }
 
