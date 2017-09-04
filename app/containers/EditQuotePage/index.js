@@ -32,7 +32,7 @@ import { cloneLine,
   updateGroupValue,
   updateSelect,
   updateSelectBundle,
-
+  saveAppCustomSegmentData,
   segment,
  } from '../App/actions';
 
@@ -212,7 +212,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   saveCustomSegmentData(segmentData) {
     this.props.saveCustomSegmentData(segmentData);
-    browserHistory.push('/EditQuote');
+    this.props.saveAppCustomSegmentData();
   }
   quickSaveQuotes() {
     this.props.quickSaveQuote(this.props.data.toJS());
@@ -385,6 +385,7 @@ EditQuotePage.propTypes = {
   checkCustomSegmentData: PropTypes.func,
   customSegments: PropTypes.any,
   clearCustomSegmentsData: PropTypes.func,
+  saveAppCustomSegmentData: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -486,6 +487,9 @@ function mapDispatchToProps(dispatch) {
     },
     clearCustomSegmentsData: (id) => {
       dispatch(clearCustomSegmentsData(id));
+    },
+    saveAppCustomSegmentData: () => {
+      dispatch(saveAppCustomSegmentData());
     },
   };
 }

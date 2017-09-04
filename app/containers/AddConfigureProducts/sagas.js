@@ -7,7 +7,7 @@ import { loadProductsDataSuccess, dataLoadingError } from './actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
 export function* getProductsSaga(action) {
-  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/AddOptions/${action.featureId}`}`;
+  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/AddOptions?FeatureId=${action.featureId}`}`;
   try {
     const repos = yield call(request, requestURL);
     yield put(loadProductsDataSuccess(repos));

@@ -313,7 +313,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           style={{
             display: 'inline-flex',
           }}
-          selectedLine={this.props.data[0]}
+          customLines={this.props.data}
           loadCustomSegmentsData={this.props.loadCustomSegmentsData}
           addCustomSegmentData={this.props.addCustomSegmentData}
           deleteCustomSegmentData={this.props.deleteCustomSegmentData}
@@ -322,6 +322,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
           checkCustomSegmentData={this.props.checkCustomSegmentData}
           customSegments={this.props.customSegments}
+          quoteData={this.props.quoteData}
         />
         <div className="sub-footer-seg upper-case">
           {total}
