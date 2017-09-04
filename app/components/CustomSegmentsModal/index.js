@@ -137,7 +137,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
       <Modal
         show={this.props.showModal} onHide={this.props.onHide}
         style={{ display: 'inline-flex' }}
-        className="customModal"
+        className="customModal customSegModal"
       >
         <Modal.Dialog >
           <Modal.Header closeButton>

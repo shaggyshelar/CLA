@@ -156,6 +156,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
           d[i].click();
         }
       }
+      const d2 = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
+      if (d2.checked) {
+        d2.checked = false;
+      }
     }
   }
 

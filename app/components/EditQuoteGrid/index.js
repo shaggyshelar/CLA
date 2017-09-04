@@ -345,13 +345,9 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           value={this.state.value}
           selectedLine={this.state.selectedLine}
         />
-        {total > 0 ?
-          <div className="sub-footer upper-case">
-            {this.context.intl.formatMessage({ ...messages.subTotal })} : {this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2 })}
-          </div>
-              :
-          <div className="sub-footer"></div>
-        }
+        <div className="sub-footer upper-case">
+          {this.context.intl.formatMessage({ ...messages.subTotal })} : {this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2 })}
+        </div>
 
       </div>
     );
