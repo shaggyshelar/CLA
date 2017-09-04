@@ -1438,3 +1438,4 @@ strong {
 body.modal-open {
     overflow: hidden!important;
 }
+.customSegModal{    max-height: calc(100% - 100px)!important;    position: fixed!important;    top: 62%!important;    left: 50%!important;    transform: translate(-50%, -50%)!important;}
