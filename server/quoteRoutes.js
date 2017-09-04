@@ -31,7 +31,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
       netAmount: 15000,
       customerAmount: 123,
       paymentTerms: 123,
-      priceBookId: '',
+      priceBookId: '123',
       linesGrouped: true,
       expirationDate: 'Date',
       currency: '₹',
@@ -2517,6 +2517,10 @@ quoteRouter.post('/SavePriceBook', (req, res) => {
       errorMessage: 'validation error',
     });
   }
+});
+
+quoteRouter.post('/SaveCustomSegments', (req, res) => {
+  res.json(req.body);
 });
 
 // /v1/quote/save/{QuoteID}

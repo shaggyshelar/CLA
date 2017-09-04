@@ -51,11 +51,7 @@ export function dataLoadingError(error) {
   };
 }
 
-export function loadSearchData(searchValue, fromSearch) {
-  const searchObj = {
-    searchValue,
-    fromSearch,
-  };
+export function loadSearchData(searchObj) {
   return {
     type: LOAD_SEARCH_DATA,
     searchObj,

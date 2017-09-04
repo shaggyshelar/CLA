@@ -251,6 +251,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               checkCustomSegmentData={this.props.checkCustomSegmentData}
               customSegments={this.props.customSegments}
               clearCustomSegmentsData={this.props.clearCustomSegmentsData}
+              quoteData={this.props.quoteData}
             />
           :
               <EditQuoteGrid
@@ -266,6 +267,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 updateBundle={this.props.updateBundle}
                 updateSelect={this.props.updateSelect}
                 updateSelectBundle={this.props.updateSelectBundle}
+                quoteData={this.props.quoteData}
               />
           }
         </div>
@@ -308,6 +310,7 @@ GroupQuote.propTypes = {
   checkCustomSegmentData: PropTypes.func,
   customSegments: PropTypes.any,
   clearCustomSegmentsData: PropTypes.any,
+  quoteData: PropTypes.any,
 };
 const mapStateToProps = createStructuredSelector({
 });

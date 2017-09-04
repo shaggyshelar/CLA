@@ -33,7 +33,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   componentWillMount() {
-    this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.priceBookId);
+    this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId);
   }
 
   onSearch(value) {
@@ -42,7 +42,13 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         selectedProducts: [],
       });
     }
-    this.props.onSearch(value);
+    const searchObj = {
+      searchValue: value,
+      fromSearch: true,
+      groupId: this.props.location.query.groupId,
+      priceBookId: this.props.location.query.PriceBookId,
+    };
+    this.props.onSearch(searchObj);
   }
 
   onSearchItemSelected(value) {
@@ -60,7 +66,13 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         selectedProducts: [],
       });
     }
-    this.props.searchInputChange(value);
+    const searchObj = {
+      searchValue: value,
+      fromSearch: false,
+      groupId: this.props.location.query.groupId,
+      priceBookId: this.props.location.query.PriceBookId,
+    };
+    this.props.searchInputChange(searchObj);
   }
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
@@ -135,12 +147,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
 
   render() {
     let data = [];
-    if (_.isArray(this.props.searchedProducts) && this.props.searchedProducts.length > 0) {
-      data = this.props.searchedProducts;
-    } else if (_.isArray(this.props.products)) {
-      data = this.props.products;
-    }
-
+    data = this.props.searchedProducts.toJS();
     const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
@@ -171,7 +178,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         </div>
         <div>
           <ProductSelectionGrid
-            products={this.props.products}
+            products={this.props.products.toJS()}
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             toggleCheckboxChange={this.toggleCheckboxChange}
@@ -217,17 +224,17 @@ function mapDispatchToProps(dispatch) {
     toggleFilter: (value) => {
       dispatch(showFilteredData(value));
     },
-    getProductsData: () => {
-      dispatch(loadProductsData());
+    getProductsData: (groupId, priceBookId) => {
+      dispatch(loadProductsData(groupId, priceBookId));
     },
     addProductsToQuote: (value) => {
       dispatch(addProducts(value));
     },
-    searchInputChange: (value) => {
-      dispatch(loadSearchData(value, false));
+    searchInputChange: (searchObj) => {
+      dispatch(loadSearchData(searchObj));
     },
-    onSearch: (value) => {
-      dispatch(loadSearchData(value, true));
+    onSearch: (searchObj) => {
+      dispatch(loadSearchData(searchObj));
     },
     onSearchItemSelected: (value) => {
       dispatch(onSearchItemSelected(value));
