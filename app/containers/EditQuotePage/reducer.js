@@ -16,11 +16,13 @@ import {
   CHECK_CUSTOM_SEGMENT_DATA,
   CLEAR_CUSTOM_SEGMENT_DATA,
   SAVE_CUSTOM_SEGMENT_DATA,
+  TOGGLE_CHECKALL,
  } from './constants';
 
 const initialState = fromJS({
   customSegments: [],
   updatedSegments: [],
+  isCheckAll: false,
 });
 
 function editQuoteReducer(state = initialState, action) {
@@ -54,9 +56,14 @@ function editQuoteReducer(state = initialState, action) {
     }
     case DELETE_CUSTOM_SEGMENT_DATA: {
       const customSegments = state.get('customSegments').toJS();
+      let isCheckAll = state.get('isCheckAll');
       const updatedSegments = _.filter(customSegments, { isSelected: false });
+      if (updatedSegments.length === 1) {
+        isCheckAll = false;
+      }
       return state
-        .set('customSegments', fromJS(updatedSegments));
+        .set('customSegments', fromJS(updatedSegments))
+        .set('isCheckAll', isCheckAll);
     }
     case CHECK_CUSTOM_SEGMENT_DATA: {
       const customSegments = state.get('customSegments').toJS();
@@ -98,6 +105,10 @@ function editQuoteReducer(state = initialState, action) {
       const updatedSegments = state.get('updatedSegments').toJS();
       return state
         .set('customSegments', fromJS(updatedSegments));
+    }
+    case TOGGLE_CHECKALL : {
+      return state
+        .set('isCheckAll', action.isCheckAll);
     }
     default:
       return state;

@@ -32,6 +32,12 @@ const getCustomSegments = () =>
   (homeState) => homeState.get('customSegments')
 );
 
+const getCheckAll = () =>
+ createSelector(
+  selectEditQuoteDomain(),
+  (homeState) => homeState.get('isCheckAll')
+);
+
 export {
   selectEditQuoteDomain,
   makeSelectData,
@@ -40,4 +46,5 @@ export {
   updateProductState,
   global,
   getCustomSegments,
+  getCheckAll,
 };

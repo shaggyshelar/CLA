@@ -99,6 +99,7 @@ import {
   CHECK_ALL_CUSTOM_SEGMENT_DATA,
   CHECK_CUSTOM_SEGMENT_DATA,
   CLEAR_CUSTOM_SEGMENT_DATA,
+  TOGGLE_CHECKALL,
 } from './constants';
 
 export function defaultAction() {
@@ -157,5 +158,12 @@ export function checkCustomSegmentData(id) {
 export function clearCustomSegmentsData() {
   return {
     type: CLEAR_CUSTOM_SEGMENT_DATA,
+  };
+}
+
+export function toggleCheckAll(isCheckAll) {
+  return {
+    type: TOGGLE_CHECKALL,
+    isCheckAll,
   };
 }

@@ -323,6 +323,8 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           checkCustomSegmentData={this.props.checkCustomSegmentData}
           customSegments={this.props.customSegments}
           quoteData={this.props.quoteData}
+          toggleCheckAll={this.props.toggleCheckAll}
+          isCheckAll={this.props.isCheckAll}
         />
         <div className="sub-footer-seg upper-case">
           {total}
@@ -356,6 +358,8 @@ SegmentedEditQuoteGrid.propTypes = {
   customSegments: PropTypes.any,
   handleCustomModalToggle: PropTypes.func,
   quoteData: PropTypes.any,
+  toggleCheckAll: PropTypes.func,
+  isCheckAll: PropTypes.any,
 };
 
 export default SegmentedEditQuoteGrid;
