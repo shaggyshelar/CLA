@@ -10,7 +10,7 @@ import { SERVER_URL, EntityURLs } from '../App/constants';
 export function* getProductsSaga(action) {
   // See example in containers/HomePage/sagas.js
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${action.groupId}&PriceListId=${action.priceBookId}`}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${action.groupId}&PriceListId=C0FE4869-0F78-E711-811F-C4346BDC0E01`}`;
     const repos = yield call(request, requestURL);
     yield put(productsDataLoaded(repos));
   } catch (error) {

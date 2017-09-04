@@ -146,7 +146,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.recongifure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
     // const bundle = cellInfo.original.isBundled ? <a title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : <span className="blank"></span>;
     // const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" style={{ color: '#449D44' }} /></a> : <span className="blank"></span>;
-    const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" style={{ color: '#31B0D5' }} /></a> : <span className="blank"></span>;
+    const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
     return (
       <div className="actionItems" >
         {reconfigure}
@@ -266,7 +266,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'code',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <span className="pro-name">{cellInfo.original.code}</span></div> : <span className="pro-name">{cellInfo.original.code}</span>),
+        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>),
       },
 
       {
@@ -274,7 +274,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
+        Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.quantity })}>{this.context.intl.formatMessage({ ...messages.quantity })}</span>,

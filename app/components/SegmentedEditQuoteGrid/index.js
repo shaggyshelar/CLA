@@ -221,7 +221,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <span className="pro-name">{cellInfo.original.code}</span></div> : <span className="pro-name">{cellInfo.original.code}</span>),
+        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span title={cellInfo.original.code} className="pro-name">{cellInfo.original.code}</span>),
       },
 
       {
@@ -230,7 +230,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
+        Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       }];
     const data = Object.assign({}, this.props.data[0]);
     data.segmentData.columns.map((i, index) => (
