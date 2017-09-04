@@ -15,86 +15,8 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
     super(props);
     this.state = {
       selectedProducts: [],
-      products: [
-        {
-          id: 123,
-          code: 'P121',
-          name: 'ABCD',
-          featureId: 123,
-          categoryId: 123,
-              // categoryId: null,
-          isDependent: true,
-          isSelected: true,
-          isRequired: true,
-          optionSelectionMethod: 123,
-          optionLayout: 'wizard/section/tab',
-          quantity: {
-            value: 123,
-            isEditable: true,
-            isVisible: true,
-            dataType: 'text/select/textarea/inputSelect',
-            selectValues: [
-              {
-                id: 123,
-                value: ':List',
-                isSelected: true,
-              },
-            ],
-          },
-          listPrice: {
-            value: 123,
-            isEditable: true,
-            isVisible: true,
-            dataType: 'text/select/textarea/inputSelect',
-            selectValues: [
-              {
-                id: 123,
-                value: ':List',
-                isSelected: true,
-              },
-            ],
-          },
-        },
-        {
-          id: 234,
-          code: 'P122',
-          name: 'EFGH',
-          featureId: 123,
-          categoryId: 456,
-              // categoryId: null,
-          isDependent: true,
-          optionSelectionMethod: 456,
-          optionLayout: 'wizard/section/tab',
-          quantity: {
-            value: 565,
-            isEditable: true,
-            isVisible: true,
-            dataType: 'text/select/textarea/inputSelect',
-            selectValues: [
-              {
-                id: 123,
-                value: ':List',
-                isSelected: true,
-              },
-            ],
-          },
-          listPrice: {
-            value: 654,
-            isEditable: true,
-            isVisible: true,
-            dataType: 'text/select/textarea/inputSelect',
-            selectValues: [
-              {
-                id: 554,
-                value: ':List',
-                isSelected: true,
-              },
-            ],
-          },
-        },
-      ],
+      products: [],
     };
-
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.checkAll = this.checkAll.bind(this);
@@ -102,27 +24,16 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   componentDidMount() {
-    let featureId = '';
-    const params = _.split(this.props.location.query.ids, '/');
-    if (params.length > 0) {
-      featureId = parseInt(params[0], 0);
-    }
-    this.props.getProductsData(featureId);
+    this.props.getProductsData(parseInt(this.props.location.query.featureId, 0));
   }
 
   addOptions() {
-    const params = _.split(this.props.location.query.ids, '/');
     const products = this.props.productsData.toJS().products ? this.props.productsData.toJS().products : [];
     const productObj = {
       selectedProducts: [],
+      featureId: parseInt(this.props.location.query.featureId, 0),
+      categoryId: parseInt(this.props.location.query.categoryId, 0),
     };
-
-    if (params.length === 1) {
-      productObj.featureId = parseInt(params[0], 0);
-    } else if (params.length === 2) {
-      productObj.featureId = parseInt(params[0], 0);
-      productObj.categoryId = parseInt(params[1], 0);
-    }
     this.state.selectedProducts = _.uniq(this.state.selectedProducts);
     this.state.selectedProducts.forEach((currentProductId) => {
       const productIndex = _.findIndex(products, { id: parseInt(currentProductId, 0) });
@@ -164,13 +75,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   render() {
-    let quoteName = '';
-    const params = _.split(this.props.location.query.ids, '/');
-    if (params.length === 2) {
-      quoteName = params[1];
-    } else if (params.length === 3) {
-      quoteName = params[2];
-    }
+    const quoteName = this.props.location.query.quoteName;
     return (
       <div>
         <div

@@ -218,6 +218,14 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.props.quickSaveQuote(this.props.data.toJS());
   }
   render() {
+    let quoteData = {};
+    const data = this.props.data.toJS();
+    if (data) {
+      quoteData = {
+        id: data.id,
+        priceBookId: data.priceBookId,
+      };
+    }
     if (this.props.loading) {
       return (<div className="loader" style={style}></div>);
     }
@@ -283,6 +291,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               checkCustomSegmentData={this.props.checkCustomSegmentData}
               customSegments={this.props.customSegments}
               clearCustomSegmentsData={this.props.clearCustomSegmentsData}
+              quoteData={quoteData}
             />
           </div>
         :
@@ -314,6 +323,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                 checkCustomSegmentData={this.props.checkCustomSegmentData}
                 customSegments={this.props.customSegments}
                 clearCustomSegmentsData={this.props.clearCustomSegmentsData}
+                quoteData={quoteData}
               />
             :
                 <EditQuoteGrid
@@ -329,6 +339,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                   updateBundle={this.props.updateBundle}
                   updateSelect={this.props.updateSelect}
                   updateSelectBundle={this.props.updateSelectBundle}
+                  quoteData={quoteData}
                 />
             }
           </div>

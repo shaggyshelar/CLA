@@ -139,6 +139,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
                     checkCustomSegmentData={this.props.checkCustomSegmentData}
                     customSegments={this.props.customSegments}
+                    quoteData={this.props.quoteData}
                   />
                 </Tab>
               :
@@ -160,6 +161,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     selectedTab={this.selectTab}
                     updateSegSelect={this.props.updateSegSelect}
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
+                    quoteData={this.props.quoteData}
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
@@ -178,6 +180,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     selectedTab={this.selectTab}
                     updateSegSelect={this.props.updateSegSelect}
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
+                    quoteData={this.props.quoteData}
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
@@ -196,6 +199,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     selectedTab={this.selectTab}
                     updateSegSelect={this.props.updateSegSelect}
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
+                    quoteData={this.props.quoteData}
                   />
                 </Tab> : '' }
             </Tabs>
@@ -214,6 +218,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               updateBundle={this.props.updateBundle}
               updateSelect={this.props.updateSelect}
               updateSelectBundle={this.props.updateSelectBundle}
+              quoteData={this.props.quoteData}
             />
           </Tab>
         </Tabs>
@@ -248,6 +253,7 @@ SegmentedQuote.propTypes = {
   checkCustomSegmentData: PropTypes.func,
   customSegments: PropTypes.any,
   clearCustomSegmentsData: PropTypes.any,
+  quoteData: PropTypes.any,
 };
 SegmentedQuote.contextTypes = {
   intl: React.PropTypes.object.isRequired,

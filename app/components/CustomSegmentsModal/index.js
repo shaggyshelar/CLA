@@ -67,7 +67,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
         const endDate = new Date(customSegments[index].endDate);
         endDate.setDate(endDate.getDate() + 1);
         const startDate = new Date(customSegments[index + 1].startDate);
-        if (endDate.getTime() !== startDate.getTime()) {
+        if (new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate()).getTime() !== new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime()) {
           dateError = true;
           break;
         }
