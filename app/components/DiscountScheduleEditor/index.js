@@ -17,7 +17,7 @@ class DiscountScheduleEditor extends React.Component { // eslint-disable-line re
     let rows = [];
     if (this.props.selectedLine !== undefined) {
       rows = this.props.selectedLine.tiers.map((item, index) => (<tr key={item.id}>
-        <td>{index}</td>
+        <td>{index + 1}</td>
         <td>{item.name}</td>
         <td>{item.lowerBound}</td>
         <td>{item.upperBound}</td>
