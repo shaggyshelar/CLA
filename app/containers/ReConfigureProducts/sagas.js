@@ -7,7 +7,7 @@ import { loadReConfigureProductsDataSuccess, dataLoadingError, configuredProduct
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
 export function* getProductBundleSaga(action) {
-  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/ReconfigureProduct?ProductId=${action.data.id}&PriceBookId=${action.data.priceBookId}&QuoteId=${action.data.quoteId}`}`;
+  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/ReconfigureProduct?ProductId=${action.data.id}&PriceListId=${action.data.priceBookId}&QuoteId=${action.data.quoteId}`}`;
   try {
     const repos = yield call(request, requestURL);
     yield put(loadReConfigureProductsDataSuccess(repos));
@@ -18,7 +18,7 @@ export function* getProductBundleSaga(action) {
 
 export function* saveProducts(data) {
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/SaveReconfigureProduct`}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/SaveConfigurations`}`;
     const options = {
       method: 'POST',
       headers: {

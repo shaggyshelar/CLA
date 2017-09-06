@@ -43,6 +43,8 @@ import {
   UPDATE_GROUP_DATA,
   UPDATE_GROUP_VAL,
   SEGMENT,
+  SAVE_CUSTOM_SEGMENT_DATA_SUCCESS,
+  SAVE_APP_CUSTOM_SEGMENT_DATA,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -252,6 +254,16 @@ function appReducer(state = initialState, action) {
         line[0].isSegmented = action.value;
         return state.setIn(['data', 'lines'], fromJS(lines));
       }
+    case SAVE_APP_CUSTOM_SEGMENT_DATA : {
+      return state.set('loading', true)
+        .set('error', false);
+    }
+    case SAVE_CUSTOM_SEGMENT_DATA_SUCCESS : {
+      return state
+        .set('data', fromJS(action.data.quote))
+        .set('loading', false);
+    }
+
     default:
       return state;
   }

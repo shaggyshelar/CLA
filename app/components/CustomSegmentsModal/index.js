@@ -17,7 +17,6 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     super(props);
     this.state = {
       customSegmentedLines: [],
-      isCheckAll: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.saveCustomSegments = this.saveCustomSegments.bind(this);
@@ -40,8 +39,8 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
   }
 
   toggleCheckAll() {
-    this.state.isCheckAll = !this.state.isCheckAll;
-    this.props.checkAllCustomSegmentData(this.state.isCheckAll);
+    this.props.toggleCheckAll(!this.props.isCheckAll);
+    this.props.checkAllCustomSegmentData(!this.props.isCheckAll);
   }
 
   saveCustomSegments() {
@@ -94,11 +93,27 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      const segment = {
-        type: 'Custom',
-        columns: this.props.customSegments.toJS(),
-      };
-      this.props.saveCustomSegmentData(segment);
+      const customLines = [];
+      const updatedObj = {};
+      const quote = {};
+      quote.id = this.props.quoteData.id;
+      this.props.customLines.forEach((item) => {
+        const line = {
+          id: item.id,
+          productId: item.productId,
+          code: item.code,
+          name: item.name,
+          segmentData: {
+            type: item.type,
+            columns: this.props.customSegments.toJS(),
+          },
+        };
+        customLines.push(line);
+      }, this);
+      quote.lines = customLines;
+      updatedObj.quote = quote;
+      updatedObj.config = {};
+      this.props.saveCustomSegmentData(updatedObj);
     }
   }
 
@@ -114,7 +129,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     let rows = [];
     if (this.props.customSegments !== undefined) {
       rows = this.props.customSegments.toJS().map((item, index) => (<tr key={index}>
-        <td>{!item.isDefault ? <input type="checkbox" className="check checkboxWidth" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check checkboxWidth hideSpan" />}</td>
+        <td>{!item.isDefault ? <input type="checkbox" className="check" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check hideSpan" />}</td>
         <td>
           <FormControl
             type="text"
@@ -149,7 +164,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
               <Table responsive bsClass="modal-table">
                 <thead>
                   <tr>
-                    <th>{<input type="checkbox" className="check checkboxWidth" defaultChecked={this.state.isCheckAll} onChange={this.toggleCheckAll} />}</th>
+                    <th>{<input type="checkbox" className="check checkboxWidth" checked={this.props.isCheckAll} onChange={this.toggleCheckAll} />}</th>
                     <th className="upper-case">{this.context.intl.formatMessage({ ...messages.segmentLabel })}</th>
                     <th className="upper-case">{this.context.intl.formatMessage({ ...messages.startDate })}</th>
                     <th className="upper-case">{this.context.intl.formatMessage({ ...messages.endDate })}</th>
@@ -190,6 +205,10 @@ CustomSegmentsModal.propTypes = {
   checkAllCustomSegmentData: React.PropTypes.func,
   checkCustomSegmentData: React.PropTypes.func,
   customSegments: React.PropTypes.any,
+  customLines: React.PropTypes.any,
+  quoteData: React.PropTypes.any,
+  toggleCheckAll: React.PropTypes.func,
+  isCheckAll: React.PropTypes.any,
 };
 
 export default CustomSegmentsModal;

@@ -70,3 +70,5 @@ export const SEGMENT = 'app/EditQuote/SEGMENT';
 export const DESEGMENT = 'app/EditQuote/DESEGMENT';
 export const UPDATE_SELECT = 'app/EditQuote/UPDATE_SELECT';
 export const UPDATE_SELECT_BUNDLE = 'app/EditQuote/UPDATE_SELECT_BUNDLE';
+export const SAVE_CUSTOM_SEGMENT_DATA_SUCCESS = 'app/EditQuote/SAVE_CUSTOM_SEGMENT_DATA_SUCCESS';
+export const SAVE_APP_CUSTOM_SEGMENT_DATA = 'app/EditQuote/SAVE_APP_CUSTOM_SEGMENT_DATA';

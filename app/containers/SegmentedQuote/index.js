@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
-import { Tabs, Tab, Button, Glyphicon } from 'react-bootstrap/lib';
+import { Tabs, Tab, Glyphicon } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import SegmentedEditQuoteGrid from 'components/SegmentedEditQuoteGrid';
 import makeSelectSegmentedQuote from './selectors';
@@ -50,6 +50,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
       isCustomModalOpen: !this.state.isCustomModalOpen,
     });
     this.props.loadCustomSegmentsData(this.state.data.CustomLines[0].segmentData.columns);
+    this.props.toggleCheckAll(false);
   }
 
   hideCustomModalToggle() {
@@ -140,6 +141,8 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     checkCustomSegmentData={this.props.checkCustomSegmentData}
                     customSegments={this.props.customSegments}
                     quoteData={this.props.quoteData}
+                    toggleCheckAll={this.props.toggleCheckAll}
+                    isCheckAll={this.props.isCheckAll}
                   />
                 </Tab>
               :
@@ -254,6 +257,8 @@ SegmentedQuote.propTypes = {
   customSegments: PropTypes.any,
   clearCustomSegmentsData: PropTypes.any,
   quoteData: PropTypes.any,
+  toggleCheckAll: PropTypes.func,
+  isCheckAll: PropTypes.any,
 };
 SegmentedQuote.contextTypes = {
   intl: React.PropTypes.object.isRequired,

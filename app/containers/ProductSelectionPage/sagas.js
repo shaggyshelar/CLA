@@ -27,7 +27,7 @@ export function* productsData() {
 
 export function* searchedProducts(action) {
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${action.searchObj.groupId}&PriceListId=${action.searchObj.priceBookId}&searchValue=${action.searchObj.searchValue}`}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${action.searchObj.priceBookId}&searchValue=${action.searchObj.searchValue}`}`;
     const repos = yield call(request, requestURL);
     if (!action.searchObj.fromSearch) {
       yield put(searchedDataLoaded(repos));

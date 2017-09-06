@@ -1,10 +1,10 @@
-import { take, call } from 'redux-saga/effects';
+import { take, call, put } from 'redux-saga/effects';
 import request from 'utils/request';
 import { LOCATION_CHANGE } from 'react-router-redux';
 // import { LOAD_REPOS } from 'containers/App/constants';
 import { SAVE_CUSTOM_SEGMENT_DATA } from './constants';
 import { SERVER_URL, EntityURLs } from '../App/constants';
-// import { loadReConfigureProductsDataSuccess, dataLoadingError, configuredProductsSaveSuccess } from './actions';
+import { saveCustomSegmentDataSuccess, dataLoadingError } from '../App/actions';
 
 export function* saveSegmentData(data) {
   try {
@@ -16,10 +16,10 @@ export function* saveSegmentData(data) {
       },
       body: JSON.stringify(data),
     };
-    yield call(request, requestURL, options);
-   // yield put(configuredProductsSaveSuccess(products));
+    const quote = yield call(request, requestURL, options);
+    yield put(saveCustomSegmentDataSuccess(quote));
   } catch (err) {
-   // yield put(dataLoadingError(err));
+    yield put(dataLoadingError(err));
   }
 }
 
