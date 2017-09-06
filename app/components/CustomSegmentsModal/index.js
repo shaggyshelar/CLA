@@ -52,7 +52,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     let dateError = false;
     let isDateNull = false;
     for (let index = 0; index <= customSegments.length - 1; index++) {
-      if (customSegments[index].startDate == null || customSegments[index].endDate == null) {
+      if (customSegments[index].startDate === null || customSegments[index].startDate === '' || customSegments[index].endDate === null || customSegments[index].endDate === '') {
         isDateNull = true;
         break;
       }
@@ -71,6 +71,8 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
           break;
         }
       }
+      customSegments[index].startDate = new Date(customSegments[index].startDate);
+      customSegments[index].endDate = new Date(customSegments[index].endDate);
     }
     if (isDateNull) {
       toast.error(this.context.intl.formatMessage({ ...messages.dateEmptyValidation }), {
@@ -105,7 +107,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
           name: item.name,
           segmentData: {
             type: item.type,
-            columns: this.props.customSegments.toJS(),
+            columns: customSegments,
           },
         };
         customLines.push(line);
@@ -117,7 +119,8 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     }
   }
 
-  handleChangeDate(item, field, value) {
+  handleChangeDate(item, field, e) {
+    const value = e.target.value;
     const obj = {
       field,
       value,
@@ -140,10 +143,18 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
           />
         </td>
         <td id="datePicker">
-          <DatePicker onChange={this.handleChangeDate.bind(this, item, 'startDate')} dateFormat="MM/DD/YYYY" value={item.startDate} />
+          <FormControl
+            type="date"
+            className="datePickerWidth"
+            onChange={this.handleChangeDate.bind(this, item, 'startDate')} value={item.startDate}
+          />
         </td>
         <td id="datePicker">
-          <DatePicker onChange={this.handleChangeDate.bind(this, item, 'endDate')} dateFormat="MM/DD/YYYY" value={item.endDate} />
+          <FormControl
+            type="date"
+            className="datePickerWidth"
+            onChange={this.handleChangeDate.bind(this, item, 'endDate')} value={item.endDate}
+          />
         </td>
       </tr>));
     }

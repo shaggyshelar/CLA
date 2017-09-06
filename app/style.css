@@ -1488,3 +1488,7 @@ body.modal-open {
 	min-height:35vh!important;
 	/*max-height:70vh!important;*/
 }
+
+.datePickerWidth {
+    width : 100% !important;
+}
