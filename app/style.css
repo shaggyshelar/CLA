@@ -1439,3 +1439,52 @@ body.modal-open {
     overflow: hidden!important;
 }
 .customSegModal{    max-height: calc(100% - 100px)!important;    position: fixed!important;    top: 62%!important;    left: 50%!important;    transform: translate(-50%, -50%)!important;}
+/*** D. 6 Sep 2017 ***/
+
+.modal-backdrop.in {
+    position: fixed!important;
+    z-index: 999999999!important;
+}
+@media (max-width: 1400px) and (min-width: 1300px){
+	.qoute-container .group #inner-tab-example-pane-custom .table-wrap {    
+		overflow-y: auto;
+		max-height: calc(60vh - 100px)!important;
+		height: calc(60vh - 100px)!important;
+	}
+	.qoute-container .group #noanim-tab-example-pane-2 .table-wrap {			
+		overflow-y: auto;
+		min-height: calc(66vh - 100px)!important;
+		height: calc(66vh - 100px)!important;
+	}
+}
+@media (max-width: 1500px) and (min-width: 1401px){
+	.qoute-container #inner-tab-example-pane-custom .table-wrap {   
+		overflow-y: auto;
+		min-height: calc(66vh - 100px)!important;
+		height: calc(66vh - 100px)!important;
+	}
+	.qoute-container #noanim-tab-example-pane-2 .table-wrap {		
+		overflow-y: auto;
+		min-height: calc(70vh - 100px)!important;
+		height: calc(70vh - 100px)!important;
+	}
+}
+
+
+.customSegModal, .customModal{
+    max-height: calc(100% - 100px)!important;
+    position: fixed!important;
+    top: 62%!important;
+    left: 50%!important;
+    transform: translate(-50%, -50%)!important;
+}
+
+.customModal < .modal-backdrop.in {
+    position: absolute!important;
+    z-index: 999999999!important;
+}
+
+.edit-grid-quote{
+	min-height:35vh!important;
+	/*max-height:70vh!important;*/
+}
