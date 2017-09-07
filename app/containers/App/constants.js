@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  serverUrl = 'http://localhost:3000/api';
+  serverUrl = 'http://192.168.101.162:3000/api';
   entityUrls = {
     PRODUCTS: '/Product',
     QUOTE: '/QuoteProduct',
