@@ -2473,7 +2473,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   return res.json(response);
 });
-quoteRouter.post('/AddProductsNew', (req, res) => {
+quoteRouter.post('/AddProducts', (req, res) => {
   const response = {
     quote: {
       id: '1',
