@@ -1489,6 +1489,8 @@ body.modal-open {
 	/*max-height:70vh!important;*/
 }
 
-.datePickerWidth {
-    width : 100% !important;
+
+.customSegmentsInput {
+    width : 90% !important;
+    margin-left: 0px !important;
 }

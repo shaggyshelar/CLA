@@ -22,7 +22,6 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     this.saveCustomSegments = this.saveCustomSegments.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.toggleCheckAll = this.toggleCheckAll.bind(this);
-    this.handleChangeDate = this.handleChangeDate.bind(this);
   }
 
   handleChange(e) {
@@ -71,8 +70,8 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
           break;
         }
       }
-      customSegments[index].startDate = new Date(customSegments[index].startDate);
-      customSegments[index].endDate = new Date(customSegments[index].endDate);
+      customSegments[index].startDate = new Date(customSegments[index].startDate).toISOString();
+      customSegments[index].endDate = new Date(customSegments[index].endDate).toISOString();
     }
     if (isDateNull) {
       toast.error(this.context.intl.formatMessage({ ...messages.dateEmptyValidation }), {
@@ -119,15 +118,6 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     }
   }
 
-  handleChangeDate(item, field, e) {
-    const value = e.target.value;
-    const obj = {
-      field,
-      value,
-      id: item.id,
-    };
-    this.props.changeCustomSegmentFieldData(obj);
-  }
   render() {
     let rows = [];
     if (this.props.customSegments !== undefined) {
@@ -139,21 +129,28 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
             id={item.id}
             name="name"
             value={item.name}
+            className="customSegmentsInput"
             onChange={this.handleChange}
           />
         </td>
         <td id="datePicker">
           <FormControl
             type="date"
-            className="datePickerWidth"
-            onChange={this.handleChangeDate.bind(this, item, 'startDate')} value={item.startDate}
+            id={item.id}
+            name="startDate"
+            value={item.startDate}
+            className="customSegmentsInput"
+            onChange={this.handleChange}
           />
         </td>
         <td id="datePicker">
           <FormControl
             type="date"
-            className="datePickerWidth"
-            onChange={this.handleChangeDate.bind(this, item, 'endDate')} value={item.endDate}
+            id={item.id}
+            name="endDate"
+            value={item.endDate}
+            className="customSegmentsInput"
+            onChange={this.handleChange}
           />
         </td>
       </tr>));
