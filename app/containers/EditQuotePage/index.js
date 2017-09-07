@@ -2,6 +2,7 @@
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
+import { generateGuid } from 'containers/App/constants';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ReactDOM from 'react-dom';
@@ -92,7 +93,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   group() {
     const data = this.props.data.toJS();
-    const randomID = parseInt(Math.random() * 100000, 0).toString();
+    const randomID = generateGuid();
     if (data.linesGrouped) {
       const name = `Group ${data.groups.length}`;
       data.groups.push({

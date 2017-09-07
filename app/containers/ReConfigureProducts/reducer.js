@@ -3,7 +3,7 @@
  * ReConfigureProducts reducer
  *
  */
-
+import { generateGuid } from 'containers/App/constants';
 import { fromJS } from 'immutable';
 import _ from 'lodash';
 import {
@@ -112,13 +112,13 @@ function reConfigureProductsReducer(state = initialState, action) {
            // For Other tab and Other Options
           if (otherFeatures.length > 0 || otherProducts.length > 0) {
             const otherCategory = {};
-            otherCategory.id = parseInt(Math.random() * 100000, 0);
+            otherCategory.id = generateGuid();
             otherCategory.name = 'Other';
             otherCategory.features = otherFeatures;
             // Create Other Options feature
             if (otherProducts.length > 0) {
               const otherOptions = {};
-              otherOptions.id = parseInt(Math.random() * 100000, 0);
+              otherOptions.id = generateGuid();
               otherOptions.categoryId = otherCategory.id;
               otherOptions.name = 'Other Options';
               otherOptions.products = [];
@@ -158,7 +158,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         // For Other Options
           if (otherProducts.length > 0) {
             const otherOptions = {};
-            otherOptions.id = parseInt(Math.random() * 100000, 0);
+            otherOptions.id = generateGuid();
             otherOptions.name = 'Other Options';
             otherOptions.products = [];
             otherOptions.products = otherProducts;
@@ -166,7 +166,7 @@ function reConfigureProductsReducer(state = initialState, action) {
           }
         } else if (categories.length === 0 && features.length === 0 && products.length > 0) { // Only Products are available
           const otherOptions = {};
-          otherOptions.id = Math.random();
+          otherOptions.id = generateGuid();
           otherOptions.name = 'Other Options';
           otherOptions.products = [];
           otherOptions.products = products;
@@ -193,7 +193,7 @@ function reConfigureProductsReducer(state = initialState, action) {
             action.productObj.selectedProducts.forEach((currentProduct) => {
               const product = currentProduct;
               product.tempId = product.id;
-              product.id = parseInt(Math.random() * 100000, 0);
+              product.id = generateGuid();
               product.isAdded = true;
               product.isRequired = false;
               product.categoryId = action.productObj.categoryId;
@@ -210,7 +210,7 @@ function reConfigureProductsReducer(state = initialState, action) {
             product.tempId = product.id;
             product.isAdded = true;
             product.isRequired = false;
-            product.id = parseInt(Math.random() * 100000, 0);
+            product.id = generateGuid();
             product.categoryId = action.productObj.categoryId;
             product.featureId = action.productObj.featureId;
             feature.products.push(product);

@@ -18,16 +18,23 @@ if (process.env.NODE_ENV === 'production') {
   serverUrl = 'http://localhost:3000/api';
   entityUrls = {
     PRODUCTS: '/Product',
-    QUOTE: '/QuoteProduct',
+    QUOTE: '/Quote',
     COUNTRIES: '/countries',
   };
 }
+function S4() {
+  return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+}
 
+export function generateGuid() {
+  const guid = (`${S4() + S4()}-${S4()}-4${S4().substr(0, 3)}-${S4()}-${S4()}${S4()}${S4()}`).toLowerCase();
+  return guid;
+}
 if (process.env.NODE_ENV === 'development') {
-  serverUrl = 'http://192.168.101.162:3000/api';
+  serverUrl = 'http://localhost:3000/api';
   entityUrls = {
     PRODUCTS: '/Product',
-    QUOTE: '/QuoteProduct',
+    QUOTE: '/Quote',
     COUNTRIES: '/countries',
   };
 }

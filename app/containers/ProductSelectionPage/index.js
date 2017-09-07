@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
+import { generateGuid } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
 import { makeSelectProductSelectionPage, makeSearchedProductsData, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
@@ -78,9 +79,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i += 1) {
       if (!d[i].checked && e.target.checked) {
-        d[i].click();
+        d[i].checked = true;
       } else if (d[i].checked && !e.target.checked) {
-        d[i].click();
+        d[i].checked = false;
       }
     }
   }
@@ -92,27 +93,32 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
     const data = this.state.selectedProducts;
-    if (!e.target.checked) {
-      _.remove(data, (n) => n === e.target.value);
-      if (d.checked) {
-        d.checked = false;
-      }
-    } else {
-      data.push(e.target.value);
+    if (d.checked) {
+      d.checked = false;
     }
-    this.setState({
-      selectedProducts: data,
-    });
+   // e.target.checked = !e.target.checked;
+    // if (!e.target.checked) {
+    //   _.remove(data, (n) => n === e.target.value);
+    //   if (d.checked) {
+    //     d.checked = false;
+    //   }
+    // } else {
+    //   data.push(e.target.value);
+    // }
+    // this.setState({
+    //   selectedProducts: data,
+    // });
   }
   addProductsWait() {
     let data = [];
+
     data = _.filter(this.props.products, (o) =>
       this.state.selectedProducts.includes(o.id)
     );
     if (this.props.location.query.groupId) {
       data.forEach((i, index) => {
         data[index].groupId = this.props.location.query.groupId;
-        data[index].id = parseInt(Math.random() * 100000, 0).toString();
+        data[index].id = generateGuid();
       });
       this.props.addProductsToQuote(data);
     } else {
@@ -128,19 +134,24 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     }
   }
   addProducts() {
-    let data = [];
-    data = _.filter(this.props.products, (o) =>
-      this.state.selectedProducts.includes(o.id)
-    );
+    const data = [];
+    // const pushData = [];
+    // data = _.filter(this.props.products.toJS(), (o) =>
+    //   this.state.selectedProducts.includes(o.id)
+    // );
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    for (let i = 0; i < d.length; i += 1) {
+      if (d[i].checked && this.props.location.query.groupId) {
+        data.push({ productId: d[i].value, groupId: this.props.location.query.groupId });
+      } else if (d[i].checked && !this.props.location.query.groupId) {
+        data.push({ productId: d[i].value });
+      }
+    }
+    console.log(data);
+    this.props.addProductsToQuote(data);
     if (this.props.location.query.groupId) {
-      data.forEach((i, index) => {
-        data[index].groupId = this.props.location.query.groupId;
-        data[index].id = parseInt(Math.random() * 100000, 0).toString();
-      });
-      this.props.addProductsToQuote(data);
       browserHistory.push(`/EditQuote?groupId=${this.props.location.query.groupId}`);
     } else {
-      this.props.addProductsToQuote(data);
       browserHistory.push('/EditQuote');
     }
   }
@@ -188,24 +199,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             checkAll={this.state.checkAll}
             toggleCheckAll={this.checkAll}
           />
-        </div>
-        <div className="filterContainer" style={this.props.showFilter ? { display: 'block' } : { display: 'none' }}>
-          <div className="bodyOverlay"></div>
-          <div className="filterBox">
-            <div className="filterHeader" >
-              <button type="button" className="close filterClose"><span onClick={this.toggleSidebar} aria-hidden="true">x</span><span className="sr-only">Close</span></button>
-              <h4>Product Filter</h4>
-            </div>
-            <div className="filterBody">
-              <h4>FG</h4>
-              <input type="text" className="form-control" style={{ width: '80%', height: '30px' }} />
-              <br /><br />
-              <button className="btn btn-primary">Apply</button>
-
-              <a className="clearLink">Clear Fields</a>
-
-            </div>
-          </div>
         </div>
       </div>
     );

@@ -9,12 +9,12 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
-
 import { fromJS } from 'immutable';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 // The initial state of the App
 import {
+  generateGuid,
   SAVE_ACTION,
   LOAD_DATA_SUCCESS,
   LOAD_DATA,
@@ -78,7 +78,7 @@ function appReducer(state = initialState, action) {
 
         const index = _.findIndex(data, { id: action.data });
         const cloneData = Object.assign({}, data[index]);
-        cloneData.id = parseInt(Math.random() * 100000, 0).toString();
+        cloneData.id = generateGuid();
         data.splice(index, 0, cloneData);
         return state.setIn(['data', 'lines'], fromJS(data));
       }
@@ -106,11 +106,11 @@ function appReducer(state = initialState, action) {
           const bundleProducts = _.filter(data, { parentId: item });
           const index = _.findIndex(data, { id: item });
           const cloneData = Object.assign({}, data[index]);
-          cloneData.id = parseInt(Math.random() * 100000, 0).toString();
+          cloneData.id = generateGuid();
           data.splice(index, 0, cloneData);
           for (let i = 0; i < bundleProducts.length; i += 1) {
             const cloneBundleLine = Object.assign({}, bundleProducts[i]);
-            cloneBundleLine.id = parseInt(Math.random() * 100000, 0).toString();
+            cloneBundleLine.id = generateGuid();
             data.splice(index + i + 1, 0, cloneBundleLine);
           }
         }, this);

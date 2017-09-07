@@ -1,70 +1,33 @@
 import request from 'utils/request';
-import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
+import { take, call, put, cancel, takeLatest, select } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { dataLoaded, dataLoadingError, xrmDataLoaded } from '../App/actions';
+import { dataLoaded, dataLoadingError } from '../App/actions';
+import { selectGlobal } from './selectors';
 import {
   SERVER_URL,
   EntityURLs,
   LOAD_DATA,
-  LOAD_XRM_DATA,
   // DELETE_MULTIPLE_LINES,
   CALCULATE_SELECTED,
   QUICK_SAVE_QUOTES,
+  ADD_PRODUCTS,
 } from '../App/constants';
 
 export function* getData(action) {
   const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/EditQuote?QuoteId=${action.quoteId}`}`;
   // const requestURL = 'http://192.168.101.162:3000/api/products';
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    },
+  };
   try {
     // Call our request helper (see 'utils/request') let repos = yield call(request,
     // 'https://14.141.105.180:1823/api/values/GetUserName/1?callback=ab');
-    const repos = yield call(request, requestURL);
+    const repos = yield call(request, requestURL, options);
     yield put(dataLoaded(repos));
-  } catch (err) {
-    yield put(dataLoadingError(err));
-  }
-}
-
-export function* getXrmData() {
-  // Select username from store const requestURL =
-  // 'https://esplsol.crm8.dynamics.com/api/data/v8.0/products?$select=name,produc
-  // t num' +     'ber,standardcost,description,p2qes_quantityeditable'; const
-  // requestURL = `${SERVER_URL +
-  // EntityURLs.PRODUCTS}?$select=name,productnumber,standardcost,description,p2qe
-  // s _quantityeditable`;
-  try {
-    const extendedQuery = "<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='tr" +
-        "ue'><entity name='product'><attribute name='name' /><attribute name='productid' " +
-        "/><attribute name='productnumber' /><attribute name='description' /><attribute n" +
-        "ame='statecode' /><attribute name='productstructure' /><order attribute='product" +
-        "number' descending='false' /><filter type='and'><condition attribute='name' oper" +
-        "ator='not-null' /><condition attribute='standardcost' operator='not-null' /><con" +
-        "dition attribute='p2qes_quantityeditable' operator='not-null' /><condition attri" +
-        "bute='description' operator='not-null' /></filter><link-entity name='productpric" +
-        "elevel' from='productid' to='productid'><attribute name='amount' /><attribute na" +
-        "me='pricingmethodcode' /><attribute name='pricelevelid' /><filter type='and'><co" +
-        "ndition attribute='amount' operator='not-null' /><condition attribute='pricingme" +
-        "thodcode' operator='not-null' /><condition attribute='pricelevelid' operator='eq" +
-        "' uiname='Big billion day' uitype='pricelevel' value='{D3B8550E-7D6B-E711-812B-C" +
-        "4346BDCAEF1}' /></filter></link-entity><link-entity name='productassociation' to" +
-        "='productid' from='productid'><attribute name='associatedproduct' /></link-entit" +
-        'y></entity></fetch>';
-    const requestURL = `${SERVER_URL}/api/data/v8.0/${EntityURLs.PRODUCTS}?fetchXml=${extendedQuery}`;
-
-    const headers = {
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json; charset=utf-8',
-        'OData-MaxVersion': '4.0',
-        Prefer: 'odata.include-annotations="*"',
-        'OData-Version': '4.0',
-      },
-    };
-
-    // Call our request helper (see 'utils/request')
-    const repos = yield call(request, requestURL, headers);
-    yield put(xrmDataLoaded(repos.value));
   } catch (err) {
     yield put(dataLoadingError(err));
   }
@@ -130,16 +93,35 @@ export function* dataSaga() {
   yield cancel(watcher);
 }
 
-export function* xrmDataSaga() {
-  // See example in containers/HomePage/sagas.js
-  const watcher = yield takeLatest(LOAD_XRM_DATA, getXrmData);
-  // Suspend execution until location changes
+export function* addProducts() {
+  const { data } = yield take(ADD_PRODUCTS);
+  const lines = yield select(selectGlobal);
+  const postLines = Object.assign({}, lines.toJS().data);
+  postLines.lines = postLines.lines.concat(data);
+  yield call(addProductsPost, postLines);
   yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
+}
+
+export function* addProductsPost(data) {
+  try {
+    const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/AddProductsNew`}`;
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+
+    const repos = yield call(request, requestURL, options);
+    yield put(dataLoaded(repos));
+  } catch (err) {
+    yield put(dataLoadingError(err));
+  }
 }
 
 // All sagas to be loaded
 export default[dataSaga,
-  xrmDataSaga,
+  addProducts,
   SaveQuotes,
   CalculateQuotes];
