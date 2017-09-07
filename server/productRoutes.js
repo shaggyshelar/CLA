@@ -282,8 +282,8 @@ productRouter.get('/GetProducts', (req, res) => {
     config: {},
   };
 
-  if (req.query.searchValue) {
-    productData.products = _.filter(productData.products, (user) => user.name.includes(req.query.searchValue));    
+  if (req.query.SearchValue) {
+    productData.products = _.filter(productData.products, (user) => user.name.includes(req.query.SearchValue));
   }
   res.json(productData);
 });
