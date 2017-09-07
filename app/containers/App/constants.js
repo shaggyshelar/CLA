@@ -31,7 +31,7 @@ export function generateGuid() {
   return guid;
 }
 if (process.env.NODE_ENV === 'development') {
-  serverUrl = 'http://localhost:3000/api';
+  serverUrl = 'http://192.168.101.162:4000/api';
   entityUrls = {
     PRODUCTS: '/Product',
     QUOTE: '/Quote',
