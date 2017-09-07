@@ -6,7 +6,6 @@
 
 import React from 'react';
 // import styled from 'styled-components';
-import DatePicker from 'react-bootstrap-date-picker';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
 import { Modal, Button, Glyphicon, Row, FormControl, Table } from 'react-bootstrap/lib';
