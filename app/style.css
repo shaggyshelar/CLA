@@ -1488,3 +1488,9 @@ body.modal-open {
 	min-height:35vh!important;
 	/*max-height:70vh!important;*/
 }
+
+
+.customSegmentsInput {
+    width : 90% !important;
+    margin-left: 0px !important;
+}
