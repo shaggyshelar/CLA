@@ -6,7 +6,7 @@
 
 import { fromJS } from 'immutable';
 import _ from 'lodash';
-
+import { generateGuid } from 'containers/App/constants';
 import {
   LOAD_CUSTOM_SEGMENT_DATA,
   ADD_CUSTOM_SEGMENT_DATA,
@@ -32,7 +32,7 @@ function editQuoteReducer(state = initialState, action) {
       if (action && customSegments) {
         action.customSegments.forEach((item) => {
           const rec = item;
-          rec.id = (Math.random() * 100000).toString();
+          rec.id = generateGuid();
           rec.isSelected = false;
           rec.startDate = item.startDate.substring(0, 10);
           rec.endDate = item.endDate.substring(0, 10);
@@ -46,7 +46,7 @@ function editQuoteReducer(state = initialState, action) {
       let customSegments = state.get('customSegments').toJS();
       let isCheckAll = state.get('isCheckAll');
       const customSegement = {
-        id: (Math.random() * 100000).toString(),
+        id: generateGuid(),
         name: '',
         startDate: '',
         endDate: '',

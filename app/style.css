@@ -799,7 +799,7 @@ height:100%;
     padding: 3px 5px!important;
 }
 .ReactTable .rt-td {
-    height:27px!important;
+    height:25px!important;
 	padding-bottom:0!important;	
 }
 /*.rt-tr-group, .rt-tr {
@@ -1488,8 +1488,118 @@ body.modal-open {
 	min-height:35vh!important;
 	/*max-height:70vh!important;*/
 }
+.modal-body input{
+	margin-left:0!important;
+}
+.modal-body input[type=checkbox]{
+	width:auto!important;
+}
+.modal-body .input-group {   
+    margin-top: 0px!important;
+}
+.input-group-addon:last-child {
+    border-left: 0!important;
+    padding-left: 20px!important;
+}
+.ReactTable .rt-noData {
+    margin-top: 25px!important;
+}
+.table-wrap {
+    /*padding-bottom: 10px!important;*/
+}
 
+/*** For filter ***/
+@media(min-width:768px){
+	.headerFix {
+		width:102%;
+		position:fixed;
+		z-index:99999999;
+	}
+}
+.filterBox{
+	width: 395px;
+	background: #F5F5F5;
+	height: 92.3vh;
+	position: absolute;
+	margin-top: -124px;
+	right: 0;
+	z-index: 99999;
+}
+.filterHeader{
+	padding: 20px;
+	border-bottom: 1px solid #e5e5e5;
+}
+.filterHeader h4{
+	text-align: left;
+	color: #337ab7;
+	font-family: 'Segoe UI';
+	margin-top:0;
+	margin-bottom:0;
+}
+.filterBody{
+	padding: 20px;
+}
+.filterBody h4{
+	font-size: 15px;
+	text-align: left;
+	margin-top: 0;
+	font-family: 'Segoe UI';
+	font-weight: 600;
+}
+.filterBody button{
+	font-family: 'Segoe UI';
+}
+.clearLink {
+	margin-left: 40px;
+	cursor: pointer;
+	font-family: 'Segoe UI';
+}
+.filterClose {
+	margin-top: -3px;
+}
+.bodyOverlay {
+	position: fixed;
+	top: 60px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 5;
+	background-color: rgba(0,0,0,0.7);
+}
+@media (min-width:1301px) and (max-width:1400px){
+	.filterBox{
+		height: 92vh;
+	}
+}
+@media (min-width:1401px) and (max-width:1500px){
+	.filterBox{
+		height: 93.2vh;
+	}
+}
+@media(max-width:767px){
+	.filterBox {
+		width: 92%;
+		background: #F5F5F5;
+		height: auto;
+		position: absolute;
+		margin-top: 0;
+		right: 0;
+		z-index: 99999;
+		margin: 0 15px;
+		top: 30%;
+	}
+	.headerFix {
+		z-index:9;
+	}
+	#inner-tab-example > ul li > a {
+		padding: 8px 8px!important;
+		font-size: 11px;
+	}
+}
+.productTopPadding{
+	padding-top:60px;
 
+}
 .customSegmentsInput {
     width : 90% !important;
     margin-left: 0px !important;

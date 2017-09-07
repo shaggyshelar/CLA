@@ -14,7 +14,7 @@ productRouter.get('/GetProducts', (req, res) => {
       {
         id: '123',
         code: 'P121',
-        name: 'abcd',
+        name: 'Car',
         isSegmented: false,
         type: 'Product',
         isBundled: true,
@@ -103,8 +103,8 @@ productRouter.get('/GetProducts', (req, res) => {
       {
         id: '1234',
         isSegmented: false,
-        code: 'P121',
-        name: 'xyz',
+        code: 'car12',
+        name: 'car2',
         type: 'Product',
         isBundled: true,
         isDisableReconfiguration: true,
@@ -191,9 +191,9 @@ productRouter.get('/GetProducts', (req, res) => {
       },
       {
         id: '1235',
-        code: 'P121',
+        code: 'car3',
         isSegmented: false,
-        name: 'pqr',
+        name: 'car',
         type: 'Product/Bundle',
         isBundled: true,
         isDisableReconfiguration: true,

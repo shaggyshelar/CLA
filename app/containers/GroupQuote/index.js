@@ -3,7 +3,7 @@
  * GroupQuote
  *
  */
-
+import { generateGuid } from 'containers/App/constants';
 import React, { PropTypes } from 'react';
 import CKEditor from 'react-ckeditor-component';
 import { connect } from 'react-redux';
@@ -54,14 +54,14 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
       _.filter(this.props.lines, { groupId: this.state.selectedGroup }));
     const group = Object.assign({},
       _.filter(this.props.groups, { id: this.state.selectedGroup })[0]);
-    const randomID = parseInt(Math.random() * 100000, 0).toString();
+    const randomID = generateGuid();
     const lines = this.props.lines;
     const groups = this.props.groups;
     group.id = randomID;
     groupLines.forEach((i) => {
       const groupLine = Object.assign({}, i);
       groupLine.groupId = randomID;
-      groupLine.id = parseInt(Math.random() * 100000, 0).toString();
+      groupLine.id = generateGuid();
       lines.push(groupLine);
     });
 
