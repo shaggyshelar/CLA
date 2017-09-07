@@ -104,7 +104,7 @@ export function* addProducts() {
 
 export function* addProductsPost(data) {
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/AddProducts}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/AddProducts`}`;
     const options = {
       method: 'POST',
       headers: {
