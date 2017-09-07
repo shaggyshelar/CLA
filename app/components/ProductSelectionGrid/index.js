@@ -90,7 +90,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
     }];
     return (
       <div>
-        <div className="table-wrap">
+        <div className="table-wrap productTopPadding">
           <ReactTable
             className="-striped -highlight"
             data={this.props.products}
@@ -101,15 +101,6 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
             {...this.state.tableOptions}
 
           />
-          <div className="filter">
-            <Sidebar container={this} title="Product Filter" side="left" isVisible={this.props.showFilter} onHide={this.props.toggleFilter}>
-              <h4>FG</h4>
-              <FormControl type="text" placeholder="" style={{ width: '80%' }} />
-              <br /> <br /> <br />
-              <Button bsStyle="primary">Apply</Button>
-              <a className="clear">Clear Fields</a>
-            </Sidebar>
-          </div>
         </div>
       </div>
     );

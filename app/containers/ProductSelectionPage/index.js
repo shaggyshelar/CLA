@@ -189,6 +189,24 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             toggleCheckAll={this.checkAll}
           />
         </div>
+		<div className="filterContainer" style={this.props.showFilter ? { display: 'block' } : { display: 'none' }}>
+          <div className="bodyOverlay"></div>
+          <div className="filterBox">
+            <div className="filterHeader" >
+              <button onClick={this.props.toggleFilter} type="button" className="close filterClose"><span aria-hidden="true">x</span><span className="sr-only">Close</span></button>
+              <h4>Product Filter</h4>
+            </div>
+            <div className="filterBody">
+              <h4>FG</h4>
+              <input type="text" className="form-control" style={{ width: '80%', height: '30px' }} />
+              <br /><br />
+              <button className="btn btn-primary">Apply</button>
+
+              <a href="" className="clearLink">Clear Fields</a>
+
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
