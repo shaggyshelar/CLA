@@ -34,6 +34,8 @@ function editQuoteReducer(state = initialState, action) {
           const rec = item;
           rec.id = (Math.random() * 100000).toString();
           rec.isSelected = false;
+          rec.startDate = item.startDate.substring(0, 10);
+          rec.endDate = item.endDate.substring(0, 10);
           customSegments.push(rec);
         }, this);
       }

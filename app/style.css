@@ -1598,4 +1598,9 @@ body.modal-open {
 }
 .productTopPadding{
 	padding-top:60px;
+
+}
+.customSegmentsInput {
+    width : 90% !important;
+    margin-left: 0px !important;
 }

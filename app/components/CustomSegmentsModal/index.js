@@ -6,7 +6,6 @@
 
 import React from 'react';
 // import styled from 'styled-components';
-import DatePicker from 'react-bootstrap-date-picker';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
 import { Modal, Button, Glyphicon, Row, FormControl, Table } from 'react-bootstrap/lib';
@@ -22,7 +21,6 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     this.saveCustomSegments = this.saveCustomSegments.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.toggleCheckAll = this.toggleCheckAll.bind(this);
-    this.handleChangeDate = this.handleChangeDate.bind(this);
   }
 
   handleChange(e) {
@@ -52,7 +50,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     let dateError = false;
     let isDateNull = false;
     for (let index = 0; index <= customSegments.length - 1; index++) {
-      if (customSegments[index].startDate == null || customSegments[index].endDate == null) {
+      if (customSegments[index].startDate === null || customSegments[index].startDate === '' || customSegments[index].endDate === null || customSegments[index].endDate === '') {
         isDateNull = true;
         break;
       }
@@ -71,6 +69,8 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
           break;
         }
       }
+      customSegments[index].startDate = new Date(customSegments[index].startDate).toISOString();
+      customSegments[index].endDate = new Date(customSegments[index].endDate).toISOString();
     }
     if (isDateNull) {
       toast.error(this.context.intl.formatMessage({ ...messages.dateEmptyValidation }), {
@@ -105,7 +105,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
           name: item.name,
           segmentData: {
             type: item.type,
-            columns: this.props.customSegments.toJS(),
+            columns: customSegments,
           },
         };
         customLines.push(line);
@@ -117,14 +117,6 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     }
   }
 
-  handleChangeDate(item, field, value) {
-    const obj = {
-      field,
-      value,
-      id: item.id,
-    };
-    this.props.changeCustomSegmentFieldData(obj);
-  }
   render() {
     let rows = [];
     if (this.props.customSegments !== undefined) {
@@ -136,14 +128,29 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
             id={item.id}
             name="name"
             value={item.name}
+            className="customSegmentsInput"
             onChange={this.handleChange}
           />
         </td>
         <td id="datePicker">
-          <DatePicker onChange={this.handleChangeDate.bind(this, item, 'startDate')} dateFormat="MM/DD/YYYY" value={item.startDate} />
+          <FormControl
+            type="date"
+            id={item.id}
+            name="startDate"
+            value={item.startDate}
+            className="customSegmentsInput"
+            onChange={this.handleChange}
+          />
         </td>
         <td id="datePicker">
-          <DatePicker onChange={this.handleChangeDate.bind(this, item, 'endDate')} dateFormat="MM/DD/YYYY" value={item.endDate} />
+          <FormControl
+            type="date"
+            id={item.id}
+            name="endDate"
+            value={item.endDate}
+            className="customSegmentsInput"
+            onChange={this.handleChange}
+          />
         </td>
       </tr>));
     }
