@@ -95,7 +95,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     const data = this.props.data.toJS();
     const randomID = generateGuid();
     if (data.linesGrouped) {
-      const name = `Group ${data.groups.length + 1}`;
+      const name = `New Group #${data.groups.length + 1}`;
       data.groups.push({
         id: randomID,
         name,
