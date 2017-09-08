@@ -95,7 +95,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     const data = this.props.data.toJS();
     const randomID = generateGuid();
     if (data.linesGrouped) {
-      const name = `Group ${data.groups.length}`;
+      const name = `Group ${data.groups.length + 1}`;
       data.groups.push({
         id: randomID,
         name,
@@ -109,7 +109,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       data.lines.forEach((i, index) => { data.lines[index].groupId = randomID; });
       data.groups.push({
         id: randomID,
-        name: 'Group1',
+        name: 'Group 1',
         isOptional: false,
         description: '',
         additionaldiscount: '',
