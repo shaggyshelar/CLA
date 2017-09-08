@@ -2438,7 +2438,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
       groups: [
         {
           id: '123',
-          name: 'Group1',
+          name: 'Group A',
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
@@ -2447,7 +2447,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         },
         {
           id: '456',
-          name: 'Group2',
+          name: 'Group B',
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
@@ -2456,7 +2456,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         },
         {
           id: '789',
-          name: 'Group3',
+          name: 'Group C',
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
@@ -5168,7 +5168,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
       groups: [
         {
           id: '123',
-          name: 'Group1',
+          name: 'Group A',
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
@@ -5177,7 +5177,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
         },
         {
           id: '456',
-          name: 'Group2',
+          name: 'Group B',
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
@@ -5186,7 +5186,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
         },
         {
           id: '789',
-          name: 'Group3',
+          name: 'Group C',
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
@@ -7692,7 +7692,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
       groups: [
         {
           id: '123',
-          name: 'Group1',
+          name: 'Group A',
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
@@ -7701,7 +7701,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
         },
         {
           id: '456',
-          name: 'Group2',
+          name: 'Group B',
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
@@ -7710,7 +7710,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
         },
         {
           id: '789',
-          name: 'Group3',
+          name: 'Group C',
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
