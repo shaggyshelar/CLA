@@ -147,7 +147,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         data.push({ productId: d[i].value });
       }
     }
-    console.log(data);
     this.props.addProductsToQuote(data);
     if (this.props.location.query.groupId) {
       browserHistory.push(`/EditQuote?groupId=${this.props.location.query.groupId}`);
