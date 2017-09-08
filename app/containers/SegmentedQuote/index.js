@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
-import { Tabs, Tab, Button, Glyphicon } from 'react-bootstrap/lib';
+import { Tabs, Tab, Glyphicon } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import SegmentedEditQuoteGrid from 'components/SegmentedEditQuoteGrid';
 import makeSelectSegmentedQuote from './selectors';
@@ -50,6 +50,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
       isCustomModalOpen: !this.state.isCustomModalOpen,
     });
     this.props.loadCustomSegmentsData(this.state.data.CustomLines[0].segmentData.columns);
+    this.props.toggleCheckAll(false);
   }
 
   hideCustomModalToggle() {
@@ -139,6 +140,9 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
                     checkCustomSegmentData={this.props.checkCustomSegmentData}
                     customSegments={this.props.customSegments}
+                    quoteData={this.props.quoteData}
+                    toggleCheckAll={this.props.toggleCheckAll}
+                    isCheckAll={this.props.isCheckAll}
                   />
                 </Tab>
               :
@@ -160,6 +164,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     selectedTab={this.selectTab}
                     updateSegSelect={this.props.updateSegSelect}
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
+                    quoteData={this.props.quoteData}
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
@@ -178,6 +183,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     selectedTab={this.selectTab}
                     updateSegSelect={this.props.updateSegSelect}
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
+                    quoteData={this.props.quoteData}
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
@@ -196,6 +202,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     selectedTab={this.selectTab}
                     updateSegSelect={this.props.updateSegSelect}
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
+                    quoteData={this.props.quoteData}
                   />
                 </Tab> : '' }
             </Tabs>
@@ -214,6 +221,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               updateBundle={this.props.updateBundle}
               updateSelect={this.props.updateSelect}
               updateSelectBundle={this.props.updateSelectBundle}
+              quoteData={this.props.quoteData}
             />
           </Tab>
         </Tabs>
@@ -248,6 +256,9 @@ SegmentedQuote.propTypes = {
   checkCustomSegmentData: PropTypes.func,
   customSegments: PropTypes.any,
   clearCustomSegmentsData: PropTypes.any,
+  quoteData: PropTypes.any,
+  toggleCheckAll: PropTypes.func,
+  isCheckAll: PropTypes.any,
 };
 SegmentedQuote.contextTypes = {
   intl: React.PropTypes.object.isRequired,

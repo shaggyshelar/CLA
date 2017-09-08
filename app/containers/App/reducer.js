@@ -9,12 +9,12 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
-
 import { fromJS } from 'immutable';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 // The initial state of the App
 import {
+  generateGuid,
   SAVE_ACTION,
   LOAD_DATA_SUCCESS,
   LOAD_DATA,
@@ -43,6 +43,8 @@ import {
   UPDATE_GROUP_DATA,
   UPDATE_GROUP_VAL,
   SEGMENT,
+  SAVE_CUSTOM_SEGMENT_DATA_SUCCESS,
+  SAVE_APP_CUSTOM_SEGMENT_DATA,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -64,7 +66,7 @@ function appReducer(state = initialState, action) {
         .set('data', fromJS(action.data.quote))
         .set('loading', false);
     case LOAD_DATA_ERROR:
-      toast.error('Server connection problem ! Please try again later', {
+      toast.error('Server connection problem ! Please try again later.', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 500000,
       });
@@ -77,7 +79,7 @@ function appReducer(state = initialState, action) {
 
         const index = _.findIndex(data, { id: action.data });
         const cloneData = Object.assign({}, data[index]);
-        cloneData.id = parseInt(Math.random() * 100000, 0).toString();
+        cloneData.id = generateGuid();
         data.splice(index, 0, cloneData);
         return state.setIn(['data', 'lines'], fromJS(data));
       }
@@ -105,11 +107,11 @@ function appReducer(state = initialState, action) {
           const bundleProducts = _.filter(data, { parentId: item });
           const index = _.findIndex(data, { id: item });
           const cloneData = Object.assign({}, data[index]);
-          cloneData.id = parseInt(Math.random() * 100000, 0).toString();
+          cloneData.id = generateGuid();
           data.splice(index, 0, cloneData);
           for (let i = 0; i < bundleProducts.length; i += 1) {
             const cloneBundleLine = Object.assign({}, bundleProducts[i]);
-            cloneBundleLine.id = parseInt(Math.random() * 100000, 0).toString();
+            cloneBundleLine.id = generateGuid();
             data.splice(index + i + 1, 0, cloneBundleLine);
           }
         }, this);
@@ -253,6 +255,17 @@ function appReducer(state = initialState, action) {
         line[0].isSegmented = action.value;
         return state.setIn(['data', 'lines'], fromJS(lines));
       }
+    case SAVE_APP_CUSTOM_SEGMENT_DATA : {
+      const loading = state.set('loading');
+      return state.set('loading', !loading)
+        .set('error', false);
+    }
+    case SAVE_CUSTOM_SEGMENT_DATA_SUCCESS : {
+      return state
+        .set('data', fromJS(action.data.quote))
+        .set('loading', false);
+    }
+
     default:
       return state;
   }

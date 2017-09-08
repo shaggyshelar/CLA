@@ -16,9 +16,9 @@ const quoteRoutes = require('./quoteRoutes');
 const productRoutes = require('./productRoutes');
 // If you need a backend, e.g. an API, add your custom backend-specific
 // middleware here app.use('/api', myApi);
-app.use('/api/quote', quoteRoutes.quoteRouter);
-app.use('/v1/quote', quoteRoutes.quoteRouter);
-app.use('/api/products', productRoutes.productRouter);
+app.use('/api/Quote', quoteRoutes.quoteRouter);
+app.use('/v1/Quote', quoteRoutes.quoteRouter);
+app.use('/api/Product', productRoutes.productRouter);
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),
@@ -31,7 +31,7 @@ const customHost = argv.host || process.env.HOST;
 const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
 
-const port = argv.port || process.env.PORT || 3000;
+const port = argv.port || process.env.PORT || 5000;
 
 // Start your app.
 app.listen(port, host, (err) => {

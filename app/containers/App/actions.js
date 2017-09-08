@@ -35,6 +35,8 @@ import {
   SEGMENT,
   UPDATE_SELECT,
   UPDATE_SELECT_BUNDLE,
+  SAVE_CUSTOM_SEGMENT_DATA_SUCCESS,
+  SAVE_APP_CUSTOM_SEGMENT_DATA,
 } from './constants';
 
 export function defaultAction() {
@@ -264,5 +266,18 @@ export function segment(id, value) {
     type: SEGMENT,
     id,
     value,
+  };
+}
+
+export function saveCustomSegmentDataSuccess(data) {
+  return {
+    type: SAVE_CUSTOM_SEGMENT_DATA_SUCCESS,
+    data,
+  };
+}
+
+export function saveAppCustomSegmentData() {
+  return {
+    type: SAVE_APP_CUSTOM_SEGMENT_DATA,
   };
 }

@@ -6,7 +6,7 @@
 
 import { fromJS } from 'immutable';
 import _ from 'lodash';
-
+import { generateGuid } from 'containers/App/constants';
 import {
   LOAD_CUSTOM_SEGMENT_DATA,
   ADD_CUSTOM_SEGMENT_DATA,
@@ -16,11 +16,13 @@ import {
   CHECK_CUSTOM_SEGMENT_DATA,
   CLEAR_CUSTOM_SEGMENT_DATA,
   SAVE_CUSTOM_SEGMENT_DATA,
+  TOGGLE_CHECKALL,
  } from './constants';
 
 const initialState = fromJS({
   customSegments: [],
   updatedSegments: [],
+  isCheckAll: false,
 });
 
 function editQuoteReducer(state = initialState, action) {
@@ -30,8 +32,10 @@ function editQuoteReducer(state = initialState, action) {
       if (action && customSegments) {
         action.customSegments.forEach((item) => {
           const rec = item;
-          rec.id = (Math.random() * 100000).toString();
+          rec.id = generateGuid();
           rec.isSelected = false;
+          rec.startDate = item.startDate.substring(0, 10);
+          rec.endDate = item.endDate.substring(0, 10);
           customSegments.push(rec);
         }, this);
       }
@@ -39,9 +43,10 @@ function editQuoteReducer(state = initialState, action) {
         .set('customSegments', fromJS(customSegments));
     }
     case ADD_CUSTOM_SEGMENT_DATA: {
-      const customSegments = state.get('customSegments').toJS();
+      let customSegments = state.get('customSegments').toJS();
+      let isCheckAll = state.get('isCheckAll');
       const customSegement = {
-        id: (Math.random() * 100000).toString(),
+        id: generateGuid(),
         name: '',
         startDate: '',
         endDate: '',
@@ -49,14 +54,30 @@ function editQuoteReducer(state = initialState, action) {
         isDefault: false,
       };
       customSegments.push(customSegement);
+      if (isCheckAll) {
+        isCheckAll = false;
+        const updatedCustomSegments = [];
+        customSegments.forEach((item) => {
+          const rec = item;
+          rec.isSelected = false;
+          updatedCustomSegments.push(rec);
+        }, this);
+        customSegments = updatedCustomSegments;
+      }
       return state
-        .set('customSegments', fromJS(customSegments));
+        .set('customSegments', fromJS(customSegments))
+        .set('isCheckAll', isCheckAll);
     }
     case DELETE_CUSTOM_SEGMENT_DATA: {
       const customSegments = state.get('customSegments').toJS();
+      let isCheckAll = state.get('isCheckAll');
       const updatedSegments = _.filter(customSegments, { isSelected: false });
+      if (updatedSegments.length === 1) {
+        isCheckAll = false;
+      }
       return state
-        .set('customSegments', fromJS(updatedSegments));
+        .set('customSegments', fromJS(updatedSegments))
+        .set('isCheckAll', isCheckAll);
     }
     case CHECK_CUSTOM_SEGMENT_DATA: {
       const customSegments = state.get('customSegments').toJS();
@@ -98,6 +119,10 @@ function editQuoteReducer(state = initialState, action) {
       const updatedSegments = state.get('updatedSegments').toJS();
       return state
         .set('customSegments', fromJS(updatedSegments));
+    }
+    case TOGGLE_CHECKALL : {
+      return state
+        .set('isCheckAll', action.isCheckAll);
     }
     default:
       return state;

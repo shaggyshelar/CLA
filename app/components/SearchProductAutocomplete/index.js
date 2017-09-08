@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import { Typeahead } from 'react-bootstrap-typeahead';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap/lib';
 class SearchProductAutocomplete extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -26,26 +26,31 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
   }
 
   handleChange(selection) {
-    this.state.onChange = true;
     this.props.onSearchItemSelected(selection[0]);
   }
 
   handleInputChange(selection) {
-    if (!this.state.onChange) {
-      this.state.selectedValue = selection;
-      this.props.searchInputChange(this.state.selectedValue);
-    }
-    this.state.onChange = false;
+    this.props.searchInputChange(selection);
+    this.setState({
+      selectedValue: selection,
+    });
   }
 
   render() {
+    let data = [];
+    if (this.props.data) {
+      data = this.props.data.map((item) => item.name);
+    } else {
+      data = [];
+    }
     return (
       <ButtonGroup className="margin" style={{ display: 'inline-flex', width: '90%' }} id="searchId">
-        <Typeahead
+        <AsyncTypeahead
+          options={data}
+          labelKey="login"
+          onSearch={this.handleInputChange}
           onChange={this.handleChange}
-          onInputChange={this.handleInputChange}
           placeholder={this.props.place}
-          options={this.props.data.map((item) => item.name)}
           clearButton
         />
         <Button bsStyle="primary" onClick={this.onSearchClick}><Glyphicon glyph="search" /></Button>

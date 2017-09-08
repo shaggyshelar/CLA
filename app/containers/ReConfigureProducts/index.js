@@ -72,7 +72,12 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
 
   componentDidMount() {
     if (this.props.location.query.id) {
-      this.props.getProductsData(this.props.location.query.id);
+      const data = {
+        id: parseInt(this.props.location.query.id, 0),
+        quoteId: parseInt(this.props.location.query.quoteId, 0),
+        priceBookId: parseInt(this.props.location.query.priceBookId, 0),
+      };
+      this.props.getProductsData(data);
     }
   }
 
@@ -195,8 +200,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    getProductsData: (id) => {
-      dispatch(loadReConfigureProductsData(id));
+    getProductsData: (data) => {
+      dispatch(loadReConfigureProductsData(data));
     },
     saveConfiguredProducts: (data) => {
       dispatch(saveConfiguredProductsData(data));

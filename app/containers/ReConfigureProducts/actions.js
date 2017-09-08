@@ -23,10 +23,10 @@ export function defaultAction() {
   };
 }
 
-export function loadReConfigureProductsData(id) {
+export function loadReConfigureProductsData(data) {
   return {
     type: LOAD_CONFIGURE_PRODUCTS_DATA,
-    id,
+    data,
   };
 }
 export function loadReConfigureProductsDataSuccess(productBundelData) {

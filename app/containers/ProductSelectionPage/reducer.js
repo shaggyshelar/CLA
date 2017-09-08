@@ -37,11 +37,12 @@ function productSelectionPageReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false);
-    case LOAD_PRODUCTS_DATA_SUCCESS:
+    case LOAD_PRODUCTS_DATA_SUCCESS: {
       return state
-        .set('products', action.products)
-        .set('searchedProducts', action.products)
+        .set('products', fromJS(action.products.products))
+        .set('searchedProducts', fromJS(action.products.products))
         .set('loading', false);
+    }
     case LOAD_DATA_ERROR:
       return state
         .set('error', action.error)
@@ -52,25 +53,33 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_SEARCH_DATA_SUCCESS:
       return state
-        .set('searchedProducts', action.searchedProducts)
+        .set('searchedProducts', fromJS(action.searchedProducts.products))
         .set('loading', false);
-    case LOAD_SEARCH_BTN_DATA_SUCCESS:
+    case LOAD_SEARCH_BTN_DATA_SUCCESS: {
       return state
-        .set('searchedProducts', [])
-        .set('products', action.searchedProducts)
+        .set('searchedProducts', fromJS(action.searchedProducts.products))
+        .set('products', fromJS(action.searchedProducts.products))
         .set('loading', false);
+    }
     case LOAD_SEARCH_ITEM_SELECTED: {
-      const searchedProducts = state.get('searchedProducts');
+      const searchedProducts = state.get('searchedProducts').toJS();
+      let products = state.get('products').toJS();
       let selectedProducts = [];
-      if (searchedProducts && searchedProducts.length > 0) {
-        const product = _.find(searchedProducts, { name: action.name });
-        selectedProducts.push(product);
-      } else {
-        selectedProducts = state.get('products');
+      if (action.name) {
+        if (searchedProducts && searchedProducts.length > 0) {
+          const product = _.find(searchedProducts, { name: action.name });
+          if (product) {
+            selectedProducts.push(product);
+            products = selectedProducts;
+          }
+        } else {
+          selectedProducts = state.get('products').toJS();
+          products = selectedProducts;
+        }
       }
       return state
-        .set('searchedProducts', [])
-        .set('products', selectedProducts)
+        .set('searchedProducts', fromJS(selectedProducts))
+        .set('products', fromJS(products))
         .set('loading', false);
     }
 

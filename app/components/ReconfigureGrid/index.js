@@ -7,7 +7,7 @@ import ReactTable from 'react-table';
 import React from 'react';
 import _ from 'lodash';
 import 'react-table/react-table.css';
-import { RIEInput } from 'riek';
+import { RIENumber } from 'riek';
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
 import messages from './messages';
@@ -68,9 +68,14 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     this.props.updateField(productObj);
   }
 
-  validate(text) {
-    const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
-    return (decimal.test(text) && (parseFloat(text) > 0));
+  validate(string) {
+    const number = parseFloat(string);
+    if (isNaN(number) || !isFinite(number)) return false;
+    return !isNaN(number);
+  }
+
+  format(e) {
+    return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
   }
 
   deleteProduct(product) {
@@ -95,14 +100,15 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     if (this.props.feature.DynamicAddEnabled || cellInfo.original.isSelected) {
       return (
         <div>
-          <RIEInput
+          <RIENumber
             className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
             classEditing="table-edit-input"
-            value={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
+            value={cellInfo.value}
             propName={`${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
             staticElement="div"
             change={this.dataChanged}
             validate={this.validate}
+            format={this.format}
             title={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
             id={cellInfo.original.id}
           />

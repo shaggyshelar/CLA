@@ -1,20 +1,20 @@
 const express = require('express');
-
+const _ = require('lodash');
 // Create the express router object for Photos
 const productRouter = express.Router();
 // A GET to the root of a resource returns a list of that resource
-productRouter.get('/', (req, res) => {
+productRouter.get('/GetProducts', (req, res) => {
   // res.json({ FirstName: 'Sagar122', LastName: 'Shelar444' });
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
 
-  res.json(
-    [
+  const productData = {
+    products: [
       {
         id: '123',
         code: 'P121',
-        name: 'abcd',
+        name: 'Car',
         isSegmented: false,
         type: 'Product',
         isBundled: true,
@@ -103,8 +103,8 @@ productRouter.get('/', (req, res) => {
       {
         id: '1234',
         isSegmented: false,
-        code: 'P121',
-        name: 'xyz',
+        code: 'car12',
+        name: 'car2',
         type: 'Product',
         isBundled: true,
         isDisableReconfiguration: true,
@@ -191,9 +191,9 @@ productRouter.get('/', (req, res) => {
       },
       {
         id: '1235',
-        code: 'P121',
+        code: 'car3',
         isSegmented: false,
-        name: 'pqr',
+        name: 'car',
         type: 'Product/Bundle',
         isBundled: true,
         isDisableReconfiguration: true,
@@ -278,8 +278,317 @@ productRouter.get('/', (req, res) => {
           ],
         },
       },
-    ]
-  );
+    ],
+    config: {},
+  };
+
+  if (req.query.SearchValue) {
+    productData.products = _.filter(productData.products, (user) => user.name.includes(req.query.SearchValue));
+  }
+  res.json(productData);
+});
+productRouter.get('/AddOptions', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  const productsData = {
+    products: [
+      {
+        id: 123353345,
+        code: 'P758',
+        name: 'pqrst',
+        featureId: 123,
+        categoryId: 123,
+              // categoryId: null,
+        isDependent: true,
+        isSelected: true,
+        isRequired: true,
+        isDeleted: false,
+        optionSelectionMethod: 123,
+        optionLayout: 'wizard/section/tab',
+        quantity: {
+          value: 890,
+          isEditable: true,
+          isVisible: true,
+          dataType: 'text/select/textarea/inputSelect',
+          selectValues: [
+            {
+              id: 123,
+              value: ':List',
+              isSelected: true,
+            },
+          ],
+        },
+        listPrice: {
+          value: 123,
+          isEditable: true,
+          isVisible: true,
+          dataType: 'text/select/textarea/inputSelect',
+          selectValues: [
+            {
+              id: 123,
+              value: ':List',
+              isSelected: true,
+            },
+          ],
+        },
+      },
+      {
+        id: 2349797897,
+        code: 'qw2342',
+        name: 'wyyyr',
+        featureId: 123,
+        categoryId: 456,
+              // categoryId: null,
+        isDependent: true,
+        isDeleted: false,
+        optionSelectionMethod: 456,
+        optionLayout: 'wizard/section/tab',
+        quantity: {
+          value: 565,
+          isEditable: true,
+          isVisible: true,
+          dataType: 'text/select/textarea/inputSelect',
+          selectValues: [
+            {
+              id: 123,
+              value: ':List',
+              isSelected: true,
+            },
+          ],
+        },
+        listPrice: {
+          value: 654,
+          isEditable: true,
+          isVisible: true,
+          dataType: 'text/select/textarea/inputSelect',
+          selectValues: [
+            {
+              id: 554,
+              value: ':List',
+              isSelected: true,
+            },
+          ],
+        },
+      },
+    ],
+    config: {},
+  };
+  return res.json(productsData);
+});
+productRouter.get('/ReconfigureProduct', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  const productBundleData = {
+    productBundle: {
+      id: 1,
+      quoteId: 123,
+      quoteName: 'Q-00163',
+      name: 'Meal',
+      products: [
+        {
+          id: 12311,
+          code: 'P121',
+          name: 'ABCD',
+          featureId: 123,
+          categoryId: 123,
+           // categoryId: null,
+          isDependent: true,
+          isSelected: true,
+          isRequired: false,
+          isDeleted: false,
+          optionSelectionMethod: 123,
+          optionLayout: 'wizard/section/tab',
+          quantity: {
+            value: 123,
+            isEditable: true,
+            isVisible: true,
+            dataType: 'text/select/textarea/inputSelect',
+            selectValues: [
+              {
+                id: 123,
+                value: ':List',
+                isSelected: true,
+              },
+            ],
+          },
+          listPrice: {
+            value: 123,
+            isEditable: true,
+            isVisible: true,
+            dataType: 'text/select/textarea/inputSelect',
+            selectValues: [
+              {
+                id: 123,
+                value: ':List',
+                isSelected: true,
+              },
+            ],
+          },
+        },
+        {
+          id: 234,
+          code: 'P122sds',
+          name: 'EFGHfsadfad',
+          featureId: 456,
+          categoryId: 456,
+            // categoryId: null,
+          isDependent: true,
+          isSelected: true,
+          isRequired: true,
+          isDeleted: false,
+          optionSelectionMethod: 456,
+          optionLayout: 'wizard/section/tab',
+          quantity: {
+            value: 565,
+            isEditable: true,
+            isVisible: true,
+            dataType: 'text/select/textarea/inputSelect',
+            selectValues: [
+              {
+                id: 123,
+                value: ':List',
+                isSelected: true,
+              },
+            ],
+          },
+          listPrice: {
+            value: 654,
+            isEditable: true,
+            isVisible: true,
+            dataType: 'text/select/textarea/inputSelect',
+            selectValues: [
+              {
+                id: 554,
+                value: ':List',
+                isSelected: true,
+              },
+            ],
+          },
+        },
+        {
+          id: 145,
+          code: 'P122',
+          name: 'EFGH',
+          featureId: 789,
+          categoryId: 456,
+            // featureId: null,
+           // categoryId: null,
+          isDependent: true,
+          isSelected: false,
+          isRequired: false,
+          isDeleted: false,
+          optionSelectionMethod: 456,
+          optionLayout: 'wizard/section/tab',
+          quantity: {
+            value: 565,
+            isEditable: true,
+            isVisible: true,
+            dataType: 'text/select/textarea/inputSelect',
+            selectValues: [
+              {
+                id: 123,
+                value: ':List',
+                isSelected: true,
+              },
+            ],
+          },
+          listPrice: {
+            value: 654,
+            isEditable: true,
+            isVisible: true,
+            dataType: 'text/select/textarea/inputSelect',
+            selectValues: [
+              {
+                id: 554,
+                value: ':List',
+                isSelected: true,
+              },
+            ],
+          },
+        },
+        {
+          id: 980,
+          code: 'P122dfgsad',
+          name: 'EFGHgsdfg',
+          featureId: null,
+            // featureId: 789,
+           // categoryId: 456,
+          categoryId: null,
+          isDependent: true,
+          isSelected: true,
+          isRequired: false,
+          isDeleted: false,
+          optionSelectionMethod: 456,
+          optionLayout: 'wizard/section/tab',
+          quantity: {
+            value: 565,
+            isEditable: true,
+            isVisible: true,
+            dataType: 'text/select/textarea/inputSelect',
+            selectValues: [
+              {
+                id: 123,
+                value: ':List',
+                isSelected: true,
+              },
+            ],
+          },
+          listPrice: {
+            value: 654,
+            isEditable: true,
+            isVisible: true,
+            dataType: 'text/select/textarea/inputSelect',
+            selectValues: [
+              {
+                id: 554,
+                value: ':List',
+                isSelected: true,
+              },
+            ],
+          },
+        },
+      ],
+      categories: [
+        {
+          id: 123,
+          name: 'Hardware',
+        },
+        {
+          id: 456,
+          name: 'Software',
+        },
+      ],
+      features: [
+        {
+          id: 123,
+          categoryId: 123,
+          //  categoryId: null,
+          name: 'Drinks',
+          DynamicAddEnabled: true,
+          minOption: 1,
+          maxOption: 2,
+        },
+        {
+          id: 456,
+          categoryId: 456,
+           // categoryId: null,
+          name: 'Mc Meal',
+          DynamicAddEnabled: true,
+        },
+        {
+          id: 789,
+          categoryId: 456,
+            // categoryId: null,
+          name: 'Test Feature',
+          DynamicAddEnabled: false,
+        },
+      ],
+    },
+    config: {},
+  };
+  return res.json(productBundleData);
 });
 // A POST to the root of a resource should create a new object
 productRouter.post('/', (req, res) => {

@@ -7,7 +7,7 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { Col, Row, Tab, Tabs } from 'react-bootstrap/lib';
-
+import { generateGuid } from 'containers/App/constants';
 import ReconfigureFeaturePanel from 'components/ReconfigureFeaturePanel';
 
 class ReconfigureProductTab extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -33,7 +33,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
   returnFeaturePanel(item) {
     return (
       <ReconfigureFeaturePanel
-        key={Math.random()}
+        key={generateGuid()}
         dataProd={this.props.dataProd}
         showFilter={this.props.showFilter}
         toggleSidebar={this.toggleSidebar}

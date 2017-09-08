@@ -3,7 +3,7 @@
  * GroupQuote
  *
  */
-
+import { generateGuid } from 'containers/App/constants';
 import React, { PropTypes } from 'react';
 import CKEditor from 'react-ckeditor-component';
 import { connect } from 'react-redux';
@@ -54,14 +54,14 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
       _.filter(this.props.lines, { groupId: this.state.selectedGroup }));
     const group = Object.assign({},
       _.filter(this.props.groups, { id: this.state.selectedGroup })[0]);
-    const randomID = parseInt(Math.random() * 100000, 0).toString();
+    const randomID = generateGuid();
     const lines = this.props.lines;
     const groups = this.props.groups;
     group.id = randomID;
     groupLines.forEach((i) => {
       const groupLine = Object.assign({}, i);
       groupLine.groupId = randomID;
-      groupLine.id = parseInt(Math.random() * 100000, 0).toString();
+      groupLine.id = generateGuid();
       lines.push(groupLine);
     });
 
@@ -251,6 +251,9 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               checkCustomSegmentData={this.props.checkCustomSegmentData}
               customSegments={this.props.customSegments}
               clearCustomSegmentsData={this.props.clearCustomSegmentsData}
+              quoteData={this.props.quoteData}
+              toggleCheckAll={this.props.toggleCheckAll}
+              isCheckAll={this.props.isCheckAll}
             />
           :
               <EditQuoteGrid
@@ -266,6 +269,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 updateBundle={this.props.updateBundle}
                 updateSelect={this.props.updateSelect}
                 updateSelectBundle={this.props.updateSelectBundle}
+                quoteData={this.props.quoteData}
               />
           }
         </div>
@@ -308,6 +312,9 @@ GroupQuote.propTypes = {
   checkCustomSegmentData: PropTypes.func,
   customSegments: PropTypes.any,
   clearCustomSegmentsData: PropTypes.any,
+  quoteData: PropTypes.any,
+  toggleCheckAll: PropTypes.func,
+  isCheckAll: PropTypes.any,
 };
 const mapStateToProps = createStructuredSelector({
 });

@@ -22,7 +22,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
   }
   render() {
     return (
-      <Row className="show-grid">
+      <Row className="show-grid headerFix">
         <Col xs={12} md={3}>
           <Helmet
             title="ProductSelectionHeader"

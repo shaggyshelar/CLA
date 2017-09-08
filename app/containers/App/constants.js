@@ -18,16 +18,23 @@ if (process.env.NODE_ENV === 'production') {
   serverUrl = 'http://192.168.101.130:3000/api';
   entityUrls = {
     PRODUCTS: '/Product',
-    QUOTE: '/QuoteProduct',
+    QUOTE: '/Quote',
     COUNTRIES: '/countries',
   };
 }
+function S4() {
+  return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+}
 
+export function generateGuid() {
+  const guid = (`${S4() + S4()}-${S4()}-4${S4().substr(0, 3)}-${S4()}-${S4()}${S4()}${S4()}`).toLowerCase();
+  return guid;
+}
 if (process.env.NODE_ENV === 'development') {
   serverUrl = 'http://192.168.100.130:1825/api';
   entityUrls = {
     PRODUCTS: '/Product',
-    QUOTE: '/QuoteProduct',
+    QUOTE: '/Quote',
     COUNTRIES: '/countries',
   };
 }
@@ -70,3 +77,5 @@ export const SEGMENT = 'app/EditQuote/SEGMENT';
 export const DESEGMENT = 'app/EditQuote/DESEGMENT';
 export const UPDATE_SELECT = 'app/EditQuote/UPDATE_SELECT';
 export const UPDATE_SELECT_BUNDLE = 'app/EditQuote/UPDATE_SELECT_BUNDLE';
+export const SAVE_CUSTOM_SEGMENT_DATA_SUCCESS = 'app/EditQuote/SAVE_CUSTOM_SEGMENT_DATA_SUCCESS';
+export const SAVE_APP_CUSTOM_SEGMENT_DATA = 'app/EditQuote/SAVE_APP_CUSTOM_SEGMENT_DATA';

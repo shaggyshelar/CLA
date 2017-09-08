@@ -6,7 +6,6 @@
 
 import React from 'react';
 // import styled from 'styled-components';
-import DatePicker from 'react-bootstrap-date-picker';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
 import { Modal, Button, Glyphicon, Row, FormControl, Table } from 'react-bootstrap/lib';
@@ -17,13 +16,11 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     super(props);
     this.state = {
       customSegmentedLines: [],
-      isCheckAll: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.saveCustomSegments = this.saveCustomSegments.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.toggleCheckAll = this.toggleCheckAll.bind(this);
-    this.handleChangeDate = this.handleChangeDate.bind(this);
   }
 
   handleChange(e) {
@@ -40,8 +37,8 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
   }
 
   toggleCheckAll() {
-    this.state.isCheckAll = !this.state.isCheckAll;
-    this.props.checkAllCustomSegmentData(this.state.isCheckAll);
+    this.props.toggleCheckAll(!this.props.isCheckAll);
+    this.props.checkAllCustomSegmentData(!this.props.isCheckAll);
   }
 
   saveCustomSegments() {
@@ -53,7 +50,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     let dateError = false;
     let isDateNull = false;
     for (let index = 0; index <= customSegments.length - 1; index++) {
-      if (customSegments[index].startDate == null || customSegments[index].endDate == null) {
+      if (customSegments[index].startDate === null || customSegments[index].startDate === '' || customSegments[index].endDate === null || customSegments[index].endDate === '') {
         isDateNull = true;
         break;
       }
@@ -67,11 +64,13 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
         const endDate = new Date(customSegments[index].endDate);
         endDate.setDate(endDate.getDate() + 1);
         const startDate = new Date(customSegments[index + 1].startDate);
-        if (endDate.getTime() !== startDate.getTime()) {
+        if (new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate()).getTime() !== new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime()) {
           dateError = true;
           break;
         }
       }
+      customSegments[index].startDate = new Date(customSegments[index].startDate).toISOString();
+      customSegments[index].endDate = new Date(customSegments[index].endDate).toISOString();
     }
     if (isDateNull) {
       toast.error(this.context.intl.formatMessage({ ...messages.dateEmptyValidation }), {
@@ -94,41 +93,64 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
         position: toast.POSITION.TOP_CENTER,
       });
     } else {
-      const segment = {
-        type: 'Custom',
-        columns: this.props.customSegments.toJS(),
-      };
-      this.props.saveCustomSegmentData(segment);
+      const customLines = [];
+      const updatedObj = {};
+      const quote = {};
+      quote.id = this.props.quoteData.id;
+      this.props.customLines.forEach((item) => {
+        const line = {
+          id: item.id,
+          productId: item.productId,
+          code: item.code,
+          name: item.name,
+          segmentData: {
+            type: item.type,
+            columns: customSegments,
+          },
+        };
+        customLines.push(line);
+      }, this);
+      quote.lines = customLines;
+      updatedObj.quote = quote;
+      updatedObj.config = {};
+      this.props.saveCustomSegmentData(updatedObj);
     }
   }
 
-  handleChangeDate(item, field, value) {
-    const obj = {
-      field,
-      value,
-      id: item.id,
-    };
-    this.props.changeCustomSegmentFieldData(obj);
-  }
   render() {
     let rows = [];
     if (this.props.customSegments !== undefined) {
       rows = this.props.customSegments.toJS().map((item, index) => (<tr key={index}>
-        <td>{!item.isDefault ? <input type="checkbox" className="check checkboxWidth" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check checkboxWidth hideSpan" />}</td>
+        <td>{!item.isDefault ? <input type="checkbox" className="check" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check hideSpan" />}</td>
         <td>
           <FormControl
             type="text"
             id={item.id}
             name="name"
             value={item.name}
+            className="customSegmentsInput"
             onChange={this.handleChange}
           />
         </td>
         <td id="datePicker">
-          <DatePicker onChange={this.handleChangeDate.bind(this, item, 'startDate')} dateFormat="MM/DD/YYYY" value={item.startDate} />
+          <FormControl
+            type="date"
+            id={item.id}
+            name="startDate"
+            value={item.startDate}
+            className="customSegmentsInput"
+            onChange={this.handleChange}
+          />
         </td>
         <td id="datePicker">
-          <DatePicker onChange={this.handleChangeDate.bind(this, item, 'endDate')} dateFormat="MM/DD/YYYY" value={item.endDate} />
+          <FormControl
+            type="date"
+            id={item.id}
+            name="endDate"
+            value={item.endDate}
+            className="customSegmentsInput"
+            onChange={this.handleChange}
+          />
         </td>
       </tr>));
     }
@@ -137,6 +159,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
       <Modal
         show={this.props.showModal} onHide={this.props.onHide}
         style={{ display: 'inline-flex' }}
+        className="customModal customSegModal"
       >
         <Modal.Dialog >
           <Modal.Header closeButton>
@@ -148,7 +171,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
               <Table responsive bsClass="modal-table">
                 <thead>
                   <tr>
-                    <th>{<input type="checkbox" className="check checkboxWidth" defaultChecked={this.state.isCheckAll} onChange={this.toggleCheckAll} />}</th>
+                    <th>{<input type="checkbox" className="check checkboxWidth" checked={this.props.isCheckAll} onChange={this.toggleCheckAll} />}</th>
                     <th className="upper-case">{this.context.intl.formatMessage({ ...messages.segmentLabel })}</th>
                     <th className="upper-case">{this.context.intl.formatMessage({ ...messages.startDate })}</th>
                     <th className="upper-case">{this.context.intl.formatMessage({ ...messages.endDate })}</th>
@@ -189,6 +212,10 @@ CustomSegmentsModal.propTypes = {
   checkAllCustomSegmentData: React.PropTypes.func,
   checkCustomSegmentData: React.PropTypes.func,
   customSegments: React.PropTypes.any,
+  customLines: React.PropTypes.any,
+  quoteData: React.PropTypes.any,
+  toggleCheckAll: React.PropTypes.func,
+  isCheckAll: React.PropTypes.any,
 };
 
 export default CustomSegmentsModal;

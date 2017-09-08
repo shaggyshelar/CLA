@@ -156,7 +156,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   }
   renderActionItems(cellInfo) {
     // const discount = cellInfo.original.canShowDiscountScheduler ? <a><Glyphicon glyph="calendar" onClick={this.handleToggle.bind(this, cellInfo.index)} /></a> : '';
-    const reconfigure = cellInfo.original.canReconfigure ? <a className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : '';
+    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.recongifure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}&quoteId=${this.props.quoteData.id}&priceBookId=${this.props.quoteData.priceBookId}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
     // const bundle = cellInfo.original.isBundled ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
     // const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
     const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Desegment"><Glyphicon glyph="transfer" /></a> : '';
@@ -221,7 +221,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <span className="pro-name">{cellInfo.original.code}</span></div> : <span className="pro-name">{cellInfo.original.code}</span>),
+        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span title={cellInfo.original.code} className="pro-name">{cellInfo.original.code}</span>),
       },
 
       {
@@ -230,7 +230,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name">{cellInfo.original.name}</span></div> : <span className="pro-name">{cellInfo.original.name}</span>),
+        Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       }];
     const data = Object.assign({}, this.props.data[0]);
     data.segmentData.columns.map((i, index) => (
@@ -313,7 +313,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           style={{
             display: 'inline-flex',
           }}
-          selectedLine={this.props.data[0]}
+          customLines={this.props.data}
           loadCustomSegmentsData={this.props.loadCustomSegmentsData}
           addCustomSegmentData={this.props.addCustomSegmentData}
           deleteCustomSegmentData={this.props.deleteCustomSegmentData}
@@ -322,6 +322,9 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           checkAllCustomSegmentData={this.props.checkAllCustomSegmentData}
           checkCustomSegmentData={this.props.checkCustomSegmentData}
           customSegments={this.props.customSegments}
+          quoteData={this.props.quoteData}
+          toggleCheckAll={this.props.toggleCheckAll}
+          isCheckAll={this.props.isCheckAll}
         />
         <div className="sub-footer-seg upper-case">
           {total}
@@ -354,6 +357,9 @@ SegmentedEditQuoteGrid.propTypes = {
   checkCustomSegmentData: PropTypes.func,
   customSegments: PropTypes.any,
   handleCustomModalToggle: PropTypes.func,
+  quoteData: PropTypes.any,
+  toggleCheckAll: PropTypes.func,
+  isCheckAll: PropTypes.any,
 };
 
 export default SegmentedEditQuoteGrid;

@@ -2,12 +2,12 @@
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import { browserHistory } from 'react-router';
+import { generateGuid } from 'containers/App/constants';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectData, makeSelectError, makeSelectLoading, getCustomSegments } from './selectors';
+import { makeSelectData, makeSelectError, makeSelectLoading, getCustomSegments, getCheckAll } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import { GroupQuote } from '../GroupQuote';
 import { SegmentedQuote } from '../SegmentedQuote';
@@ -32,11 +32,11 @@ import { cloneLine,
   updateGroupValue,
   updateSelect,
   updateSelectBundle,
-
+  saveAppCustomSegmentData,
   segment,
  } from '../App/actions';
 
-import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData, clearCustomSegmentsData } from './actions';
+import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData, clearCustomSegmentsData, toggleCheckAll } from './actions';
 
 
 export class EditQuotePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -93,9 +93,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   group() {
     const data = this.props.data.toJS();
-    const randomID = parseInt(Math.random() * 100000, 0).toString();
+    const randomID = generateGuid();
     if (data.linesGrouped) {
-      const name = `Group ${data.groups.length}`;
+      const name = `New Group #${data.groups.length + 1}`;
       data.groups.push({
         id: randomID,
         name,
@@ -109,7 +109,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       data.lines.forEach((i, index) => { data.lines[index].groupId = randomID; });
       data.groups.push({
         id: randomID,
-        name: 'Group1',
+        name: 'Group 1',
         isOptional: false,
         description: '',
         additionaldiscount: '',
@@ -155,6 +155,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         if (d[i].checked) {
           d[i].click();
         }
+      }
+      const d2 = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
+      if (d2.checked) {
+        d2.checked = false;
       }
     }
   }
@@ -212,12 +216,20 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   saveCustomSegmentData(segmentData) {
     this.props.saveCustomSegmentData(segmentData);
-    browserHistory.push('/EditQuote');
+    this.props.saveAppCustomSegmentData();
   }
   quickSaveQuotes() {
     this.props.quickSaveQuote(this.props.data.toJS());
   }
   render() {
+    let quoteData = {};
+    const data = this.props.data.toJS();
+    if (data) {
+      quoteData = {
+        id: data.id,
+        priceBookId: data.priceBookId,
+      };
+    }
     if (this.props.loading) {
       return (<div className="loader" style={style}></div>);
     }
@@ -283,6 +295,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               checkCustomSegmentData={this.props.checkCustomSegmentData}
               customSegments={this.props.customSegments}
               clearCustomSegmentsData={this.props.clearCustomSegmentsData}
+              quoteData={quoteData}
+              toggleCheckAll={this.props.toggleCheckAll}
+              isCheckAll={this.props.isCheckAll}
             />
           </div>
         :
@@ -314,6 +329,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                 checkCustomSegmentData={this.props.checkCustomSegmentData}
                 customSegments={this.props.customSegments}
                 clearCustomSegmentsData={this.props.clearCustomSegmentsData}
+                quoteData={quoteData}
+                toggleCheckAll={this.props.toggleCheckAll}
+                isCheckAll={this.props.isCheckAll}
               />
             :
                 <EditQuoteGrid
@@ -329,6 +347,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                   updateBundle={this.props.updateBundle}
                   updateSelect={this.props.updateSelect}
                   updateSelectBundle={this.props.updateSelectBundle}
+                  quoteData={quoteData}
                 />
             }
           </div>
@@ -374,6 +393,9 @@ EditQuotePage.propTypes = {
   checkCustomSegmentData: PropTypes.func,
   customSegments: PropTypes.any,
   clearCustomSegmentsData: PropTypes.func,
+  saveAppCustomSegmentData: PropTypes.func,
+  toggleCheckAll: PropTypes.func,
+  isCheckAll: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -381,6 +403,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
   customSegments: getCustomSegments(),
+  isCheckAll: getCheckAll(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -475,6 +498,12 @@ function mapDispatchToProps(dispatch) {
     },
     clearCustomSegmentsData: (id) => {
       dispatch(clearCustomSegmentsData(id));
+    },
+    saveAppCustomSegmentData: () => {
+      dispatch(saveAppCustomSegmentData());
+    },
+    toggleCheckAll: (isCheckAll) => {
+      dispatch(toggleCheckAll(isCheckAll));
     },
   };
 }
