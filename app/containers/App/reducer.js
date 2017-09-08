@@ -83,8 +83,7 @@ function appReducer(state = initialState, action) {
         return state.setIn(['data', 'lines'], fromJS(data));
       }
     case ADD_PRODUCTS:
-      data = state.getIn(['data', 'lines']);
-      return state.setIn(['data', 'lines'], fromJS(data.concat(action.data)));
+      return state.set('loading', true);
     case DELETE_LINE:
       data = state.getIn(['data', 'lines']).toJS();
       _.remove(data, (n) => n.id === action.data);
