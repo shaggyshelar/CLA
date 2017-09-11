@@ -11,6 +11,20 @@ const errorLoading = (err) => {
 const loadModule = (cb) => (componentModule) => {
   cb(null, componentModule.default);
 };
+export const memoizeComponent = (loadComponent) => {
+  let savedComponent;
+  return (nextState, cb) => {
+    const renderRoute = loadModule(cb);
+    if (savedComponent) {
+      renderRoute(savedComponent);
+    } else {
+      loadComponent((loadedComponent) => {
+        savedComponent = loadedComponent;
+        renderRoute(savedComponent);
+      });
+    }
+  };
+};
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
@@ -34,7 +48,7 @@ export default function createRoutes(store) {
     childRoutes: [{
       path: appHomeRoute,
       name: 'home',
-      getComponent(nextState, cb) {
+      getComponent: memoizeComponent((renderRoute) => {
         // const importModules = Promise.all([
         //   import('containers/HomePage'),
         // ]);
@@ -44,7 +58,7 @@ export default function createRoutes(store) {
           import('containers/EditQuotePage'),
         ]);
 
-        const renderRoute = loadModule(cb);
+        // const renderRoute = loadModule(cb);
 
         // importModules.then(([component]) => {
         //   renderRoute(component);
@@ -57,18 +71,18 @@ export default function createRoutes(store) {
         });
 
         importModules.catch(errorLoading);
-      },
+      }),
     }, {
       path: '/ProductSelection',
       name: 'productSelectionPage',
-      getComponent(nextState, cb) {
+      getComponent: memoizeComponent((renderRoute) => {
         const importModules = Promise.all([
           import('containers/ProductSelectionPage/reducer'),
           import('containers/ProductSelectionPage/sagas'),
           import('containers/ProductSelectionPage'),
         ]);
 
-        const renderRoute = loadModule(cb);
+        // const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('productSelectionPage', reducer.default);
@@ -77,18 +91,18 @@ export default function createRoutes(store) {
         });
 
         importModules.catch(errorLoading);
-      },
+      }),
     }, {
       path: '/EditQuote',
       name: 'editQuote',
-      getComponent(nextState, cb) {
+      getComponent: memoizeComponent((renderRoute) => {
         const importModules = Promise.all([
           import('containers/EditQuotePage/reducer'),
           import('containers/EditQuotePage/sagas'),
           import('containers/EditQuotePage'),
         ]);
 
-        const renderRoute = loadModule(cb);
+       // const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('editQuote', reducer.default);
@@ -97,7 +111,7 @@ export default function createRoutes(store) {
         });
 
         importModules.catch(errorLoading);
-      },
+      }),
     }, {
       path: '/PriceBook',
       name: 'priceBook',

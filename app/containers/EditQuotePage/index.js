@@ -55,7 +55,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.cloneCheckedLines = this.cloneCheckedLines.bind(this);
     this.checkAll = this.checkAll.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
-    this.quickSaveQuotes = this.quickSaveQuotes.bind(this);
+    this.quickSaveQuoteLines = this.quickSaveQuoteLines.bind(this);
     this.updateProps = this.updateProps.bind(this);
     this.ungroup = this.ungroup.bind(this);
     this.group = this.group.bind(this);
@@ -218,8 +218,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.props.saveCustomSegmentData(segmentData);
     this.props.saveAppCustomSegmentData();
   }
-  quickSaveQuotes() {
-    this.props.quickSaveQuote(this.props.data.toJS());
+  quickSaveQuoteLines() {
+    this.props.quickSaveQuote();
   }
   render() {
     let quoteData = {};
@@ -253,7 +253,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             deleteLine={this.deleteCheckedLines}
             clone={this.cloneCheckedLines}
             calculateTotal={this.calculateTotal}
-            quickSave={this.quickSaveQuotes}
+            quickSave={this.quickSaveQuoteLines}
             ungroup={this.ungroup}
             group={this.group}
             grouped={grouped}
@@ -424,8 +424,8 @@ function mapDispatchToProps(dispatch) {
     calculateSelected: (data) => {
       dispatch(calculateSelectedData(data));
     },
-    quickSaveQuote: (data) => {
-      dispatch(quickSaveQuotes(data));
+    quickSaveQuote: () => {
+      dispatch(quickSaveQuotes());
     },
     updateProps: (data) => {
       dispatch(updateProps(data));

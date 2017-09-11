@@ -7729,10 +7729,10 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
 });
 
 // /v1/quote/save/{QuoteID}
-quoteRouter.post('/save/:QuoteID', (req, res) => {
-  // req.params.QuoteID;
-  quotes.quotes.push(req.body.quote);
-  res.json(req.body);
+quoteRouter.post('/SaveQuote', (req, res) => {
+  const response = { config: {}, quote: {} };
+  response.quote = req.body;
+  res.json(response);
 });
 
 quoteRouter.post('/calculate/:QuoteID', (req, res) => {
