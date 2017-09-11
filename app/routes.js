@@ -3,7 +3,7 @@
 // See http://blog.mxstbr.com/2016/01/react-apps-with-pages for more information
 // about the code splitting business
 import { getAsyncInjectors } from 'utils/asyncInjectors';
-const definedRoutes = ['/EditQuote', '/ProductSelection', '/reconfigureproducts'];
+const definedRoutes = ['/editquote', '/productselection', '/reconfigureproducts', '/addconfigureproducts'];
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
 };
@@ -28,7 +28,7 @@ export const memoizeComponent = (loadComponent) => {
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
-  const appHomeRoute = definedRoutes.includes(location.pathname) ? '/EditQuote' : location.pathname;
+  const appHomeRoute = definedRoutes.includes(location.pathname.toLowerCase()) ? '/EditQuote' : location.pathname;
   return {
     getComponent(nextState, cb) {
       const importModules = Promise.all([
@@ -155,14 +155,14 @@ export default function createRoutes(store) {
     }, {
       path: '/reconfigureproducts',
       name: 'reConfigureProducts',
-      getComponent(nextState, cb) {
+      getComponent: memoizeComponent((renderRoute) => {
         const importModules = Promise.all([
           import('containers/ReConfigureProducts/reducer'),
           import('containers/ReConfigureProducts/sagas'),
           import('containers/ReConfigureProducts'),
         ]);
 
-        const renderRoute = loadModule(cb);
+        // const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('reConfigureProducts', reducer.default);
@@ -171,18 +171,18 @@ export default function createRoutes(store) {
         });
 
         importModules.catch(errorLoading);
-      },
+      }),
     }, {
       path: '/addConfigureProducts',
       name: 'addConfigureProducts',
-      getComponent(nextState, cb) {
+      getComponent: memoizeComponent((renderRoute) => {
         const importModules = Promise.all([
           import('containers/AddConfigureProducts/reducer'),
           import('containers/AddConfigureProducts/sagas'),
           import('containers/AddConfigureProducts'),
         ]);
 
-        const renderRoute = loadModule(cb);
+        // const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('addConfigureProducts', reducer.default);
@@ -191,7 +191,7 @@ export default function createRoutes(store) {
         });
 
         importModules.catch(errorLoading);
-      },
+      }),
     }, {
       path: '*',
       name: 'notfound',
