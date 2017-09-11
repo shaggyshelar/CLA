@@ -110,35 +110,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     // });
   }
   addProductsWait() {
-    let data = [];
-
-    data = _.filter(this.props.products, (o) =>
-      this.state.selectedProducts.includes(o.id)
-    );
-    if (this.props.location.query.groupId) {
-      data.forEach((i, index) => {
-        data[index].groupId = this.props.location.query.groupId;
-        data[index].id = generateGuid();
-      });
-      this.props.addProductsToQuote(data);
-    } else {
-      this.props.addProductsToQuote(data);
-    }
-
-    const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
-    if (d.checked) {
-      d.click();
-      toast.success(' Products Added', {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    }
-  }
-  addProducts() {
     const data = [];
-    // const pushData = [];
-    // data = _.filter(this.props.products.toJS(), (o) =>
-    //   this.state.selectedProducts.includes(o.id)
-    // );
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i += 1) {
       if (d[i].checked && this.props.location.query.groupId) {
@@ -147,7 +119,25 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         data.push({ productId: d[i].value });
       }
     }
-    console.log(data);
+    this.props.addProductsToQuote(data);
+    const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
+    if (d1.checked) {
+      d1.click();
+      toast.success(' Products Added', {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  }
+  addProducts() {
+    const data = [];
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    for (let i = 0; i < d.length; i += 1) {
+      if (d[i].checked && this.props.location.query.groupId) {
+        data.push({ productId: d[i].value, groupId: this.props.location.query.groupId });
+      } else if (d[i].checked && !this.props.location.query.groupId) {
+        data.push({ productId: d[i].value });
+      }
+    }
     this.props.addProductsToQuote(data);
     if (this.props.location.query.groupId) {
       browserHistory.push(`/EditQuote?groupId=${this.props.location.query.groupId}`);
