@@ -7732,6 +7732,8 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
 quoteRouter.post('/SaveQuote', (req, res) => {
   const response = { config: {}, quote: {} };
   response.quote = req.body;
+  const error = [{ id: 123, type: 'as', message: 'Invalid Products' }, { id: 123, type: 'as', message: 'Invalid Data' }];
+  response.quote.errorMessages = error;
   res.json(response);
 });
 

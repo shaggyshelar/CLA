@@ -3,7 +3,7 @@
 // See http://blog.mxstbr.com/2016/01/react-apps-with-pages for more information
 // about the code splitting business
 import { getAsyncInjectors } from 'utils/asyncInjectors';
-
+const definedRoutes = ['/EditQuote', '/ProductSelection', '/reconfigureproducts'];
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
 };
@@ -28,7 +28,7 @@ export const memoizeComponent = (loadComponent) => {
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
-  const appHomeRoute = location.pathname;
+  const appHomeRoute = definedRoutes.includes(location.pathname) ? '/EditQuote' : location.pathname;
   return {
     getComponent(nextState, cb) {
       const importModules = Promise.all([
