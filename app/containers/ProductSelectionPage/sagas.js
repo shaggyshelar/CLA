@@ -2,14 +2,14 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import { take, call, select, put, cancel, takeLatest, takeEvery, fork, actionChannel } from 'redux-saga/effects';
 import request from 'utils/request';
 import { LOAD_PRODUCTS_DATA, LOAD_SEARCH_DATA } from './constants';
-import { dataLoaded } from '../App/actions';
+import { dataLoaded, dataLoadingError } from '../App/actions';
 import { selectGlobal } from '../App/selectors';
 import {
   SERVER_URL,
   EntityURLs,
   ADD_PRODUCTS,
 } from '../App/constants';
-import { productsDataLoaded, dataLoadingError, searchedDataLoaded, searchBtnDataLoaded } from './actions';
+import { productsDataLoaded, searchedDataLoaded, searchBtnDataLoaded } from './actions';
 // import { LOAD_REPOS } from 'containers/App/constants';
 // import { SERVER_URL, EntityURLs } from '../App/constants';
 // Individual exports for testing
@@ -91,7 +91,7 @@ export function* addProductsPost(data, action) {
       body: JSON.stringify(dataPost),
     };
     const repos = yield call(request, requestURL, options);
-    yield put(dataLoaded(repos));
+    yield put(dataLoadingError(repos));
   } catch (err) {
     yield put(dataLoadingError(err));
   }
