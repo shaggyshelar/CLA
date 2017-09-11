@@ -45,6 +45,7 @@ import {
   SEGMENT,
   SAVE_CUSTOM_SEGMENT_DATA_SUCCESS,
   SAVE_APP_CUSTOM_SEGMENT_DATA,
+  QUICK_SAVE_QUOTES,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -84,8 +85,11 @@ function appReducer(state = initialState, action) {
         return state.setIn(['data', 'lines'], fromJS(data));
       }
     case ADD_PRODUCTS:
-      data = state.getIn(['data', 'lines']);
-      return state.setIn(['data', 'lines'], fromJS(data.concat(action.data)));
+      return state.set('loading', true);
+    case QUICK_SAVE_QUOTES:
+      return state.set('loading', true);
+    case CALCULATE_SELECTED:
+      return state.set('loading', true);
     case DELETE_LINE:
       data = state.getIn(['data', 'lines']).toJS();
       _.remove(data, (n) => n.id === action.data);
@@ -128,9 +132,6 @@ function appReducer(state = initialState, action) {
         .set('loading', false);
     case UPDTATE_PROPS:
       return state.setIn(['data', 'lines'], fromJS(action.data));
-    case CALCULATE_SELECTED:
-      return state
-          .setIn(['data'], fromJS(action.data));
     case CLONE_GROUP:
       return state
         .setIn(['data', 'lines'], fromJS(action.lines))
