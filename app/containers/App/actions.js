@@ -120,10 +120,9 @@ export function calculateSelectedData(data) {
   };
 }
 
-export function quickSaveQuotes(data) {
+export function quickSaveQuotes() {
   return {
     type: QUICK_SAVE_QUOTES,
-    data,
   };
 }
 

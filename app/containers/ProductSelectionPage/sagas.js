@@ -1,11 +1,17 @@
 import { LOCATION_CHANGE } from 'react-router-redux';
-import _ from 'lodash';
-import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
+import { take, call, select, put, cancel, takeLatest, takeEvery, fork, actionChannel } from 'redux-saga/effects';
 import request from 'utils/request';
 import { LOAD_PRODUCTS_DATA, LOAD_SEARCH_DATA } from './constants';
+import { dataLoaded } from '../App/actions';
+import { selectGlobal } from '../App/selectors';
+import {
+  SERVER_URL,
+  EntityURLs,
+  ADD_PRODUCTS,
+} from '../App/constants';
 import { productsDataLoaded, dataLoadingError, searchedDataLoaded, searchBtnDataLoaded } from './actions';
 // import { LOAD_REPOS } from 'containers/App/constants';
-import { SERVER_URL, EntityURLs } from '../App/constants';
+// import { SERVER_URL, EntityURLs } from '../App/constants';
 // Individual exports for testing
 export function* getProductsSaga(action) {
   // See example in containers/HomePage/sagas.js
@@ -19,10 +25,12 @@ export function* getProductsSaga(action) {
 }
 
 export function* productsData() {
-  const watcher = yield takeLatest(LOAD_PRODUCTS_DATA, getProductsSaga);
-  // Suspend execution until location changes
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
+  while (true) {
+    const watcher = yield takeLatest(LOAD_PRODUCTS_DATA, getProductsSaga);
+    // Suspend execution until location changes
+    yield take(LOCATION_CHANGE);
+    yield cancel(watcher);
+  }
 }
 
 export function* searchedProducts(action) {
@@ -45,9 +53,53 @@ export function* searchedData() {
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);
 }
+export function* addProducts() {
+  while (true) {
+    const chan = yield actionChannel(ADD_PRODUCTS);
+    const lines = yield select(selectGlobal);
+    const postLines = Object.assign({}, lines.toJS().data);
+    const { data } = yield take(chan);
+    try {
+      const dataPost = postLines;
+      dataPost.lines = dataPost.lines.concat(data);
+      const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/AddProducts`}`;
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataPost),
+      };
+      const repos = yield call(request, requestURL, options);
+      yield put(dataLoaded(repos));
+    } catch (err) {
+      yield put(dataLoadingError(err));
+    }
+  }
+}
+
+export function* addProductsPost(data, action) {
+  try {
+    const dataPost = data;
+    dataPost.lines = dataPost.lines.concat(action.data);
+    const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/AddProducts`}`;
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataPost),
+    };
+    const repos = yield call(request, requestURL, options);
+    yield put(dataLoaded(repos));
+  } catch (err) {
+    yield put(dataLoadingError(err));
+  }
+}
 
 // All sagas to be loaded
 export default[
   productsData,
   searchedData,
+  addProducts,
 ];
