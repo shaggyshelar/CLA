@@ -13,7 +13,7 @@ import { browserHistory } from 'react-router';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
 import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState } from './selectors';
-import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange } from './actions';
+import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -69,15 +69,18 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     this.saveProducts = this.saveProducts.bind(this);
   }
 
-
   componentDidMount() {
-    if (this.props.location.query.id) {
+    console.log('this.props.fromAddOption', this.props.fromAddOption);
+    if (!this.props.fromAddOption) {
       const data = {
         id: parseInt(this.props.location.query.id, 0),
         quoteId: parseInt(this.props.location.query.quoteId, 0),
         priceBookId: parseInt(this.props.location.query.priceBookId, 0),
       };
+      console.log(' this.props.getProductsData');
       this.props.getProductsData(data);
+    } else {
+      this.props.toggleAddOptionsState(false);
     }
   }
 
@@ -169,6 +172,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             deleteProduct={this.props.deleteProduct}
             updateField={this.props.updateField}
             quoteName={this.props.reConfigureProductData.toJS().productBundleQuoteName}
+            toggleAddOptionsState={this.props.toggleAddOptionsState}
           />
         </div>
       </div>
@@ -188,6 +192,8 @@ ReConfigureProducts.propTypes = {
   location: PropTypes.any,
   updateField: PropTypes.func,
   toggleCheckboxChange: PropTypes.func,
+  fromAddOption: PropTypes.any,
+  toggleAddOptionsState: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -214,6 +220,9 @@ function mapDispatchToProps(dispatch) {
     },
     toggleCheckboxChange: (productObj) => {
       dispatch(toggleCheckboxChange(productObj));
+    },
+    toggleAddOptionsState: (fromAddOption) => {
+      dispatch(toggleAddOptionsState(fromAddOption));
     },
   };
 }

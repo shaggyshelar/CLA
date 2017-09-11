@@ -17,6 +17,7 @@ import {
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
   TOGGLE_CHECKBOX_CHANGE,
+  TOGGLE_ADDOPTIONS_STATE,
 } from './constants';
 
 const initialState = fromJS({
@@ -37,6 +38,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS: {
       const reConfigureProducts = {};
+      console.log('action.productBundelData', action.productBundelData);
       const productBundelData = action.productBundelData;
       if (!_.isUndefined(action.productBundelData) !== undefined && !_.isUndefined(action.productBundelData)) {
         let categories = [];
@@ -311,6 +313,11 @@ function reConfigureProductsReducer(state = initialState, action) {
       }
       return state
         .set('reConfigureProductData', fromJS(reConfigureProduct));
+    }
+
+    case TOGGLE_ADDOPTIONS_STATE: {
+      return state
+        .set('fromAddOptions', action.fromAddOptions);
     }
     default:
       return state;

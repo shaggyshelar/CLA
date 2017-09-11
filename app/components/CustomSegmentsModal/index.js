@@ -94,7 +94,6 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
       });
     } else {
       const customLines = [];
-      const updatedObj = {};
       const quote = {};
       quote.id = this.props.quoteData.id;
       this.props.customLines.forEach((item) => {
@@ -111,9 +110,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
         customLines.push(line);
       }, this);
       quote.lines = customLines;
-      updatedObj.quote = quote;
-      updatedObj.config = {};
-      this.props.saveCustomSegmentData(updatedObj);
+      this.props.saveCustomSegmentData(quote);
     }
   }
 
