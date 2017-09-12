@@ -67,7 +67,7 @@ function appReducer(state = initialState, action) {
         .set('data', fromJS(action.data.quote))
         .set('loading', false);
     case LOAD_DATA_ERROR:
-      if (action.error) {
+      if (action.error instanceof Array) {
         action.error.map((i) => {
           toast.error(i.message, {
             position: toast.POSITION.TOP_CENTER,
@@ -75,7 +75,7 @@ function appReducer(state = initialState, action) {
           return this;
         });
       } else {
-        toast.error('Server connection problem ! Please try again later.', {
+        toast.error(action.error.message, {
           position: toast.POSITION.TOP_CENTER,
         });
       }
