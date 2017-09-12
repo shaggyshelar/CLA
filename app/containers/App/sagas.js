@@ -19,7 +19,11 @@ export function* getData(action) {
   };
   try {
     const repos = yield call(request, requestURL, options);
-    yield put(dataLoaded(repos));
+    if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
+      yield put(dataLoadingError(repos.quote.errorMessages));
+    } else {
+      yield put(dataLoaded(repos));
+    }
   } catch (err) {
     yield put(dataLoadingError(err));
   }

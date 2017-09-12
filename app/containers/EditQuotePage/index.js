@@ -71,11 +71,11 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         segmented: true,
       });
     }
-    if (window.parent.Xrm !== undefined) {
-      console.log(window.parent.Xrm.Page.getAttribute('').getValue());
-      console.log(window.parent.Xrm.Page.data.entity.getId().replace('{', '').replace('}', ''));
-      console.log(window.parent.Xrm.Page.data.entity.getEntityName());
-    }
+    // if (window.parent.Xrm !== undefined) {
+    //   console.log(window.parent.Xrm.Page.getAttribute('').getValue());
+    //   console.log(window.parent.Xrm.Page.data.entity.getId().replace('{', '').replace('}', ''));
+    //   console.log(window.parent.Xrm.Page.data.entity.getEntityName());
+    // }
   }
 
   ungroup() {
