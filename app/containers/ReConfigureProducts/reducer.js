@@ -6,6 +6,7 @@
 import { generateGuid } from 'containers/App/constants';
 import { fromJS } from 'immutable';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
 import {
   DEFAULT_ACTION,
   LOAD_CONFIGURE_PRODUCTS_DATA,
@@ -38,7 +39,6 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS: {
       const reConfigureProducts = {};
-      console.log('action.productBundelData', action.productBundelData);
       const productBundelData = action.productBundelData;
       if (!_.isUndefined(action.productBundelData) !== undefined && !_.isUndefined(action.productBundelData)) {
         let categories = [];
@@ -181,6 +181,18 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('reConfigureProductData', fromJS(reConfigureProducts));
     }
     case LOAD_CONFIGURE_PRODUCTS_DATA_ERROR: {
+      if (action.error) {
+        action.error.map((i) => {
+          toast.error(i.message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          return this;
+        });
+      } else {
+        toast.error('Server connection problem ! Please try again later.', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
       return state
         .set('error', action.error)
         .set('loading', false);
