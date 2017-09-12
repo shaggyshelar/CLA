@@ -6,6 +6,7 @@
 import { generateGuid } from 'containers/App/constants';
 import { fromJS } from 'immutable';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
 import {
   DEFAULT_ACTION,
   LOAD_CONFIGURE_PRODUCTS_DATA,
@@ -17,6 +18,7 @@ import {
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
   TOGGLE_CHECKBOX_CHANGE,
+  TOGGLE_ADDOPTIONS_STATE,
 } from './constants';
 
 const initialState = fromJS({
@@ -179,6 +181,18 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('reConfigureProductData', fromJS(reConfigureProducts));
     }
     case LOAD_CONFIGURE_PRODUCTS_DATA_ERROR: {
+      if (action.error) {
+        action.error.map((i) => {
+          toast.error(i.message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          return this;
+        });
+      } else {
+        toast.error('Server connection problem ! Please try again later.', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
       return state
         .set('error', action.error)
         .set('loading', false);
@@ -311,6 +325,11 @@ function reConfigureProductsReducer(state = initialState, action) {
       }
       return state
         .set('reConfigureProductData', fromJS(reConfigureProduct));
+    }
+
+    case TOGGLE_ADDOPTIONS_STATE: {
+      return state
+        .set('fromAddOptions', action.fromAddOptions);
     }
     default:
       return state;

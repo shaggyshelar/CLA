@@ -40,7 +40,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
       productObj.selectedProducts.push(products[productIndex]);
     }, this);
     this.props.addOptions(productObj);
-    browserHistory.push('/reconfigureproducts');
+    browserHistory.goBack();
   }
 
   toggleSidebar() {
