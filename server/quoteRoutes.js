@@ -9748,7 +9748,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
                 netTotal: 4356456,
               },
               {
-                name: 'Custom 1',
+                name: 'Custom 11111',
                 isDefault: false,
                 quantity: 123,
                 listPrice: 123,
@@ -9777,7 +9777,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
                 netTotal: 456456,
               },
               {
-                name: 'Custom 2',
+                name: 'Custom 22222',
                 isDefault: false,
                 quantity: 1234,
                 listPrice: 1234,
