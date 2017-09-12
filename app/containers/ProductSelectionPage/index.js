@@ -34,7 +34,13 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   componentWillMount() {
-    this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId);
+    const priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+    if (process.env.NODE_ENV === 'production') {
+      this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId);
+    }
+    if (process.env.NODE_ENV === 'development') {
+      this.props.getProductsData(this.props.location.query.groupId, priceBookId);
+    }
   }
 
   onSearch(value) {
@@ -67,11 +73,15 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         selectedProducts: [],
       });
     }
+    let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+    if (process.env.NODE_ENV === 'production') {
+      priceBookId = this.props.location.query.PriceBookId;
+    }
     const searchObj = {
       searchValue: value,
       fromSearch: false,
       groupId: this.props.location.query.groupId,
-      priceBookId: this.props.location.query.PriceBookId,
+      priceBookId,
     };
     this.props.searchInputChange(searchObj);
   }
@@ -92,7 +102,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
-    const data = this.state.selectedProducts;
     if (d.checked) {
       d.checked = false;
     }
