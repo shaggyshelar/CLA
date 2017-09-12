@@ -24,7 +24,13 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   componentDidMount() {
-    this.props.getProductsData(parseInt(this.props.location.query.featureId, 0));
+    const params = {
+      featureId: parseInt(this.props.location.query.featureId, 0),
+      bundleId: parseInt(this.props.location.query.bundleId, 0),
+      priceBookId: parseInt(this.props.location.query.priceBookId, 0),
+    };
+
+    this.props.getProductsData(params);
   }
 
   addOptions() {
@@ -124,8 +130,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    getProductsData: (featureId) => {
-      dispatch(loadProductsData(featureId));
+    getProductsData: (params) => {
+      dispatch(loadProductsData(params));
     },
     addOptions: (productObj) => {
       dispatch(addOptions(productObj));

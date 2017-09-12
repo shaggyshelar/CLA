@@ -227,6 +227,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     if (data) {
       quoteData = {
         id: data.id,
+        name: data.name,
         priceBookId: data.priceBookId,
       };
     }
