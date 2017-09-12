@@ -67,10 +67,18 @@ function appReducer(state = initialState, action) {
         .set('data', fromJS(action.data.quote))
         .set('loading', false);
     case LOAD_DATA_ERROR:
-      toast.error('Server connection problem ! Please try again later.', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 500000,
-      });
+      if (action.error instanceof Array) {
+        action.error.map((i) => {
+          toast.error(i.message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          return this;
+        });
+      } else {
+        toast.error(action.error.message, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
       return state
         .set('error', action.error)
         .set('loading', false);

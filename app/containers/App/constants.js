@@ -15,7 +15,7 @@ let entityUrls = {};
 if (process.env.NODE_ENV === 'production') {
   // serverUrl = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/';
   // serverUrl = window.parent.Xrm.Page.context.getClientUrl();
-  serverUrl = 'http://192.168.101.130:1825/api';
+  serverUrl = 'http://14.141.105.180:1825/api';
   entityUrls = {
     PRODUCTS: '/Product',
     QUOTE: '/Quote',

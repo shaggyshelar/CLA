@@ -1,7 +1,6 @@
 import { take, call, put, select, actionChannel } from 'redux-saga/effects';
 import request from 'utils/request';
 import { LOCATION_CHANGE } from 'react-router-redux';
-// import { LOAD_REPOS } from 'containers/App/constants';
 import { SAVE_CUSTOM_SEGMENT_DATA } from './constants';
 import { selectGlobal } from '../App/selectors';
 import { saveCustomSegmentDataSuccess, dataLoadingError, dataLoaded } from '../App/actions';
@@ -10,7 +9,6 @@ import {
   EntityURLs,
   CALCULATE_SELECTED,
   QUICK_SAVE_QUOTES,
-  LOAD_DATA_SUCCESS,
 } from '../App/constants';
 export function* saveSegmentData(data) {
   try {
@@ -34,7 +32,6 @@ export function* saveCustomSegmentData() {
     const chan = yield actionChannel(SAVE_CUSTOM_SEGMENT_DATA);
     const { segment } = yield take(chan);
     yield call(saveSegmentData, segment);
-    // yield take(LOCATION_CHANGE);
   }
 }
 export function* calculateQuotes() {
@@ -54,7 +51,11 @@ export function* calculateQuoteTotals(data) {
       body: JSON.stringify(data),
     };
     const quotes = yield call(request, requestURL, options);
-    yield put(dataLoaded(JSON.parse(quotes)));
+    if (quotes.quote.errorMessages && quotes.quote.errorMessages.length) {
+      yield put(dataLoadingError(quotes.quote.errorMessages));
+    } else {
+      yield put(dataLoaded(quotes));
+    }
   } catch (err) {
     yield put(dataLoadingError(err));
   }
@@ -77,7 +78,11 @@ export function* saveQuoteLines() {
       };
 
       const repos = yield call(request, requestURL, options);
-      yield put(dataLoaded(repos));
+      if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
+        yield put(dataLoadingError(repos.quote.errorMessages));
+      } else {
+        yield put(dataLoaded(repos));
+      }
     } catch (err) {
       yield put(dataLoadingError(err));
     }

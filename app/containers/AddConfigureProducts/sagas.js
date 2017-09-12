@@ -1,13 +1,11 @@
 import request from 'utils/request';
-import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
-import { LOCATION_CHANGE } from 'react-router-redux';
-// import { LOAD_REPOS } from 'containers/App/constants';
+import { take, call, put, actionChannel } from 'redux-saga/effects';
 import { LOAD_PRODUCTS_DATA } from './constants';
 import { loadProductsDataSuccess, dataLoadingError } from './actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
-export function* getProductsSaga(action) {
-  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/AddOptions?FeatureId=${action.featureId}`}`;
+export function* getProductsSaga(featureId) {
+  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/AddOptions?FeatureId=${featureId}`}`;
   try {
     const repos = yield call(request, requestURL);
     yield put(loadProductsDataSuccess(repos));
@@ -17,10 +15,11 @@ export function* getProductsSaga(action) {
 }
 
 export function* loadProductsData() {
-  const watcher = yield takeLatest(LOAD_PRODUCTS_DATA, getProductsSaga);
-  // Suspend execution until location changes
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
+  while (true) {
+    const chan = yield actionChannel(LOAD_PRODUCTS_DATA);
+    const { featureId } = yield take(chan);
+    yield call(getProductsSaga, featureId);
+  }
 }
 
 // All sagas to be loaded

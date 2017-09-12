@@ -23,7 +23,7 @@ export class App extends React.Component { // eslint-disable-line react/prefer-s
       }
     }
     if (process.env.NODE_ENV === 'development') {
-      quoteId = 'CD957BE3-7D86-E711-8129-C4346BDCDF81';
+      quoteId = '41861B38-8094-E711-812B-C4346BDCDF81';
     }
     this.props.getAllData(quoteId);
   }
