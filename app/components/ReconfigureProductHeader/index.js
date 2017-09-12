@@ -24,7 +24,7 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
   render() {
     return (
       <Row className="show-grid">
-        <Col xs={12} md={3}>
+        <Col xs={12} md={6}>
           <Helmet
             title="ProductSelectionHeader"
             meta={[
@@ -37,7 +37,7 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
           />
         </Col>
 
-        <Col xs={12} md={9} style={{ textAlign: 'right' }}>
+        <Col xs={12} md={6} style={{ textAlign: 'right' }}>
           <ButtonGroup className="margin">
             <Button onClick={this.props.addProducts}><Glyphicon glyph="filter" /></Button>
           </ButtonGroup>

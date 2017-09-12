@@ -13,8 +13,6 @@ import {
   LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   LOAD_CONFIGURE_PRODUCTS_DATA_ERROR,
   ADD_OPTIONS,
-  SAVE_CONFIGURE_PRODUCTS_DATA,
-  SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
   TOGGLE_CHECKBOX_CHANGE,
@@ -234,14 +232,6 @@ function reConfigureProductsReducer(state = initialState, action) {
       return state
         .set('reConfigureProductData', fromJS(reConfigureProductData));
     }
-    case SAVE_CONFIGURE_PRODUCTS_DATA:
-      return state
-        .set('loading', true)
-        .set('error', false);
-    case SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS:
-      return state
-      .set('productBundleData', fromJS(action.data))
-      .set('loading', false);
     case DELETE_PRODUCT: {
       const reConfigureProduct = state.get('reConfigureProductData').toJS();
       if (reConfigureProduct.categories.length > 0) {

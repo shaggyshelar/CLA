@@ -37,7 +37,7 @@ export function loadReConfigureProductsDataSuccess(productBundelData) {
   };
 }
 
-export function dataLoadingError(error) {
+export function reconfigureDataLoadingError(error) {
   return {
     type: LOAD_CONFIGURE_PRODUCTS_DATA_ERROR,
     error,
