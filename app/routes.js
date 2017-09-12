@@ -30,13 +30,13 @@ export default function createRoutes(store) {
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
   const appHomeRoute = definedRoutes.includes(location.pathname.toLowerCase()) ? '/EditQuote' : location.pathname;
   return {
-    getComponent(nextState, cb) {
+    getComponent: memoizeComponent((renderRoute) => {
       const importModules = Promise.all([
         import('containers/App/sagas'),
         import('containers/App'),
       ]);
 
-      const renderRoute = loadModule(cb);
+      // const renderRoute = loadModule(cb);
 
       importModules.then(([sagas, component]) => {
         injectSagas(sagas.default);
@@ -44,7 +44,7 @@ export default function createRoutes(store) {
       });
 
       importModules.catch(errorLoading);
-    },
+    }),
     childRoutes: [{
       path: appHomeRoute,
       name: 'home',
