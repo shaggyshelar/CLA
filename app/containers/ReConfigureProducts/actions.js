@@ -15,6 +15,7 @@ import {
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
   TOGGLE_CHECKBOX_CHANGE,
+  TOGGLE_ADDOPTIONS_STATE,
 } from './constants';
 
 export function defaultAction() {
@@ -88,5 +89,12 @@ export function toggleCheckboxChange(product) {
   return {
     type: TOGGLE_CHECKBOX_CHANGE,
     product,
+  };
+}
+
+export function toggleAddOptionsState(fromAddOptions) {
+  return {
+    type: TOGGLE_ADDOPTIONS_STATE,
+    fromAddOptions,
   };
 }

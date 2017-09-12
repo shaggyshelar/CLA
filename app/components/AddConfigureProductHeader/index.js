@@ -35,7 +35,7 @@ class AddConfigureProductHeader extends React.Component { // eslint-disable-line
             <Button onClick={this.props.addProducts}><Glyphicon glyph="filter" /></Button>
           </ButtonGroup>
           <ButtonGroup className="margin">
-            <Button onClick={() => { browserHistory.push('/reconfigureproducts'); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
+            <Button onClick={() => { browserHistory.goBack(); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
             <Button bsStyle="primary" onClick={this.props.addOptions}>{this.context.intl.formatMessage({ ...messages.add })}</Button>
           </ButtonGroup>
         </Col>

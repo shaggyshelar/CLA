@@ -2,23 +2,27 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import { take, call, select, put, cancel, takeLatest, takeEvery, fork, actionChannel } from 'redux-saga/effects';
 import request from 'utils/request';
 import { LOAD_PRODUCTS_DATA, LOAD_SEARCH_DATA } from './constants';
-import { dataLoaded } from '../App/actions';
+import { dataLoaded, dataLoadingError } from '../App/actions';
 import { selectGlobal } from '../App/selectors';
 import {
   SERVER_URL,
   EntityURLs,
   ADD_PRODUCTS,
 } from '../App/constants';
-import { productsDataLoaded, dataLoadingError, searchedDataLoaded, searchBtnDataLoaded } from './actions';
+import { productsDataLoaded, searchedDataLoaded, searchBtnDataLoaded } from './actions';
 // import { LOAD_REPOS } from 'containers/App/constants';
 // import { SERVER_URL, EntityURLs } from '../App/constants';
 // Individual exports for testing
 export function* getProductsSaga(action) {
   // See example in containers/HomePage/sagas.js
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${action.groupId}&PriceListId=C0FE4869-0F78-E711-811F-C4346BDC0E01`}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${action.groupId}&PriceListId=${action.priceBookId}`}`;
     const repos = yield call(request, requestURL);
-    yield put(productsDataLoaded(repos));
+    if (repos.products.errorMessages && repos.quote.errorMessages.length) {
+      yield put(dataLoadingError(repos.quote.errorMessages));
+    } else {
+      yield put(productsDataLoaded(repos));
+    }
   } catch (error) {
     yield put(dataLoadingError(error));
   }
@@ -71,7 +75,11 @@ export function* addProducts() {
         body: JSON.stringify(dataPost),
       };
       const repos = yield call(request, requestURL, options);
-      yield put(dataLoaded(repos));
+      if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
+        yield put(dataLoadingError(repos.quote.errorMessages));
+      } else {
+        yield put(dataLoaded(repos));
+      }
     } catch (err) {
       yield put(dataLoadingError(err));
     }
@@ -91,7 +99,7 @@ export function* addProductsPost(data, action) {
       body: JSON.stringify(dataPost),
     };
     const repos = yield call(request, requestURL, options);
-    yield put(dataLoaded(repos));
+    yield put(dataLoadingError(repos));
   } catch (err) {
     yield put(dataLoadingError(err));
   }

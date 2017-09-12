@@ -1,13 +1,11 @@
 import request from 'utils/request';
-import { take, call, put, cancel, takeLatest } from 'redux-saga/effects';
-import { LOCATION_CHANGE } from 'react-router-redux';
-// import { LOAD_REPOS } from 'containers/App/constants';
+import { take, call, put, actionChannel } from 'redux-saga/effects';
 import { LOAD_CONFIGURE_PRODUCTS_DATA, SAVE_CONFIGURE_PRODUCTS_DATA } from './constants';
-import { loadReConfigureProductsDataSuccess, dataLoadingError, configuredProductsSaveSuccess } from './actions';
+import { loadReConfigureProductsDataSuccess, configuredProductsSaveSuccess, dataLoadingError } from './actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
-export function* getProductBundleSaga(action) {
-  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/ReconfigureProduct?ProductId=${action.data.id}&PriceListId=${action.data.priceBookId}&QuoteId=${action.data.quoteId}`}`;
+export function* getProductBundleSaga(data) {
+  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/ReconfigureProduct?ProductId=${data.id}&PriceListId=${data.priceBookId}&QuoteId=${data.quoteId}`}`;
   try {
     const repos = yield call(request, requestURL);
     yield put(loadReConfigureProductsDataSuccess(repos));
@@ -34,16 +32,19 @@ export function* saveProducts(data) {
 }
 
 export function* saveConfiguredProducts() {
-  const { data } = yield take(SAVE_CONFIGURE_PRODUCTS_DATA);
-  yield call(saveProducts, data);
-  yield take(LOCATION_CHANGE);
+  while (true) {
+    const chan = yield actionChannel(SAVE_CONFIGURE_PRODUCTS_DATA);
+    const { data } = yield take(chan);
+    yield call(saveProducts, data);
+  }
 }
 
 export function* loadProductBundleData() {
-  const watcher = yield takeLatest(LOAD_CONFIGURE_PRODUCTS_DATA, getProductBundleSaga);
-  // Suspend execution until location changes
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
+  while (true) {
+    const chan = yield actionChannel(LOAD_CONFIGURE_PRODUCTS_DATA);
+    const { data } = yield take(chan);
+    yield call(getProductBundleSaga, data);
+  }
 }
 
 // All sagas to be loaded
