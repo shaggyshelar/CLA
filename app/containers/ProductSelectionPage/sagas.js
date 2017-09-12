@@ -16,7 +16,7 @@ import { productsDataLoaded, searchedDataLoaded, searchBtnDataLoaded } from './a
 export function* getProductsSaga(action) {
   // See example in containers/HomePage/sagas.js
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${action.groupId}&PriceListId=C0FE4869-0F78-E711-811F-C4346BDC0E01`}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${action.groupId}&PriceListId=${action.priceBookId}`}`;
     const repos = yield call(request, requestURL);
     if (repos.products.errorMessages && repos.quote.errorMessages.length) {
       yield put(dataLoadingError(repos.quote.errorMessages));
