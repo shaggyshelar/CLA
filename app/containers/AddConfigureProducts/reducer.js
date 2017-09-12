@@ -5,6 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
+import { toast } from 'react-toastify';
 import {
   DEFAULT_ACTION,
   LOAD_PRODUCTS_DATA,
@@ -32,6 +33,18 @@ function addConfigureProductsReducer(state = initialState, action) {
         .set('loading', false);
     }
     case LOAD_PRODUCTS_DATA_ERROR: {
+      if (action.error) {
+        action.error.map((i) => {
+          toast.error(i.message, {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          return this;
+        });
+      } else {
+        toast.error('Server connection problem ! Please try again later.', {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
       return state
         .set('error', action.error)
         .set('loading', false);
