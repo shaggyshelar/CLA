@@ -24,6 +24,7 @@ const initialState = fromJS({
   error: false,
   products: [],
   searchedProducts: [],
+  initialProducts: [],
 });
 
 function productSelectionPageReducer(state = initialState, action) {
@@ -40,6 +41,7 @@ function productSelectionPageReducer(state = initialState, action) {
     case LOAD_PRODUCTS_DATA_SUCCESS: {
       return state
         .set('products', fromJS(action.products.products))
+        .set('initialProducts', fromJS(action.products.products))
         .set('searchedProducts', fromJS(action.products.products))
         .set('loading', false);
     }
@@ -62,24 +64,23 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('loading', false);
     }
     case LOAD_SEARCH_ITEM_SELECTED: {
-      const searchedProducts = state.get('searchedProducts').toJS();
-      let products = state.get('products').toJS();
+      const initialProducts = state.get('initialProducts').toJS();
       let selectedProducts = [];
       if (action.name) {
-        if (searchedProducts && searchedProducts.length > 0) {
-          const product = _.find(searchedProducts, { name: action.name });
+        if (initialProducts && initialProducts.length > 0) {
+          const product = _.find(initialProducts, { name: action.name });
           if (product) {
             selectedProducts.push(product);
-            products = selectedProducts;
           }
         } else {
           selectedProducts = state.get('products').toJS();
-          products = selectedProducts;
         }
+      } else {
+        selectedProducts = initialProducts;
       }
       return state
         .set('searchedProducts', fromJS(selectedProducts))
-        .set('products', fromJS(products))
+        .set('products', fromJS(selectedProducts))
         .set('loading', false);
     }
 

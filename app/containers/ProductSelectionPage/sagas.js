@@ -37,11 +37,11 @@ export function* productsData() {
   }
 }
 
-export function* searchedProducts(action) {
+export function* searchedProducts(searchObj) {
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${action.searchObj.priceBookId}&SearchValue=${action.searchObj.searchValue}`}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${searchObj.priceBookId}&SearchValue=${searchObj.searchValue}`}`;
     const repos = yield call(request, requestURL);
-    if (!action.searchObj.fromSearch) {
+    if (!searchObj.fromSearch) {
       yield put(searchedDataLoaded(repos));
     } else {
       yield put(searchBtnDataLoaded(repos));
@@ -52,10 +52,11 @@ export function* searchedProducts(action) {
 }
 
 export function* searchedData() {
-  const watcher = yield takeLatest(LOAD_SEARCH_DATA, searchedProducts);
-  // Suspend execution until location changes
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
+  while (true) {
+    const chan = yield actionChannel(LOAD_SEARCH_DATA);
+    const { searchObj } = yield take(chan);
+    yield call(searchedProducts, searchObj);
+  }
 }
 export function* addProducts() {
   while (true) {
