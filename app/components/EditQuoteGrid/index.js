@@ -303,12 +303,12 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         headerStyle: { textAlign: 'right' },
         Cell: this.renderDiscount,
       },
-      {
-        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.markup })}>{this.context.intl.formatMessage({ ...messages.markup })}</span>,
-        accessor: 'markup',
-        style: { textAlign: 'right' },
-        Cell: (props) => <span>{props.value.toLocaleString('en', { minimumFractionDigits: 2 })} %</span>,
-      },
+      // {
+      //   Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.markup })}>{this.context.intl.formatMessage({ ...messages.markup })}</span>,
+      //   accessor: 'markup',
+      //   style: { textAlign: 'right' },
+      //   Cell: (props) => <span>{props.value.toLocaleString('en', { minimumFractionDigits: 2 })} %</span>,
+      // },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netPrice })}>{this.context.intl.formatMessage({ ...messages.netPrice })}</span>,
         accessor: 'netUnitPrice',
@@ -318,7 +318,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
-        accessor: 'totalPrice',
+        accessor: 'netTotal',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,

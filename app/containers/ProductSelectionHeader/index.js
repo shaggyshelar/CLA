@@ -25,7 +25,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
       <Row className="show-grid headerFix">
         <Col xs={12} md={3}>
           <Helmet
-            title="ProductSelectionHeader"
+            title="CPQ - Product Selection"
             meta={[
               { name: 'description', content: 'Description of ProductSelectionHeader' },
             ]}
