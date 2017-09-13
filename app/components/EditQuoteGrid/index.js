@@ -214,7 +214,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       </div>);
   }
   renderChecbox(cellInfo) {
-    if (!cellInfo.original.isBundled) {
+    if (!cellInfo.original.parentId) {
       return (<input type="checkbox" className="check" onChange={this.props.toggleQuoteCheckbox} value={cellInfo.original.id} />);
     }
     return (<span></span>);

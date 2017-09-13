@@ -39,6 +39,8 @@ import {
   SAVE_APP_CUSTOM_SEGMENT_DATA,
   SAVE_RECONFIGURATION_DATA_SUCCESS,
   SAVE_APP_RECONFIGURATION_DATA,
+  CANCEL,
+  CONTINUE,
 } from './constants';
 
 export function defaultAction() {
@@ -50,6 +52,16 @@ export function saveAction(data) {
   return {
     type: SAVE_ACTION,
     data,
+  };
+}
+export function cancel() {
+  return {
+    type: CANCEL,
+  };
+}
+export function continueSave() {
+  return {
+    type: CONTINUE,
   };
 }
 export function loadXrmData() {
