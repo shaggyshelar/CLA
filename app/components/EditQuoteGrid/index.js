@@ -318,7 +318,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
-        accessor: 'totalPrice',
+        accessor: 'netTotal',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,
