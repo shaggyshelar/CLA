@@ -1262,13 +1262,9 @@ strong {
 @media (min-width:768px){
 	.header-container {
 		border-bottom: 1px solid #d0d0d0!important;
-		position: fixed;
 		width: 100%;
 		z-index: 999999;
 		background-color: #EDEDED!important;
-	}
-	.table-container{
-		padding-top:75px;
 	}
 	
 }
