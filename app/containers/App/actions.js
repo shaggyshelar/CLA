@@ -35,9 +35,7 @@ import {
   SEGMENT,
   UPDATE_SELECT,
   UPDATE_SELECT_BUNDLE,
-  SAVE_CUSTOM_SEGMENT_DATA_SUCCESS,
   SAVE_APP_CUSTOM_SEGMENT_DATA,
-  SAVE_RECONFIGURATION_DATA_SUCCESS,
   SAVE_APP_RECONFIGURATION_DATA,
   CANCEL,
   CONTINUE,
@@ -282,23 +280,9 @@ export function segment(id, value) {
   };
 }
 
-export function saveCustomSegmentDataSuccess(data) {
-  return {
-    type: SAVE_CUSTOM_SEGMENT_DATA_SUCCESS,
-    data,
-  };
-}
-
 export function saveAppCustomSegmentData() {
   return {
     type: SAVE_APP_CUSTOM_SEGMENT_DATA,
-  };
-}
-
-export function saveReconfigurationDataSuccess(data) {
-  return {
-    type: SAVE_RECONFIGURATION_DATA_SUCCESS,
-    data,
   };
 }
 

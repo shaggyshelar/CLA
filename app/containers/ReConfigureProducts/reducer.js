@@ -25,6 +25,7 @@ const initialState = fromJS({
   productBundleData: {},
   reConfigureProductData: {},
   fromAddOptions: false,
+  activeTab: 0,
 });
 
 function reConfigureProductsReducer(state = initialState, action) {
@@ -73,6 +74,7 @@ function reConfigureProductsReducer(state = initialState, action) {
                     // get all product having same feature Id
                       if (product.featureId === feature.id) {
                         productObj = product;
+                        productObj.isDeleted = false;
                         featureObj.products.push(productObj);
                         linkedProducts.push(productObj);
                       }
@@ -92,7 +94,9 @@ function reConfigureProductsReducer(state = initialState, action) {
             products.forEach((product) => {
               const index = _.findIndex(linkedProducts, { id: product.id });
               if (index === -1) {
-                otherProducts.push(product);
+                const productObj = product;
+                productObj.isDeleted = false;
+                otherProducts.push(productObj);
               }
             }, this);
           }
@@ -114,7 +118,14 @@ function reConfigureProductsReducer(state = initialState, action) {
             const otherCategory = {};
             otherCategory.id = generateGuid();
             otherCategory.name = 'Other';
-            otherCategory.features = otherFeatures;
+            // otherCategory.features = otherFeatures;
+            otherCategory.features = [];
+            otherFeatures.forEach((feature) => {
+              let updatedFeature = {};
+              updatedFeature = feature;
+              updatedFeature.categoryId = otherCategory.id;
+              otherCategory.features.push(updatedFeature);
+            }, this);
             // Create Other Options feature
             if (otherProducts.length > 0) {
               const otherOptions = {};
@@ -138,6 +149,7 @@ function reConfigureProductsReducer(state = initialState, action) {
                     // get all product having same feature Id
                 if (product.featureId === feature.id) {
                   productObj = product;
+                  productObj.isDeleted = false;
                   featureObj.products.push(productObj);
                   linkedProducts.push(productObj);
                 }
@@ -151,7 +163,9 @@ function reConfigureProductsReducer(state = initialState, action) {
             products.forEach((product) => {
               const index = _.findIndex(linkedProducts, { id: product.id });
               if (index === -1) {
-                otherProducts.push(product);
+                const productObj = product;
+                productObj.isDeleted = false;
+                otherProducts.push(productObj);
               }
             }, this);
           }
@@ -169,14 +183,20 @@ function reConfigureProductsReducer(state = initialState, action) {
           otherOptions.id = generateGuid();
           otherOptions.name = 'Other Options';
           otherOptions.products = [];
-          otherOptions.products = products;
+        //  otherOptions.products = products;
+          products.forEach((product) => {
+            const productObj = product;
+            productObj.isDeleted = false;
+            otherOptions.products.push(productObj);
+          }, this);
           reConfigureProducts.features.push(otherOptions);
         }
       }
       return state
         .set('productBundleData', fromJS(action.productBundelData))
         .set('loading', false)
-        .set('reConfigureProductData', fromJS(reConfigureProducts));
+        .set('reConfigureProductData', fromJS(reConfigureProducts))
+        .set('activeTab', 0);
     }
     case LOAD_CONFIGURE_PRODUCTS_DATA_ERROR: {
       if (action.error) {
@@ -207,6 +227,8 @@ function reConfigureProductsReducer(state = initialState, action) {
               product.tempId = product.id;
               product.id = generateGuid();
               product.isAdded = true;
+              product.isDeleted = false;
+              product.isSelected = true;
               product.isRequired = false;
               product.categoryId = action.productObj.categoryId;
               product.featureId = action.productObj.featureId;
@@ -221,6 +243,8 @@ function reConfigureProductsReducer(state = initialState, action) {
             const product = currentProduct;
             product.tempId = product.id;
             product.isAdded = true;
+            product.isDeleted = false;
+            product.isSelected = true;
             product.isRequired = false;
             product.id = generateGuid();
             product.categoryId = action.productObj.categoryId;
@@ -245,6 +269,7 @@ function reConfigureProductsReducer(state = initialState, action) {
                 _.remove(feature.products, (currentObject) => currentObject.id === action.product.id);
               } else {
                 product.isDeleted = true;
+                product.isSelected = false;
               }
             }
           }
@@ -258,6 +283,7 @@ function reConfigureProductsReducer(state = initialState, action) {
               _.remove(feature.products, (currentObject) => currentObject.id === action.product.id);
             } else {
               product.isDeleted = true;
+              product.isSelected = false;
             }
           }
         }
@@ -273,7 +299,7 @@ function reConfigureProductsReducer(state = initialState, action) {
           if (category) {
             const feature = _.find(category.features, { id: action.productObj.featureId });
             if (feature) {
-              const product = _.find(feature.products, { id: parseInt(action.productObj.id, 0) });
+              const product = _.find(feature.products, { id: action.productObj.id });
               if (product) {
                 product[action.productObj.field].value = action.productObj.value;
               }
@@ -282,7 +308,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         } else if (reConfigureProduct.features.length > 0) {
           const feature = _.find(reConfigureProduct.features, { id: action.product.featureId });
           if (feature) {
-            const product = _.find(feature.products, { id: parseInt(action.productObj.id, 0) });
+            const product = _.find(feature.products, { id: action.productObj.id });
             if (product) {
               product[action.productObj.field].value = action.productObj.value;
             }
@@ -318,8 +344,15 @@ function reConfigureProductsReducer(state = initialState, action) {
     }
 
     case TOGGLE_ADDOPTIONS_STATE: {
+      let activeTab = 0;
+      if (action.activeTab) {
+        activeTab = action.activeTab;
+      } else {
+        activeTab = action.activeTab;
+      }
       return state
-        .set('fromAddOptions', action.fromAddOptions);
+        .set('fromAddOptions', action.fromAddOptions)
+        .set('activeTab', activeTab);
     }
     default:
       return state;
