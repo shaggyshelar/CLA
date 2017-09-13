@@ -123,7 +123,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           parentId: '111',
           parentName: 'Porche',
           id: '12456',
-          isBundled: true,
+          isBundled: false,
           code: 'Dom154AC',
           name: 'Porche AC',
           type: 'Product',
@@ -7731,8 +7731,14 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
 // /v1/quote/save/{QuoteID}
 quoteRouter.post('/SaveQuote', (req, res) => {
   const response = { config: {}, quote: {} };
+  let error = [];
   response.quote = req.body;
-  const error = [{ id: 123, type: 'as', message: 'Invalid Products' }, { id: 123, type: 'as', message: 'Invalid Data' }];
+  if (!response.quote.forceSave) {
+    error = [{ id: 123, type: 'alert', message: 'Invalid Products' }, { id: 123, type: 'as', message: 'Invalid Data' }];
+  } else {
+    response.quote.forceSave = false;
+    error = [{ id: 123, type: 'asa', message: 'Invalid Products' }, { id: 123, type: 'as', message: 'Invalid Data' }];
+  }
   response.quote.errorMessages = error;
   res.json(response);
 });

@@ -48,10 +48,13 @@ import {
   QUICK_SAVE_QUOTES,
   SAVE_RECONFIGURATION_DATA_SUCCESS,
   SAVE_APP_RECONFIGURATION_DATA,
+  CANCEL,
+  CONTINUE,
 } from './constants';
 const initialState = fromJS({
   loading: false,
   error: false,
+  errorMessage: '',
   showPrice: false,
   data: {},
 });
@@ -69,21 +72,28 @@ function appReducer(state = initialState, action) {
         .set('data', fromJS(action.data.quote))
         .set('loading', false);
     case LOAD_DATA_ERROR:
-      if (action.error instanceof Array) {
-        action.error.map((i) => {
-          toast.error(i.message, {
+      {
+        let error = false;
+        let errorMsg = false;
+        if (action.error instanceof Array) {
+          action.error.map((i) => {
+            if (i.type === 'alert') {
+              error = true;
+              errorMsg = i.message;
+            } else {
+              toast.error(i.message, {
+                position: toast.POSITION.TOP_CENTER,
+              });
+            }
+            return this;
+          });
+        } else {
+          toast.error(action.error.message, {
             position: toast.POSITION.TOP_CENTER,
           });
-          return this;
-        });
-      } else {
-        toast.error(action.error.message, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        }
+        return state.set('loading', true).set('error', error).set('errorMessage', errorMsg);
       }
-      return state
-        .set('error', action.error)
-        .set('loading', false);
     case CLONE_LINE:
       {
         data = state.getIn(['data', 'lines']).toJS();
@@ -98,6 +108,10 @@ function appReducer(state = initialState, action) {
       return state.set('loading', true);
     case QUICK_SAVE_QUOTES:
       return state.set('loading', true);
+    case CANCEL:
+      return state.set('error', false);
+    case CONTINUE:
+      return state.set('loading', true).set('error', false);
     case CALCULATE_SELECTED:
       return state.set('loading', true);
     case DELETE_LINE:

@@ -79,7 +79,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
         },
         {
           Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.listPrice })}>{this.context.intl.formatMessage({ ...messages.listPrice })}</span>,
-          accessor: 'netUnitPrice',
+          accessor: 'listPrice.value',
           style: { textAlign: 'right' },
           headerStyle: { textAlign: 'right' },
           Cell: (props) => <span>₹ {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,

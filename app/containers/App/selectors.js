@@ -27,9 +27,21 @@ const getLanguage = () =>
   language,
   (homeState) => homeState.get('locale')
 );
+const getError = () =>
+ createSelector(
+  selectGlobal,
+  (homeState) => homeState.get('error')
+);
+const getErrorMessage = () =>
+ createSelector(
+  selectGlobal,
+  (homeState) => homeState.get('errorMessage')
+);
 export {
   makeSelectData,
   selectGlobal,
   makeSelectLocationState,
   getLanguage,
+  getError,
+  getErrorMessage,
 };
