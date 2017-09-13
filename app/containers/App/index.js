@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer } from 'react-toastify';
-import { loadData } from './actions';
+import { Modal, Glyphicon, Button } from 'react-bootstrap/lib';
+import { loadData, cancel, continueSave } from './actions';
 import { changeLocale } from '../LanguageProvider/actions';
-import { makeSelectData, getLanguage } from './selectors';
+import { makeSelectData, getLanguage, getError, getErrorMessage } from './selectors';
 export class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
@@ -52,6 +53,21 @@ export class App extends React.Component { // eslint-disable-line react/prefer-s
           <option value="en">English</option>
           <option value="fr">French</option>
         </select>
+        <Modal
+          show={this.props.error} onHide={this.props.cancel} style={{ width: '50%' }}
+          autoFocus keyboard
+        >
+          <Modal.Header closeButton>
+            <Modal.Title style={{ textAlign: 'center' }}><Glyphicon glyph="warning-sign" /> Alert</Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ textAlign: 'center', fontSize: '18px' }}>
+            {this.props.errorMsg}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.props.cancel} >Cancel</Button>
+            <Button bsStyle="primary" onClick={this.props.continue} >Continue</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
@@ -63,12 +79,17 @@ App.propTypes = {
   data: React.PropTypes.any,
   language: React.PropTypes.any,
   changeLocale: React.PropTypes.func,
+  error: React.PropTypes.any,
+  cancel: React.PropTypes.any,
+  errorMsg: React.PropTypes.any,
+  continue: React.PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
   language: getLanguage(),
-
+  error: getError(),
+  errorMsg: getErrorMessage(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -79,6 +100,12 @@ function mapDispatchToProps(dispatch) {
     },
     changeLocale: (locale) => {
       dispatch(changeLocale(locale));
+    },
+    cancel: () => {
+      dispatch(cancel());
+    },
+    continue: () => {
+      dispatch(continueSave());
     },
   };
 }

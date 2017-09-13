@@ -15,7 +15,7 @@ let entityUrls = {};
 if (process.env.NODE_ENV === 'production') {
   // serverUrl = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/';
   // serverUrl = window.parent.Xrm.Page.context.getClientUrl();
-  serverUrl = 'http://14.141.105.180:1825/api';
+  serverUrl = 'https://14.141.105.180:1825/api';
   entityUrls = {
     PRODUCTS: '/Product',
     QUOTE: '/Quote',
@@ -76,6 +76,10 @@ export const UPDATE_GROUP_VAL = 'app/EditQuote/UPDATE_GROUP_VAL';
 export const SEGMENT = 'app/EditQuote/SEGMENT';
 export const DESEGMENT = 'app/EditQuote/DESEGMENT';
 export const UPDATE_SELECT = 'app/EditQuote/UPDATE_SELECT';
+export const CANCEL = 'app/EditQuote/CANCEL';
+export const CONTINUE = 'app/EditQuote/CONTINUE';
 export const UPDATE_SELECT_BUNDLE = 'app/EditQuote/UPDATE_SELECT_BUNDLE';
 export const SAVE_CUSTOM_SEGMENT_DATA_SUCCESS = 'app/EditQuote/SAVE_CUSTOM_SEGMENT_DATA_SUCCESS';
 export const SAVE_APP_CUSTOM_SEGMENT_DATA = 'app/EditQuote/SAVE_APP_CUSTOM_SEGMENT_DATA';
+export const SAVE_RECONFIGURATION_DATA_SUCCESS = 'app/ReConfigureProducts/SAVE_RECONFIGURATION_DATA_SUCCESS';
+export const SAVE_APP_RECONFIGURATION_DATA = 'app/ReConfigureProducts/SAVE_APP_RECONFIGURATION_DATA';

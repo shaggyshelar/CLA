@@ -56,7 +56,7 @@ productRouter.get('/GetProducts', (req, res) => {
         canReconfigure: true,
         canShowDiscountScheduler: true,
         listPrice: {
-          value: 123,
+          value: 8959,
           isEditable: true,
           isVisible: true,
           dataType: 'text/select/textarea/inputSelect',
@@ -145,7 +145,7 @@ productRouter.get('/GetProducts', (req, res) => {
         canReconfigure: true,
         canShowDiscountScheduler: true,
         listPrice: {
-          value: 123,
+          value: 635,
           isEditable: true,
           isVisible: true,
           dataType: 'text/select/textarea/inputSelect',
@@ -234,7 +234,7 @@ productRouter.get('/GetProducts', (req, res) => {
         canReconfigure: true,
         canShowDiscountScheduler: true,
         listPrice: {
-          value: 123,
+          value: 85225123,
           isEditable: true,
           isVisible: true,
           dataType: 'text/select/textarea/inputSelect',

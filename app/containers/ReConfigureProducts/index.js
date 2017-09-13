@@ -14,6 +14,7 @@ import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
 import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState } from './selectors';
 import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
+import { saveAppReconfigurationData } from '../App/actions';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -126,8 +127,9 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
 
     intialProductBundleData.productBundle.products = [];
     intialProductBundleData.productBundle.products = updatedProducts;
-    this.props.saveConfiguredProducts(intialProductBundleData);
-    browserHistory.push('/EditQuote');
+    this.props.saveConfiguredProducts(intialProductBundleData.productBundle);
+    this.props.saveAppReconfigurationData();
+    browserHistory.push('/');
   }
 
   toggleSidebar() {
@@ -143,6 +145,12 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
   }
 
   render() {
+    const reconfigurationData = this.props.reConfigureProductData.toJS();
+    const params = {
+      bundleId: reconfigurationData.productBundleId,
+      quoteName: this.props.location.query.quoteName,
+      priceBookId: parseInt(this.props.location.query.priceBookId, 0),
+    };
     return (
       <div>
         <div
@@ -155,7 +163,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             toggleFilter={this.toggleSidebar}
             data={this.state.dataProd}
             saveProducts={this.saveProducts}
-            quoteName={this.props.reConfigureProductData.toJS().productBundleQuoteName}
+            quoteName={params.quoteName}
           />
           <ReconfigureProductTab
             reConfigureData={this.props.reConfigureProductData.toJS()}
@@ -169,7 +177,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             toggleCheckAll={this.checkAll}
             deleteProduct={this.props.deleteProduct}
             updateField={this.props.updateField}
-            quoteName={this.props.reConfigureProductData.toJS().productBundleQuoteName}
+            params={params}
             toggleAddOptionsState={this.props.toggleAddOptionsState}
           />
         </div>
@@ -192,6 +200,7 @@ ReConfigureProducts.propTypes = {
   toggleCheckboxChange: PropTypes.func,
   fromAddOption: PropTypes.any,
   toggleAddOptionsState: PropTypes.any,
+  saveAppReconfigurationData: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -209,6 +218,9 @@ function mapDispatchToProps(dispatch) {
     },
     saveConfiguredProducts: (data) => {
       dispatch(saveConfiguredProductsData(data));
+    },
+    saveAppReconfigurationData: () => {
+      dispatch(saveAppReconfigurationData());
     },
     deleteProduct: (product) => {
       dispatch(deleteProduct(product));

@@ -52,6 +52,7 @@ export function* calculateQuoteTotals(data) {
     };
     const quotes = yield call(request, requestURL, options);
     if (quotes.quote.errorMessages && quotes.quote.errorMessages.length) {
+      yield put(dataLoaded(quotes));
       yield put(dataLoadingError(quotes.quote.errorMessages));
     } else {
       yield put(dataLoaded(quotes));
@@ -80,6 +81,7 @@ export function* saveQuoteLines() {
       const repos = yield call(request, requestURL, options);
       if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
         yield put(dataLoadingError(repos.quote.errorMessages));
+        yield put(dataLoaded(repos));
       } else {
         yield put(dataLoaded(repos));
       }
