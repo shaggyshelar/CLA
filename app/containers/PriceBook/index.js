@@ -32,7 +32,7 @@ export class PriceBook extends React.Component { // eslint-disable-line react/pr
     return (
       <div>
         <Helmet
-          title="PriceBook"
+          title="CPQ"
           meta={[
             { name: 'description', content: 'Description of PriceBook' },
           ]}

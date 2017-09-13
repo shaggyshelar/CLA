@@ -163,7 +163,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       <div>
         <div className="loader" style={style}></div>
         <Helmet
-          title="ProductSelectionPage"
+          title="CPQ - Product Selection"
           meta={[{
             name: 'description',
             content: 'Description of ProductSelectionPage',
