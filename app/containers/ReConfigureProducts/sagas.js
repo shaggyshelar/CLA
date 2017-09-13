@@ -1,7 +1,8 @@
 import request from 'utils/request';
 import { take, call, put, actionChannel } from 'redux-saga/effects';
 import { LOAD_CONFIGURE_PRODUCTS_DATA, SAVE_CONFIGURE_PRODUCTS_DATA } from './constants';
-import { loadReConfigureProductsDataSuccess, configuredProductsSaveSuccess, dataLoadingError } from './actions';
+import { loadReConfigureProductsDataSuccess, reconfigureDataLoadingError } from './actions';
+import { saveReconfigurationDataSuccess, dataLoadingError } from '../App/actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
 export function* getProductBundleSaga(data) {
@@ -10,7 +11,7 @@ export function* getProductBundleSaga(data) {
     const repos = yield call(request, requestURL);
     yield put(loadReConfigureProductsDataSuccess(repos));
   } catch (err) {
-    yield put(dataLoadingError(err));
+    yield put(reconfigureDataLoadingError(err));
   }
 }
 
@@ -24,8 +25,12 @@ export function* saveProducts(data) {
       },
       body: JSON.stringify(data),
     };
-    const products = yield call(request, requestURL, options);
-    yield put(configuredProductsSaveSuccess(products));
+    const quote = yield call(request, requestURL, options);
+    if (quote.quote.errorMessages && quote.quote.errorMessages.length) {
+      yield put(dataLoadingError(quote.quote.errorMessages));
+    } else {
+      yield put(saveReconfigurationDataSuccess(quote));
+    }
   } catch (err) {
     yield put(dataLoadingError(err));
   }

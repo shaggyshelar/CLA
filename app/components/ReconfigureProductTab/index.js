@@ -25,7 +25,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         categoryId={item.id}
         deleteProduct={this.props.deleteProduct}
         updateField={this.props.updateField}
-        quoteName={this.props.quoteName}
+        params={this.props.params}
         toggleAddOptionsState={this.props.toggleAddOptionsState}
       />
     </Tab>);
@@ -44,7 +44,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         features={item}
         deleteProduct={this.props.deleteProduct}
         updateField={this.props.updateField}
-        quoteName={this.props.quoteName}
+        params={this.props.params}
         toggleAddOptionsState={this.props.toggleAddOptionsState}
       />);
   }
@@ -95,8 +95,8 @@ ReconfigureProductTab.propTypes = {
   updateField: PropTypes.func,
   checkAll: PropTypes.func,
   toggleCheckboxChange: PropTypes.func,
-  quoteName: PropTypes.any,
   toggleAddOptionsState: PropTypes.any,
+  params: PropTypes.any,
 };
 
 export default ReconfigureProductTab;

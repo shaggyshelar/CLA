@@ -5,6 +5,7 @@
 */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap/lib';
 class SearchProductAutocomplete extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -12,9 +13,7 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
   constructor(props) {
     super(props);
     this.state = {
-      selectedValue: '',
       disableSearch: false,
-      onChange: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -22,7 +21,8 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
   }
 
   onSearchClick() {
-    this.props.onSearchClick(this.state.selectedValue);
+    const searchInputValue = ReactDOM.findDOMNode(this).getElementsByClassName('rbt-input-main')[0].value;
+    this.props.onSearchClick(searchInputValue);
   }
 
   handleChange(selection) {
@@ -31,9 +31,6 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
 
   handleInputChange(selection) {
     this.props.searchInputChange(selection);
-    this.setState({
-      selectedValue: selection,
-    });
   }
 
   render() {

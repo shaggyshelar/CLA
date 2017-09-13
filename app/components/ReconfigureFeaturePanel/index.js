@@ -21,9 +21,9 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
   renderAddButton(feature, index) {
     if (feature.DynamicAddEnabled) {
       if (feature.categoryId) {
-        return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&categoryId=${feature.categoryId}&quoteName=${this.props.quoteName}`); }} >Add Options</Button>);
+        return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&categoryId=${feature.categoryId}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}`); }} >Add Options</Button>);
       }
-      return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&quoteName=${this.props.quoteName}`); }} >Add Options</Button>);
+      return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}`); }} >Add Options</Button>);
     }
     return (<span></span>);
   }
@@ -59,7 +59,6 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
           categoryId={this.props.categoryId}
           deleteProduct={this.props.deleteProduct}
           updateField={this.props.updateField}
-          quoteName={this.props.quoteName}
         />
         {addButton}
       </div>);
@@ -90,7 +89,7 @@ ReconfigureFeaturePanel.propTypes = {
   deleteProduct: PropTypes.func,
   updateField: PropTypes.func,
   categoryId: PropTypes.any,
-  quoteName: PropTypes.any,
+  params: PropTypes.any,
   toggleAddOptionsState: PropTypes.any,
 };
 
