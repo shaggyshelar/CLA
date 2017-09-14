@@ -37,10 +37,17 @@ const getAddOptionState = () =>
   (homeState) => homeState.get('fromAddOptions')
 );
 
+const getActiveTabState = () =>
+ createSelector(
+  selectReConfigureProductsDomain(),
+  (homeState) => homeState.get('activeTab')
+);
+
 export {
   selectReConfigureProductsDomain,
   makeSelectReConfigureProducts,
   getProductBundle,
   getReConfigureProductData,
   getAddOptionState,
+  getActiveTabState,
 };
