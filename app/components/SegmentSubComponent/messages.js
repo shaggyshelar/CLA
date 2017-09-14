@@ -46,9 +46,9 @@ export default defineMessages({
     id: 'app.components.SegmentSubComponent.segment',
     defaultMessage: 'Segment',
   },
-  recongifure: {
-    id: 'app.components.SegmentSubComponent.recongifure',
-    defaultMessage: 'Recongifure Lines',
+  reconfigure: {
+    id: 'app.components.SegmentSubComponent.reconfigure',
+    defaultMessage: 'Reconfigure Lines',
   },
   discountSchedule: {
     id: 'app.components.SegmentSubComponent.discountSchedule',

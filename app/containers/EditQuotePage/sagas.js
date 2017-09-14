@@ -40,13 +40,15 @@ export function* saveCustomSegmentData() {
   }
 }
 export function* calculateQuotes() {
-  const { data } = yield take(CALCULATE_SELECTED);
-  yield call(calculateQuoteTotals, data);
-  yield take(LOCATION_CHANGE);
+  while (true) {
+    const chan = yield actionChannel(CALCULATE_SELECTED);
+    const { data } = yield take(chan);
+    yield call(calculateQuoteTotals, data);
+  }
 }
 export function* calculateQuoteTotals(data) {
   try {
-    const requestURL = 'http://localhost:3000/v1/quote/calculate/1';
+    const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/Calculate`}`;
 
     const options = {
       method: 'POST',

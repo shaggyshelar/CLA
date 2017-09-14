@@ -48,9 +48,12 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.selectBundleDataChanged = this.selectBundleDataChanged.bind(this);
     this.checkAll = this.checkAll.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
+    this.clickEdit = this.clickEdit.bind(this);
   }
 
-
+  clickEdit(e) {
+    e.currentTarget.nextSibling.focus();
+  }
   setTableOption(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -143,8 +146,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
   renderActionItems(cellInfo) {
     // const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : <span className="blank"></span>;
-    // const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.recongifure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
-    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.recongifure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}&quoteId=${this.props.quoteData.id}&priceBookId=${this.props.quoteData.priceBookId}&quoteName=${this.props.quoteData.name}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
+    // const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
+    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}&quoteId=${this.props.quoteData.id}&priceBookId=${this.props.quoteData.priceBookId}&quoteName=${this.props.quoteData.name}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
     // const bundle = cellInfo.original.isBundled ? <a title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : <span className="blank"></span>;
     // const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" style={{ color: '#449D44' }} /></a> : <span className="blank"></span>;
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
@@ -170,7 +173,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     });
     return (
       <div>
-        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+        <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         <RIENumber
           className={'table-edit-quantity'}
           classEditing="table-edit-input"
@@ -200,7 +203,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     }
     return (
       <div>
-        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+        <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         <RIENumber
           className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
           classEditing="table-edit-input"
