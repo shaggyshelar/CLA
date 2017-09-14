@@ -51,9 +51,9 @@ export default defineMessages({
     id: 'app.components.SegmentedEditQuoteGrid.segment',
     defaultMessage: 'Segment',
   },
-  recongifure: {
-    id: 'app.components.SegmentedEditQuoteGrid.recongifure',
-    defaultMessage: 'Recongifure Lines',
+  reconfigure: {
+    id: 'app.components.SegmentedEditQuoteGrid.reconfigure',
+    defaultMessage: 'Reconfigure Lines',
   },
   discountSchedule: {
     id: 'app.components.SegmentedEditQuoteGrid.discountSchedule',

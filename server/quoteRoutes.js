@@ -7743,10 +7743,13 @@ quoteRouter.post('/SaveQuote', (req, res) => {
   res.json(response);
 });
 
-quoteRouter.post('/calculate/:QuoteID', (req, res) => {
+quoteRouter.post('/Calculate', (req, res) => {
   // req.params.QuoteID;
-  quotes.quotes.push(req.body.quote);
-  res.json(req.body);
+  const response = { config: {}, quote: {} };
+  const error = [];
+  response.quote = req.body;
+  response.quote.errorMessages = error;
+  res.json(response);
 });
 
 

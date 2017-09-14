@@ -50,9 +50,9 @@ export default defineMessages({
     id: 'app.components.EditQuoteGrid.segment',
     defaultMessage: 'Segment',
   },
-  recongifure: {
-    id: 'app.components.EditQuoteGrid.recongifure',
-    defaultMessage: 'Recongifure Lines',
+  reconfigure: {
+    id: 'app.components.EditQuoteGrid.reconfigure',
+    defaultMessage: 'Reconfigure Lines',
   },
   discountSchedule: {
     id: 'app.components.EditQuoteGrid.discountSchedule',

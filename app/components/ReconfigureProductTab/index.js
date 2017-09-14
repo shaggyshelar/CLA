@@ -12,6 +12,17 @@ import ReconfigureFeaturePanel from 'components/ReconfigureFeaturePanel';
 
 class ReconfigureProductTab extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeTab: 0,
+    };
+    this.onTabSelect = this.onTabSelect.bind(this);
+  }
+  onTabSelect(e) {
+    this.setState({ activeTab: e });
+  }
+
   returnReactTab(item, index) {
     return (<Tab key={index} eventKey={index} title={item.name}>
       <ReconfigureFeaturePanel
@@ -27,6 +38,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         updateField={this.props.updateField}
         params={this.props.params}
         toggleAddOptionsState={this.props.toggleAddOptionsState}
+        activeTab={this.state.activeTab}
       />
     </Tab>);
   }
@@ -76,7 +88,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         </div>
         <div>
           {showTabView ?
-            <Tabs defaultActiveKey={0} id="configureProductsList">
+            <Tabs defaultActiveKey={this.props.activeTab} id="configureProductsList" onSelect={this.onTabSelect}>
               {tabtitleList}
             </Tabs>
         : <div>{ tabtitleList }</div>
@@ -97,6 +109,7 @@ ReconfigureProductTab.propTypes = {
   toggleCheckboxChange: PropTypes.func,
   toggleAddOptionsState: PropTypes.any,
   params: PropTypes.any,
+  activeTab: PropTypes.any,
 };
 
 export default ReconfigureProductTab;
