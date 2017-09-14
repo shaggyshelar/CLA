@@ -42,6 +42,15 @@ const getActiveTabState = () =>
   selectReConfigureProductsDomain(),
   (homeState) => homeState.get('activeTab')
 );
+const makeSelectLoading = () => createSelector(
+  selectReConfigureProductsDomain(),
+  (homeState) => homeState.get('loading')
+);
+
+const makeSelectError = () => createSelector(
+  selectReConfigureProductsDomain(),
+  (homeState) => homeState.get('error')
+);
 
 export {
   selectReConfigureProductsDomain,
@@ -50,4 +59,6 @@ export {
   getReConfigureProductData,
   getAddOptionState,
   getActiveTabState,
+  makeSelectLoading,
+  makeSelectError,
 };
