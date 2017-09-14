@@ -51,9 +51,6 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.clickEdit = this.clickEdit.bind(this);
   }
 
-  clickEdit(e) {
-    e.currentTarget.nextSibling.focus();
-  }
   setTableOption(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -158,6 +155,9 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         {/* <a><Glyphicon glyph="star-empty" /></a> */}
       </div>
     );
+  }
+  clickEdit(e) {
+    e.currentTarget.nextSibling.focus();
   }
   renderDiscount(cellInfo) {
     const selected = cellInfo.original[cellInfo.column.id].selectValues;

@@ -70,6 +70,9 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
     return (decimal.test(text) && (parseFloat(text) > 0));
   }
+  clickEdit(e) {
+    e.currentTarget.nextSibling.focus();
+  }
   renderDiscount(cellInfo) {
     const col = cellInfo.column.id.split('.')[0];
     const selected = cellInfo.original[col].selectValues;
@@ -85,7 +88,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     });
     return (
       <div>
-        <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+        <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         <RIENumber
           className={'table-edit-quantity'}
           classEditing="table-edit-input"
@@ -117,7 +120,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     }
     const col = cellInfo.column.id.split('.')[0];
     return (<div>
-      <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+      <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
       <RIENumber
         className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
         classEditing="table-edit-input"
