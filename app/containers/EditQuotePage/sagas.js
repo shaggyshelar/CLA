@@ -3,7 +3,7 @@ import request from 'utils/request';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import { SAVE_CUSTOM_SEGMENT_DATA } from './constants';
 import { selectGlobal } from '../App/selectors';
-import { saveCustomSegmentDataSuccess, dataLoadingError, dataLoaded } from '../App/actions';
+import { dataLoadingError, dataLoaded } from '../App/actions';
 import {
   SERVER_URL,
   EntityURLs,
@@ -20,8 +20,13 @@ export function* saveSegmentData(data) {
       },
       body: JSON.stringify(data),
     };
-    const quote = yield call(request, requestURL, options);
-    yield put(saveCustomSegmentDataSuccess(quote));
+    const quotes = yield call(request, requestURL, options);
+    if (quotes.quote.errorMessages && quotes.quote.errorMessages.length) {
+      yield put(dataLoaded(quotes));
+      yield put(dataLoadingError(quotes.quote.errorMessages));
+    } else {
+      yield put(dataLoaded(quotes));
+    }
   } catch (err) {
     yield put(dataLoadingError(err));
   }

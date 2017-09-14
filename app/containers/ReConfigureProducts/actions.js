@@ -92,9 +92,10 @@ export function toggleCheckboxChange(product) {
   };
 }
 
-export function toggleAddOptionsState(fromAddOptions) {
+export function toggleAddOptionsState(fromAddOptions, activeTab) {
   return {
     type: TOGGLE_ADDOPTIONS_STATE,
     fromAddOptions,
+    activeTab,
   };
 }

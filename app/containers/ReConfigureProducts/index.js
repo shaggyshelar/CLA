@@ -12,7 +12,7 @@ import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
-import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState } from './selectors';
+import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState } from './selectors';
 import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
 import { saveAppReconfigurationData } from '../App/actions';
 
@@ -73,13 +73,13 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
   componentDidMount() {
     if (!this.props.fromAddOption) {
       const data = {
-        id: parseInt(this.props.location.query.id, 0),
-        quoteId: parseInt(this.props.location.query.quoteId, 0),
-        priceBookId: parseInt(this.props.location.query.priceBookId, 0),
+        id: this.props.location.query.id,
+        quoteId: this.props.location.query.quoteId,
+        priceBookId: this.props.location.query.priceBookId,
       };
       this.props.getProductsData(data);
     } else {
-      this.props.toggleAddOptionsState(false);
+      this.props.toggleAddOptionsState(false, 0);
     }
   }
 
@@ -95,10 +95,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             if (product.tempId) {
               product.id = product.tempId;
               // product = _.omit(product, ['tempId', 'isAdded']);
-            }
-            const index = _.indexOf(this.state.selectedProducts, product.id);
-            if (index !== -1) {
-              product.isSelected = true;
             }
             if (category.name === 'Other') {
               product.categoryId = null;
@@ -149,7 +145,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     const params = {
       bundleId: reconfigurationData.productBundleId,
       quoteName: this.props.location.query.quoteName,
-      priceBookId: parseInt(this.props.location.query.priceBookId, 0),
+      priceBookId: this.props.location.query.priceBookId,
     };
     return (
       <div>
@@ -179,6 +175,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             updateField={this.props.updateField}
             params={params}
             toggleAddOptionsState={this.props.toggleAddOptionsState}
+            activeTab={this.props.activeTab}
           />
         </div>
       </div>
@@ -201,6 +198,7 @@ ReConfigureProducts.propTypes = {
   fromAddOption: PropTypes.any,
   toggleAddOptionsState: PropTypes.any,
   saveAppReconfigurationData: PropTypes.any,
+  activeTab: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -208,6 +206,7 @@ const mapStateToProps = createStructuredSelector({
   productBundleData: getProductBundle(),
   reConfigureProductData: getReConfigureProductData(),
   fromAddOption: getAddOptionState(),
+  activeTab: getActiveTabState(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -231,8 +230,8 @@ function mapDispatchToProps(dispatch) {
     toggleCheckboxChange: (productObj) => {
       dispatch(toggleCheckboxChange(productObj));
     },
-    toggleAddOptionsState: (fromAddOption) => {
-      dispatch(toggleAddOptionsState(fromAddOption));
+    toggleAddOptionsState: (fromAddOption, activeTab) => {
+      dispatch(toggleAddOptionsState(fromAddOption, activeTab));
     },
   };
 }
