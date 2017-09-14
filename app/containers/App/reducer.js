@@ -90,7 +90,7 @@ function appReducer(state = initialState, action) {
             position: toast.POSITION.TOP_CENTER,
           });
         }
-        return state.set('loading', true).set('error', error).set('errorMessage', errorMsg);
+        return state.set('loading', false).set('error', error).set('errorMessage', errorMsg);
       }
     case CLONE_LINE:
       {
