@@ -1606,3 +1606,7 @@ body.modal-open {
     width : 90% !important;
     margin-left: 0px !important;
 }
+
+.cellColor {
+    color: grey;
+}
