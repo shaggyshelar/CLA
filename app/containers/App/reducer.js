@@ -279,13 +279,11 @@ function appReducer(state = initialState, action) {
         return state.setIn(['data', 'lines'], fromJS(lines));
       }
     case SAVE_APP_CUSTOM_SEGMENT_DATA : {
-      const loading = state.set('loading');
-      return state.set('loading', !loading)
+      return state.set('loading', true)
         .set('error', false);
     }
     case SAVE_APP_RECONFIGURATION_DATA : {
-      const loading = state.set('loading');
-      return state.set('loading', !loading)
+      return state.set('loading', true)
         .set('error', false);
     }
     default:
