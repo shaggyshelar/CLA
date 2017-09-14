@@ -242,7 +242,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       <div>
         <div className="loader" style={style}></div>
         <Helmet
-          title="EditQuotePage"
+          title="CPQ - Edit Quote"
           meta={[
             { name: 'description', content: 'Description of EditQuotePage' },
           ]}

@@ -43,10 +43,8 @@ import {
   UPDATE_GROUP_DATA,
   UPDATE_GROUP_VAL,
   SEGMENT,
-  SAVE_CUSTOM_SEGMENT_DATA_SUCCESS,
   SAVE_APP_CUSTOM_SEGMENT_DATA,
   QUICK_SAVE_QUOTES,
-  SAVE_RECONFIGURATION_DATA_SUCCESS,
   SAVE_APP_RECONFIGURATION_DATA,
   CANCEL,
   CONTINUE,
@@ -92,7 +90,7 @@ function appReducer(state = initialState, action) {
             position: toast.POSITION.TOP_CENTER,
           });
         }
-        return state.set('loading', true).set('error', error).set('errorMessage', errorMsg);
+        return state.set('loading', false).set('error', error).set('errorMessage', errorMsg);
       }
     case CLONE_LINE:
       {
@@ -285,23 +283,11 @@ function appReducer(state = initialState, action) {
       return state.set('loading', !loading)
         .set('error', false);
     }
-    case SAVE_CUSTOM_SEGMENT_DATA_SUCCESS : {
-      return state
-        .set('data', fromJS(action.data.quote))
-        .set('loading', false);
-    }
-
     case SAVE_APP_RECONFIGURATION_DATA : {
       const loading = state.set('loading');
       return state.set('loading', !loading)
         .set('error', false);
     }
-    case SAVE_RECONFIGURATION_DATA_SUCCESS : {
-      return state
-        .set('data', fromJS(action.data.quote))
-        .set('loading', false);
-    }
-
     default:
       return state;
   }

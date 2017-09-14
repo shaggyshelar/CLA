@@ -128,8 +128,13 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         input = (<a title={this.context.intl.formatMessage({ ...messages.deleteLine })} onClick={this.deleteProduct.bind(this, cellInfo.original)} ><Glyphicon glyph="trash" style={{ color: '#C9302C' }} /></a>);
       }
       return input;
+    } else if (!this.props.feature.DynamicAddEnabled) {
+      if (cellInfo.original.isRequired) {
+        input = (<input type="checkbox" className="check" defaultChecked={cellInfo.original.isSelected} disabled value={cellInfo.original.id} />);
+      } else {
+        input = (<input type="checkbox" className="check" defaultChecked={cellInfo.original.isSelected} onChange={this.toggleCheckboxChange.bind(this, cellInfo.original)} value={cellInfo.original.id} />);
+      }
     }
-    input = (<input type="checkbox" className="check" defaultChecked={cellInfo.original.isSelected} onChange={this.toggleCheckboxChange.bind(this, cellInfo.original)} value={cellInfo.original.id} />);
     return input;
   }
 

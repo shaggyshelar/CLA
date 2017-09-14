@@ -28,7 +28,7 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
       <Row className="show-grid">
         <Col xs={12} md={3}>
           <Helmet
-            title="TableHeader"
+            title="CPQ - Edit Quote"
             meta={[
               { name: 'description', content: 'Description of TableHeader' },
             ]}

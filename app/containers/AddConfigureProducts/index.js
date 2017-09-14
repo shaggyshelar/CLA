@@ -25,9 +25,9 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
 
   componentDidMount() {
     const params = {
-      featureId: parseInt(this.props.location.query.featureId, 0),
-      bundleId: parseInt(this.props.location.query.bundleId, 0),
-      priceBookId: parseInt(this.props.location.query.priceBookId, 0),
+      featureId: this.props.location.query.featureId,
+      bundleId: this.props.location.query.bundleId,
+      priceBookId: this.props.location.query.priceBookId,
     };
 
     this.props.getProductsData(params);
@@ -37,12 +37,12 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
     const products = this.props.productsData.toJS().products ? this.props.productsData.toJS().products : [];
     const productObj = {
       selectedProducts: [],
-      featureId: parseInt(this.props.location.query.featureId, 0),
-      categoryId: parseInt(this.props.location.query.categoryId, 0),
+      featureId: this.props.location.query.featureId,
+      categoryId: this.props.location.query.categoryId,
     };
     this.state.selectedProducts = _.uniq(this.state.selectedProducts);
     this.state.selectedProducts.forEach((currentProductId) => {
-      const productIndex = _.findIndex(products, { id: parseInt(currentProductId, 0) });
+      const productIndex = _.findIndex(products, { id: currentProductId });
       productObj.selectedProducts.push(products[productIndex]);
     }, this);
     this.props.addOptions(productObj);

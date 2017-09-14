@@ -76,7 +76,7 @@ function productSelectionPageReducer(state = initialState, action) {
           selectedProducts = state.get('products').toJS();
         }
       } else {
-        selectedProducts = initialProducts;
+        selectedProducts = state.get('products').toJS();
       }
       return state
         .set('searchedProducts', fromJS(selectedProducts))
