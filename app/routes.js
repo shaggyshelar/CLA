@@ -48,30 +48,31 @@ export default function createRoutes(store) {
     childRoutes: [{
       path: appHomeRoute,
       name: 'home',
-      getComponent: memoizeComponent((renderRoute) => {
-        // const importModules = Promise.all([
-        //   import('containers/HomePage'),
-        // ]);
-        const importModules = Promise.all([
-          import('containers/EditQuotePage/reducer'),
-          import('containers/EditQuotePage/sagas'),
-          import('containers/EditQuotePage'),
-        ]);
+      onEnter: (_nextState, replace) => replace('/EditQuote'),
+      // getComponent: memoizeComponent((renderRoute) => {
+      //   // const importModules = Promise.all([
+      //   //   import('containers/HomePage'),
+      //   // ]);
+      //   const importModules = Promise.all([
+      //     import('containers/EditQuotePage/reducer'),
+      //     import('containers/EditQuotePage/sagas'),
+      //     import('containers/EditQuotePage'),
+      //   ]);
 
-        // const renderRoute = loadModule(cb);
+      //   // const renderRoute = loadModule(cb);
 
-        // importModules.then(([component]) => {
-        //   renderRoute(component);
-        // });
+      //   // importModules.then(([component]) => {
+      //   //   renderRoute(component);
+      //   // });
 
-        importModules.then(([reducer, sagas, component]) => {
-          injectReducer('editQuote', reducer.default);
-          injectSagas(sagas.default);
-          renderRoute(component);
-        });
+      //   importModules.then(([reducer, sagas, component]) => {
+      //     injectReducer('editQuote', reducer.default);
+      //     injectSagas(sagas.default);
+      //     renderRoute(component);
+      //   });
 
-        importModules.catch(errorLoading);
-      }),
+      //   importModules.catch(errorLoading);
+      // }),
     }, {
       path: '/ProductSelection',
       name: 'productSelectionPage',
