@@ -39,7 +39,7 @@ function reConfigureProductsReducer(state = initialState, action) {
     case LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS: {
       const reConfigureProducts = {};
       const productBundelData = action.productBundelData;
-      if (!_.isUndefined(action.productBundelData) !== undefined && !_.isUndefined(action.productBundelData)) {
+      if (!_.isUndefined(action) && !_.isUndefined(action.productBundelData)) {
         let categories = [];
         let features = [];
         let products = [];
@@ -52,6 +52,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         reConfigureProducts.productBundleName = productBundelData.productBundle.name;
         reConfigureProducts.productBundleQuoteId = productBundelData.productBundle.quoteId;
         reConfigureProducts.productBundleQuoteName = productBundelData.productBundle.quoteName;
+        reConfigureProducts.quoteLineId = productBundelData.productBundle.lineId;
         reConfigureProducts.categories = [];
         reConfigureProducts.features = [];
         // Categories are available
@@ -232,6 +233,8 @@ function reConfigureProductsReducer(state = initialState, action) {
               product.isRequired = false;
               product.categoryId = action.productObj.categoryId;
               product.featureId = action.productObj.featureId;
+              product.parentId = reConfigureProductData.productBundleId;
+              product.parentLineId = reConfigureProductData.quoteLineId;
               feature.products.push(product);
             }, this);
           }
@@ -306,7 +309,7 @@ function reConfigureProductsReducer(state = initialState, action) {
             }
           }
         } else if (reConfigureProduct.features.length > 0) {
-          const feature = _.find(reConfigureProduct.features, { id: action.product.featureId });
+          const feature = _.find(reConfigureProduct.features, { id: action.productObj.featureId });
           if (feature) {
             const product = _.find(feature.products, { id: action.productObj.id });
             if (product) {
@@ -369,7 +372,7 @@ function reConfigureProductsReducer(state = initialState, action) {
           if (product) {
             product.isSelected = !product.isSelected;
             const featureArray = [];
-            feature.forEach((featureData) => {
+            reConfigureProduct.features.forEach((featureData) => {
               const featureObj = featureData;
               const productArray = [];
               featureData.products.forEach((productData) => {

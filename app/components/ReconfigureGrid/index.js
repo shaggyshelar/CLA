@@ -97,7 +97,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   }
 
   renderEditable(cellInfo) {
-    if (this.props.feature.DynamicAddEnabled || cellInfo.original.isSelected) {
+    if (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected) {
       return (
         <div>
           <RIENumber
@@ -129,14 +129,14 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     } else if (cellInfo.original.isDependent) {
       title = `Required: ${cellInfo.original.dependentBy}`;
     }
-    if (this.props.feature.DynamicAddEnabled) {
+    if (this.props.feature.dynamicAddEnabled) {
       if (cellInfo.original.isRequired) {
         input = (<a title={this.context.intl.formatMessage({ ...messages.deleteLine })} className="disabled-link"><Glyphicon glyph="trash" /></a>);
       } else {
         input = (<a title={this.context.intl.formatMessage({ ...messages.deleteLine })} onClick={this.deleteProduct.bind(this, cellInfo.original)} ><Glyphicon glyph="trash" style={{ color: '#C9302C' }} /></a>);
       }
       return input;
-    } else if (!this.props.feature.DynamicAddEnabled) {
+    } else if (!this.props.feature.dynamicAddEnabled) {
       if (cellInfo.original.isRequired || cellInfo.original.isDisable) {
         input = (<input type="checkbox" className="check" title={title} checked={cellInfo.original.isSelected} disabled value={cellInfo.original.id} />);
       } else {
@@ -171,14 +171,14 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           accessor: 'code',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
-          Cell: (cellInfo) => (this.props.feature.DynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.code}</span> : <span className="cellColor">{cellInfo.original.code}</span>),
+          Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.code}</span> : <span className="cellColor">{cellInfo.original.code}</span>),
         },
         {
           Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
           accessor: 'name',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
-          Cell: (cellInfo) => (this.props.feature.DynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.name}</span> : <span className="cellColor">{cellInfo.original.name}</span>),
+          Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.name}</span> : <span className="cellColor">{cellInfo.original.name}</span>),
         },
         {
           Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
@@ -192,7 +192,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           id: 'listPrice',
           style: { textAlign: 'right' },
           headerStyle: { textAlign: 'right' },
-          Cell: (cellInfo) => (this.props.feature.DynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.listPrice.value}</span> : <span className="cellColor">{cellInfo.original.listPrice.value}</span>),
+          Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.listPrice.value}</span> : <span className="cellColor">{cellInfo.original.listPrice.value}</span>),
         },
       ],
     }];
