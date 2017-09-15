@@ -2,12 +2,16 @@ import { createSelector } from 'reselect';
 
 const selectProductSelectionPageDomain = (state) => state.get('productSelectionPage');
 const globalState = (state) => state.get('global');
-
+const language = (state) => state.get('language');
 const makeSelectProductSelectionPage = () => createSelector(
   selectProductSelectionPageDomain,
  (homeState) => homeState.toJS()
 );
-
+const getLanguage = () =>
+ createSelector(
+  language,
+  (homeState) => homeState.get('locale')
+);
 const showFilter = () => createSelector(
   selectProductSelectionPageDomain,
   (homeState) => homeState.get('showFilter')
@@ -49,5 +53,6 @@ export {
   makeProductsData,
   getQuoteLines,
   makeSearchedProductsData,
+  getLanguage,
 };
 

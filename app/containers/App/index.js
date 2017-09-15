@@ -49,10 +49,6 @@ export class App extends React.Component { // eslint-disable-line react/prefer-s
           style={{ zIndex: 9999999 }}
         />
         {React.Children.toArray(this.props.children)}
-        <select onChange={this.languageChange} value={this.props.language}>
-          <option value="en">English</option>
-          <option value="fr">French</option>
-        </select>
         <Modal
           show={this.props.error} onHide={this.props.cancel} style={{ width: '50%' }}
           autoFocus keyboard

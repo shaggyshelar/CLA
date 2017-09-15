@@ -41,8 +41,8 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
     });
   }
   render() {
-    const columns = [{
-      columns: [{
+    const columns = [
+      {
         Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
         accessor: 'id',
         id: 'id',
@@ -52,42 +52,39 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
         headerStyle: { textAlign: 'center' },
         Cell: (props) => <input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={props.value} />,
       },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
-          accessor: 'code',
-          style: { textAlign: 'left' },
-          headerStyle: { textAlign: 'left' },
-        },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
+        accessor: 'code',
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
+      },
 
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
-          accessor: 'name',
-          style: { textAlign: 'left' },
-          headerStyle: { textAlign: 'left' },
-        },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productFamily })}>{this.context.intl.formatMessage({ ...messages.productFamily })}</span>,
-          accessor: 'type',
-          style: { textAlign: 'left' },
-          headerStyle: { textAlign: 'left' },
-        },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
-          style: { textAlign: 'left' },
-          accessor: 'description',
-          headerStyle: { textAlign: 'left', title: 'PRODUCT DESCRIPTION' },
-        },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.listPrice })}>{this.context.intl.formatMessage({ ...messages.listPrice })}</span>,
-          accessor: 'listPrice.value',
-          style: { textAlign: 'right' },
-          headerStyle: { textAlign: 'right' },
-          Cell: (props) => <span>₹ {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,
-        },
-
-
-      ],
-    }];
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
+        accessor: 'name',
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productFamily })}>{this.context.intl.formatMessage({ ...messages.productFamily })}</span>,
+        accessor: 'type',
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
+        style: { textAlign: 'left' },
+        accessor: 'description',
+        headerStyle: { textAlign: 'left', title: 'PRODUCT DESCRIPTION' },
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.listPrice })}>{this.context.intl.formatMessage({ ...messages.listPrice })}</span>,
+        accessor: 'listPrice.value',
+        style: { textAlign: 'right' },
+        headerStyle: { textAlign: 'right' },
+        Cell: (props) => <span>₹ {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,
+      },
+    ];
     return (
       <div>
         <div className="table-wrap productTopPadding">
