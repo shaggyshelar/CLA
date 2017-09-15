@@ -115,12 +115,20 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         </div>);
     }
-    return (<span>{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
+    return (<span className="cellColor">{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
   }
 
 
   renderActionItems(cellInfo) {
     let input;
+    let title;
+    if (cellInfo.original.isDependent && cellInfo.original.isExclusion) {
+      title = `Required: ${cellInfo.original.dependentBy} / Exclusion: ${cellInfo.original.dependentBy}`;
+    } else if (cellInfo.original.isExclusion) {
+      title = `Exclusion: ${cellInfo.original.dependentBy}`;
+    } else if (cellInfo.original.isDependent) {
+      title = `Required: ${cellInfo.original.dependentBy}`;
+    }
     if (this.props.feature.DynamicAddEnabled) {
       if (cellInfo.original.isRequired) {
         input = (<a title={this.context.intl.formatMessage({ ...messages.deleteLine })} className="disabled-link"><Glyphicon glyph="trash" /></a>);
@@ -129,10 +137,10 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       }
       return input;
     } else if (!this.props.feature.DynamicAddEnabled) {
-      if (cellInfo.original.isRequired) {
-        input = (<input type="checkbox" className="check" defaultChecked={cellInfo.original.isSelected} disabled value={cellInfo.original.id} />);
+      if (cellInfo.original.isRequired || cellInfo.original.isDisable) {
+        input = (<input type="checkbox" className="check" title={title} checked={cellInfo.original.isSelected} disabled value={cellInfo.original.id} />);
       } else {
-        input = (<input type="checkbox" className="check" defaultChecked={cellInfo.original.isSelected} onChange={this.toggleCheckboxChange.bind(this, cellInfo.original)} value={cellInfo.original.id} />);
+        input = (<input type="checkbox" className="check" title={title} checked={cellInfo.original.isSelected} onChange={this.toggleCheckboxChange.bind(this, cellInfo.original)} value={cellInfo.original.id} />);
       }
     }
     return input;
@@ -163,12 +171,14 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           accessor: 'code',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
+          Cell: (cellInfo) => (this.props.feature.DynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.code}</span> : <span className="cellColor">{cellInfo.original.code}</span>),
         },
         {
           Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
           accessor: 'name',
           style: { textAlign: 'left' },
           headerStyle: { textAlign: 'left' },
+          Cell: (cellInfo) => (this.props.feature.DynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.name}</span> : <span className="cellColor">{cellInfo.original.name}</span>),
         },
         {
           Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
@@ -182,6 +192,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           id: 'listPrice',
           style: { textAlign: 'right' },
           headerStyle: { textAlign: 'right' },
+          Cell: (cellInfo) => (this.props.feature.DynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.listPrice.value}</span> : <span className="cellColor">{cellInfo.original.listPrice.value}</span>),
         },
       ],
     }];

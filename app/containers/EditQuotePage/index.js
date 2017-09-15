@@ -7,10 +7,11 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectData, makeSelectError, makeSelectLoading, getCustomSegments, getCheckAll } from './selectors';
+import { getLanguage, makeSelectData, makeSelectError, makeSelectLoading, getCustomSegments, getCheckAll } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import { GroupQuote } from '../GroupQuote';
 import { SegmentedQuote } from '../SegmentedQuote';
+import { changeLocale } from '../LanguageProvider/actions';
 import { cloneLine,
   deleteLine,
   deleteMultipleLines,
@@ -258,6 +259,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             ungroup={this.ungroup}
             group={this.group}
             grouped={grouped}
+            language={this.props.language}
+            languageChange={this.props.changeLocale}
           />
         </div>
         {grouped ?
@@ -397,6 +400,8 @@ EditQuotePage.propTypes = {
   saveAppCustomSegmentData: PropTypes.func,
   toggleCheckAll: PropTypes.func,
   isCheckAll: PropTypes.any,
+  language: PropTypes.any,
+  changeLocale: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -405,6 +410,7 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectError(),
   customSegments: getCustomSegments(),
   isCheckAll: getCheckAll(),
+  language: getLanguage(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -505,6 +511,9 @@ function mapDispatchToProps(dispatch) {
     },
     toggleCheckAll: (isCheckAll) => {
       dispatch(toggleCheckAll(isCheckAll));
+    },
+    changeLocale: (locale) => {
+      dispatch(changeLocale(locale));
     },
   };
 }

@@ -16,9 +16,13 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
   constructor(props, context) {
     super(props, context);
     this.handleFullScreen = this.handleFullScreen.bind(this);
+    this.languageChange = this.languageChange.bind(this);
   }
   handleFullScreen() {
     screenfull.toggle(document.getElementById('app'));
+  }
+  languageChange(e) {
+    this.props.languageChange(e.target.value);
   }
   render() {
     return (
@@ -43,17 +47,20 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
           />
         </Col>
         <Col xs={12} md={5} style={{ textAlign: 'right' }}>
-          <ButtonGroup className="margin">
+          {/* <ButtonGroup className="margin">
             <Button title={this.context.intl.formatMessage({ ...messages.filter })} onClick={this.props.toggleFilter}><Glyphicon glyph="filter" /></Button>
             <Button title={this.context.intl.formatMessage({ ...messages.favourites })} onClick={() => { browserHistory.push('/favourites'); }} ><Glyphicon glyph="star" /></Button>
-          </ButtonGroup>
+          </ButtonGroup> */}
           {/* <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
           <ButtonGroup className="margin">
             <Button title={this.context.intl.formatMessage({ ...messages.select })} onClick={this.props.addProducts}>{this.context.intl.formatMessage({ ...messages.select })}</Button>
             <Button title={this.context.intl.formatMessage({ ...messages.selectMore })} onClick={this.props.addProductsWait}>{this.context.intl.formatMessage({ ...messages.selectMore })}</Button>
             <Button title={this.context.intl.formatMessage({ ...messages.cancel })} onClick={() => { browserHistory.push('/EditQuote'); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
           </ButtonGroup>
-
+          <select className="lang" onChange={this.languageChange} value={this.props.language}>
+            <option value="en">En</option>
+            <option value="fr">Fr</option>
+          </select>
         </Col>
 
       </Row>
@@ -70,6 +77,8 @@ ProductSelectionHeader.propTypes = {
   searchInputChange: React.PropTypes.func,
   onSearchClick: React.PropTypes.func,
   onSearchItemSelected: React.PropTypes.func,
-  toggleFilter: React.PropTypes.any,
+  // toggleFilter: React.PropTypes.any,
+  languageChange: React.PropTypes.func,
+  language: React.PropTypes.any,
 };
 export default ProductSelectionHeader;

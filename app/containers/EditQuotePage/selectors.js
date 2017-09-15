@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 // const selectEditQuote = (state) => state.get('editQuote');
 const selectEditQuoteDomain = () => (state) => state.get('editQuote');
 const global = (state) => state.get('global');
+const language = (state) => state.get('language');
 const makeSelectLoading = () => createSelector(
   global,
   (homeState) => homeState.get('loading')
@@ -37,7 +38,11 @@ const getCheckAll = () =>
   selectEditQuoteDomain(),
   (homeState) => homeState.get('isCheckAll')
 );
-
+const getLanguage = () =>
+ createSelector(
+  language,
+  (homeState) => homeState.get('locale')
+);
 export {
   selectEditQuoteDomain,
   makeSelectData,
@@ -47,4 +52,5 @@ export {
   global,
   getCustomSegments,
   getCheckAll,
+  getLanguage,
 };

@@ -13,7 +13,6 @@ const selectEditQuoteHeaderDomain = () => (state) => state.get('editQuoteHeader'
 /**
  * Default selector used by EditQuoteHeader
  */
-
 const makeSelectEditQuoteHeader = () => createSelector(
   selectEditQuoteHeaderDomain(),
   (substate) => substate.toJS()
