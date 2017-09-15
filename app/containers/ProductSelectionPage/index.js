@@ -13,10 +13,12 @@ import { toast } from 'react-toastify';
 import { generateGuid } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { makeSelectProductSelectionPage, makeSearchedProductsData, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
+import { getLanguage, makeSelectProductSelectionPage, makeSearchedProductsData, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
+import { changeLocale } from '../LanguageProvider/actions';
+
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
@@ -184,6 +186,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
             onSearchItemSelected={this.onSearchItemSelected}
+            language={this.props.language}
+            languageChange={this.props.changeLocale}
           />
         </div>
         <div>
@@ -217,6 +221,8 @@ ProductSelectionPage.propTypes = {
   searchedProducts: PropTypes.any,
   onSearchItemSelected: PropTypes.func,
   loading: PropTypes.any,
+  language: PropTypes.any,
+  changeLocale: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -226,6 +232,7 @@ const mapStateToProps = createStructuredSelector({
   products: makeProductsData(),
   searchedProducts: makeSearchedProductsData(),
   loading: makeSelectLoading(),
+  language: getLanguage(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -248,6 +255,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSearchItemSelected: (value) => {
       dispatch(onSearchItemSelected(value));
+    },
+    changeLocale: (locale) => {
+      dispatch(changeLocale(locale));
     },
   };
 }

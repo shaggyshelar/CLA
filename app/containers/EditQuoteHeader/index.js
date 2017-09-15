@@ -14,19 +14,23 @@ import messages from './messages';
 
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
 
-export class EditQuoteHeader extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class EditQuoteHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.handleFullScreen = this.handleFullScreen.bind(this);
+    this.languageChange = this.languageChange.bind(this);
   }
 
   handleFullScreen() {
     screenfull.toggle(document.getElementById('app'));
   }
+  languageChange(e) {
+    this.props.languageChange(e.target.value);
+  }
   render() {
     return (
       <Row className="show-grid">
-        <Col xs={12} md={3}>
+        <Col xs={12} sm={12} md={4}>
           <Helmet
             title="CPQ - Edit Quote"
             meta={[
@@ -35,7 +39,7 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
           />
           <EditQuoteHeaderCard currency={this.props.data.currency} name={this.props.data.name} total={this.props.data.netAmount} />
         </Col>
-        <Col xs={12} md={9} style={{ textAlign: 'right' }}>
+        <Col xs={12} sm={12} md={8} style={{ textAlign: 'right' }}>
           {this.props.grouped ?
             ''
             :
@@ -60,6 +64,10 @@ export class EditQuoteHeader extends React.PureComponent { // eslint-disable-lin
             <Button title={this.context.intl.formatMessage({ ...messages.calculate })} onClick={this.props.calculateTotal}><FormattedMessage {...messages.calculate} /></Button>
             <Button title={this.context.intl.formatMessage({ ...messages.save })} onClick={this.props.quickSave}><FormattedMessage {...messages.save} /></Button>
           </ButtonGroup>
+          <select className="lang" onChange={this.languageChange} value={this.props.language}>
+            <option value="en">En</option>
+            <option value="fr">Fr</option>
+          </select>
         </Col>
       </Row>
     );
@@ -75,6 +83,8 @@ EditQuoteHeader.propTypes = {
   group: React.PropTypes.func,
   ungroup: React.PropTypes.func,
   cloneLine: React.PropTypes.func,
+  languageChange: React.PropTypes.func,
+  language: React.PropTypes.any,
 };
 EditQuoteHeader.contextTypes = {
   intl: React.PropTypes.object.isRequired,
