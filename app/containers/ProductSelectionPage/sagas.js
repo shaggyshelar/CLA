@@ -13,10 +13,10 @@ import { productsDataLoaded, searchedDataLoaded, searchBtnDataLoaded } from './a
 // import { LOAD_REPOS } from 'containers/App/constants';
 // import { SERVER_URL, EntityURLs } from '../App/constants';
 // Individual exports for testing
-export function* getProductsSaga(action) {
+export function* getProductsSaga(groupId, priceBookId) {
   // See example in containers/HomePage/sagas.js
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${action.groupId}&PriceListId=${action.priceBookId}`}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${groupId}&PriceListId=${priceBookId}`}`;
     const repos = yield call(request, requestURL);
     if (repos.products.errorMessages && repos.quote.errorMessages.length) {
       yield put(dataLoadingError(repos.quote.errorMessages));
@@ -30,10 +30,11 @@ export function* getProductsSaga(action) {
 
 export function* productsData() {
   while (true) {
-    const watcher = yield takeLatest(LOAD_PRODUCTS_DATA, getProductsSaga);
+    const chan = yield actionChannel(LOAD_PRODUCTS_DATA);
     // Suspend execution until location changes
-    yield take(LOCATION_CHANGE);
-    yield cancel(watcher);
+    const { groupId, priceBookId } = yield take(chan);
+    console.log(groupId, priceBookId);
+    yield call(getProductsSaga, groupId, priceBookId);
   }
 }
 
@@ -60,24 +61,24 @@ export function* searchedData() {
 }
 export function* addProducts() {
   while (true) {
-    const chan = yield actionChannel(ADD_PRODUCTS);
-    const lines = yield select(selectGlobal);
-    const postLines = Object.assign({}, lines.toJS().data);
-    const { data } = yield take(chan);
     try {
-      const dataPost = postLines;
-      dataPost.lines = dataPost.lines.concat(data);
+      const chan = yield actionChannel(ADD_PRODUCTS);
+      const { data } = yield take(chan);
+      const lines = yield select(selectGlobal);
+      const postLines = Object.assign({}, lines.toJS().data);
+      postLines.lines = postLines.lines.length ? postLines.lines.concat(data) : data;
       const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/AddProducts`}`;
       const options = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(dataPost),
+        body: JSON.stringify(postLines),
       };
       const repos = yield call(request, requestURL, options);
       if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
         yield put(dataLoadingError(repos.quote.errorMessages));
+        yield put(dataLoaded(repos));
       } else {
         yield put(dataLoaded(repos));
       }

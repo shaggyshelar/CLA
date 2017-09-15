@@ -6,7 +6,7 @@ import _ from 'lodash';
 import AddConfigureProductHeader from 'components/AddConfigureProductHeader';
 import AddConfigureProductGrid from 'components/AddConfigureProductGrid';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectAddConfigureProducts, makeProductsData } from './selectors';
+import { makeSelectAddConfigureProducts, makeProductsData, makeSelectLoading, makeSelectError } from './selectors';
 import { loadProductsData } from './actions';
 import { addOptions } from '../ReConfigureProducts/actions';
 
@@ -82,6 +82,10 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
 
   render() {
     const quoteName = this.props.location.query.quoteName;
+    const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
+    if (this.props.loading) {
+      return (<div className="loader" style={style}></div>);
+    }
     return (
       <div>
         <div
@@ -120,11 +124,14 @@ AddConfigureProducts.propTypes = {
   productsData: PropTypes.any,
   addOptions: PropTypes.func,
   location: PropTypes.any,
+  loading: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   AddConfigureProducts: makeSelectAddConfigureProducts(),
   productsData: makeProductsData(),
+  loading: makeSelectLoading(),
+  error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {

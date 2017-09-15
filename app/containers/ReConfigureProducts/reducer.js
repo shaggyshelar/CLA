@@ -327,6 +327,38 @@ function reConfigureProductsReducer(state = initialState, action) {
             const product = _.find(feature.products, { id: action.product.id });
             if (product) {
               product.isSelected = !product.isSelected;
+              const categoryArray = [];
+              reConfigureProduct.categories.forEach((categoryData) => {
+                const categoryObj = categoryData;
+                const featureArray = [];
+                categoryData.features.forEach((featureData) => {
+                  const featureObj = featureData;
+                  const productArray = [];
+                  featureData.products.forEach((productData) => {
+                    const productObj = productData;
+                    let isDeleted = false;
+                    if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
+                      productObj.isDisable = true;
+                    } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
+                      if (productObj.isAdded) {
+                        isDeleted = true;
+                      }
+                      productObj.isDisable = !productObj.isDisable;
+                    } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
+                      productObj.isDisable = !productObj.isDisable;
+                      productObj.isSelected = false;
+                    }
+                    if (!isDeleted) {
+                      productArray.push(productObj);
+                    }
+                  });
+                  featureObj.products = productArray;
+                  featureArray.push(featureObj);
+                });
+                categoryObj.features = featureArray;
+                categoryArray.push(categoryObj);
+              });
+              reConfigureProduct.categories = categoryArray;
             }
           }
         }
@@ -336,6 +368,32 @@ function reConfigureProductsReducer(state = initialState, action) {
           const product = _.find(feature.products, { id: action.product.id });
           if (product) {
             product.isSelected = !product.isSelected;
+            const featureArray = [];
+            feature.forEach((featureData) => {
+              const featureObj = featureData;
+              const productArray = [];
+              featureData.products.forEach((productData) => {
+                const productObj = productData;
+                let isDeleted = false;
+                if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
+                  productObj.isDisable = true;
+                } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
+                  if (productObj.isAdded) {
+                    isDeleted = true;
+                  }
+                  productObj.isDisable = !productObj.isDisable;
+                } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
+                  productObj.isDisable = !productObj.isDisable;
+                  productObj.isSelected = false;
+                }
+                if (!isDeleted) {
+                  productArray.push(productObj);
+                }
+              });
+              featureObj.products = productArray;
+              featureArray.push(featureObj);
+            });
+            reConfigureProduct.features = featureArray;
           }
         }
       }

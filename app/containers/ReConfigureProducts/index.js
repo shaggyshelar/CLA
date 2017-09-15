@@ -12,7 +12,7 @@ import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
-import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState } from './selectors';
+import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError } from './selectors';
 import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
 import { saveAppReconfigurationData } from '../App/actions';
 
@@ -124,8 +124,8 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     intialProductBundleData.productBundle.products = [];
     intialProductBundleData.productBundle.products = updatedProducts;
     this.props.saveConfiguredProducts(intialProductBundleData.productBundle);
-    this.props.saveAppReconfigurationData();
     browserHistory.push('/');
+    this.props.saveAppReconfigurationData();
   }
 
   toggleSidebar() {
@@ -147,6 +147,10 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       quoteName: this.props.location.query.quoteName,
       priceBookId: this.props.location.query.priceBookId,
     };
+    const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
+    if (this.props.loading) {
+      return (<div className="loader" style={style}></div>);
+    }
     return (
       <div>
         <div
@@ -199,6 +203,7 @@ ReConfigureProducts.propTypes = {
   toggleAddOptionsState: PropTypes.any,
   saveAppReconfigurationData: PropTypes.any,
   activeTab: PropTypes.any,
+  loading: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -207,6 +212,8 @@ const mapStateToProps = createStructuredSelector({
   reConfigureProductData: getReConfigureProductData(),
   fromAddOption: getAddOptionState(),
   activeTab: getActiveTabState(),
+  loading: makeSelectLoading(),
+  error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {

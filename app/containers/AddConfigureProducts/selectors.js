@@ -24,9 +24,20 @@ const makeProductsData = () =>
   selectAddConfigureProductsDomain(),
   (homeState) => homeState.get('productsData')
 );
+const makeSelectLoading = () => createSelector(
+  selectAddConfigureProductsDomain(),
+  (homeState) => homeState.get('loading')
+);
+
+const makeSelectError = () => createSelector(
+  selectAddConfigureProductsDomain(),
+  (homeState) => homeState.get('error')
+);
 
 export {
   selectAddConfigureProductsDomain,
   makeSelectAddConfigureProducts,
   makeProductsData,
+  makeSelectLoading,
+  makeSelectError,
 };

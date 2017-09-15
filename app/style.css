@@ -79,9 +79,6 @@ padding-right:60px !important;
     overflow: hidden;
 	
 }
-select {
-    padding-left:5px!important;
-}
 .table-edit-input .inline-edit {
      display:none !important;
 }
@@ -1152,6 +1149,16 @@ strong {
 }***/
 
 /*** Ungroup ***/
+.lang {
+    margin-right: 10px;
+    margin-right: 10px;
+    border: 2px solid #ccc;
+    float: right;
+    position: relative;
+    z-index: 9999;
+    top: 18px;
+    background: white;
+}
 .qoute-container .sub-footer{
 	position: fixed;
     width: 100%;
@@ -1514,7 +1521,6 @@ body.modal-open {
 @media(min-width:768px){
 	.headerFix {
 		width:102%;
-		position:fixed;
 		z-index:99999999;
 	}
 }
@@ -1598,11 +1604,11 @@ body.modal-open {
 		font-size: 11px;
 	}
 }
-.productTopPadding{
-	padding-top:60px;
-
-}
 .customSegmentsInput {
     width : 90% !important;
     margin-left: 0px !important;
+}
+
+.cellColor {
+    color: grey;
 }
