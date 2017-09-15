@@ -1917,6 +1917,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '112',
           code: 'T132',
+          productId: '111',
           name: 'Android',
           type: 'Product/Bundle',
           isBundled: false,
@@ -4647,6 +4648,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
         {
           id: '112',
           code: 'T132',
+          productId: '111',
           name: 'Android',
           type: 'Product/Bundle',
           isBundled: false,
@@ -7142,6 +7144,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
         {
           id: '112',
           code: 'T132',
+          productId: '111',
           name: 'Android',
           type: 'Product/Bundle',
           isBundled: false,
@@ -9686,6 +9689,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
         {
           id: '112',
           code: 'T132',
+          productId: '111',
           name: 'Android',
           type: 'Product/Bundle',
           isBundled: false,
