@@ -32,7 +32,7 @@ module.exports = (options) => ({
     }, {
       test: /\.(jpg|png|gif)$/,
       loaders: [
-        'file-loader',
+        'file-loader?name=p2qes_[name].[ext]',
         {
           loader: 'image-webpack-loader',
           query: {

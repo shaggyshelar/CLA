@@ -6,34 +6,34 @@
  */
 import { addLocaleData } from 'react-intl';
 import enLocaleData from 'react-intl/locale-data/en';
-import deLocaleData from 'react-intl/locale-data/de';
+import frLocaleData from 'react-intl/locale-data/fr';
 
-import { DEFAULT_LOCALE } from '../app/containers/App/constants';
-
+import { DEFAULT_LOCALE } from './containers/App/constants'; // eslint-disable-line
 import enTranslationMessages from './translations/en.json';
-import deTranslationMessages from './translations/de.json';
-
-addLocaleData(enLocaleData);
-addLocaleData(deLocaleData);
+import frTranslationMessages from './translations/fr.json';
 
 export const appLocales = [
   'en',
-  'de',
+  'fr',
 ];
+
+addLocaleData(enLocaleData);
+addLocaleData(frLocaleData);
 
 export const formatTranslationMessages = (locale, messages) => {
   const defaultFormattedMessages = locale !== DEFAULT_LOCALE
     ? formatTranslationMessages(DEFAULT_LOCALE, enTranslationMessages)
     : {};
   return Object.keys(messages).reduce((formattedMessages, key) => {
-    const formattedMessage = !messages[key] && locale !== DEFAULT_LOCALE
-      ? defaultFormattedMessages[key]
-      : messages[key];
-    return Object.assign(formattedMessages, { [key]: formattedMessage });
+    let message = messages[key];
+    if (!message && locale !== DEFAULT_LOCALE) {
+      message = defaultFormattedMessages[key];
+    }
+    return Object.assign(formattedMessages, { [key]: message });
   }, {});
 };
 
 export const translationMessages = {
   en: formatTranslationMessages('en', enTranslationMessages),
-  de: formatTranslationMessages('de', deTranslationMessages),
+  fr: formatTranslationMessages('fr', frTranslationMessages),
 };

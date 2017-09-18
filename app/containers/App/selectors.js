@@ -1,31 +1,7 @@
-/**
- * The global state selectors
- */
-
 import { createSelector } from 'reselect';
 
 const selectGlobal = (state) => state.get('global');
-
-const makeSelectCurrentUser = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('currentUser')
-);
-
-const makeSelectLoading = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('loading')
-);
-
-const makeSelectError = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('error')
-);
-
-const makeSelectRepos = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['userData', 'repositories'])
-);
-
+const language = (state) => state.get('language');
 const makeSelectLocationState = () => {
   let prevRoutingState;
   let prevRoutingStateJS;
@@ -41,12 +17,31 @@ const makeSelectLocationState = () => {
     return prevRoutingStateJS;
   };
 };
-
-export {
+const makeSelectData = () =>
+ createSelector(
   selectGlobal,
-  makeSelectCurrentUser,
-  makeSelectLoading,
-  makeSelectError,
-  makeSelectRepos,
+  (homeState) => homeState.getIn(['data'])
+);
+const getLanguage = () =>
+ createSelector(
+  language,
+  (homeState) => homeState.get('locale')
+);
+const getError = () =>
+ createSelector(
+  selectGlobal,
+  (homeState) => homeState.get('error')
+);
+const getErrorMessage = () =>
+ createSelector(
+  selectGlobal,
+  (homeState) => homeState.get('errorMessage')
+);
+export {
+  makeSelectData,
+  selectGlobal,
   makeSelectLocationState,
+  getLanguage,
+  getError,
+  getErrorMessage,
 };
