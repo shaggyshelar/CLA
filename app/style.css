@@ -1173,7 +1173,7 @@ strong {
     margin-top: -5%;
     bottom: 0;
     background: #ececec;
-	padding:7px 2em!important;
+	padding-top:7px 15px!important;
 }
 .qoute-container  .sub-footer-seg .ReactTable {
 	border:none!important;
@@ -1516,11 +1516,15 @@ body.modal-open {
 .table-wrap {
     /*padding-bottom: 10px!important;*/
 }
-
+.tab-pane{   overflow: hidden!important;    overflow-x: auto!important;}.qoute-container {    height: auto!important;}.group {    height: auto!important;}.show-grid.row{   margin-right:0!important;}
+.show-grid.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
 /*** For filter ***/
 @media(min-width:768px){
 	.headerFix {
-		width:102%;
+		width:100%;
 		z-index:99999999;
 	}
 }
