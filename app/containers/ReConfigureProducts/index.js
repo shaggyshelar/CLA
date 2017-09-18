@@ -8,13 +8,13 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
-import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError } from './selectors';
+import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError, getLanguage } from './selectors';
 import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
 import { saveAppReconfigurationData } from '../App/actions';
+import { changeLocale } from '../LanguageProvider/actions';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -77,6 +77,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
         quoteId: this.props.location.query.quoteId,
         priceBookId: this.props.location.query.priceBookId,
         quoteLineId: this.props.location.query.quoteLineId,
+        groupId: this.props.location.query.groupId,
       };
       this.props.getProductsData(data);
     } else {
@@ -165,6 +166,8 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             data={this.state.dataProd}
             saveProducts={this.saveProducts}
             quoteName={params.quoteName}
+            language={this.props.language}
+            languageChange={this.props.changeLocale}
           />
           <ReconfigureProductTab
             reConfigureData={this.props.reConfigureProductData.toJS()}
@@ -205,6 +208,8 @@ ReConfigureProducts.propTypes = {
   saveAppReconfigurationData: PropTypes.any,
   activeTab: PropTypes.any,
   loading: PropTypes.any,
+  language: PropTypes.any,
+  changeLocale: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -215,6 +220,7 @@ const mapStateToProps = createStructuredSelector({
   activeTab: getActiveTabState(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  language: getLanguage(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -240,6 +246,9 @@ function mapDispatchToProps(dispatch) {
     },
     toggleAddOptionsState: (fromAddOption, activeTab) => {
       dispatch(toggleAddOptionsState(fromAddOption, activeTab));
+    },
+    changeLocale: (locale) => {
+      dispatch(changeLocale(locale));
     },
   };
 }

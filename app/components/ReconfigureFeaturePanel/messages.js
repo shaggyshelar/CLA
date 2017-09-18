@@ -10,4 +10,8 @@ export default defineMessages({
     id: 'app.components.ReconfigureFeaturePanel.header',
     defaultMessage: 'This is the ReconfigureFeaturePanel component !',
   },
+  addOptions: {
+    id: 'app.components.ReconfigureFeaturePanel.addOptions',
+    defaultMessage: 'Add Options',
+  },
 });
