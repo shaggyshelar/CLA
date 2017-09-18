@@ -73,13 +73,14 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
   componentDidMount() {
     if (!this.props.fromAddOption) {
       const data = {
-        id: this.props.location.query.id,
+        productId: this.props.location.query.productId,
         quoteId: this.props.location.query.quoteId,
         priceBookId: this.props.location.query.priceBookId,
+        quoteLineId: this.props.location.query.quoteLineId,
       };
       this.props.getProductsData(data);
     } else {
-      this.props.toggleAddOptionsState(false, 0);
+      this.props.toggleAddOptionsState(false);
     }
   }
 

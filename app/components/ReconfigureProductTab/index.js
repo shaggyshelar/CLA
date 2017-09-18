@@ -19,10 +19,12 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
     };
     this.onTabSelect = this.onTabSelect.bind(this);
   }
+  componentWillMount() {
+    this.setState({ activeTab: this.props.activeTab });
+  }
   onTabSelect(e) {
     this.setState({ activeTab: e });
   }
-
   returnReactTab(item, index) {
     return (<Tab key={index} eventKey={index} title={item.name}>
       <ReconfigureFeaturePanel

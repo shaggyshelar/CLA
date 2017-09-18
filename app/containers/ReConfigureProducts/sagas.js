@@ -6,7 +6,7 @@ import { dataLoaded, dataLoadingError } from '../App/actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
 export function* getProductBundleSaga(data) {
-  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/ReconfigureProduct?ProductId=${data.id}&PriceListId=${data.priceBookId}&QuoteId=${data.quoteId}`}`;
+  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/ReconfigureProduct?ProductId=${data.productId}&PriceListId=${data.priceBookId}&QuoteId=${data.quoteId}&LineId=${data.quoteLineId}`}`;
   try {
     const repos = yield call(request, requestURL);
     yield put(loadReConfigureProductsDataSuccess(repos));
