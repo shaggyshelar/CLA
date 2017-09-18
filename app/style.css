@@ -177,9 +177,7 @@ position: relative;
     /* padding-left:5px; */
  }
 .group {
-    margin: 0!important;    
-    border-width: 1px;    
-    border-style: solid;    
+    margin: 0!important;     
     border-color: #d0d0d0;    
     border-radius: 4px;    
     height: 100%;    
@@ -1229,11 +1227,11 @@ strong {
     padding: 7px 2em!important;
 }
 .qoute-container .group .sub-footer {
-    position: relative;
-    width: auto;
+    position: fixed;
+    width: 100%;
     margin-left: auto;
     margin-top: auto;
-    bottom: auto;
+    bottom: 0;
     background: #ececec;
     padding: 10px 2em!important;
 }
