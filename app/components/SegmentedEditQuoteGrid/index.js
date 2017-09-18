@@ -245,8 +245,8 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     ));
     columns.push({
       Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
-      accessor: 'netTotal',
-      id: 'netTotal',
+      accessor: 'segmentTotal',
+      id: 'segmentTotal',
       style: { textAlign: 'right' },
       headerStyle: { textAlign: 'right' },
       className: 'table-edit',
