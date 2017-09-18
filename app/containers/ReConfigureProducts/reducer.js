@@ -117,7 +117,7 @@ function reConfigureProductsReducer(state = initialState, action) {
            // For Other tab and Other Options
           if (otherFeatures.length > 0 || otherProducts.length > 0) {
             const otherCategory = {};
-            otherCategory.id = generateGuid();
+            otherCategory.id = 'o1t2h3e4r5';
             otherCategory.name = 'Other';
             // otherCategory.features = otherFeatures;
             otherCategory.features = [];
@@ -130,7 +130,7 @@ function reConfigureProductsReducer(state = initialState, action) {
             // Create Other Options feature
             if (otherProducts.length > 0) {
               const otherOptions = {};
-              otherOptions.id = generateGuid();
+              otherOptions.id = 'o1t2h3e4r5o6p7t8i9o0n123';
               otherOptions.categoryId = otherCategory.id;
               otherOptions.name = 'Other Options';
               otherOptions.products = [];
@@ -173,7 +173,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         // For Other Options
           if (otherProducts.length > 0) {
             const otherOptions = {};
-            otherOptions.id = generateGuid();
+            otherOptions.id = 'o1t2h3e4r5o6p7t8i9o0n123';
             otherOptions.name = 'Other Options';
             otherOptions.products = [];
             otherOptions.products = otherProducts;
@@ -181,7 +181,7 @@ function reConfigureProductsReducer(state = initialState, action) {
           }
         } else if (categories.length === 0 && features.length === 0 && products.length > 0) { // Only Products are available
           const otherOptions = {};
-          otherOptions.id = generateGuid();
+          otherOptions.id = 'o1t2h3e4r5o6p7t8i9o0n123';
           otherOptions.name = 'Other Options';
           otherOptions.products = [];
         //  otherOptions.products = products;

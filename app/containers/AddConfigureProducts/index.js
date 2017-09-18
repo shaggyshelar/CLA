@@ -6,9 +6,10 @@ import _ from 'lodash';
 import AddConfigureProductHeader from 'components/AddConfigureProductHeader';
 import AddConfigureProductGrid from 'components/AddConfigureProductGrid';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectAddConfigureProducts, makeProductsData, makeSelectLoading, makeSelectError } from './selectors';
+import { makeSelectAddConfigureProducts, makeProductsData, makeSelectLoading, makeSelectError, getLanguage } from './selectors';
 import { loadProductsData } from './actions';
 import { addOptions } from '../ReConfigureProducts/actions';
+import { changeLocale } from '../LanguageProvider/actions';
 
 export class AddConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -99,6 +100,8 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
             data={this.state.dataProd}
             addOptions={this.addOptions}
             quoteName={quoteName}
+            language={this.props.language}
+            languageChange={this.props.changeLocale}
           />
           <div className="qoute-container">
             <AddConfigureProductGrid
@@ -125,6 +128,8 @@ AddConfigureProducts.propTypes = {
   addOptions: PropTypes.func,
   location: PropTypes.any,
   loading: PropTypes.any,
+  language: PropTypes.any,
+  changeLocale: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -132,6 +137,7 @@ const mapStateToProps = createStructuredSelector({
   productsData: makeProductsData(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  language: getLanguage(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -142,6 +148,9 @@ function mapDispatchToProps(dispatch) {
     },
     addOptions: (productObj) => {
       dispatch(addOptions(productObj));
+    },
+    changeLocale: (locale) => {
+      dispatch(changeLocale(locale));
     },
   };
 }
