@@ -47,6 +47,7 @@
   "app.components.ProductSelectionGrid.productFamily": "Famille de produits",
   "app.components.ProductSelectionGrid.productName": "Nom du produit",
   "app.components.ProductSelectionHeaderCard.header": "",
+  "app.components.ReconfigureFeaturePanel.addOptions": "Ajouter des options",
   "app.components.ReconfigureFeaturePanel.header": "",
   "app.components.ReconfigureGrid.deleteLine": "Supprimer la ligne",
   "app.components.ReconfigureGrid.header": "",
