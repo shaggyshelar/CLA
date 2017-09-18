@@ -28,7 +28,7 @@ export const memoizeComponent = (loadComponent) => {
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
-  const appHomeRoute = definedRoutes.includes(location.pathname.toLowerCase()) ? '/EditQuote' : location.pathname;
+  const appHomeRoute = definedRoutes.includes(location.pathname.toLowerCase()) ? '/' : location.pathname;
   return {
     getComponent: memoizeComponent((renderRoute) => {
       const importModules = Promise.all([
