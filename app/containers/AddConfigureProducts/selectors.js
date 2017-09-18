@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
  * Direct selector to the addConfigureProducts state domain
  */
 const selectAddConfigureProductsDomain = () => (state) => state.get('addConfigureProducts');
+const language = (state) => state.get('language');
 
 /**
  * Other specific selectors
@@ -34,10 +35,17 @@ const makeSelectError = () => createSelector(
   (homeState) => homeState.get('error')
 );
 
+const getLanguage = () =>
+ createSelector(
+  language,
+  (homeState) => homeState.get('locale')
+);
+
 export {
   selectAddConfigureProductsDomain,
   makeSelectAddConfigureProducts,
   makeProductsData,
   makeSelectLoading,
   makeSelectError,
+  getLanguage,
 };

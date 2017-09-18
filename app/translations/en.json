@@ -47,6 +47,7 @@
   "app.components.ProductSelectionGrid.productFamily": "Product Family",
   "app.components.ProductSelectionGrid.productName": "Product Name",
   "app.components.ProductSelectionHeaderCard.header": "This is the ProductSelectionHeaderCard component !",
+  "app.components.ReconfigureFeaturePanel.addOptions": "Add Options",
   "app.components.ReconfigureFeaturePanel.header": "This is the ReconfigureFeaturePanel component !",
   "app.components.ReconfigureGrid.deleteLine": "Delete Line",
   "app.components.ReconfigureGrid.header": "This is the ReconfigureGrid component !",
