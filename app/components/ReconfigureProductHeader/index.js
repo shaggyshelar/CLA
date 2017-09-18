@@ -17,9 +17,13 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
   constructor(props, context) {
     super(props, context);
     this.handleFullScreen = this.handleFullScreen.bind(this);
+    this.languageChange = this.languageChange.bind(this);
   }
   handleFullScreen() {
     screenfull.toggle(document.getElementById('app'));
+  }
+  languageChange(e) {
+    this.props.languageChange(e.target.value);
   }
   render() {
     return (
@@ -45,7 +49,10 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
             <Button onClick={() => { browserHistory.push('/EditQuote'); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
             <Button bsStyle="primary" onClick={this.props.saveProducts}>{this.context.intl.formatMessage({ ...messages.save })}</Button>
           </ButtonGroup>
-
+          <select className="lang" onChange={this.languageChange} value={this.props.language}>
+            <option value="en">En</option>
+            <option value="fr">Fr</option>
+          </select>
         </Col>
 
       </Row>
@@ -61,6 +68,8 @@ ReconfigureProductHeader.propTypes = {
   saveProducts: PropTypes.func,
   quoteName: PropTypes.any,
   addProducts: PropTypes.any,
+  languageChange: React.PropTypes.func,
+  language: React.PropTypes.any,
 };
 
 export default ReconfigureProductHeader;
