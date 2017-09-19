@@ -190,7 +190,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   {/* <input className="input-group input-text" step="0.1" onChange={this.valueChanged} id="additionaldiscount" type="text" name={group.id} value={group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 2 })} /> */}
                 </Col>
               </Row>
-              <Row>
+              {/* <Row>
                 <Col md={8} sm={8} xs={8}>
                   <span className="group-label" >{this.context.intl.formatMessage({ ...messages.subTerm })}</span>
                   <OverlayTrigger placement="top" overlay={subscriptionTooltip}>
@@ -206,15 +206,15 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                     change={this.dataChanged}
                     validate={this.validate}
                   /><Glyphicon glyph="pencil" className="inline-edit" />
-                  {/* <input className="input-group input-text" onChange={this.valueChanged} id="subscriptionTerm" type="text" name={group.id} value={group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2 })} /> */}
+                  {/* <input className="input-group input-text" onChange={this.valueChanged} id="subscriptionTerm" type="text" name={group.id} value={group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2 })} />
                 </Col>
-              </Row>
+              </Row> */}
             </Col>
             <Col md={4} sm={6} xs={12} className="containers">
               <div>
                 <Button className="margin" title={this.context.intl.formatMessage({ ...messages.addProducts })} onClick={() => { browserHistory.push(`/ProductSelection?groupId=${group.id}&PriceBookId=${this.props.data.priceBookId}&QuoteId=${this.props.data.id}`); }}>{this.context.intl.formatMessage({ ...messages.addProducts })}</Button>
                 <ButtonGroup className="margin">
-                  <Button onClick={this.cloneGroupIn} title={this.context.intl.formatMessage({ ...messages.cloneGroup })}>{this.context.intl.formatMessage({ ...messages.cloneGroup })}</Button>
+                  {/* <Button onClick={this.cloneGroupIn} title={this.context.intl.formatMessage({ ...messages.cloneGroup })}>{this.context.intl.formatMessage({ ...messages.cloneGroup })}</Button> */}
                   <Button onClick={this.deleteGroupIn} bsStyle="danger" title={this.context.intl.formatMessage({ ...messages.deleteGroup })} disabled={this.props.groups.length === 1}>{this.context.intl.formatMessage({ ...messages.deleteGroup })}</Button>
                 </ButtonGroup>
               </div>
