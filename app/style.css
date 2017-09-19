@@ -384,7 +384,6 @@ height:100%;
         display: inline;
         width: 35%;
         margin-left: 10px;
-    
         height: 30px;
 }
 
@@ -948,23 +947,23 @@ strong {
 #noanim-tab-example-pane-2 .table-wrap{
 	min-height:55vh;
 	height:55vh;
-	overflow-y:hidden;
+	overflow-y:auto;
 }
 #inner-tab-example-pane-custom .table-wrap {
     min-height: 52vh;
 	height:52vh;
-	overflow-y:hidden;
+	overflow-y:auto;
 }
 @media (max-width:1400px){
 	#inner-tab-example-pane-custom .table-wrap {
 		min-height: 48vh;
 		height:48vh;
-		overflow-y:hidden;
+		overflow-y:auto;
 	}
 	#noanim-tab-example-pane-2 .table-wrap {
 		min-height: 52vh;
 		height:52vh;
-		overflow-y:hidden;
+		overflow-y:auto;
 	}
 }
 
@@ -1215,12 +1214,12 @@ strong {
 .qoute-container #inner-tab-example-pane-custom .table-wrap {
     min-height: 70vh;
 	height:70vh;
-	overflow-y:hidden;
+	overflow-y:auto;
 }
 .qoute-container #noanim-tab-example-pane-2 .table-wrap {
     min-height: 75vh;
 	height:75vh;
-	overflow-y:hidden;
+	overflow-y:auto;
 }
 
 /**** Group ****/
@@ -1245,25 +1244,25 @@ strong {
 .qoute-container .group #inner-tab-example-pane-custom .table-wrap {
     min-height: 52vh;
 	height:52vh;
-	overflow-y:hidden;
+	overflow-y:auto;
 }
 .qoute-container .group #noanim-tab-example-pane-2 .table-wrap {
     min-height: 55vh;
 	height:55vh;
-	overflow-y:hidden;
+	overflow-y:auto;
 }
 @media (min-width:1400px) and (max-width:1500px){
 	.qoute-container .group #inner-tab-example-pane-custom .table-wrap {
 		min-height: 50vh;
 		height:50vh;
-		overflow-y:hidden;
+		overflow-y:auto;
 	}
 }
 @media (min-width:1300px) and (max-width:1400px){
 	.qoute-container .group #inner-tab-example-pane-custom .table-wrap {
 		min-height: 40vh;
 		height:40vh;
-		overflow-y:hidden;
+		overflow-y:auto;
 	}
 }
 .show-grid {
@@ -1399,7 +1398,7 @@ strong {
     padding: 0px 14px;
     font-size: 13px;
 }
-.qoute-container .group #inner-tab-example-tab-monthly .table-wrap {
+ .qoute-container .group #inner-tab-example-tab-monthly .table-wrap {
 	min-height: 48vh!important;
 	height: 48vh!important;
 	overflow-y: auto;
@@ -1408,7 +1407,7 @@ strong {
     min-height: 52vh;
     height: 52vh;
     overflow-y: auto;
-}
+} 
 .tab-pane .table-wrap {
     min-height: 48vh;
 }
@@ -1500,7 +1499,8 @@ body.modal-open {
 }
 
 .edit-grid-quote{
-	min-height:35vh!important;
+    min-height:35vh!important;
+    overflow: auto;
 	/*max-height:70vh!important;*/
 }
 .modal-body input{
@@ -1624,10 +1624,57 @@ body.modal-open {
 }
 
 /* chiatnaya */
-.tab-pane{   overflow: hidden!important;   overflow-x: auto!important;   padding-bottom: 3em;}.qoute-container {    height: auto!important;}.group {    height: auto!important;}.show-grid.row{   margin-right:0!important;}.qoute-container .sub-footer-seg {    padding: 7px 15px!important;}.qoute-container .group #inner-tab-example-pane-custom .table-wrap {    min-height: auto;    height: auto;    overflow-y: auto;}.qoute-container .group #noanim-tab-example-pane-2 .table-wrap {    min-height: auto;    height: auto;    overflow-y: auto;}.qoute-container #inner-tab-example-pane-custom .table-wrap {    max-height: 100%;    height: auto;    padding-bottom: 12em;    overflow-y: auto;}.qoute-container.segmented{    height: 100%!important;    padding-bottom: 13em!important;    min-height: 20vh;}
-
+.tab-pane{   overflow: hidden!important;   
+    overflow-x: auto!important;   
+    padding-bottom: 3em;
+}
+.qoute-container {    
+    height: auto!important;
+}
+.group {    
+    height: auto!important;
+}
+.show-grid.row{   
+    margin-right:0!important;
+}
+.qoute-container .sub-footer-seg {    
+    padding: 7px 15px!important;
+}
+.qoute-container .group #inner-tab-example-pane-custom .table-wrap {    
+    min-height: auto;    
+    /* height: auto;     */
+    overflow-y: auto;
+}
+.qoute-container .group #noanim-tab-example-pane-2 .table-wrap {    
+    min-height: auto;    
+    /* height: auto;     */
+    overflow-y: auto;}
+    .qoute-container #inner-tab-example-pane-custom .table-wrap {    
+        max-height: 100%;    
+        /* height: auto;     */
+        /* padding-bottom: 12em;     */
+        overflow-y: auto;
+    }
+.qoute-container.segmented{    
+    height: 100%!important;    
+    /* padding-bottom: 13em!important;     */
+    min-height: 20vh;
+}
+.ReactTable .rt-thead.-header {
+    position: fixed;
+    background:#eee;
+    width: 100%
+}
+.sub-seg .ReactTable .rt-tbody {
+   height: 64px !important;
+   margin-top: 0px !important;
+}
+.table-wrap .ReactTable .rt-tbody {
+  
+    margin-top: 30px;
+}
 /* Harshit */
-.ReactTable .rt-tr-group {
+/* .ReactTable .rt-tr-group {
     display: inline-block !important;
 }
 
@@ -1643,4 +1690,4 @@ body.modal-open {
 .sub-component .rt-tbody .rt-tr-group {
     margin-bottom: -7px;
     overflow: hidden;
-}
+} */

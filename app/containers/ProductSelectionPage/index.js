@@ -38,10 +38,10 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   componentWillMount() {
     const priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
     if (process.env.NODE_ENV === 'production') {
-      this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId);
+      this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId, this.props.location.query.QuoteId);
     }
     if (process.env.NODE_ENV === 'development') {
-      this.props.getProductsData(this.props.location.query.groupId, priceBookId);
+      this.props.getProductsData(this.props.location.query.groupId, priceBookId, this.props.location.query.QuoteId);
     }
   }
 
@@ -51,11 +51,16 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         selectedProducts: [],
       });
     }
+    let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+    if (process.env.NODE_ENV === 'production') {
+      priceBookId = this.props.location.query.PriceBookId;
+    }
     const searchObj = {
       searchValue: value,
       fromSearch: true,
       groupId: this.props.location.query.groupId,
-      priceBookId: this.props.location.query.PriceBookId,
+      priceBookId,
+      quoteId: this.props.location.query.QuoteId,
     };
     this.props.onSearch(searchObj);
   }
@@ -84,6 +89,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       fromSearch: false,
       groupId: this.props.location.query.groupId,
       priceBookId,
+      quoteId: this.props.location.query.QuoteId,
     };
     this.props.searchInputChange(searchObj);
   }
@@ -241,8 +247,8 @@ function mapDispatchToProps(dispatch) {
     toggleFilter: (value) => {
       dispatch(showFilteredData(value));
     },
-    getProductsData: (groupId, priceBookId) => {
-      dispatch(loadProductsData(groupId, priceBookId));
+    getProductsData: (groupId, priceBookId, quoteId) => {
+      dispatch(loadProductsData(groupId, priceBookId, quoteId));
     },
     addProductsToQuote: (value) => {
       dispatch(addProducts(value));
