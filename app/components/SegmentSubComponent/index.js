@@ -66,9 +66,10 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
   formatt(e) {
     return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
   }
-  validate(text) {
-    const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
-    return (decimal.test(text) && (parseFloat(text) > 0));
+  validate(string) {
+    const number = parseFloat(string);
+    if (isNaN(number) || !isFinite(number)) return false;
+    return !isNaN(number);
   }
   clickEdit(e) {
     e.currentTarget.nextSibling.focus();
