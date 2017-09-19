@@ -82,9 +82,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   ungroup() {
     const data = this.props.data.toJS();
     data.lines.forEach((i, index) => { data.lines[index].groupId = null; });
-    data.groups = [];
+    data.groups.map((j, index) => { data.groups[index].isDeleted = true; return this; });
     data.linesGrouped = false;
-
     this.props.ungroup(data);
   }
 
@@ -101,6 +100,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         id: randomID,
         name,
         isOptional: false,
+        isDeleted: false,
         description: '',
         additionaldiscount: '',
         subscriptionTerm: '',
@@ -112,6 +112,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         id: randomID,
         name: 'Group 1',
         isOptional: false,
+        isDeleted: false,
         description: '',
         additionaldiscount: '',
         subscriptionTerm: '',
@@ -124,7 +125,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   checkAll(e) {
-    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    const d = Object.assign([], ReactDOM.findDOMNode(this).getElementsByClassName('check'));
     for (let i = 0; i < d.length; i += 1) {
       if (!d[i].checked && e.target.checked) {
         d[i].checked = true;
@@ -268,7 +269,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
           <div className="qoute-container table-container">
             <GroupQuote
               data={this.props.data ? this.props.data.toJS() : []}
-              groups={this.props.data ? this.props.data.toJS().groups : []}
+              groups={this.props.data ? _.filter(this.props.data.toJS().groups, { isDeleted: false }) : []}
               lines={this.props.data ? this.props.data.toJS().lines : []}
               cloneLine={this.props.cloneLine}
               deleteLine={this.props.deleteLine}
