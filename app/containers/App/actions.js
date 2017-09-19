@@ -188,10 +188,10 @@ export function update(id, data, field) {
     field,
   };
 }
-export function updateBundle(parentId, id, field, data) {
+export function updateBundle(parentLineId, id, field, data) {
   return {
     type: UPDATE_BUNDLE,
-    parentId,
+    parentLineId,
     data,
     id,
     field,
@@ -207,10 +207,10 @@ export function updateSelect(id, data, field) {
   };
 }
 
-export function updateSelectBundle(parentId, id, field, data) {
+export function updateSelectBundle(parentLineId, id, field, data) {
   return {
     type: UPDATE_SELECT_BUNDLE,
-    parentId,
+    parentLineId,
     data,
     id,
     field,
@@ -226,10 +226,10 @@ export function updateSeg(id, name, field, data) {
     name,
   };
 }
-export function updateSegBundle(parentId, id, name, field, data) {
+export function updateSegBundle(parentLineId, id, name, field, data) {
   return {
     type: UPDATE_SEG_BUNDLE,
-    parentId,
+    parentLineId,
     data,
     id,
     field,
@@ -245,10 +245,10 @@ export function updateSegSelect(id, name, field, data) {
     name,
   };
 }
-export function updateSegBundleSelect(parentId, id, name, field, data) {
+export function updateSegBundleSelect(parentLineId, id, name, field, data) {
   return {
     type: UPDATE_SEG_BUNDLE_SELECT,
-    parentId,
+    parentLineId,
     data,
     id,
     field,

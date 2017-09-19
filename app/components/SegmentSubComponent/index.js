@@ -235,7 +235,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             dataSet[i][j.name] = { id: data.id, value: j.additionalDiscount.value, selectValues: data.segmentData.columns[index].additionalDiscount.selectValues };
             dataSet[i].editable = j.additionalDiscount.isEditable;
             dataSet[i].isBundled = data.isBundled;
-            dataSet[i].parent = data.parentId;
+            dataSet[i].parent = data.parentLineId;
             dataSet[i].selectValues = data.segmentData.columns[index].additionalDiscount.selectValues;
             return this;
           });

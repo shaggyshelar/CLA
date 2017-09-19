@@ -28,9 +28,11 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '111',
           code: 'Dom154',
+          isBundled: false,
+          parentLineId: null,
+          isDeleted: false,
           name: 'Porche',
           type: 'Bundle',
-          isBundled: false,
           isDisableReconfiguration: false,
           groupId: '456',
           markup: 123,
@@ -121,9 +123,11 @@ quoteRouter.get('/EditQuote', (req, res) => {
         },
         {
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           id: '12456',
           isBundled: false,
+          isDeleted: false,
           code: 'Dom154AC',
           name: 'Porche AC',
           type: 'Product',
@@ -278,6 +282,8 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: 's',
           parentId: '111',
+          parentLineId: '111',
+          isDeleted: false,
           parentName: 'Porche',
           isBundled: true,
           code: 'Dom154Stter',
@@ -405,7 +411,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         },
         {
           id: '123ass',
-
+          isDeleted: false,
           code: 'Car154',
           name: 'Ferrari',
           type: 'Product',
@@ -503,6 +509,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           code: 'Car3422',
           name: 'Lamborghini',
           type: 'Bundle',
+          isDeleted: false,
           isBundled: false,
           isDisableReconfiguration: false,
           groupId: '456',
@@ -655,8 +662,10 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '3453453',
           parentId: '222',
+          parentLineId: '222',
           parentName: 'Lamborghini',
           isBundled: true,
+          isDeleted: false,
           code: 'LAmbo154AC',
           name: 'Lambo AC',
           type: 'Product',
@@ -814,6 +823,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           name: 'Pagani',
           type: 'Product/Bundle',
           isBundled: false,
+          isDeleted: false,
           isDisableReconfiguration: false,
           groupId: '456',
           markup: 123,
@@ -998,6 +1008,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           isBundled: false,
           isDisableReconfiguration: false,
           groupId: '789',
+          isDeleted: false,
           markup: 123,
           quantity: {
             value: 123,
@@ -1150,6 +1161,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           name: 'Harley Davidson',
           type: 'Product/Bundle',
           isBundled: false,
+          isDeleted: false,
           isDisableReconfiguration: false,
           groupId: '789',
           markup: 123,
@@ -1304,6 +1316,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           name: 'BMW',
           type: 'Product/Bundle',
           isBundled: false,
+          isDeleted: false,
           isDisableReconfiguration: false,
           groupId: '789',
           markup: 123,
@@ -1486,6 +1499,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           name: 'Classic',
           type: 'Product/Bundle',
           isBundled: false,
+          isDeleted: false,
           isDisableReconfiguration: false,
           groupId: '789',
           markup: 123,
@@ -1614,6 +1628,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           isBundled: false,
           isDisableReconfiguration: true,
           groupId: '123',
+          isDeleted: false,
           markup: 123,
           quantity: {
             value: 123,
@@ -1740,6 +1755,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           isBundled: false,
           isDisableReconfiguration: true,
           groupId: '123',
+          isDeleted: false,
           markup: 123,
           quantity: {
             value: 123,
@@ -1921,6 +1937,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           name: 'Android',
           type: 'Product/Bundle',
           isBundled: false,
+          isDeleted: false,
           isDisableReconfiguration: false,
           groupId: '123',
           markup: 123,
@@ -2079,6 +2096,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           isBundled: false,
           isDisableReconfiguration: false,
           groupId: '123',
+          isDeleted: false,
           markup: 123,
           quantity: {
             value: 123,
@@ -2261,6 +2279,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           isBundled: false,
           isDisableReconfiguration: false,
           groupId: '123',
+          isDeleted: false,
           markup: 123,
           quantity: {
             value: 123,
@@ -2441,6 +2460,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           id: '123',
           name: 'Group A',
           isOptional: true,
+          isDeleted: false,
           description: 'longtext',
           additionaldiscount: 123,
           subscriptionTerm: 123,
@@ -2449,6 +2469,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '456',
           name: 'Group B',
+          isDeleted: false,
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
@@ -2458,6 +2479,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '789',
           name: 'Group C',
+          isDeleted: false,
           isOptional: true,
           description: 'longtext',
           additionaldiscount: 123,
@@ -3009,6 +3031,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
         {
           id: 's',
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           isBundled: true,
           code: 'Dom154Stter',
@@ -3386,6 +3409,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
         {
           id: '3453453',
           parentId: '222',
+          parentLineId: '222',
           parentName: 'Lamborghini',
           isBundled: true,
           code: 'LAmbo154AC',
@@ -5348,6 +5372,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
         },
         {
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           id: '12456',
           isBundled: true,
@@ -5505,6 +5530,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
         {
           id: 's',
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           isBundled: true,
           code: 'Dom154Stter',
@@ -5882,6 +5908,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
         {
           id: '3453453',
           parentId: '222',
+          parentLineId: '222',
           parentName: 'Lamborghini',
           isBundled: true,
           code: 'LAmbo154AC',
@@ -7893,6 +7920,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
         },
         {
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           id: '12456',
           isBundled: true,
@@ -8050,6 +8078,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
         {
           id: 's',
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           isBundled: true,
           code: 'Dom154Stter',
@@ -8427,6 +8456,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
         {
           id: '3453453',
           parentId: '222',
+          parentLineId: '222',
           parentName: 'Lamborghini',
           isBundled: true,
           code: 'LAmbo154AC',

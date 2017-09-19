@@ -233,7 +233,7 @@ function reConfigureProductsReducer(state = initialState, action) {
               product.isRequired = false;
               product.categoryId = action.productObj.categoryId;
               product.featureId = action.productObj.featureId;
-              product.parentId = reConfigureProductData.productBundleId;
+              product.parentLineId = reConfigureProductData.productBundleId;
               product.parentLineId = reConfigureProductData.quoteLineId;
               feature.products.push(product);
             }, this);
