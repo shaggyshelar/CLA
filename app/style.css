@@ -943,28 +943,28 @@ strong {
 /*#inner-tab-example .table-wrap{
 	min-height:48vh;
 	height:48vh;
-	overflow-y:auto;
+	overflow-y:hidden;
 }*/
 #noanim-tab-example-pane-2 .table-wrap{
 	min-height:55vh;
 	height:55vh;
-	overflow-y:auto;
+	overflow-y:hidden;
 }
 #inner-tab-example-pane-custom .table-wrap {
     min-height: 52vh;
 	height:52vh;
-	overflow-y:auto;
+	overflow-y:hidden;
 }
 @media (max-width:1400px){
 	#inner-tab-example-pane-custom .table-wrap {
 		min-height: 48vh;
 		height:48vh;
-		overflow-y:auto;
+		overflow-y:hidden;
 	}
 	#noanim-tab-example-pane-2 .table-wrap {
 		min-height: 52vh;
 		height:52vh;
-		overflow-y:auto;
+		overflow-y:hidden;
 	}
 }
 
@@ -1215,12 +1215,12 @@ strong {
 .qoute-container #inner-tab-example-pane-custom .table-wrap {
     min-height: 70vh;
 	height:70vh;
-	overflow-y:auto;
+	overflow-y:hidden;
 }
 .qoute-container #noanim-tab-example-pane-2 .table-wrap {
     min-height: 75vh;
 	height:75vh;
-	overflow-y:auto;
+	overflow-y:hidden;
 }
 
 /**** Group ****/
@@ -1245,25 +1245,25 @@ strong {
 .qoute-container .group #inner-tab-example-pane-custom .table-wrap {
     min-height: 52vh;
 	height:52vh;
-	overflow-y:auto;
+	overflow-y:hidden;
 }
 .qoute-container .group #noanim-tab-example-pane-2 .table-wrap {
     min-height: 55vh;
 	height:55vh;
-	overflow-y:auto;
+	overflow-y:hidden;
 }
 @media (min-width:1400px) and (max-width:1500px){
 	.qoute-container .group #inner-tab-example-pane-custom .table-wrap {
 		min-height: 50vh;
 		height:50vh;
-		overflow-y:auto;
+		overflow-y:hidden;
 	}
 }
 @media (min-width:1300px) and (max-width:1400px){
 	.qoute-container .group #inner-tab-example-pane-custom .table-wrap {
 		min-height: 40vh;
 		height:40vh;
-		overflow-y:auto;
+		overflow-y:hidden;
 	}
 }
 .show-grid {
@@ -1622,3 +1622,21 @@ body.modal-open {
 /* chiatnaya */
 .tab-pane{   overflow: hidden!important;   overflow-x: auto!important;   padding-bottom: 3em;}.qoute-container {    height: auto!important;}.group {    height: auto!important;}.show-grid.row{   margin-right:0!important;}.qoute-container .sub-footer-seg {    padding: 7px 15px!important;}.qoute-container .group #inner-tab-example-pane-custom .table-wrap {    min-height: auto;    height: auto;    overflow-y: auto;}.qoute-container .group #noanim-tab-example-pane-2 .table-wrap {    min-height: auto;    height: auto;    overflow-y: auto;}.qoute-container #inner-tab-example-pane-custom .table-wrap {    max-height: 100%;    height: auto;    padding-bottom: 12em;    overflow-y: auto;}.qoute-container.segmented{    height: 100%!important;    padding-bottom: 13em!important;    min-height: 20vh;}
 
+/* Harshit */
+.ReactTable .rt-tr-group {
+    display: inline-block !important;
+}
+
+.ReactTable .rt-tr {
+   width: 100%;
+}
+.table-wrap .ReactTable .rt-tbody {
+   height: 75vh;
+}
+.sub-seg .ReactTable .rt-tbody {
+   height: auto !important;
+}
+.sub-component .rt-tbody .rt-tr-group {
+    margin-bottom: -7px;
+    overflow: hidden;
+}
