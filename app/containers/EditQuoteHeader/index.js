@@ -7,6 +7,7 @@
 import React from 'react';
 import screenfull from 'screenfull';
 import Helmet from 'react-helmet';
+import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import { Button, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -43,9 +44,9 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
           {this.props.grouped ?
             ''
             :
-            <Button title={this.context.intl.formatMessage({ ...messages.addProducts })} className="margin" onClick={() => { browserHistory.push(`/ProductSelection?PriceBookId=${this.props.data.priceBookId}`); }}><FormattedMessage {...messages.addProducts} /></Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.addProducts })} className="margin" onClick={() => { browserHistory.push(`/ProductSelection?PriceBookId=${this.props.data.priceBookId}&QuoteId=${this.props.data.id}`); }}><FormattedMessage {...messages.addProducts} /></Button>
           }
-          {(!this.props.grouped && this.props.data.groups.length === 0) ?
+          {(!this.props.grouped && _.filter(this.props.data.groups, { isDeleted: false }).length === 0) ?
             <Button title={this.context.intl.formatMessage({ ...messages.addGroup })} className="margin" onClick={this.props.group}><FormattedMessage {...messages.addGroup} /></Button>
             :
             <ButtonGroup className="margin">

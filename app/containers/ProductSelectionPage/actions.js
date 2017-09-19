@@ -29,11 +29,12 @@ export function showFilteredData(data) {
   };
 }
 
-export function loadProductsData(groupId, priceBookId) {
+export function loadProductsData(groupId, priceBookId, quoteId) {
   return {
     type: LOAD_PRODUCTS_DATA,
     groupId,
     priceBookId,
+    quoteId,
   };
 }
 
