@@ -266,14 +266,14 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
   render() {
     const data = this.renderColumns(this.props.data);
     return (
-      <div className="header">
+      <div className="header sub-seg">
         <ReactTable
           className="sub-component"
           data={data.dataSet}
           columns={data.columns}
           defaultPageSize={data.dataSet.length}
           pageSize={data.dataSet.length}
-          style={{ width: '100%' }}
+          style={{ width: '100%', height:"auto !important" }}
           {...this.state.tableOptions}
         />
       </div>
