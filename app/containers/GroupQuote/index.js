@@ -92,9 +92,10 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   changeOptional(e) {
     this.props.updateGroupData(e.target.name, e.target.id, e.target.checked);
   }
-  validate(text) {
-    const decimal = /^([0-9]+(\.[0-9]+)?|Infinity)$/;
-    return (decimal.test(text) && (parseFloat(text) > 0));
+  validate(string) {
+    const number = parseFloat(string);
+    if (isNaN(number) || !isFinite(number)) return false;
+    return !isNaN(number);
   }
   editorTextChange(e) {
     this.setState({ desc: e });

@@ -1529,19 +1529,19 @@ body.modal-open {
     padding: 7px 15px!important;
 }
 
-.ReactTable .rt-thead.-header {
+/* .ReactTable .rt-thead.-header {
     position: fixed;
     background:#eee;
     width: 100%
-}
+} */
 .sub-seg .ReactTable .rt-tbody {
    height: 64px !important;
    margin-top: 0px !important;
 }
-.table-wrap .ReactTable .rt-tbody {
+/* .table-wrap .ReactTable .rt-tbody {
   
     margin-top: 30px;
-}
+} */
 .sub-footer-seg{ height:64px;}
 .sub-seg .ReactTable.sub-component{ height: 150px !important;padding-bottom: 0px!important;}
 /* Harshit */
