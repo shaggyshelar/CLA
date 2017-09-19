@@ -126,7 +126,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     intialProductBundleData.productBundle.products = [];
     intialProductBundleData.productBundle.products = updatedProducts;
     this.props.saveConfiguredProducts(intialProductBundleData.productBundle);
-    browserHistory.push('/');
+    browserHistory.push('/EditQuote');
     this.props.saveAppReconfigurationData();
   }
 
