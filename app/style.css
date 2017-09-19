@@ -1669,6 +1669,8 @@ body.modal-open {
   
     margin-top: 30px;
 }
+.sub-footer-seg{ height:64px;}
+.sub-seg .ReactTable.sub-component{ height: 150px !important;padding-bottom: 0px!important;}
 /* Harshit */
 /* .ReactTable .rt-tr-group {
     display: inline-block !important;
