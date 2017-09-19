@@ -81,10 +81,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   ungroup() {
     const data = this.props.data.toJS();
-    data.lines.forEach((i, index) => { data.lines[index].groupId = ''; });
-    data.groups = [];
+    data.lines.forEach((i, index) => { data.lines[index].groupId = null; });
+    data.groups.map((j, index) => { data.groups[index].isDeleted = true; return this; });
     data.linesGrouped = false;
-
     this.props.ungroup(data);
   }
 
@@ -101,6 +100,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         id: randomID,
         name,
         isOptional: false,
+        isDeleted: false,
         description: '',
         additionaldiscount: '',
         subscriptionTerm: '',
@@ -112,6 +112,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         id: randomID,
         name: 'Group 1',
         isOptional: false,
+        isDeleted: false,
         description: '',
         additionaldiscount: '',
         subscriptionTerm: '',
@@ -124,7 +125,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   checkAll(e) {
-    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    const d = Object.assign([], ReactDOM.findDOMNode(this).getElementsByClassName('check'));
     for (let i = 0; i < d.length; i += 1) {
       if (!d[i].checked && e.target.checked) {
         d[i].checked = true;
@@ -146,7 +147,13 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   deleteCheckedLines() {
     const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     if (d1.length) {
-      const selectedLines = _.map(d1, (i) => { if (i.checked) return i.value; });
+      const selectedLines = [];
+      _.map(d1, (i) => {
+        if (i.checked && typeof i !== 'undefined') {
+          selectedLines.push(i.value);
+        }
+        return this;
+      });
       this.props.deleteSelectedLines(selectedLines);
       if (ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked) {
         ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked = false;
@@ -268,8 +275,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
           <div className="qoute-container table-container">
             <GroupQuote
               data={this.props.data ? this.props.data.toJS() : []}
-              groups={this.props.data ? this.props.data.toJS().groups : []}
-              lines={this.props.data ? this.props.data.toJS().lines : []}
+              groups={this.props.data ? _.filter(this.props.data.toJS().groups, { isDeleted: false }) : []}
+              lines={this.props.data ? _.filter(this.props.data.toJS().lines, { isDeleted: false }) : []}
               cloneLine={this.props.cloneLine}
               deleteLine={this.props.deleteLine}
               toggleAllCheckBox={this.checkAll}
@@ -308,7 +315,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
           <div className="qoute-container table-container">
             {segmented ?
               <SegmentedQuote
-                data={this.props.data ? this.props.data.toJS().lines : []}
+                data={this.props.data ? _.filter(this.props.data.toJS().lines, { isDeleted: false }) : []}
                 cloneLine={this.props.cloneLine}
                 deleteLine={this.props.deleteLine}
                 toggleAllCheckBox={this.checkAll}
@@ -339,7 +346,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               />
             :
                 <EditQuoteGrid
-                  data={this.props.data ? this.props.data.toJS().lines : []}
+                  data={this.props.data ? _.filter(this.props.data.toJS().lines, { isDeleted: false }) : []}
                   cloneLine={this.props.cloneLine}
                   deleteLine={this.props.deleteLine}
                   toggleAllCheckBox={this.checkAll}
@@ -452,26 +459,26 @@ function mapDispatchToProps(dispatch) {
     update: (id, data, field) => {
       dispatch(update(id, data, field));
     },
-    updateSelectBundle: (parentId, id, field, data) => {
-      dispatch(updateSelectBundle(parentId, id, field, data));
+    updateSelectBundle: (parentLineId, id, field, data) => {
+      dispatch(updateSelectBundle(parentLineId, id, field, data));
     },
     updateSelect: (id, data, field) => {
       dispatch(updateSelect(id, data, field));
     },
-    updateBundle: (parentId, id, field, data) => {
-      dispatch(updateBundle(parentId, id, field, data));
+    updateBundle: (parentLineId, id, field, data) => {
+      dispatch(updateBundle(parentLineId, id, field, data));
     },
     updateSeg: (id, name, field, data) => {
       dispatch(updateSeg(id, name, field, data));
     },
-    updateSegBundle: (parentId, id, name, field, data) => {
-      dispatch(updateSegBundle(parentId, id, name, field, data));
+    updateSegBundle: (parentLineId, id, name, field, data) => {
+      dispatch(updateSegBundle(parentLineId, id, name, field, data));
     },
     updateSegSelect: (id, name, field, data) => {
       dispatch(updateSegSelect(id, name, field, data));
     },
-    updateSegBundleSelect: (parentId, id, name, field, data) => {
-      dispatch(updateSegBundleSelect(parentId, id, name, field, data));
+    updateSegBundleSelect: (parentLineId, id, name, field, data) => {
+      dispatch(updateSegBundleSelect(parentLineId, id, name, field, data));
     },
     updateGroupData: (id, field, data) => {
       dispatch(updateGroupData(id, field, data));

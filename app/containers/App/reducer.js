@@ -79,14 +79,14 @@ function appReducer(state = initialState, action) {
               error = true;
               errorMsg = i.message;
             } else {
-              toast.error(i.message, {
+              toast.error(i.message === '' ? 'Something Went Wrong' : i.message, {
                 position: toast.POSITION.TOP_CENTER,
               });
             }
             return this;
           });
         } else {
-          toast.error(action.error.message, {
+          toast.error(action.error.message === '' ? 'Something Went Wrong' : action.error.message, {
             position: toast.POSITION.TOP_CENTER,
           });
         }
@@ -115,14 +115,14 @@ function appReducer(state = initialState, action) {
     case DELETE_LINE:
       data = state.getIn(['data', 'lines']).toJS();
       _.remove(data, (n) => n.id === action.data);
-      _.remove(data, (n) => n.parentId === action.data);
+      _.remove(data, (n) => n.parentLineId === action.data);
       return state.setIn(['data', 'lines'], fromJS(data));
 
     case DELETE_MULTIPLE_LINES:
       data = state.getIn(['data', 'lines']).toJS();
       action.data.forEach((item) => {
-        _.remove(data, { id: item });
-        _.remove(data, { parentId: item });
+        _.filter(data, { id: item }).map((j) => { j.isDeleted = true; });
+        _.filter(data, { parentLineId: item }).map((j) => { j.isDeleted = true; });
       }, this);
       return state.setIn(['data', 'lines'], fromJS(data));
     case CLONE_MULTIPLE_LINES:
@@ -130,7 +130,7 @@ function appReducer(state = initialState, action) {
         data = state.getIn(['data', 'lines']).toJS();
 
         action.data.forEach((item) => {
-          const bundleProducts = _.filter(data, { parentId: item });
+          const bundleProducts = _.filter(data, { parentLineId: item });
           const index = _.findIndex(data, { id: item });
           const cloneData = Object.assign({}, data[index]);
           cloneData.id = generateGuid();
@@ -192,7 +192,7 @@ function appReducer(state = initialState, action) {
     case UPDATE_BUNDLE:
       {
         const linesBundle = state.getIn(['data', 'lines']).toJS();
-        const lineBundle = _.filter(linesBundle, { id: action.parentId });
+        const lineBundle = _.filter(linesBundle, { id: action.parentLineId });
         const bundleLine = _.filter(lineBundle[0].bundleProducts, { id: action.id });
         bundleLine[0][action.field].value = action.data;
         return state.setIn(['data', 'lines'], fromJS(linesBundle));
@@ -214,7 +214,7 @@ function appReducer(state = initialState, action) {
     case UPDATE_SELECT_BUNDLE:
       {
         const linesBundle = state.getIn(['data', 'lines']).toJS();
-        const lineBundle = _.filter(linesBundle, { id: action.parentId });
+        const lineBundle = _.filter(linesBundle, { id: action.parentLineId });
         const bundleLine = _.filter(lineBundle[0].bundleProducts, { id: action.id });
         _.map(bundleLine[0][action.field].selectValues, (i, index) => {
           if (i.id === action.data && !i.isSelected) {
@@ -241,7 +241,7 @@ function appReducer(state = initialState, action) {
     case UPDATE_SEG_BUNDLE:
       {
         const lines = state.getIn(['data', 'lines']).toJS();
-        const line = _.filter(lines, { id: action.parentId });
+        const line = _.filter(lines, { id: action.parentLineId });
         const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
         const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
         segLine[0][action.field] = action.data;
@@ -265,7 +265,7 @@ function appReducer(state = initialState, action) {
     case UPDATE_SEG_BUNDLE_SELECT:
       {
         const lines = state.getIn(['data', 'lines']).toJS();
-        const line = _.filter(lines, { id: action.parentId });
+        const line = _.filter(lines, { id: action.parentLineId });
         const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
         const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
         segLine[0][action.field] = action.data;

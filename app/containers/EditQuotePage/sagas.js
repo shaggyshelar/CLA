@@ -98,7 +98,6 @@ export function* saveQuoteLines() {
   }
 }
 export function* saveQuoteDetails(data, action) {
-  console.log('data', data, action);
   try {
     const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/SaveQuote`}`;
     const options = {
