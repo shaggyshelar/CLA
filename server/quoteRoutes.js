@@ -29,6 +29,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           id: '111',
           code: 'Dom154',
           isBundled: false,
+          parentLineId: null,
           isDeleted: false,
           name: 'Porche',
           type: 'Bundle',
@@ -122,6 +123,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         },
         {
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           id: '12456',
           isBundled: false,
@@ -280,6 +282,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: 's',
           parentId: '111',
+          parentLineId: '111',
           isDeleted: false,
           parentName: 'Porche',
           isBundled: true,
@@ -659,6 +662,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '3453453',
           parentId: '222',
+          parentLineId: '222',
           parentName: 'Lamborghini',
           isBundled: true,
           isDeleted: false,
@@ -3027,6 +3031,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
         {
           id: 's',
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           isBundled: true,
           code: 'Dom154Stter',
@@ -3404,6 +3409,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
         {
           id: '3453453',
           parentId: '222',
+          parentLineId: '222',
           parentName: 'Lamborghini',
           isBundled: true,
           code: 'LAmbo154AC',
@@ -5366,6 +5372,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
         },
         {
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           id: '12456',
           isBundled: true,
@@ -5523,6 +5530,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
         {
           id: 's',
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           isBundled: true,
           code: 'Dom154Stter',
@@ -5900,6 +5908,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
         {
           id: '3453453',
           parentId: '222',
+          parentLineId: '222',
           parentName: 'Lamborghini',
           isBundled: true,
           code: 'LAmbo154AC',
@@ -7911,6 +7920,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
         },
         {
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           id: '12456',
           isBundled: true,
@@ -8068,6 +8078,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
         {
           id: 's',
           parentId: '111',
+          parentLineId: '111',
           parentName: 'Porche',
           isBundled: true,
           code: 'Dom154Stter',
@@ -8445,6 +8456,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
         {
           id: '3453453',
           parentId: '222',
+          parentLineId: '222',
           parentName: 'Lamborghini',
           isBundled: true,
           code: 'LAmbo154AC',
