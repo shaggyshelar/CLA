@@ -212,7 +212,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             </Col>
             <Col md={4} sm={6} xs={12} className="containers">
               <div>
-                <Button className="margin" title={this.context.intl.formatMessage({ ...messages.addProducts })} onClick={() => { browserHistory.push(`/ProductSelection?groupId=${group.id}&PriceBookId=${this.props.data.priceBookId}`); }}>{this.context.intl.formatMessage({ ...messages.addProducts })}</Button>
+                <Button className="margin" title={this.context.intl.formatMessage({ ...messages.addProducts })} onClick={() => { browserHistory.push(`/ProductSelection?groupId=${group.id}&PriceBookId=${this.props.data.priceBookId}&QuoteId=${this.props.data.id}`); }}>{this.context.intl.formatMessage({ ...messages.addProducts })}</Button>
                 <ButtonGroup className="margin">
                   <Button onClick={this.cloneGroupIn} title={this.context.intl.formatMessage({ ...messages.cloneGroup })}>{this.context.intl.formatMessage({ ...messages.cloneGroup })}</Button>
                   <Button onClick={this.deleteGroupIn} bsStyle="danger" title={this.context.intl.formatMessage({ ...messages.deleteGroup })} disabled={this.props.groups.length === 1}>{this.context.intl.formatMessage({ ...messages.deleteGroup })}</Button>
