@@ -13,10 +13,10 @@ import { productsDataLoaded, searchedDataLoaded, searchBtnDataLoaded } from './a
 // import { LOAD_REPOS } from 'containers/App/constants';
 // import { SERVER_URL, EntityURLs } from '../App/constants';
 // Individual exports for testing
-export function* getProductsSaga(groupId, priceBookId) {
+export function* getProductsSaga(groupId, priceBookId, quoteId) {
   // See example in containers/HomePage/sagas.js
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${groupId}&PriceListId=${priceBookId}`}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?GroupId=${groupId}&PriceListId=${priceBookId}&QuoteId=${quoteId}`}`;
     const repos = yield call(request, requestURL);
     if (repos.products.errorMessages && repos.quote.errorMessages.length) {
       yield put(dataLoadingError(repos.quote.errorMessages));
@@ -32,14 +32,14 @@ export function* productsData() {
   while (true) {
     const chan = yield actionChannel(LOAD_PRODUCTS_DATA);
     // Suspend execution until location changes
-    const { groupId, priceBookId } = yield take(chan);
-    yield call(getProductsSaga, groupId, priceBookId);
+    const { groupId, priceBookId, quoteId } = yield take(chan);
+    yield call(getProductsSaga, groupId, priceBookId, quoteId);
   }
 }
 
 export function* searchedProducts(searchObj) {
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${searchObj.priceBookId}&SearchValue=${searchObj.searchValue}`}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${searchObj.priceBookId}&QuoteId=${searchObj.quoteId}&SearchValue=${searchObj.searchValue}`}`;
     const repos = yield call(request, requestURL);
     if (!searchObj.fromSearch) {
       yield put(searchedDataLoaded(repos));
