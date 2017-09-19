@@ -11,6 +11,10 @@
     opacity: .7;
     z-index: 9999999;
 }
+
+body {
+    overflow: hidden;
+}
 .actionItems .glyphicon {
     padding-top: 3px;
 }
@@ -614,10 +618,11 @@ height:100%;
 .Sidebar.right.fade.in.modal {    display: block;}
 .small-modal .modal {width:40% !important}
 .sub-footer-seg {
+    width: 100% ;
     bottom: 0;
     border: 2px solid rgba(0,0,0,0.08);
     border-top: rgba(0,0,0,0.08);
-    position: relative;
+    position: fixed;
     text-align: right;
     background-color: rgba(0,0,0,0.05);
     width: 100%;
@@ -631,10 +636,11 @@ height:100%;
     text-transform: none;
 }
 .sub-footer {
+    width: 100%;
     bottom: 0;
     border: 2px solid rgba(0,0,0,0.08);
     border-top: rgba(0,0,0,0.08);
-    position: relative;
+    position: fixed;
     text-align: right;
     background-color: rgba(0,0,0,0.05);
     width: 100%;
@@ -864,6 +870,7 @@ input[type=number]::-webkit-inner-spin-button {
     font-size: 14px;
 }
 .sub-footer{
+    width: 100%!important;
 	height: auto!important;
     font-size: 16px!important;
     font-weight: 600!important;
@@ -1218,11 +1225,11 @@ strong {
 
 /**** Group ****/
 .qoute-container .group .sub-footer-seg {
-    position: relative;
+    position: fixed;
     width: auto;
     margin-left: auto;
     margin-top: auto;
-    bottom: auto;
+    bottom: 0;
     background: #ececec;
     padding: 7px 2em!important;
 }
@@ -1289,6 +1296,7 @@ strong {
 		width: 100%;
 	}
 	.qoute-container .group .sub-footer-seg{
+         width: 100%;
 		margin-left:0%!important;
 	}
 	.qoute-container .sub-footer {
@@ -1614,3 +1622,7 @@ body.modal-open {
 .cellColor {
     color: grey;
 }
+
+/* chiatnaya */
+.tab-pane{   overflow: hidden!important;   overflow-x: auto!important;   padding-bottom: 3em;}.qoute-container {    height: auto!important;}.group {    height: auto!important;}.show-grid.row{   margin-right:0!important;}.qoute-container .sub-footer-seg {    padding: 7px 15px!important;}.qoute-container .group #inner-tab-example-pane-custom .table-wrap {    min-height: auto;    height: auto;    overflow-y: auto;}.qoute-container .group #noanim-tab-example-pane-2 .table-wrap {    min-height: auto;    height: auto;    overflow-y: auto;}.qoute-container #inner-tab-example-pane-custom .table-wrap {    max-height: 100%;    height: auto;    padding-bottom: 12em;    overflow-y: auto;}.qoute-container.segmented{    height: 100%!important;    padding-bottom: 13em!important;    min-height: 20vh;}
+

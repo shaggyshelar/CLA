@@ -33,7 +33,6 @@ export function* productsData() {
     const chan = yield actionChannel(LOAD_PRODUCTS_DATA);
     // Suspend execution until location changes
     const { groupId, priceBookId } = yield take(chan);
-    console.log(groupId, priceBookId);
     yield call(getProductsSaga, groupId, priceBookId);
   }
 }

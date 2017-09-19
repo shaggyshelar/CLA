@@ -35,14 +35,12 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   }
   componentWillMount() {
     const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId, 0) });
-
     if (this.state.selectedGroup === null) {
       this.props.location.query.groupId && groupLen ?
        this.setState({ selectedGroup: parseInt(this.props.location.query.groupId, 0) }) :
        this.setState({ selectedGroup: this.props.groups[0].id });
     }
   }
-
   changeGroup(e) {
     this.setState({ selectedGroup: e });
   }
@@ -74,9 +72,9 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
       _.filter(this.props.groups, { id: this.state.selectedGroup })[0]);
     const lines = this.props.lines;
     const groups = this.props.groups;
-    _.remove(lines, (i) => i.groupId === group.id);
-    _.remove(groups, (j) => j.id === group.id);
-    this.setState({ selectedGroup: this.props.groups[0].id });
+    _.filter(lines, (i) => i.groupId === group.id).map((j) => { j.isDeleted = true; });
+    _.filter(groups, (j) => j.id === group.id).map((j) => { j.isDeleted = true; });
+    this.setState({ selectedGroup: _.filter(this.props.groups, { isDeleted: false })[0].id });
     this.props.deleteGroup(lines, groups);
   }
   descUpdate() {
