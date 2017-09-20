@@ -5,6 +5,7 @@
  */
 // import React, { PropTypes } from 'react';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import screenfull from 'screenfull';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
@@ -56,9 +57,9 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
 
           }
           <ButtonGroup className="margin">
-             <Button title={this.context.intl.formatMessage({ ...messages.cloneLines })} onClick={this.props.cloneLine} ><FormattedMessage {...messages.cloneLines} /></Button>
-            <Button title={this.context.intl.formatMessage({ ...messages.deleteLines })} onClick={this.props.deleteLine} bsStyle="danger"><FormattedMessage {...messages.deleteLines} /></Button>
-            <Button title={this.context.intl.formatMessage({ ...messages.cancel })} ><FormattedMessage {...messages.cancel} /></Button>
+            <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.cloneLines })} onClick={this.props.cloneLine} ><FormattedMessage {...messages.cloneLines} /></Button>
+            <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.deleteLines })} onClick={this.props.deleteLine} bsStyle="danger"><FormattedMessage {...messages.deleteLines} /></Button>
+            <Button onClick={() => browserHistory.push('/')} title={this.context.intl.formatMessage({ ...messages.cancel })} ><FormattedMessage {...messages.cancel} /></Button>
           </ButtonGroup>
           {/* <Button title="Go to Full Screen" className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
           <ButtonGroup className="margin">
@@ -86,6 +87,7 @@ EditQuoteHeader.propTypes = {
   cloneLine: React.PropTypes.func,
   languageChange: React.PropTypes.func,
   language: React.PropTypes.any,
+  disabledButton: React.PropTypes.bool,
 };
 EditQuoteHeader.contextTypes = {
   intl: React.PropTypes.object.isRequired,

@@ -4,6 +4,7 @@ import request from 'utils/request';
 import { LOAD_PRODUCTS_DATA, LOAD_SEARCH_DATA } from './constants';
 import { dataLoaded, dataLoadingError } from '../App/actions';
 import { selectGlobal } from '../App/selectors';
+import { toast } from 'react-toastify';
 import {
   SERVER_URL,
   EntityURLs,
@@ -76,9 +77,15 @@ export function* addProducts() {
       };
       const repos = yield call(request, requestURL, options);
       if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
+        toast.success(' Products Added with errors', {
+          position: toast.POSITION.TOP_CENTER,
+        });
         yield put(dataLoadingError(repos.quote.errorMessages));
         yield put(dataLoaded(repos));
       } else {
+        toast.success(' Products Added', {
+          position: toast.POSITION.TOP_CENTER,
+        });
         yield put(dataLoaded(repos));
       }
     } catch (err) {
