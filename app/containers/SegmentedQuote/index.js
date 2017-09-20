@@ -22,7 +22,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     this.saveCustomSegmentData = this.saveCustomSegmentData.bind(this);
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     let lines = [];
     let bundleLines = [];
     _.map(this.props.data, (e) => {
@@ -34,10 +34,10 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     if (this.state.selectedTab !== '') {
       let state = this.state.selectedTab;
       state = state.charAt(0).toUpperCase() + state.slice(1);
-      lines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: state } });
+      lines = _.filter(nextProps.data, { isSegmented: true, segmentData: { type: state } });
       lines = lines.concat(_.filter(bundleLines, { segmentData: { type: state } }));
     }
-    if (lines.length === 1) {
+    if (lines.length === 0) {
       this.setState({ selectedTab: '' });
     }
   }

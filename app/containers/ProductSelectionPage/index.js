@@ -9,7 +9,6 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
-import { toast } from 'react-toastify';
 import { generateGuid } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
@@ -24,6 +23,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     super(props);
     this.state = {
       selectedProducts: [],
+      disabledButton: true,
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.addProducts = this.addProducts.bind(this);
@@ -95,6 +95,11 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    if (e.target.checked) {
+      this.setState({ disabledButton: false });
+    } else {
+      this.setState({ disabledButton: true });
+    }
     for (let i = 0; i < d.length; i += 1) {
       if (!d[i].checked && e.target.checked) {
         d[i].checked = true;
@@ -110,6 +115,12 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
+    const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    if (_.filter(d1, { checked: true }).length) {
+      this.setState({ disabledButton: false });
+    } else {
+      this.setState({ disabledButton: true });
+    }
     if (d.checked) {
       d.checked = false;
     }
@@ -132,18 +143,18 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     for (let i = 0; i < d.length; i += 1) {
       if (d[i].checked && this.props.location.query.groupId) {
         data.push({ productId: d[i].value, groupId: this.props.location.query.groupId });
+        d[i].checked = false;
       } else if (d[i].checked && !this.props.location.query.groupId) {
         data.push({ productId: d[i].value });
+        d[i].checked = false;
       }
     }
-    this.props.addProductsToQuote(data);
     const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
     if (d1.checked) {
       d1.click();
-      toast.success(' Products Added', {
-        position: toast.POSITION.TOP_CENTER,
-      });
     }
+    this.setState({ disabledButton: true });
+    this.props.addProductsToQuote(data);
   }
   addProducts() {
     const data = [];
@@ -193,6 +204,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             onSearchClick={this.onSearch}
             onSearchItemSelected={this.onSearchItemSelected}
             language={this.props.language}
+            disabledButton={this.state.disabledButton}
             languageChange={this.props.changeLocale}
           />
         </div>

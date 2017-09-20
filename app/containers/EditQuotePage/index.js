@@ -49,6 +49,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       segmented: false,
       segLines: [],
       loading: false,
+      disabledButton: true,
     };
 
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
@@ -88,6 +89,19 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 
   segment(id, value) {
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
+    for (let i = 0; i < d.length; i += 1) {
+      if (d[i].checked) {
+        d[i].checked = false;
+      }
+    }
+    d1.checked = false;
+    if (_.filter(d, { checked: true }).length) {
+      this.setState({ disabledButton: false });
+    } else {
+      this.setState({ disabledButton: true });
+    }
     this.props.segment(id, value);
   }
 
@@ -137,6 +151,12 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
 
   toggleCheckboxChange(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
+    const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    if (_.filter(d1, { checked: true }).length) {
+      this.setState({ disabledButton: false });
+    } else {
+      this.setState({ disabledButton: true });
+    }
     if (!e.target.checked) {
       if (d.checked) {
         d.checked = false;
@@ -154,6 +174,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         }
         return this;
       });
+      this.setState({ disabledButton: true });
       this.props.deleteSelectedLines(selectedLines);
       if (ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked) {
         ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked = false;
@@ -181,7 +202,6 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         }
         return results;
       }, []);
-      console.log('checked Lines', selectedLines);
       const d2 = ReactDOM.findDOMNode(this).getElementsByClassName('check');
       for (let i = 0; i < d2.length; i += 1) {
         if (d2[i].checked) {
@@ -268,6 +288,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             grouped={grouped}
             language={this.props.language}
             languageChange={this.props.changeLocale}
+            disabledButton={this.state.disabledButton}
           />
         </div>
         {grouped ?
