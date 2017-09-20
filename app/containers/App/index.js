@@ -21,6 +21,8 @@ export class App extends React.Component { // eslint-disable-line react/prefer-s
     if (process.env.NODE_ENV === 'production') {
       if (window.parent.Xrm !== undefined) {
         quoteId = window.parent.Xrm.Page.data.entity.getId().replace('{', '').replace('}', '');
+      } else {
+        quoteId = this.props.location.query.QuoteId;
       }
     }
     if (process.env.NODE_ENV === 'development') {
@@ -73,12 +75,12 @@ App.propTypes = {
   children: React.PropTypes.node,
   getAllData: React.PropTypes.func,
   data: React.PropTypes.any,
-  language: React.PropTypes.any,
   changeLocale: React.PropTypes.func,
   error: React.PropTypes.any,
   cancel: React.PropTypes.any,
   errorMsg: React.PropTypes.any,
   continue: React.PropTypes.any,
+  location: React.PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
