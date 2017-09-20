@@ -34,19 +34,13 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
   }
 
   render() {
-    let data = [];
-    if (this.props.data) {
-      data = this.props.data.map((item) => item.name);
-    } else {
-      data = [];
-    }
     return (
       <ButtonGroup className="margin" style={{ display: 'inline-flex', width: '90%' }} id="searchId">
         <AsyncTypeahead
-          options={data}
-          labelKey="login"
+          options={this.props.data}
           onSearch={this.handleInputChange}
           onChange={this.handleChange}
+          filterBy={(option) => option}
           placeholder={this.props.place}
           clearButton
         />
