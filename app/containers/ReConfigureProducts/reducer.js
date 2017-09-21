@@ -3,7 +3,6 @@
  * ReConfigureProducts reducer
  *
  */
-import { generateGuid } from 'containers/App/constants';
 import { fromJS } from 'immutable';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
@@ -227,8 +226,6 @@ function reConfigureProductsReducer(state = initialState, action) {
             if (feature) {
               action.productObj.selectedProducts.forEach((currentProduct) => {
                 const product = currentProduct;
-                product.tempId = product.id;
-                product.id = generateGuid();
                 product.isAdded = true;
                 product.isDeleted = false;
                 product.isSelected = true;
@@ -246,12 +243,10 @@ function reConfigureProductsReducer(state = initialState, action) {
           if (feature) {
             action.productObj.selectedProducts.forEach((currentProduct) => {
               const product = currentProduct;
-              product.tempId = product.id;
               product.isAdded = true;
               product.isDeleted = false;
               product.isSelected = true;
               product.isRequired = false;
-              product.id = generateGuid();
               product.categoryId = action.productObj.categoryId;
               product.featureId = action.productObj.featureId;
               product.parentId = reConfigureProductData.productBundleId;
