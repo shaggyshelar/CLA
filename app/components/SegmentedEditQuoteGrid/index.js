@@ -234,10 +234,11 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       }];
     const data = Object.assign({}, this.props.data[0]);
+    let segmentTotal = 0;
     data.segmentData.columns.map((i, index) => {
       let total = 0;
       const c = this.props.data.map((j) => {
-        return _.filter(j.segmentData.columns, { name: i.name }).map((d) => total += d.netTotal);
+        return _.filter(j.segmentData.columns, { name: i.name }).map((d) => { segmentTotal += d.segmentTotal; total += d.netTotal; });
       });
       columns.push({
         Header: () => <span className="upper-case" title={i.name}>{i.name}</span>,
@@ -252,6 +253,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     columns.push({
       Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
       accessor: 'segmentTotal',
+      Footer: (<span className="sub-footer-table">{segmentTotal.toLocaleString('en', { minimumFractionDigits: 2 })}</span>),
       id: 'segmentTotal',
       style: { textAlign: 'right' },
       headerStyle: { textAlign: 'right' },

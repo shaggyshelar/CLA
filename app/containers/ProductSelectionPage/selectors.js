@@ -25,7 +25,10 @@ const makeSelectLoading = () => createSelector(
   selectProductSelectionPageDomain,
   (homeState) => homeState.get('loading')
 );
-
+const globalLoading = () => createSelector(
+  globalState,
+  (homeState) => homeState.get('loading')
+);
 const makeSelectError = () => createSelector(
   selectProductSelectionPageDomain,
   (homeState) => homeState.get('error')
@@ -46,5 +49,6 @@ export {
   makeProductsData,
   getQuoteLines,
   getLanguage,
+  globalLoading,
 };
 

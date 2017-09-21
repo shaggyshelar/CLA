@@ -106,6 +106,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           netUnitPrice: 123,
           totalPrice: 123,
           netTotal: 123,
+          segmentTotal: 123,
           pricingMethod: {
             values: [
               {
@@ -264,6 +265,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           netUnitPrice: 123,
           totalPrice: 123,
           netTotal: 123,
+          segmentTotal: 123,
           pricingMethod: {
             values: [
               {
@@ -394,6 +396,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           netUnitPrice: 123,
           totalPrice: 123,
           netTotal: 123,
+          segmentTotal: 123,
           pricingMethod: {
             values: [
               {

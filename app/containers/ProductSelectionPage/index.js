@@ -12,7 +12,7 @@ import _ from 'lodash';
 import { SERVER_URL, EntityURLs } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
+import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
@@ -155,18 +155,19 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     for (let i = 0; i < d.length; i += 1) {
       if (d[i].checked && this.props.location.query.groupId) {
         data.push({ productId: d[i].value, groupId: this.props.location.query.groupId });
-        d[i].checked = false;
       } else if (d[i].checked && !this.props.location.query.groupId) {
         data.push({ productId: d[i].value });
-        d[i].checked = false;
       }
+    }
+    this.props.addProductsToQuote(data);
+    for (let i = 0; i < d.length; i += 1) {
+      d[i].checked = false;
     }
     const d1 = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
     if (d1.checked) {
-      d1.click();
+      d1.checked = false;
     }
     this.setState({ disabledButton: true });
-    this.props.addProductsToQuote(data);
   }
   addProducts() {
     const data = [];
@@ -187,7 +188,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   render() {
-    const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
+    const style = this.props.loading ? { display: 'inline' } : this.props.globalLoading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
         <div className="loader" style={style}></div>
@@ -247,6 +248,7 @@ ProductSelectionPage.propTypes = {
   onSearch: PropTypes.func,
   onSearchItemSelected: PropTypes.func,
   loading: PropTypes.any,
+  globalLoading: PropTypes.any,
   language: PropTypes.any,
   changeLocale: PropTypes.any,
 };
@@ -257,6 +259,7 @@ const mapStateToProps = createStructuredSelector({
   data: getQuoteLines(),
   products: makeProductsData(),
   loading: makeSelectLoading(),
+  globalLoading: globalLoading(),
   language: getLanguage(),
 });
 
