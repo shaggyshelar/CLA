@@ -76,7 +76,7 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
     const columns = [{
       columns: [
         {
-          Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
+         // Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
           accessor: 'id',
           id: 'id',
           sortable: false,
@@ -138,7 +138,7 @@ AddConfigureProductGrid.contextTypes = {
 
 AddConfigureProductGrid.propTypes = {
   products: React.PropTypes.any,
-  toggleCheckAll: React.PropTypes.func,
+  // toggleCheckAll: React.PropTypes.func,
   showFilter: React.PropTypes.func,
   toggleCheckboxChange: React.PropTypes.func,
   toggleFilter: React.PropTypes.func,
