@@ -6,11 +6,14 @@
 
 import { fromJS } from 'immutable';
 import { toast } from 'react-toastify';
+import _ from 'lodash';
 import {
   DEFAULT_ACTION,
   LOAD_PRODUCTS_DATA,
   LOAD_PRODUCTS_DATA_SUCCESS,
   LOAD_PRODUCTS_DATA_ERROR,
+  TOGGLE_CHECKBOX_CHANGE,
+  TOGGLE_CHECK_ALL,
 } from './constants';
 
 const initialState = fromJS({
@@ -48,6 +51,43 @@ function addConfigureProductsReducer(state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false);
+    }
+    case TOGGLE_CHECKBOX_CHANGE: {
+      const productsDataObj = state.get('productsData').toJS();
+      if (action.id) {
+        const product = _.find(productsDataObj.products, { id: action.id });
+        if (product) {
+          product.isSelected = !product.isSelected;
+          const productArray = [];
+          productsDataObj.products.forEach((productData) => {
+            const productObj = productData;
+            if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
+              productObj.isDisable = true;
+            } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
+              productObj.isDisable = !productObj.isDisable;
+            } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
+              productObj.isDisable = !productObj.isDisable;
+              productObj.isSelected = false;
+            }
+            productArray.push(productObj);
+          });
+          productsDataObj.products = productArray;
+        }
+      }
+      return state
+        .set('productsData', fromJS(productsDataObj));
+    }
+    case TOGGLE_CHECK_ALL: {
+      const productObj = state.get('productsData').toJS();
+      const updatedProducts = [];
+      productObj.products.forEach((item) => {
+        const product = item;
+        product.isSelected = action.isCheckAll;
+        updatedProducts.push(product);
+      }, this);
+      productObj.products = updatedProducts;
+      return state
+        .set('productsData', fromJS(productObj));
     }
     default:
       return state;

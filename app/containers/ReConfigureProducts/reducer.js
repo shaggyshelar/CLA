@@ -3,7 +3,6 @@
  * ReConfigureProducts reducer
  *
  */
-import { generateGuid } from 'containers/App/constants';
 import { fromJS } from 'immutable';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
@@ -53,6 +52,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         reConfigureProducts.productBundleQuoteId = productBundelData.productBundle.quoteId;
         reConfigureProducts.productBundleQuoteName = productBundelData.productBundle.quoteName;
         reConfigureProducts.quoteLineId = productBundelData.productBundle.lineId;
+        reConfigureProducts.groupId = productBundelData.productBundle.groupId;
         reConfigureProducts.categories = [];
         reConfigureProducts.features = [];
         // Categories are available
@@ -218,42 +218,42 @@ function reConfigureProductsReducer(state = initialState, action) {
     }
     case ADD_OPTIONS : {
       const reConfigureProductData = state.get('reConfigureProductData').toJS();
-      if (reConfigureProductData.categories.length > 0) {
-        const category = _.find(reConfigureProductData.categories, { id: action.productObj.categoryId });
-        if (category) {
-          const feature = _.find(category.features, { id: action.productObj.featureId });
+      if (reConfigureProductData && reConfigureProductData.categories) {
+        if (reConfigureProductData.categories.length > 0) {
+          const category = _.find(reConfigureProductData.categories, { id: action.productObj.categoryId });
+          if (category) {
+            const feature = _.find(category.features, { id: action.productObj.featureId });
+            if (feature) {
+              action.productObj.selectedProducts.forEach((currentProduct) => {
+                const product = currentProduct;
+                product.isAdded = true;
+                product.isDeleted = false;
+                product.isSelected = true;
+                product.isRequired = false;
+                product.categoryId = action.productObj.categoryId;
+                product.featureId = action.productObj.featureId;
+                product.parentId = reConfigureProductData.productBundleId;
+                product.parentLineId = reConfigureProductData.quoteLineId;
+                feature.products.push(product);
+              }, this);
+            }
+          }
+        } else if (reConfigureProductData.features.length > 0) {
+          const feature = _.find(reConfigureProductData.features, { id: action.productObj.featureId });
           if (feature) {
             action.productObj.selectedProducts.forEach((currentProduct) => {
               const product = currentProduct;
-              product.tempId = product.id;
-              product.id = generateGuid();
               product.isAdded = true;
               product.isDeleted = false;
               product.isSelected = true;
               product.isRequired = false;
               product.categoryId = action.productObj.categoryId;
               product.featureId = action.productObj.featureId;
-              product.parentLineId = reConfigureProductData.productBundleId;
+              product.parentId = reConfigureProductData.productBundleId;
               product.parentLineId = reConfigureProductData.quoteLineId;
               feature.products.push(product);
             }, this);
           }
-        }
-      } else if (reConfigureProductData.features.length > 0) {
-        const feature = _.find(reConfigureProductData.features, { id: action.productObj.featureId });
-        if (feature) {
-          action.productObj.selectedProducts.forEach((currentProduct) => {
-            const product = currentProduct;
-            product.tempId = product.id;
-            product.isAdded = true;
-            product.isDeleted = false;
-            product.isSelected = true;
-            product.isRequired = false;
-            product.id = generateGuid();
-            product.categoryId = action.productObj.categoryId;
-            product.featureId = action.productObj.featureId;
-            feature.products.push(product);
-          }, this);
         }
       }
       return state

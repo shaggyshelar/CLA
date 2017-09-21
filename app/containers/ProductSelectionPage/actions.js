@@ -66,10 +66,11 @@ export function searchedDataLoaded(searchedProducts) {
   };
 }
 
-export function searchBtnDataLoaded(searchedProducts) {
+export function searchBtnDataLoaded(searchedProducts, emptySearch) {
   return {
     type: LOAD_SEARCH_BTN_DATA_SUCCESS,
     searchedProducts,
+    emptySearch,
   };
 }
 

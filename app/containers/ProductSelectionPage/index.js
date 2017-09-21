@@ -9,10 +9,10 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
-import { generateGuid } from 'containers/App/constants';
+import { SERVER_URL, EntityURLs } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { getLanguage, makeSelectProductSelectionPage, makeSearchedProductsData, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
+import { getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
@@ -23,6 +23,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     super(props);
     this.state = {
       selectedProducts: [],
+      searchedProducts: [],
       disabledButton: true,
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
@@ -51,6 +52,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         selectedProducts: [],
       });
     }
+    this.setState({
+      searchedProducts: [],
+    });
     let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
     if (process.env.NODE_ENV === 'production') {
       priceBookId = this.props.location.query.PriceBookId;
@@ -71,6 +75,9 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         selectedProducts: [],
       });
     }
+    this.setState({
+      searchedProducts: [],
+    });
     this.props.onSearchItemSelected(value);
   }
 
@@ -91,7 +98,12 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       priceBookId,
       quoteId: this.props.location.query.QuoteId,
     };
-    this.props.searchInputChange(searchObj);
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${searchObj.priceBookId}&QuoteId=${searchObj.quoteId}&SearchValue=${searchObj.searchValue}`}`;
+    fetch(requestURL).then((response) => response.json()).then((json) => {
+      this.setState({
+        searchedProducts: json.products.map((item) => item.name),
+      });
+    });
   }
   checkAll(e) {
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
@@ -175,8 +187,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   render() {
-    let data = [];
-    data = this.props.searchedProducts.toJS();
     const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
@@ -199,7 +209,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             toggleFilter={this.toggleSidebar}
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
-            data={data}
+            data={this.state.searchedProducts}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
             onSearchItemSelected={this.onSearchItemSelected}
@@ -234,9 +244,7 @@ ProductSelectionPage.propTypes = {
   getProductsData: PropTypes.func,
   location: PropTypes.any,
   addProductsToQuote: PropTypes.func,
-  searchInputChange: PropTypes.func,
   onSearch: PropTypes.func,
-  searchedProducts: PropTypes.any,
   onSearchItemSelected: PropTypes.func,
   loading: PropTypes.any,
   language: PropTypes.any,
@@ -248,7 +256,6 @@ const mapStateToProps = createStructuredSelector({
   showFilter: showFilter(),
   data: getQuoteLines(),
   products: makeProductsData(),
-  searchedProducts: makeSearchedProductsData(),
   loading: makeSelectLoading(),
   language: getLanguage(),
 });
@@ -264,9 +271,6 @@ function mapDispatchToProps(dispatch) {
     },
     addProductsToQuote: (value) => {
       dispatch(addProducts(value));
-    },
-    searchInputChange: (searchObj) => {
-      dispatch(loadSearchData(searchObj));
     },
     onSearch: (searchObj) => {
       dispatch(loadSearchData(searchObj));
