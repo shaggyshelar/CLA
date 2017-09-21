@@ -938,10 +938,15 @@ strong {
 }
 /* height management */
 .qoute-container.segmented .table-wrap.edit-grid-segment {
-	min-height: 79vh!important;
-	height: 79vh!important;
+	min-height: 78vh!important;
+	height: 78vh!important;
 	overflow-y: auto;
 }
+.table-wrap.edit-grid-segment .ReactTable {
+    padding: 0px !important;
+    overflow: auto;
+}
+
 .qoute-container.segmented .table-wrap.edit-grid-quote {
     min-height: 77vh !important;
 	height: 77vh !important;
