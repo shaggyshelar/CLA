@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
@@ -7,7 +6,7 @@ import AddConfigureProductHeader from 'components/AddConfigureProductHeader';
 import AddConfigureProductGrid from 'components/AddConfigureProductGrid';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectAddConfigureProducts, makeProductsData, makeSelectLoading, makeSelectError, getLanguage } from './selectors';
-import { loadProductsData } from './actions';
+import { loadProductsData, toggleCheckbox, toggleCheckAll } from './actions';
 import { addOptions } from '../ReConfigureProducts/actions';
 import { changeLocale } from '../LanguageProvider/actions';
 
@@ -29,6 +28,9 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
       featureId: this.props.location.query.featureId,
       bundleId: this.props.location.query.bundleId,
       priceBookId: this.props.location.query.priceBookId,
+      quoteId: this.props.location.query.quoteId,
+      bundleLineId: this.props.location.query.bundleLineId,
+      groupId: this.props.location.query.groupId,
     };
 
     this.props.getProductsData(params);
@@ -37,15 +39,10 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   addOptions() {
     const products = this.props.productsData.toJS().products ? this.props.productsData.toJS().products : [];
     const productObj = {
-      selectedProducts: [],
+      selectedProducts: _.filter(products, { isSelected: true }),
       featureId: this.props.location.query.featureId,
       categoryId: this.props.location.query.categoryId,
     };
-    this.state.selectedProducts = _.uniq(this.state.selectedProducts);
-    this.state.selectedProducts.forEach((currentProductId) => {
-      const productIndex = _.findIndex(products, { id: currentProductId });
-      productObj.selectedProducts.push(products[productIndex]);
-    }, this);
     this.props.addOptions(productObj);
     browserHistory.goBack();
   }
@@ -58,27 +55,11 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   checkAll(e) {
-    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
-    for (let i = 0; i < d.length; i += 1) {
-      if (!d[i].checked && e.target.checked) {
-        d[i].click();
-      } else if (d[i].checked && !e.target.checked) {
-        d[i].click();
-      }
-    }
+    this.props.toggleCheckAllChange(e.target.checked);
   }
 
   toggleCheckboxChange(e) {
-    const d = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
-    // const data = this.state.selectedQuotes;
-    if (!e.target.checked) {
-      _.remove(this.state.selectedProducts, (n) => n === e.target.value);
-      if (d.checked) {
-        d.checked = false;
-      }
-    } else {
-      this.state.selectedProducts.push(e.target.value);
-    }
+    this.props.toggleCheckboxChange(e.target.value);
   }
 
   render() {
@@ -130,6 +111,8 @@ AddConfigureProducts.propTypes = {
   loading: PropTypes.any,
   language: PropTypes.any,
   changeLocale: PropTypes.any,
+  toggleCheckboxChange: PropTypes.func,
+  toggleCheckAllChange: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -151,6 +134,12 @@ function mapDispatchToProps(dispatch) {
     },
     changeLocale: (locale) => {
       dispatch(changeLocale(locale));
+    },
+    toggleCheckboxChange: (id) => {
+      dispatch(toggleCheckbox(id));
+    },
+    toggleCheckAllChange: (isCheckAll) => {
+      dispatch(toggleCheckAll(isCheckAll));
     },
   };
 }

@@ -148,6 +148,9 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       bundleId: reconfigurationData.productBundleId,
       quoteName: this.props.location.query.quoteName,
       priceBookId: this.props.location.query.priceBookId,
+      quoteId: reconfigurationData.productBundleQuoteId,
+      bundleLineId: reconfigurationData.quoteLineId,
+      groupId: reconfigurationData.groupId,
     };
     const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
     if (this.props.loading) {

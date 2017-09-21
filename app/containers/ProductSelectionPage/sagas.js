@@ -40,12 +40,16 @@ export function* productsData() {
 
 export function* searchedProducts(searchObj) {
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${searchObj.priceBookId}&QuoteId=${searchObj.quoteId}&SearchValue=${searchObj.searchValue}`}`;
-    const repos = yield call(request, requestURL);
-    if (!searchObj.fromSearch) {
-      yield put(searchedDataLoaded(repos));
+    if (searchObj.fromSearch && searchObj.searchValue === '') {
+      yield put(searchBtnDataLoaded(null, true));
     } else {
-      yield put(searchBtnDataLoaded(repos));
+      const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${searchObj.priceBookId}&QuoteId=${searchObj.quoteId}&SearchValue=${searchObj.searchValue}`}`;
+      const repos = yield call(request, requestURL);
+      if (!searchObj.fromSearch) {
+        yield put(searchedDataLoaded(repos));
+      } else {
+        yield put(searchBtnDataLoaded(repos, false));
+      }
     }
   } catch (error) {
     yield put(dataLoadingError(error));

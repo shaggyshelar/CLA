@@ -27,7 +27,7 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
       isVisible: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
-    this.renderCheckbox = this.renderCheckbox.bind(this);
+    this.renderActionItems = this.renderActionItems.bind(this);
   }
 
   setTableOption(event) {
@@ -54,8 +54,23 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
     </div>);
   }
 
-  renderCheckbox(cellInfo) {
-    return (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={cellInfo.original.id} />);
+  renderActionItems(cellInfo) {
+    let input;
+    let title;
+    if (cellInfo.original.isDependent && cellInfo.original.isExclusion) {
+      title = `Required: ${cellInfo.original.dependentBy} / Exclusion: ${cellInfo.original.dependentBy}`;
+    } else if (cellInfo.original.isExclusion) {
+      title = `Exclusion: ${cellInfo.original.dependentBy}`;
+    } else if (cellInfo.original.isDependent) {
+      title = `Required: ${cellInfo.original.dependentBy}`;
+    }
+
+    if (cellInfo.original.isDisable) {
+      input = (<input type="checkbox" className="check" title={title} checked={cellInfo.original.isSelected} disabled value={cellInfo.original.id} />);
+    } else {
+      input = (<input type="checkbox" className="check" title={title} checked={cellInfo.original.isSelected} onChange={this.props.toggleCheckboxChange} value={cellInfo.original.id} />);
+    }
+    return input;
   }
   render() {
     const columns = [{
@@ -67,7 +82,7 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
           sortable: false,
           width: 50,
           style: { textAlign: 'center' },
-          Cell: this.renderCheckbox,
+          Cell: this.renderActionItems,
         },
         {
           Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
