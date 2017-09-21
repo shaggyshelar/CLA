@@ -175,21 +175,23 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         }
         return this;
       });
-      this.setState({ disabledButton: true });
+      
       this.props.deleteSelectedLines(selectedLines);
+      
       if (ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked) {
         ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked = false;
       }
       const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
       for (let i = 0; i < d.length; i += 1) {
         if (d[i].checked) {
-          d[i].click();
+          d[i].checked = false;
         }
       }
       const d2 = ReactDOM.findDOMNode(this).getElementsByClassName('checkAll')[0];
       if (d2.checked) {
         d2.checked = false;
       }
+      this.setState({ disabledButton: true });
     }
   }
 
@@ -267,7 +269,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       return (<div className="loader" style={style}></div>);
     }
     const grouped = this.props.data.toJS().linesGrouped;
-    const segmented = _.filter(this.props.data.toJS().lines, { isSegmented: true }).length + _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
+    const segmented = _.filter(this.props.data.toJS().lines, { isSegmented: true, isDeleted: false }).length + _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true, isDeleted: false }] }).length;
     // const segmentedBundle = _.filter(this.props.data.toJS().lines, { bundleProducts: [{ isSegmented: true }] }).length;
     const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
     return (
