@@ -1412,7 +1412,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 netTotal: 65786,
               },
               {
-                name: 'Month 3',
+                name: 'Month 4',
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2190,7 +2190,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 netTotal: 123,
               },
               {
-                name: 'Month 3',
+                name: 'Month 5',
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2218,7 +2218,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 netTotal: 123,
               },
               {
-                name: 'Month 3',
+                name: 'Month 6',
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2246,7 +2246,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 netTotal: 123,
               },
               {
-                name: 'Month 3',
+                name: 'Month 7',
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2274,7 +2274,35 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 netTotal: 123,
               },
               {
-                name: 'Month 3',
+                name: 'Month 8',
+                quantity: 123,
+                listPrice: 123,
+                uplift: 123,
+                startDate: 'Date',
+                endDate: 'Date',
+                additionalDiscount: {
+                  value: 123,
+                  isEditable: true,
+                  isVisible: true,
+                  dataType: 'select',
+                  selectValues: [
+                    {
+                      id: '123',
+                      value: '%',
+                      isSelected: false,
+                    },
+                    {
+                      id: '124',
+                      value: 'INR',
+                      isSelected: true,
+                    },
+                  ],
+                },
+                netunitPrice: 123,
+                netTotal: 111,
+              },
+              {
+                name: 'Month 121',
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2302,7 +2330,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 netTotal: 123,
               },
               {
-                name: 'Month 3',
+                name: 'Month 9',
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2330,7 +2358,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 netTotal: 123,
               },
               {
-                name: 'Month 3',
+                name: 'Month 10',
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2358,7 +2386,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 netTotal: 123,
               },
               {
-                name: 'Month 3',
+                name: 'Month 11',
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2386,7 +2414,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 netTotal: 123,
               },
               {
-                name: 'Month 3',
+                name: 'Month 12',
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2414,36 +2442,8 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 netTotal: 123,
               },
               {
-                name: 'Month 3',
-                quantity: 123,
-                listPrice: 123,
-                uplift: 123,
-                startDate: 'Date',
-                endDate: 'Date',
-                additionalDiscount: {
-                  value: 123,
-                  isEditable: true,
-                  isVisible: true,
-                  dataType: 'select',
-                  selectValues: [
-                    {
-                      id: '123',
-                      value: '%',
-                      isSelected: false,
-                    },
-                    {
-                      id: '124',
-                      value: 'INR',
-                      isSelected: true,
-                    },
-                  ],
-                },
-                netunitPrice: 123,
-                netTotal: 123,
-              },
-              {
-                name: 'Month 3',
-                quantity: 123,
+                name: 'Month 13',
+                quantity: 1231,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',

@@ -938,8 +938,8 @@ strong {
 }
 /* height management */
 .qoute-container.segmented .table-wrap.edit-grid-segment {
-	min-height: 70vh!important;
-	height: 70vh!important;
+	min-height: 79vh!important;
+	height: 79vh!important;
 	overflow-y: auto;
 }
 .qoute-container.segmented .table-wrap.edit-grid-quote {
@@ -963,9 +963,13 @@ strong {
 	overflow-y:auto;
 }
 .group .qoute-container.segmented  .table-wrap.edit-grid-segment { 
-    min-height: 48vh !important;
-	height: 48vh !important;
+    min-height: 55vh !important;
+    height: 55vh !important;
+    padding-bottom: 0px !important;
 	overflow-y:auto;
+}
+.group .qoute-container.segmented  .table-wrap.edit-grid-segment .ReactTable{ 
+    padding-bottom: 0px !important;
 }
 .table-container .group .table-wrap.edit-grid-quote { 
     min-height: 60vh !important;
@@ -1562,3 +1566,18 @@ body.modal-open {
     margin-bottom: -7px;
     overflow: hidden;
 } */
+.ReactTable .rt-tfoot {
+    font-size: 16px!important;
+    font-weight: 600!important;
+    height: auto;
+    bottom:0;
+    position: relative;
+    background: #ececec;
+    color: #16325C;
+    box-shadow: none !important;
+    padding: 10px 2em!important;
+}
+.ReactTable .rt-tfoot .rt-td {
+    border: 0px !important;
+
+}

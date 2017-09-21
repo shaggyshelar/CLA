@@ -227,22 +227,28 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
         accessor: 'name',
+        Footer: (<span>{this.context.intl.formatMessage({ ...messages.subTotal })}</span>),
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
         Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       }];
     const data = Object.assign({}, this.props.data[0]);
-    data.segmentData.columns.map((i, index) => (
+    data.segmentData.columns.map((i, index) => {
+      let total = 0;
+      const c = this.props.data.map((j) => {
+        return _.filter(j.segmentData.columns, { name: i.name }).map((d) => total += d.netTotal);
+      });
       columns.push({
         Header: () => <span className="upper-case" title={i.name}>{i.name}</span>,
+        Footer: (<span className="sub-footer-table">{total.toLocaleString('en', { minimumFractionDigits: 2 })}</span>),
         accessor: `segmentData.columns[${index}].netTotal`,
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         className: 'table-edit',
         Cell: this.renderCell.bind(this, index),
-      })
-    ));
+      });
+    });
     columns.push({
       Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
       accessor: 'segmentTotal',
@@ -326,9 +332,9 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           toggleCheckAll={this.props.toggleCheckAll}
           isCheckAll={this.props.isCheckAll}
         />
-        <div className="sub-footer-seg upper-case">
+        {/* <div className="sub-footer-seg upper-case">
           {total}
-        </div>
+        </div> */}
       </div>
     );
   }
