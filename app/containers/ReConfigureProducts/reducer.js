@@ -16,6 +16,7 @@ import {
   UPDATE_PRODUCT,
   TOGGLE_CHECKBOX_CHANGE,
   TOGGLE_ADDOPTIONS_STATE,
+  SAVE_CONFIGURE_PRODUCTS_DATA,
 } from './constants';
 
 const initialState = fromJS({
@@ -415,6 +416,10 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('fromAddOptions', action.fromAddOptions)
         .set('activeTab', activeTab);
     }
+    case SAVE_CONFIGURE_PRODUCTS_DATA:
+      return state
+        .set('loading', true)
+        .set('error', false);
     default:
       return state;
   }

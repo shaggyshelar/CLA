@@ -735,6 +735,7 @@ height:100%;
     color: #54698d;
     font-size: 20px;
     line-height: 2.5;
+    font-weight: 600;
 }
 
 .minMaxMessage {
@@ -1078,10 +1079,6 @@ strong {
 		display:block!important;
 		width:25%;
 	}
-}
-.categoryLabel {
-    font-weight: 600;
-    margin-left: -15px;
 }
 .panelMargin .group-card{
 	border-bottom: 1px solid #d0d0d0!important;

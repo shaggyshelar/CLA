@@ -8,12 +8,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { browserHistory } from 'react-router';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
 import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError, getLanguage } from './selectors';
 import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
-import { saveAppReconfigurationData } from '../App/actions';
 import { changeLocale } from '../LanguageProvider/actions';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -119,8 +117,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     intialProductBundleData.productBundle.products = [];
     intialProductBundleData.productBundle.products = updatedProducts;
     this.props.saveConfiguredProducts(intialProductBundleData.productBundle);
-    browserHistory.push('/EditQuote');
-    this.props.saveAppReconfigurationData();
   }
 
   toggleSidebar() {
@@ -201,7 +197,6 @@ ReConfigureProducts.propTypes = {
   toggleCheckboxChange: PropTypes.func,
   fromAddOption: PropTypes.any,
   toggleAddOptionsState: PropTypes.any,
-  saveAppReconfigurationData: PropTypes.any,
   activeTab: PropTypes.any,
   loading: PropTypes.any,
   language: PropTypes.any,
@@ -227,9 +222,6 @@ function mapDispatchToProps(dispatch) {
     },
     saveConfiguredProducts: (data) => {
       dispatch(saveConfiguredProductsData(data));
-    },
-    saveAppReconfigurationData: () => {
-      dispatch(saveAppReconfigurationData());
     },
     deleteProduct: (product) => {
       dispatch(deleteProduct(product));
