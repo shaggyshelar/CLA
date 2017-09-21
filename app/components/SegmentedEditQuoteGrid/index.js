@@ -235,11 +235,12 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       }];
     const data = Object.assign({}, this.props.data[0]);
     let segmentTotal = 0;
+    _.forEach(this.props.data, (value) => {
+      segmentTotal += value.segmentTotal;
+    });
     data.segmentData.columns.map((i, index) => {
       let total = 0;
-      const c = this.props.data.map((j) => {
-        return _.filter(j.segmentData.columns, { name: i.name }).map((d) => { segmentTotal += d.segmentTotal; total += d.netTotal; });
-      });
+      const c = this.props.data.map((j) => _.filter(j.segmentData.columns, { name: i.name }).map((d) => total += d.netTotal));
       columns.push({
         Header: () => <span className="upper-case" title={i.name}>{i.name}</span>,
         Footer: (<span className="sub-footer-table">{total.toLocaleString('en', { minimumFractionDigits: 2 })}</span>),
@@ -283,7 +284,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   render() {
     const data = this.props.data;
     const columns = this.renderColumns();
-    const total = this.calculateTotal();
+    // const total = this.calculateTotal();
     return (
       <div>
         <div className="table-wrap edit-grid-segment">
