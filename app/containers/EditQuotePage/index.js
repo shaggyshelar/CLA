@@ -60,6 +60,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.quickSaveQuoteLines = this.quickSaveQuoteLines.bind(this);
     this.updateProps = this.updateProps.bind(this);
     this.ungroup = this.ungroup.bind(this);
+    this.disabledButton = this.disabledButton.bind(this);
     this.group = this.group.bind(this);
     this.segment = this.segment.bind(this);
     this.saveCustomSegmentData = this.saveCustomSegmentData.bind(this);
@@ -246,6 +247,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.props.saveCustomSegmentData(segmentData);
     this.props.saveAppCustomSegmentData();
   }
+  disabledButton() {
+    this.setState({ disabledButton: true });
+  }
   quickSaveQuoteLines() {
     this.props.quickSaveQuote();
   }
@@ -339,6 +343,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                 data={this.props.data ? _.filter(this.props.data.toJS().lines, { isDeleted: false }) : []}
                 cloneLine={this.props.cloneLine}
                 deleteLine={this.props.deleteLine}
+                disableButton={this.disabledButton}
                 toggleAllCheckBox={this.checkAll}
                 toggleQuoteCheckbox={this.toggleCheckboxChange}
                 updateProps={this.updateProps}
