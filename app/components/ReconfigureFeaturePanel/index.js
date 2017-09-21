@@ -34,6 +34,8 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
       text = `Choose at least ${feature.minOption} but no more than ${feature.maxOption} of the following:`;
     } else if (feature.minOption && feature.maxOption == null) {
       text = `Choose at least ${feature.minOption} of the following:`;
+    } else if (feature.minOption == null && feature.maxOption) {
+      text = `Choose at most ${feature.maxOption} of the following:`;
     }
     return (<div className="minMaxMessage"><span>{text}</span></div>);
   }

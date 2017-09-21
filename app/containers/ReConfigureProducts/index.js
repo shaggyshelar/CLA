@@ -92,6 +92,9 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
         category.features.forEach((feature) => {
           feature.products.forEach((currrentProduct) => {
             const product = currrentProduct;
+            if (product.tempId) {
+              product.id = product.tempId;
+            }
             if (category.name === 'Other') {
               product.categoryId = null;
             }
@@ -106,6 +109,9 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       updatedProductBundleData.features.forEach((feature) => {
         feature.products.forEach((currrentProduct) => {
           const product = currrentProduct;
+          if (product.tempId) {
+            product.id = product.tempId;
+          }
           if (feature.name === 'Other Options') {
             product.featureId = null;
           }
