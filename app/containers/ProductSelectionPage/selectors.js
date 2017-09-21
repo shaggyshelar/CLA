@@ -37,13 +37,6 @@ const makeProductsData = () =>
   (homeState) => homeState.get('products')
 );
 
-const makeSearchedProductsData = () =>
- createSelector(
-  selectProductSelectionPageDomain,
-  (homeState) => homeState.get('searchedProducts')
-);
-
-
 export {
   selectProductSelectionPageDomain,
   makeSelectProductSelectionPage,
@@ -52,7 +45,6 @@ export {
   makeSelectError,
   makeProductsData,
   getQuoteLines,
-  makeSearchedProductsData,
   getLanguage,
 };
 

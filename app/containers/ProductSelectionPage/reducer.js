@@ -23,7 +23,6 @@ const initialState = fromJS({
   loading: false,
   error: false,
   products: [],
-  searchedProducts: [],
   initialProducts: [],
 });
 
@@ -42,7 +41,6 @@ function productSelectionPageReducer(state = initialState, action) {
       return state
         .set('products', fromJS(action.products.products))
         .set('initialProducts', fromJS(action.products.products))
-        .set('searchedProducts', fromJS(action.products.products))
         .set('loading', false);
     }
     case LOAD_DATA_ERROR:
@@ -55,12 +53,14 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_SEARCH_DATA_SUCCESS:
       return state
-        .set('searchedProducts', fromJS(action.searchedProducts.products))
         .set('loading', false);
     case LOAD_SEARCH_BTN_DATA_SUCCESS: {
+      let products = state.get('initialProducts').toJS();
+      if (!action.emptySearch) {
+        products = action.searchedProducts.products;
+      }
       return state
-        .set('searchedProducts', fromJS(action.searchedProducts.products))
-        .set('products', fromJS(action.searchedProducts.products))
+        .set('products', fromJS(products))
         .set('loading', false);
     }
     case LOAD_SEARCH_ITEM_SELECTED: {
@@ -79,7 +79,6 @@ function productSelectionPageReducer(state = initialState, action) {
         selectedProducts = state.get('products').toJS();
       }
       return state
-        .set('searchedProducts', fromJS(selectedProducts))
         .set('products', fromJS(selectedProducts))
         .set('loading', false);
     }

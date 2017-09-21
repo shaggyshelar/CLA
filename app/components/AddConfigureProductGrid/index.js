@@ -27,7 +27,7 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
       isVisible: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
-    this.renderCheckbox = this.renderCheckbox.bind(this);
+    this.renderActionItems = this.renderActionItems.bind(this);
   }
 
   setTableOption(event) {
@@ -54,20 +54,35 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
     </div>);
   }
 
-  renderCheckbox(cellInfo) {
-    return (<input type="checkbox" className="check" onChange={this.props.toggleCheckboxChange} value={cellInfo.original.id} />);
+  renderActionItems(cellInfo) {
+    let input;
+    let title;
+    if (cellInfo.original.isDependent && cellInfo.original.isExclusion) {
+      title = `Required: ${cellInfo.original.dependentBy} / Exclusion: ${cellInfo.original.dependentBy}`;
+    } else if (cellInfo.original.isExclusion) {
+      title = `Exclusion: ${cellInfo.original.dependentBy}`;
+    } else if (cellInfo.original.isDependent) {
+      title = `Required: ${cellInfo.original.dependentBy}`;
+    }
+
+    if (cellInfo.original.isDisable) {
+      input = (<input type="checkbox" className="check" title={title} checked={cellInfo.original.isSelected} disabled value={cellInfo.original.id} />);
+    } else {
+      input = (<input type="checkbox" className="check" title={title} checked={cellInfo.original.isSelected} onChange={this.props.toggleCheckboxChange} value={cellInfo.original.id} />);
+    }
+    return input;
   }
   render() {
     const columns = [{
       columns: [
         {
-          Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
+         // Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
           accessor: 'id',
           id: 'id',
           sortable: false,
           width: 50,
           style: { textAlign: 'center' },
-          Cell: this.renderCheckbox,
+          Cell: this.renderActionItems,
         },
         {
           Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
@@ -123,7 +138,7 @@ AddConfigureProductGrid.contextTypes = {
 
 AddConfigureProductGrid.propTypes = {
   products: React.PropTypes.any,
-  toggleCheckAll: React.PropTypes.func,
+  // toggleCheckAll: React.PropTypes.func,
   showFilter: React.PropTypes.func,
   toggleCheckboxChange: React.PropTypes.func,
   toggleFilter: React.PropTypes.func,

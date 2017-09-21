@@ -5,7 +5,7 @@ import { loadProductsDataSuccess, dataLoadingError } from './actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
 export function* getProductsSaga(params) {
-  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/AddOptions?FeatureId=${params.featureId}&BundleId=${params.bundleId}&PriceListId=${params.priceBookId}`}`;
+  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/AddOptions?FeatureId=${params.featureId}&BundleId=${params.bundleId}&PriceListId=${params.priceBookId}&BundleLineId=${params.bundleLineId}&QuoteId=${params.quoteId}&GroupId=${params.groupId}`}`;
   try {
     const repos = yield call(request, requestURL);
     yield put(loadProductsDataSuccess(repos));
