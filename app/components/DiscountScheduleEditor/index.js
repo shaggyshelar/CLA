@@ -32,7 +32,7 @@ class DiscountScheduleEditor extends React.Component { // eslint-disable-line re
       >
         <Modal.Dialog >
           <Modal.Header closeButton>
-            <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="calendar" /> <strong> Discount Schedule Editor </strong></Modal.Title>
+            <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="calendar" /> <strong> Discount Schedule </strong></Modal.Title>
           </Modal.Header>
 
           <Modal.Body>

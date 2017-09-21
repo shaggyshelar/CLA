@@ -59,7 +59,7 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
           <ButtonGroup className="margin">
             <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.cloneLines })} onClick={this.props.cloneLine} ><FormattedMessage {...messages.cloneLines} /></Button>
             <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.deleteLines })} onClick={this.props.deleteLine} bsStyle="danger"><FormattedMessage {...messages.deleteLines} /></Button>
-            <Button onClick={() => browserHistory.push('/')} title={this.context.intl.formatMessage({ ...messages.cancel })} ><FormattedMessage {...messages.cancel} /></Button>
+            <Button onClick={() => location.reload(true)} title={this.context.intl.formatMessage({ ...messages.cancel })} ><FormattedMessage {...messages.cancel} /></Button>
           </ButtonGroup>
           {/* <Button title="Go to Full Screen" className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
           <ButtonGroup className="margin">
