@@ -4,6 +4,7 @@ import request from 'utils/request';
 import { LOAD_PRODUCTS_DATA, LOAD_SEARCH_DATA } from './constants';
 import { dataLoaded, dataLoadingError } from '../App/actions';
 import { selectGlobal } from '../App/selectors';
+import { toast } from 'react-toastify';
 import {
   SERVER_URL,
   EntityURLs,
@@ -39,12 +40,16 @@ export function* productsData() {
 
 export function* searchedProducts(searchObj) {
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${searchObj.priceBookId}&QuoteId=${searchObj.quoteId}&SearchValue=${searchObj.searchValue}`}`;
-    const repos = yield call(request, requestURL);
-    if (!searchObj.fromSearch) {
-      yield put(searchedDataLoaded(repos));
+    if (searchObj.fromSearch && searchObj.searchValue === '') {
+      yield put(searchBtnDataLoaded(null, true));
     } else {
-      yield put(searchBtnDataLoaded(repos));
+      const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${searchObj.priceBookId}&QuoteId=${searchObj.quoteId}&SearchValue=${searchObj.searchValue}`}`;
+      const repos = yield call(request, requestURL);
+      if (!searchObj.fromSearch) {
+        yield put(searchedDataLoaded(repos));
+      } else {
+        yield put(searchBtnDataLoaded(repos, false));
+      }
     }
   } catch (error) {
     yield put(dataLoadingError(error));
@@ -76,9 +81,15 @@ export function* addProducts() {
       };
       const repos = yield call(request, requestURL, options);
       if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
+        toast.success(' Products Added with errors', {
+          position: toast.POSITION.TOP_CENTER,
+        });
         yield put(dataLoadingError(repos.quote.errorMessages));
         yield put(dataLoaded(repos));
       } else {
+        toast.success(' Products Added', {
+          position: toast.POSITION.TOP_CENTER,
+        });
         yield put(dataLoaded(repos));
       }
     } catch (err) {

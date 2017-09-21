@@ -53,8 +53,8 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
           </ButtonGroup> */}
           {/* <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
           <ButtonGroup className="margin">
-            <Button title={this.context.intl.formatMessage({ ...messages.select })} onClick={this.props.addProducts}>{this.context.intl.formatMessage({ ...messages.select })}</Button>
-            <Button title={this.context.intl.formatMessage({ ...messages.selectMore })} onClick={this.props.addProductsWait}>{this.context.intl.formatMessage({ ...messages.selectMore })}</Button>
+            <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.select })} onClick={this.props.addProducts}>{this.context.intl.formatMessage({ ...messages.select })}</Button>
+            <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.selectMore })} onClick={this.props.addProductsWait}>{this.context.intl.formatMessage({ ...messages.selectMore })}</Button>
             <Button title={this.context.intl.formatMessage({ ...messages.cancel })} onClick={() => { browserHistory.push('/EditQuote'); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
           </ButtonGroup>
           <select className="lang" onChange={this.languageChange} value={this.props.language}>
@@ -80,5 +80,6 @@ ProductSelectionHeader.propTypes = {
   // toggleFilter: React.PropTypes.any,
   languageChange: React.PropTypes.func,
   language: React.PropTypes.any,
+  disabledButton: React.PropTypes.bool,
 };
 export default ProductSelectionHeader;

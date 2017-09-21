@@ -94,10 +94,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
         category.features.forEach((feature) => {
           feature.products.forEach((currrentProduct) => {
             const product = currrentProduct;
-            if (product.tempId) {
-              product.id = product.tempId;
-              // product = _.omit(product, ['tempId', 'isAdded']);
-            }
             if (category.name === 'Other') {
               product.categoryId = null;
             }
@@ -112,9 +108,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       updatedProductBundleData.features.forEach((feature) => {
         feature.products.forEach((currrentProduct) => {
           const product = currrentProduct;
-          if (product.tempId) {
-            product.id = product.tempId;
-          }
           if (feature.name === 'Other Options') {
             product.featureId = null;
           }
@@ -148,6 +141,9 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       bundleId: reconfigurationData.productBundleId,
       quoteName: this.props.location.query.quoteName,
       priceBookId: this.props.location.query.priceBookId,
+      quoteId: reconfigurationData.productBundleQuoteId,
+      bundleLineId: reconfigurationData.quoteLineId,
+      groupId: reconfigurationData.groupId,
     };
     const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
     if (this.props.loading) {

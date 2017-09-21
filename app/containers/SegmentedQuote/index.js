@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { Tabs, Tab, Glyphicon } from 'react-bootstrap/lib';
+import ReactDOM from 'react-dom';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import SegmentedEditQuoteGrid from 'components/SegmentedEditQuoteGrid';
 import makeSelectSegmentedQuote from './selectors';
@@ -22,7 +23,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     this.saveCustomSegmentData = this.saveCustomSegmentData.bind(this);
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     let lines = [];
     let bundleLines = [];
     _.map(this.props.data, (e) => {
@@ -34,15 +35,18 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     if (this.state.selectedTab !== '') {
       let state = this.state.selectedTab;
       state = state.charAt(0).toUpperCase() + state.slice(1);
-      lines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: state } });
+      lines = _.filter(nextProps.data, { isSegmented: true, segmentData: { type: state } });
       lines = lines.concat(_.filter(bundleLines, { segmentData: { type: state } }));
     }
-    if (lines.length === 1) {
+    if (lines.length === 0) {
       this.setState({ selectedTab: '' });
     }
   }
+
   selectTab(e) {
+    
     this.setState({ selectedTab: e });
+    //this.props.disableButton();
   }
 
   showCustomModal() {
@@ -93,6 +97,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
       <Glyphicon className="customPencilIcon" glyph="pencil" onClick={this.showCustomModal} />
     </div>);
   }
+
   render() {
     const data = this.renderSegmentData();
     this.state.data = data;
@@ -112,7 +117,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
         <Tabs animation={false} defaultActiveKey={1} id="noanim-tab-example">
           <Tab unmountOnExit eventKey={1} title={this.context.intl.formatMessage({ ...messages.segment })}>
 
-            <Tabs activeKey={this.state.selectedTab === '' ? selected : this.state.selectedTab} onSelect={this.selectTab} animation={false} id="inner-tab-example">
+            <Tabs animation={false} activeKey={this.state.selectedTab === '' ? selected : this.state.selectedTab} onSelect={this.selectTab} id="inner-tab-example">
               { data.CustomLines.length > 0 ?
                 <Tab unmountOnExit eventKey={'custom'} tabClassName={'custom'} title={this.renderButton()}>
                   <SegmentedEditQuoteGrid
