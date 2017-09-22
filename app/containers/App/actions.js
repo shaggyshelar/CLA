@@ -36,7 +36,6 @@ import {
   UPDATE_SELECT,
   UPDATE_SELECT_BUNDLE,
   SAVE_APP_CUSTOM_SEGMENT_DATA,
-  SAVE_APP_RECONFIGURATION_DATA,
   CANCEL,
   CONTINUE,
 } from './constants';
@@ -283,11 +282,5 @@ export function segment(id, value) {
 export function saveAppCustomSegmentData() {
   return {
     type: SAVE_APP_CUSTOM_SEGMENT_DATA,
-  };
-}
-
-export function saveAppReconfigurationData() {
-  return {
-    type: SAVE_APP_RECONFIGURATION_DATA,
   };
 }
