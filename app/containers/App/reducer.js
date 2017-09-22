@@ -45,7 +45,6 @@ import {
   SEGMENT,
   SAVE_APP_CUSTOM_SEGMENT_DATA,
   QUICK_SAVE_QUOTES,
-  SAVE_APP_RECONFIGURATION_DATA,
   CANCEL,
   CONTINUE,
 } from './constants';
@@ -279,10 +278,6 @@ function appReducer(state = initialState, action) {
         return state.setIn(['data', 'lines'], fromJS(lines));
       }
     case SAVE_APP_CUSTOM_SEGMENT_DATA : {
-      return state.set('loading', true)
-        .set('error', false);
-    }
-    case SAVE_APP_RECONFIGURATION_DATA : {
       return state.set('loading', true)
         .set('error', false);
     }

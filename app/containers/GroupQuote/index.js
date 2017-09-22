@@ -3,7 +3,7 @@
  * GroupQuote
  *
  */
-import { generateGuid } from 'containers/App/constants';
+import { generateGuid, addQuery, removeQuery } from 'containers/App/constants';
 import React, { PropTypes } from 'react';
 import CKEditor from 'react-ckeditor-component';
 import { connect } from 'react-redux';
@@ -34,14 +34,20 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.descUpdate = this.descUpdate.bind(this);
   }
   componentWillMount() {
-    const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId, 0) });
+    
+    const groupLen = _.find(this.props.groups, { id: this.props.location.query.groupId });
     if (this.state.selectedGroup === null) {
-      this.props.location.query.groupId && groupLen ?
-       this.setState({ selectedGroup: parseInt(this.props.location.query.groupId, 0) }) :
-       this.setState({ selectedGroup: this.props.groups[0].id });
+      if (this.props.location.query.groupId && groupLen) {
+        this.setState({ selectedGroup: this.props.location.query.groupId });
+        addQuery({ groupId: this.props.location.query.groupId });
+      } else {
+        this.setState({ selectedGroup: this.props.groups[0].id });
+        addQuery({ groupId: this.props.groups[0].id });
+      }
     }
   }
   changeGroup(e) {
+    addQuery({ groupId: e });
     this.setState({ selectedGroup: e });
   }
   toggleEditor() {
@@ -74,6 +80,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     const groups = this.props.groups;
     _.filter(lines, (i) => i.groupId === group.id).map((j) => { j.isDeleted = true; });
     _.filter(groups, (j) => j.id === group.id).map((j) => { j.isDeleted = true; });
+    addQuery({ groupId: _.filter(this.props.groups, { isDeleted: false })[0].id });
     this.setState({ selectedGroup: _.filter(this.props.groups, { isDeleted: false })[0].id });
     this.props.deleteGroup(lines, groups);
   }
@@ -232,8 +239,10 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
               updateProps={this.props.updateProps}
               currency={this.props.data.currency}
+              disableButton={this.props.disableButton}
               segment={this.props.segment}
               update={this.props.update}
+              location={this.props.location}
               updateBundle={this.props.updateBundle}
               updateSeg={this.props.updateSeg}
               updateSegBundle={this.props.updateSegBundle}
