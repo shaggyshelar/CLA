@@ -29,12 +29,18 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
   }
   addProducts() {
     let url = `/ProductSelection${this.props.location.search}`;
-    if (!('PriceBookId' in this.props.location.query)) {
+    if (!('PriceBookId' in this.props.location.query) && this.props.location.query.length) {
       url += `&PriceBookId=${this.props.data.priceBookId}`;
+      if (!('QuoteId' in this.props.location.query)) {
+        url += `&QuoteId=${this.props.data.id}`;
+      }
+    } else {
+      url += `?PriceBookId=${this.props.data.priceBookId}`;
+      if (!('QuoteId' in this.props.location.query)) {
+        url += `&QuoteId=${this.props.data.id}`;
+      }
     }
-    if (!('QuoteId' in this.props.location.query)) {
-      url += `&QuoteId=${this.props.data.id}`;
-    }
+    
     browserHistory.push(url);
   }
   languageChange(e) {
