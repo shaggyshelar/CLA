@@ -2,7 +2,7 @@
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import { generateGuid } from 'containers/App/constants';
+import { generateGuid,removeQuery } from 'containers/App/constants';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ReactDOM from 'react-dom';
@@ -86,6 +86,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     data.lines.forEach((i, index) => { data.lines[index].groupId = null; });
     data.groups.map((j, index) => { data.groups[index].isDeleted = true; return this; });
     data.linesGrouped = false;
+    removeQuery('groupId');
     this.props.ungroup(data);
   }
 
@@ -313,6 +314,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               deleteGroup={this.props.deleteGroup}
               segmented={segmented}
               segment={this.segment}
+              disableButton={this.disabledButton}
               update={this.props.update}
               updateBundle={this.props.updateBundle}
               updateSeg={this.props.updateSeg}
@@ -352,6 +354,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                 currency={this.props.data.get('currency')}
                 segment={this.segment}
                 update={this.props.update}
+                location={this.props.location}
                 updateBundle={this.props.updateBundle}
                 updateSelect={this.props.updateSelect}
                 updateSelectBundle={this.props.updateSelectBundle}

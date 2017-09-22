@@ -75,6 +75,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     e.currentTarget.nextSibling.focus();
   }
   renderDiscount(cellInfo) {
+    console.log(cellInfo)
     const col = cellInfo.column.id.split('.')[0];
     const selected = cellInfo.original[col].selectValues;
     const options = [];
@@ -170,14 +171,16 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         Cell: (props) => <span><strong> {this.context.intl.formatMessage({ ...messages[props.value] }).replace(/([A-Z])/g, ' $1').toUpperCase()}</strong></span>,
       },
     ];
-    data.segmentData.columns.map((i) => (
+    data.segmentData.columns.map((i) => {
+
+    
       columns.push({
         accessor: `${i.name}.value`,
         sortable: false,
         style: { textAlign: 'right' },
         Cell: this.renderEditable,
       })
-    ));
+    });
     columns.push({
       accessor: 'demo',
       sortable: false,
