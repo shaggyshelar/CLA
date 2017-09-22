@@ -21,10 +21,21 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
     super(props);
     this.handleFullScreen = this.handleFullScreen.bind(this);
     this.languageChange = this.languageChange.bind(this);
+    this.addProducts = this.addProducts.bind(this);
   }
 
   handleFullScreen() {
     screenfull.toggle(document.getElementById('app'));
+  }
+  addProducts() {
+    let url = `/ProductSelection${this.props.location.search}`;
+    if (!('PriceBookId' in this.props.location.query)) {
+      url += `&PriceBookId=${this.props.data.priceBookId}`;
+    }
+    if (!('QuoteId' in this.props.location.query)) {
+      url += `&QuoteId=${this.props.data.id}`;
+    }
+    browserHistory.push(url);
   }
   languageChange(e) {
     this.props.languageChange(e.target.value);
@@ -45,7 +56,7 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
           {this.props.grouped ?
             ''
             :
-            <Button title={this.context.intl.formatMessage({ ...messages.addProducts })} className="margin" onClick={() => { browserHistory.push(`/ProductSelection?PriceBookId=${this.props.data.priceBookId}&QuoteId=${this.props.data.id}`); }}><FormattedMessage {...messages.addProducts} /></Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.addProducts })} className="margin" onClick={this.addProducts}><FormattedMessage {...messages.addProducts} /></Button>
           }
           {(!this.props.grouped && _.filter(this.props.data.groups, { isDeleted: false }).length === 0) ?
             <Button title={this.context.intl.formatMessage({ ...messages.addGroup })} className="margin" onClick={this.props.group}><FormattedMessage {...messages.addGroup} /></Button>

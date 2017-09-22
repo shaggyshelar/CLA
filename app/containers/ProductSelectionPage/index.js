@@ -181,7 +181,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     }
     this.props.addProductsToQuote(data);
     if (this.props.location.query.groupId) {
-      browserHistory.push(`/EditQuote?groupId=${this.props.location.query.groupId}`);
+      browserHistory.push(`/EditQuote?groupId=${this.props.location.search}`);
     } else {
       browserHistory.push('/EditQuote');
     }
@@ -210,6 +210,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             toggleFilter={this.toggleSidebar}
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
+            location={this.props.location}
             data={this.state.searchedProducts}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}

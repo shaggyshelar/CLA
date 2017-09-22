@@ -55,7 +55,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
           <ButtonGroup className="margin">
             <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.select })} onClick={this.props.addProducts}>{this.context.intl.formatMessage({ ...messages.select })}</Button>
             <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.selectMore })} onClick={this.props.addProductsWait}>{this.context.intl.formatMessage({ ...messages.selectMore })}</Button>
-            <Button title={this.context.intl.formatMessage({ ...messages.cancel })} onClick={() => { browserHistory.push('/EditQuote'); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
+            <Button title={this.context.intl.formatMessage({ ...messages.cancel })} onClick={() => { browserHistory.push(`/EditQuote${this.props.location.search}`); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
           </ButtonGroup>
           <select className="lang" onChange={this.languageChange} value={this.props.language}>
             <option value="en">En</option>

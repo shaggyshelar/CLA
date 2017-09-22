@@ -75,7 +75,6 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     e.currentTarget.nextSibling.focus();
   }
   renderDiscount(cellInfo) {
-    console.log(cellInfo)
     const col = cellInfo.column.id.split('.')[0];
     const selected = cellInfo.original[col].selectValues;
     const options = [];
