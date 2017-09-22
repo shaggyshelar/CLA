@@ -8,7 +8,7 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
-
+import { browserHistory } from 'react-router';
 export const DEFAULT_LOCALE = 'en';
 let serverUrl = '';
 let entityUrls = {};
@@ -25,7 +25,17 @@ if (process.env.NODE_ENV === 'production') {
 function S4() {
   return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 }
+export function addQuery(query) {
+  const location = Object.assign({}, browserHistory.getCurrentLocation());
+  Object.assign(location.query, query); // or simple replace location.query if you want to completely change params
+  browserHistory.push(location);
+}
 
+export function removeQuery(...queryNames) {
+  const location = Object.assign({}, browserHistory.getCurrentLocation());
+  queryNames.forEach((q) => delete location.query[q]);
+  browserHistory.push(location);
+}
 export function generateGuid() {
   const guid = (`${S4() + S4()}-${S4()}-4${S4().substr(0, 3)}-${S4()}-${S4()}${S4()}${S4()}`).toLowerCase();
   return guid;
