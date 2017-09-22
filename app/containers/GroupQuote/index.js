@@ -25,6 +25,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
       showEditor: false,
     };
     this.changeGroup = this.changeGroup.bind(this);
+    this.addProducts = this.addProducts.bind(this);
     this.dataChanged = this.dataChanged.bind(this);
     this.changeOptional = this.changeOptional.bind(this);
     this.cloneGroupIn = this.cloneGroupIn.bind(this);
@@ -34,7 +35,6 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.descUpdate = this.descUpdate.bind(this);
   }
   componentWillMount() {
-    
     const groupLen = _.find(this.props.groups, { id: this.props.location.query.groupId });
     if (this.state.selectedGroup === null) {
       if (this.props.location.query.groupId && groupLen) {
@@ -87,6 +87,16 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   descUpdate() {
     this.toggleEditor();
     this.props.updateGroupData(this.state.selectedGroup, 'description', this.state.desc);
+  }
+  addProducts() {
+    let url = `/ProductSelection${this.props.location.search}`;
+    if (!('PriceBookId' in this.props.location.query)) {
+      url += `&PriceBookId=${this.props.data.priceBookId}`;
+    }
+    if (!('QuoteId' in this.props.location.query)) {
+      url += `&QuoteId=${this.props.data.id}`;
+    }
+    browserHistory.push(url);
   }
   dataChanged(e) {
     const key = Object.keys(e)[0];
@@ -220,7 +230,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             </Col>
             <Col md={4} sm={6} xs={12} className="containers">
               <div>
-                <Button className="margin" title={this.context.intl.formatMessage({ ...messages.addProducts })} onClick={() => { browserHistory.push(`/ProductSelection?groupId=${group.id}&PriceBookId=${this.props.data.priceBookId}&QuoteId=${this.props.data.id}`); }}>{this.context.intl.formatMessage({ ...messages.addProducts })}</Button>
+                <Button className="margin" title={this.context.intl.formatMessage({ ...messages.addProducts })} onClick={this.addProducts}>{this.context.intl.formatMessage({ ...messages.addProducts })}</Button>
                 <ButtonGroup className="margin">
                   {/* <Button onClick={this.cloneGroupIn} title={this.context.intl.formatMessage({ ...messages.cloneGroup })}>{this.context.intl.formatMessage({ ...messages.cloneGroup })}</Button> */}
                   <Button onClick={this.deleteGroupIn} bsStyle="danger" title={this.context.intl.formatMessage({ ...messages.deleteGroup })} disabled={this.props.groups.length === 1}>{this.context.intl.formatMessage({ ...messages.deleteGroup })}</Button>

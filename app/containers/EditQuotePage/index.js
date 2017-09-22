@@ -293,6 +293,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             ungroup={this.ungroup}
             group={this.group}
             grouped={grouped}
+            location={this.props.location}
             language={this.props.language}
             languageChange={this.props.changeLocale}
             disabledButton={this.state.disabledButton}
