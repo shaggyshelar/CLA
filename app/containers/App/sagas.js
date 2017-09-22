@@ -8,6 +8,7 @@ import {
   EntityURLs,
   LOAD_DATA,
   CONTINUE,
+  SEGMENT,
 } from '../App/constants';
 
 export function* getData(action) {
@@ -63,6 +64,37 @@ export function* continueSave() {
     } catch (err) {
       yield put(dataLoadingError(err));
     }
+  }
+}
+
+export function* segmentCall(id, value) {
+  while (true) {
+    const chan = yield actionChannel(SEGMENT);
+    yield take(chan);
+    console.log("action", id, value);
+    // const lines = yield select(selectGlobal);
+    // const postLines = Object.assign({}, lines.toJS().data);
+    // postLines.forceSave = true;
+    // try {
+    //   const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/SaveQuote`}`;
+    //   const options = {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(postLines),
+    //   };
+
+    //   const repos = yield call(request, requestURL, options);
+    //   if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
+    //     yield put(dataLoadingError(repos.quote.errorMessages));
+    //     yield put(dataLoaded(repos));
+    //   } else {
+    //     yield put(dataLoaded(repos));
+    //   }
+    // } catch (err) {
+    //   yield put(dataLoadingError(err));
+    // }
   }
 }
 
