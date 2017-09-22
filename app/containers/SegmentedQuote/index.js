@@ -3,18 +3,20 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { Tabs, Tab, Glyphicon } from 'react-bootstrap/lib';
-import ReactDOM from 'react-dom';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import SegmentedEditQuoteGrid from 'components/SegmentedEditQuoteGrid';
 import makeSelectSegmentedQuote from './selectors';
 import messages from './messages';
+import { addQuery, removeQuery } from '../App/constants';
 export class SegmentedQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.renderSegmentData = this.renderSegmentData.bind(this);
     this.selectTab = this.selectTab.bind(this);
+    this.selectMainTab = this.selectMainTab.bind(this);
     this.state = {
       selectedTab: '',
+      selectedMainTab: '1',
       isCustomModalOpen: false,
       data: [],
     };
@@ -22,31 +24,40 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     this.hideCustomModalToggle = this.hideCustomModalToggle.bind(this);
     this.saveCustomSegmentData = this.saveCustomSegmentData.bind(this);
   }
-
-  componentWillReceiveProps(nextProps) {
-    let lines = [];
-    let bundleLines = [];
-    _.map(this.props.data, (e) => {
-      const a = _.filter(e.bundleProducts, { isSegmented: true });
-      if (a.length) {
-        bundleLines = bundleLines.concat(a);
-      }
-    });
-    if (this.state.selectedTab !== '') {
-      let state = this.state.selectedTab;
-      state = state.charAt(0).toUpperCase() + state.slice(1);
-      lines = _.filter(nextProps.data, { isSegmented: true, segmentData: { type: state } });
-      lines = lines.concat(_.filter(bundleLines, { segmentData: { type: state } }));
+  componentWillMount() {
+    if (this.props.location.query.mainTab) {
+      this.setState({ selectedMainTab: this.props.location.query.mainTab });
+    } else {
+      addQuery({ mainTab: 1 });
     }
-    if (lines.length === 0) {
+    if (this.props.location.query.tab) {
+      this.setState({ selectedTab: this.props.location.query.tab });
+    } else {
       this.setState({ selectedTab: '' });
+      addQuery({ tab: '' });
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    let lines1 = [];
+    if (nextProps.location.query.tab !== '') {
+      let state = nextProps.location.query.tab;
+      state = state.charAt(0).toUpperCase() + state.slice(1);
+      this.setState({ selectedTab: nextProps.location.query.tab });
+      lines1 = _.filter(nextProps.data, { isSegmented: true, segmentData: { type: state } });
+      if (lines1.length === 0) {
+        addQuery({ tab: '' });
+        this.setState({ selectedTab: '' });
+      }
     }
   }
 
   selectTab(e) {
-    
-    this.setState({ selectedTab: e });
-    //this.props.disableButton();
+    addQuery({ tab: e });
+  }
+  selectMainTab(e) {
+    addQuery({ mainTab: e });
+    this.setState({ selectedMainTab: e });
+    // this.props.disableButton();
   }
 
   showCustomModal() {
@@ -114,8 +125,8 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
 
     return (
       <div className="qoute-container segmented">
-        <Tabs animation={false} defaultActiveKey={1} id="noanim-tab-example">
-          <Tab unmountOnExit eventKey={1} title={this.context.intl.formatMessage({ ...messages.segment })}>
+        <Tabs activeKey={this.state.selectedMainTab} onSelect={this.selectMainTab} animation={false} defaultActiveKey={1} id="noanim-tab-example">
+          <Tab unmountOnExit eventKey={'1'} title={this.context.intl.formatMessage({ ...messages.segment })}>
 
             <Tabs animation={false} activeKey={this.state.selectedTab === '' ? selected : this.state.selectedTab} onSelect={this.selectTab} id="inner-tab-example">
               { data.CustomLines.length > 0 ?
@@ -212,7 +223,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                 </Tab> : '' }
             </Tabs>
           </Tab>
-          <Tab unmountOnExit eventKey={2} title={this.context.intl.formatMessage({ ...messages.standard })}>
+          <Tab unmountOnExit eventKey={'2'} title={this.context.intl.formatMessage({ ...messages.standard })}>
             <EditQuoteGrid
               data={data.NormalLines}
               cloneLine={this.props.cloneLine}
@@ -264,6 +275,7 @@ SegmentedQuote.propTypes = {
   quoteData: PropTypes.any,
   toggleCheckAll: PropTypes.func,
   isCheckAll: PropTypes.any,
+  location: PropTypes.any,
 };
 SegmentedQuote.contextTypes = {
   intl: React.PropTypes.object.isRequired,

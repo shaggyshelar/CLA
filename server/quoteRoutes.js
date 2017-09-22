@@ -1803,7 +1803,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
-                  value: 123,
+                  value: 5,
                   isEditable: true,
                   isVisible: true,
                   dataType: 'select',
@@ -1825,13 +1825,13 @@ quoteRouter.get('/EditQuote', (req, res) => {
               },
               {
                 name: 'Quater 2',
-                quantity: 123,
+                quantity: 6,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
-                  value: 123,
+                  value: 6,
                   isEditable: true,
                   isVisible: true,
                   dataType: 'select',
@@ -1859,7 +1859,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
-                  value: 123,
+                  value: 7,
                   isEditable: true,
                   isVisible: true,
                   dataType: 'select',

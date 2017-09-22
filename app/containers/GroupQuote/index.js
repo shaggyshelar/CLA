@@ -3,7 +3,7 @@
  * GroupQuote
  *
  */
-import { generateGuid } from 'containers/App/constants';
+import { generateGuid, addQuery, removeQuery } from 'containers/App/constants';
 import React, { PropTypes } from 'react';
 import CKEditor from 'react-ckeditor-component';
 import { connect } from 'react-redux';
@@ -25,6 +25,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
       showEditor: false,
     };
     this.changeGroup = this.changeGroup.bind(this);
+    this.addProducts = this.addProducts.bind(this);
     this.dataChanged = this.dataChanged.bind(this);
     this.changeOptional = this.changeOptional.bind(this);
     this.cloneGroupIn = this.cloneGroupIn.bind(this);
@@ -34,14 +35,19 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.descUpdate = this.descUpdate.bind(this);
   }
   componentWillMount() {
-    const groupLen = _.find(this.props.groups, { id: parseInt(this.props.location.query.groupId, 0) });
+    const groupLen = _.find(this.props.groups, { id: this.props.location.query.groupId });
     if (this.state.selectedGroup === null) {
-      this.props.location.query.groupId && groupLen ?
-       this.setState({ selectedGroup: parseInt(this.props.location.query.groupId, 0) }) :
-       this.setState({ selectedGroup: this.props.groups[0].id });
+      if (this.props.location.query.groupId && groupLen) {
+        this.setState({ selectedGroup: this.props.location.query.groupId });
+        addQuery({ groupId: this.props.location.query.groupId });
+      } else {
+        this.setState({ selectedGroup: this.props.groups[0].id });
+        addQuery({ groupId: this.props.groups[0].id });
+      }
     }
   }
   changeGroup(e) {
+    addQuery({ groupId: e });
     this.setState({ selectedGroup: e });
   }
   toggleEditor() {
@@ -74,12 +80,23 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     const groups = this.props.groups;
     _.filter(lines, (i) => i.groupId === group.id).map((j) => { j.isDeleted = true; });
     _.filter(groups, (j) => j.id === group.id).map((j) => { j.isDeleted = true; });
+    addQuery({ groupId: _.filter(this.props.groups, { isDeleted: false })[0].id });
     this.setState({ selectedGroup: _.filter(this.props.groups, { isDeleted: false })[0].id });
     this.props.deleteGroup(lines, groups);
   }
   descUpdate() {
     this.toggleEditor();
     this.props.updateGroupData(this.state.selectedGroup, 'description', this.state.desc);
+  }
+  addProducts() {
+    let url = `/ProductSelection${this.props.location.search}`;
+    if (!('PriceBookId' in this.props.location.query)) {
+      url += `&PriceBookId=${this.props.data.priceBookId}`;
+    }
+    if (!('QuoteId' in this.props.location.query)) {
+      url += `&QuoteId=${this.props.data.id}`;
+    }
+    browserHistory.push(url);
   }
   dataChanged(e) {
     const key = Object.keys(e)[0];
@@ -213,7 +230,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             </Col>
             <Col md={4} sm={6} xs={12} className="containers">
               <div>
-                <Button className="margin" title={this.context.intl.formatMessage({ ...messages.addProducts })} onClick={() => { browserHistory.push(`/ProductSelection?groupId=${group.id}&PriceBookId=${this.props.data.priceBookId}&QuoteId=${this.props.data.id}`); }}>{this.context.intl.formatMessage({ ...messages.addProducts })}</Button>
+                <Button className="margin" title={this.context.intl.formatMessage({ ...messages.addProducts })} onClick={this.addProducts}>{this.context.intl.formatMessage({ ...messages.addProducts })}</Button>
                 <ButtonGroup className="margin">
                   {/* <Button onClick={this.cloneGroupIn} title={this.context.intl.formatMessage({ ...messages.cloneGroup })}>{this.context.intl.formatMessage({ ...messages.cloneGroup })}</Button> */}
                   <Button onClick={this.deleteGroupIn} bsStyle="danger" title={this.context.intl.formatMessage({ ...messages.deleteGroup })} disabled={this.props.groups.length === 1}>{this.context.intl.formatMessage({ ...messages.deleteGroup })}</Button>
@@ -232,8 +249,10 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
               updateProps={this.props.updateProps}
               currency={this.props.data.currency}
+              disableButton={this.props.disableButton}
               segment={this.props.segment}
               update={this.props.update}
+              location={this.props.location}
               updateBundle={this.props.updateBundle}
               updateSeg={this.props.updateSeg}
               updateSegBundle={this.props.updateSegBundle}

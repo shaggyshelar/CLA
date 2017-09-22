@@ -1,8 +1,9 @@
 import request from 'utils/request';
+import { browserHistory } from 'react-router';
 import { take, call, put, actionChannel } from 'redux-saga/effects';
 import { LOAD_CONFIGURE_PRODUCTS_DATA, SAVE_CONFIGURE_PRODUCTS_DATA } from './constants';
 import { loadReConfigureProductsDataSuccess, reconfigureDataLoadingError } from './actions';
-import { dataLoaded, dataLoadingError } from '../App/actions';
+import { dataLoaded } from '../App/actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
 export function* getProductBundleSaga(data) {
@@ -27,13 +28,13 @@ export function* saveProducts(data) {
     };
     const quotes = yield call(request, requestURL, options);
     if (quotes.quote.errorMessages && quotes.quote.errorMessages.length) {
-      yield put(dataLoaded(quotes));
-      yield put(dataLoadingError(quotes.quote.errorMessages));
+      yield put(reconfigureDataLoadingError(quotes.quote.errorMessages));
     } else {
+      browserHistory.push('/EditQuote');
       yield put(dataLoaded(quotes));
     }
   } catch (err) {
-    yield put(dataLoadingError(err));
+    yield put(reconfigureDataLoadingError(err));
   }
 }
 
