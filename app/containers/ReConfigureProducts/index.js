@@ -7,6 +7,7 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
@@ -66,6 +67,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.saveProducts = this.saveProducts.bind(this);
+    this.cancelReconfiguration = this.cancelReconfiguration.bind(this);
   }
 
   componentDidMount() {
@@ -122,7 +124,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
 
     intialProductBundleData.productBundle.products = [];
     intialProductBundleData.productBundle.products = updatedProducts;
-    this.props.saveConfiguredProducts(intialProductBundleData.productBundle);
+    this.props.saveConfiguredProducts(intialProductBundleData.productBundle, this.props.location.query);
   }
 
   toggleSidebar() {
@@ -131,8 +133,15 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       .toggleFilter(!this.props.showFilter);
     this.forceUpdate();
   }
-
-
+  cancelReconfiguration() {
+    let url = '/EditQuote';
+    if (this.props.location.query.groupId) {
+      url = `/EditQuote?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`;
+    } else {
+      url = `/EditQuote?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`;
+    }
+    browserHistory.push(url);
+  }
   toggleCheckboxChange(productObj) {
     this.props.toggleCheckboxChange(productObj);
   }
@@ -166,6 +175,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             quoteName={params.quoteName}
             language={this.props.language}
             languageChange={this.props.changeLocale}
+            cancelReconfiguration={this.cancelReconfiguration}
           />
           <ReconfigureProductTab
             reConfigureData={this.props.reConfigureProductData.toJS()}
@@ -226,8 +236,8 @@ function mapDispatchToProps(dispatch) {
     getProductsData: (data) => {
       dispatch(loadReConfigureProductsData(data));
     },
-    saveConfiguredProducts: (data) => {
-      dispatch(saveConfiguredProductsData(data));
+    saveConfiguredProducts: (data, locationQuery) => {
+      dispatch(saveConfiguredProductsData(data, locationQuery));
     },
     deleteProduct: (product) => {
       dispatch(deleteProduct(product));

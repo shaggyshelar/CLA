@@ -391,6 +391,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                   updateSelect={this.props.updateSelect}
                   updateSelectBundle={this.props.updateSelectBundle}
                   quoteData={quoteData}
+                  location={this.props.location}
                 />
             }
           </div>

@@ -288,6 +288,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 updateSelect={this.props.updateSelect}
                 updateSelectBundle={this.props.updateSelectBundle}
                 quoteData={this.props.quoteData}
+                location={this.props.location}
               />
           }
         </div>

@@ -57,10 +57,11 @@ export function addOptions(productObj) {
   };
 }
 
-export function saveConfiguredProductsData(data) {
+export function saveConfiguredProductsData(data, locationQuery) {
   return {
     type: SAVE_CONFIGURE_PRODUCTS_DATA,
     data,
+    locationQuery,
   };
 }
 

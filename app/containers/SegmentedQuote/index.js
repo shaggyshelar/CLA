@@ -160,6 +160,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     quoteData={this.props.quoteData}
                     toggleCheckAll={this.props.toggleCheckAll}
                     isCheckAll={this.props.isCheckAll}
+                    location={this.props.location}
                   />
                 </Tab>
               :
@@ -182,6 +183,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSegSelect={this.props.updateSegSelect}
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
                     quoteData={this.props.quoteData}
+                    location={this.props.location}
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
@@ -201,6 +203,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSegSelect={this.props.updateSegSelect}
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
                     quoteData={this.props.quoteData}
+                    location={this.props.location}
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
@@ -220,6 +223,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSegSelect={this.props.updateSegSelect}
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
                     quoteData={this.props.quoteData}
+                    location={this.props.location}
                   />
                 </Tab> : '' }
             </Tabs>
@@ -239,6 +243,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               updateSelect={this.props.updateSelect}
               updateSelectBundle={this.props.updateSelectBundle}
               quoteData={this.props.quoteData}
+              location={this.props.location}
             />
           </Tab>
         </Tabs>
