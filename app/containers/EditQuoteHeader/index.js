@@ -5,7 +5,6 @@
  */
 // import React, { PropTypes } from 'react';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import screenfull from 'screenfull';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
@@ -22,10 +21,14 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
     this.handleFullScreen = this.handleFullScreen.bind(this);
     this.languageChange = this.languageChange.bind(this);
     this.addProducts = this.addProducts.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
   handleFullScreen() {
     screenfull.toggle(document.getElementById('app'));
+  }
+  cancel() {
+    window.location.reload();
   }
   addProducts() {
     let url = `/ProductSelection${this.props.location.search}`;
@@ -40,7 +43,6 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
         url += `&QuoteId=${this.props.data.id}`;
       }
     }
-    
     browserHistory.push(url);
   }
   languageChange(e) {
@@ -76,7 +78,7 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
           <ButtonGroup className="margin">
             <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.cloneLines })} onClick={this.props.cloneLine} ><FormattedMessage {...messages.cloneLines} /></Button>
             <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.deleteLines })} onClick={this.props.deleteLine} bsStyle="danger"><FormattedMessage {...messages.deleteLines} /></Button>
-            <Button onClick={() => location.reload(true)} title={this.context.intl.formatMessage({ ...messages.cancel })} ><FormattedMessage {...messages.cancel} /></Button>
+            <Button onClick={this.cancel} title={this.context.intl.formatMessage({ ...messages.cancel })} ><FormattedMessage {...messages.cancel} /></Button>
           </ButtonGroup>
           {/* <Button title="Go to Full Screen" className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
           <ButtonGroup className="margin">
@@ -105,6 +107,7 @@ EditQuoteHeader.propTypes = {
   languageChange: React.PropTypes.func,
   language: React.PropTypes.any,
   disabledButton: React.PropTypes.bool,
+  location: React.PropTypes.any,
 };
 EditQuoteHeader.contextTypes = {
   intl: React.PropTypes.object.isRequired,

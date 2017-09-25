@@ -202,7 +202,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('activeTab', 0);
     }
     case LOAD_CONFIGURE_PRODUCTS_DATA_ERROR: {
-      if (action.error) {
+      if (action.error && action.error instanceof Array) {
         action.error.map((i) => {
           toast.error(i.message, {
             position: toast.POSITION.TOP_CENTER,
@@ -210,7 +210,7 @@ function reConfigureProductsReducer(state = initialState, action) {
           return this;
         });
       } else {
-        toast.error('Server connection problem ! Please try again later.', {
+        toast.error('Something went wrong.', {
           position: toast.POSITION.TOP_CENTER,
         });
       }

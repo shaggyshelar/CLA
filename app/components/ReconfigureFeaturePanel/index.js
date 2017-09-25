@@ -50,7 +50,7 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
           {this.renderMinMaxMessage(feature)}
         </div>
         <ReconfigureGrid
-          products={feature.products.length > 0 ? feature.products : []}
+          products={feature.products.length > 0 ? _.filter(feature.products, { isDeleted: false }) : []}
           showFilter={this.props.showFilter}
           toggleFilter={this.props.toggleSidebar}
           toggleCheckboxChange={this.props.toggleCheckboxChange}

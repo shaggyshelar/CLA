@@ -3,7 +3,7 @@
  * GroupQuote
  *
  */
-import { generateGuid, addQuery, removeQuery } from 'containers/App/constants';
+import { generateGuid, addQuery } from 'containers/App/constants';
 import React, { PropTypes } from 'react';
 import CKEditor from 'react-ckeditor-component';
 import { connect } from 'react-redux';
@@ -128,9 +128,9 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     const discountTooltip = (
       <Tooltip id="dtooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.addDiscountTT })}</strong></Tooltip>
     );
-    const subscriptionTooltip = (
-      <Tooltip id="stooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.subTermTT })}</strong></Tooltip>
-    );
+    // const subscriptionTooltip = (
+    //   <Tooltip id="stooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.subTermTT })}</strong></Tooltip>
+    // );
     const segmented = _.filter(groupLines, { isSegmented: true }).length;
     return (
       <div className="group">
@@ -288,6 +288,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 updateSelect={this.props.updateSelect}
                 updateSelectBundle={this.props.updateSelectBundle}
                 quoteData={this.props.quoteData}
+                location={this.props.location}
               />
           }
         </div>
@@ -333,6 +334,7 @@ GroupQuote.propTypes = {
   quoteData: PropTypes.any,
   toggleCheckAll: PropTypes.func,
   isCheckAll: PropTypes.any,
+  disableButton: PropTypes.any,
 };
 const mapStateToProps = createStructuredSelector({
 });

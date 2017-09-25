@@ -16,7 +16,7 @@ export function* getProductBundleSaga(data) {
   }
 }
 
-export function* saveProducts(data) {
+export function* saveProducts(data, locationQuery) {
   try {
     const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/SaveConfigurations`}`;
     const options = {
@@ -30,7 +30,13 @@ export function* saveProducts(data) {
     if (quotes.quote.errorMessages && quotes.quote.errorMessages.length) {
       yield put(reconfigureDataLoadingError(quotes.quote.errorMessages));
     } else {
-      browserHistory.push('/EditQuote');
+      let url = '/EditQuote';
+      if (locationQuery.groupId) {
+        url = `/EditQuote?groupId=${locationQuery.groupId}&mainTab=${locationQuery.mainTab}&tab=${locationQuery.tab}`;
+      } else {
+        url = `/EditQuote?mainTab=${locationQuery.mainTab}&tab=${locationQuery.tab}`;
+      }
+      browserHistory.push(url);
       yield put(dataLoaded(quotes));
     }
   } catch (err) {
@@ -41,8 +47,8 @@ export function* saveProducts(data) {
 export function* saveConfiguredProducts() {
   while (true) {
     const chan = yield actionChannel(SAVE_CONFIGURE_PRODUCTS_DATA);
-    const { data } = yield take(chan);
-    yield call(saveProducts, data);
+    const { data, locationQuery } = yield take(chan);
+    yield call(saveProducts, data, locationQuery);
   }
 }
 
