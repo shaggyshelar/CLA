@@ -147,8 +147,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   }
 
   render() {
-    const columns = [{
-      columns: [{
+    const columns = [
+      {
         accessor: 'id',
         id: 'id',
         sortable: false,
@@ -156,45 +156,44 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         style: { textAlign: 'center' },
         Cell: this.renderActionItems,
       },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.quantity })}>{this.context.intl.formatMessage({ ...messages.quantity })}</span>,
-          accessor: 'quantity.value',
-          id: 'quantity',
-          className: 'table-edit-row',
-          style: { textAlign: 'right' },
-          headerStyle: { textAlign: 'right' },
-          Cell: this.renderEditable,
-        },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
-          accessor: 'code',
-          style: { textAlign: 'left' },
-          headerStyle: { textAlign: 'left' },
-          Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.code}</span> : <span className="cellColor">{cellInfo.original.code}</span>),
-        },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
-          accessor: 'name',
-          style: { textAlign: 'left' },
-          headerStyle: { textAlign: 'left' },
-          Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.name}</span> : <span className="cellColor">{cellInfo.original.name}</span>),
-        },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.quantity })}>{this.context.intl.formatMessage({ ...messages.quantity })}</span>,
+        accessor: 'quantity.value',
+        id: 'quantity',
+        className: 'table-edit-row',
+        style: { textAlign: 'right' },
+        headerStyle: { textAlign: 'right' },
+        Cell: this.renderEditable,
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
+        accessor: 'code',
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
+        Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.code}</span> : <span className="cellColor">{cellInfo.original.code}</span>),
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
+        accessor: 'name',
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
+        Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.name}</span> : <span className="cellColor">{cellInfo.original.name}</span>),
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
           // accessor: '',
-          style: { textAlign: 'left' },
-          headerStyle: { textAlign: 'left' },
-        },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.unitPrice })}>{this.context.intl.formatMessage({ ...messages.unitPrice })}</span>,
-          accessor: 'listPrice.value',
-          id: 'listPrice',
-          style: { textAlign: 'right' },
-          headerStyle: { textAlign: 'right' },
-          Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.listPrice.value}</span> : <span className="cellColor">{cellInfo.original.listPrice.value}</span>),
-        },
-      ],
-    }];
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.unitPrice })}>{this.context.intl.formatMessage({ ...messages.unitPrice })}</span>,
+        accessor: 'listPrice.value',
+        id: 'listPrice',
+        style: { textAlign: 'right' },
+        headerStyle: { textAlign: 'right' },
+        Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.listPrice.value}</span> : <span className="cellColor">{cellInfo.original.listPrice.value}</span>),
+      },
+    ];
 
     return (
       <div>
