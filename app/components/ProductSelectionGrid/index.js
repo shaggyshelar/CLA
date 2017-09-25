@@ -1,8 +1,6 @@
 import ReactTable from 'react-table';
 import React from 'react';
 import 'react-table/react-table.css';
-import Sidebar from 'components/Sidebar';
-import { Button, FormControl } from 'react-bootstrap/lib';
 import messages from './messages';
 class ProductSelectionGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -108,8 +106,6 @@ ProductSelectionGrid.contextTypes = {
 };
 ProductSelectionGrid.propTypes = {
   products: React.PropTypes.any,
-  showFilter: React.PropTypes.any,
-  toggleFilter: React.PropTypes.any,
   toggleCheckAll: React.PropTypes.any,
   toggleCheckboxChange: React.PropTypes.any,
 };

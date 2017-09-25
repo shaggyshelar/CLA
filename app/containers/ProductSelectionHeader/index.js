@@ -10,7 +10,7 @@ import Helmet from 'react-helmet';
 import { browserHistory } from 'react-router';
 import ProductSelectionHeaderCard from 'components/ProductSelectionHeaderCard';
 import SearchProductAutocomplete from 'components/SearchProductAutocomplete';
-import { Button, Glyphicon, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
+import { Button, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
 import messages from './messages';
 export class ProductSelectionHeader extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props, context) {
@@ -77,7 +77,7 @@ ProductSelectionHeader.propTypes = {
   searchInputChange: React.PropTypes.func,
   onSearchClick: React.PropTypes.func,
   onSearchItemSelected: React.PropTypes.func,
-  // toggleFilter: React.PropTypes.any,
+  location: React.PropTypes.any,
   languageChange: React.PropTypes.func,
   language: React.PropTypes.any,
   disabledButton: React.PropTypes.bool,

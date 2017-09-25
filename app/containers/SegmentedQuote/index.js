@@ -7,7 +7,7 @@ import EditQuoteGrid from 'components/EditQuoteGrid';
 import SegmentedEditQuoteGrid from 'components/SegmentedEditQuoteGrid';
 import makeSelectSegmentedQuote from './selectors';
 import messages from './messages';
-import { addQuery, removeQuery } from '../App/constants';
+import { addQuery } from '../App/constants';
 export class SegmentedQuote extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
