@@ -139,7 +139,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     return total;
   }
   formatt(e) {
-    return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
+    return (e.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
   }
   clickEdit(e) {
     e.currentTarget.nextSibling.focus();
@@ -178,7 +178,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         <RIENumber
           className={'table-edit-quantity'}
           classEditing="table-edit-input"
-          value={cellInfo.value}
+          value={cellInfo.value.toFixed(2)}
           propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
           format={this.formatt}
           change={this.dataChanged}
@@ -200,22 +200,26 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
-      return (<span>{cellInfo.column.id === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
+      return (<span>{cellInfo.column.id === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>);
     }
     return (
-      <div>
-        <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
-        <RIENumber
-          className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
-          classEditing="table-edit-input"
-          value={cellInfo.value}
-          propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-          format={this.formatt}
-          change={this.dataChanged}
-          validate={this.validate}
-          classInvalid="invalid"
-        />
-      </div>);
+      cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice') ?
+        <span>Included</span>
+      :
+        <div>
+          <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+          <RIENumber
+            className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
+            classEditing="table-edit-input"
+            value={cellInfo.value.toFixed(2)}
+            propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+            format={this.formatt}
+            change={this.dataChanged}
+            validate={this.validate}
+            classInvalid="invalid"
+          />
+        </div>
+    );
   }
   renderChecbox(cellInfo) {
     if (!cellInfo.original.parentLineId) {
@@ -279,7 +283,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
+        Cell: (cellInfo) => (cellInfo.original.isBundled || cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.quantity })}>{this.context.intl.formatMessage({ ...messages.quantity })}</span>,
@@ -311,21 +315,21 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       //   Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.markup })}>{this.context.intl.formatMessage({ ...messages.markup })}</span>,
       //   accessor: 'markup',
       //   style: { textAlign: 'right' },
-      //   Cell: (props) => <span>{props.value.toLocaleString('en', { minimumFractionDigits: 2 })} %</span>,
+      //   Cell: (props) => <span>{props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} %</span>,
       // },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netPrice })}>{this.context.intl.formatMessage({ ...messages.netPrice })}</span>,
         accessor: 'netUnitPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
-        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,
+        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>,
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
         accessor: 'netTotal',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
-        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>,
+        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>,
       },
     ];
     return (
@@ -350,7 +354,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           selectedLine={this.state.selectedLine}
         />
         <div className="sub-footer upper-case">
-          {this.context.intl.formatMessage({ ...messages.subTotal })} : {this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2 })}
+          {this.context.intl.formatMessage({ ...messages.subTotal })} : {this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </div>
 
       </div>

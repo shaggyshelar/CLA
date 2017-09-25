@@ -75,7 +75,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   }
 
   format(e) {
-    return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
+    return (e.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
   }
 
   deleteProduct(product) {
@@ -109,13 +109,13 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
             change={this.dataChanged}
             validate={this.validate}
             format={this.format}
-            title={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}
+            title={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             id={cellInfo.original.id}
           />
           <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         </div>);
     }
-    return (<span className="cellColor">{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
+    return (<span className="cellColor">{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>);
   }
 
 

@@ -64,7 +64,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     this.props.updateSegBundle(field[0], field[1], field[2], field[3], parseFloat(data1));
   }
   formatt(e) {
-    return (e.toLocaleString('en', { minimumFractionDigits: 2 }));
+    return (e.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
   }
   validate(string) {
     const number = parseFloat(string);
@@ -114,26 +114,29 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
   }
   renderEditable(cellInfo) {
     if (cellInfo.original.editable === false) {
-      return (<span> {cellInfo.original.prop === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
+      return (<span> {cellInfo.original.prop === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>);
     }
     if (cellInfo.original.prop === 'additionalDiscount') {
       return this.renderDiscount(cellInfo);
     }
     const col = cellInfo.column.id.split('.')[0];
-    return (<div>
-      <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
-      <RIENumber
-        className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
-        classEditing="table-edit-input"
-        value={cellInfo.value}
-        propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
-        change={this.dataChanged}
-        validate={this.validate}
-        format={this.formatt}
-        classInvalid="invalid"
-      />
-
-    </div>);
+    return (
+      cellInfo.original.isBundled && (cellInfo.original.prop === 'listPrice') ?
+        <span>Included</span>
+      :
+        <div>
+          <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+          <RIENumber
+            className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
+            classEditing="table-edit-input"
+            value={cellInfo.value}
+            propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
+            change={this.dataChanged}
+            validate={this.validate}
+            format={this.formatt}
+            classInvalid="invalid"
+          />
+        </div>);
   }
   renderColumns(data) {
     const columns = [
