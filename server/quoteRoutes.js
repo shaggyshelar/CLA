@@ -8236,8 +8236,6 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
 
   return res.json(response);
 });
-
-// /v1/quote/save/{QuoteID}
 quoteRouter.post('/SaveQuote', (req, res) => {
   const response = { config: {}, quote: {} };
   let error = [];
