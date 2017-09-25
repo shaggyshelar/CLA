@@ -1551,33 +1551,33 @@ body.modal-open {
 .sub-footer-seg{ height:64px;}
 .sub-seg .ReactTable.sub-component{ height: 150px !important;padding-bottom: 0px!important;}
 /* Harshit */
-/* .ReactTable .rt-tr-group {
+.ReactTable .rt-tr-group {
     display: inline-block !important;
 }
 
 .ReactTable .rt-tr {
    width: 100%;
 }
-.table-wrap .ReactTable .rt-tbody {
+/* .table-wrap .ReactTable .rt-tbody {
    height: 75vh;
 }
 .sub-seg .ReactTable .rt-tbody {
    height: auto !important;
-}
+}*/
 .sub-component .rt-tbody .rt-tr-group {
     margin-bottom: -7px;
     overflow: hidden;
-} */
+}
 .ReactTable .rt-tfoot {
     font-size: 16px!important;
     font-weight: 600!important;
-    height: auto;
+    height: 50px;
     bottom:0;
     position: relative;
     background: #ececec;
     color: #16325C;
     box-shadow: none !important;
-    padding: 10px 2em!important;
+    padding: 10px 10px!important;
 }
 .ReactTable .rt-tfoot .rt-td {
     border: 0px !important;
