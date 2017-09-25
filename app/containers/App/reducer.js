@@ -47,6 +47,7 @@ import {
   QUICK_SAVE_QUOTES,
   CANCEL,
   CONTINUE,
+  SAVECONFIGURATION_SUCCESS,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -281,6 +282,29 @@ function appReducer(state = initialState, action) {
     case SAVE_APP_CUSTOM_SEGMENT_DATA : {
       return state.set('loading', true)
         .set('error', false);
+    }
+    case SAVECONFIGURATION_SUCCESS: {
+      const quoteData = state.get('data').toJS();
+      const newLines = [];
+      if (quoteData && quoteData.lines && action.data.quote && action.data.quote.lines) {
+        quoteData.netAmount = action.data.quote.netAmount;
+        action.data.quote.lines.forEach((line) => {
+          let quoteLine = _.find(quoteData.lines, { id: line.id });
+          if (quoteLine) {
+            quoteLine = line;
+          } else {
+            newLines.push(line);
+          }
+        }, this);
+      }
+      if (newLines.length > 0) {
+        newLines.forEach((newLine) => {
+          quoteData.lines.push(newLine);
+        }, this);
+      }
+      return state
+        .set('data', fromJS(quoteData))
+        .set('loading', false);
     }
     default:
       return state;

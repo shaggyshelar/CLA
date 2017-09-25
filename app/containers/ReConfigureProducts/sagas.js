@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import { take, call, put, actionChannel } from 'redux-saga/effects';
 import { LOAD_CONFIGURE_PRODUCTS_DATA, SAVE_CONFIGURE_PRODUCTS_DATA } from './constants';
 import { loadReConfigureProductsDataSuccess, reconfigureDataLoadingError } from './actions';
-import { dataLoaded } from '../App/actions';
+import { saveConfiguration } from '../App/actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
 export function* getProductBundleSaga(data) {
@@ -31,13 +31,13 @@ export function* saveProducts(data, locationQuery) {
       yield put(reconfigureDataLoadingError(quotes.quote.errorMessages));
     } else {
       let url = '/EditQuote';
-      if (locationQuery.groupId) {
+      if (locationQuery.groupId !== 'null') {
         url = `/EditQuote?groupId=${locationQuery.groupId}&mainTab=${locationQuery.mainTab}&tab=${locationQuery.tab}`;
-      } else {
+      } else if (locationQuery.mainTab !== 'undefined' && locationQuery.tab !== 'undefined') {
         url = `/EditQuote?mainTab=${locationQuery.mainTab}&tab=${locationQuery.tab}`;
       }
       browserHistory.push(url);
-      yield put(dataLoaded(quotes));
+      yield put(saveConfiguration(quotes));
     }
   } catch (err) {
     yield put(reconfigureDataLoadingError(err));
