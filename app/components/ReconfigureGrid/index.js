@@ -147,7 +147,6 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   }
 
   render() {
-    const products = _.filter(this.props.products, { isDeleted: false });
     const columns = [{
       columns: [{
         accessor: 'id',
@@ -202,7 +201,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         <div className="table-wrap" id="configureGridId">
           <ReactTable
             className="-striped -highlight"
-            data={products}
+            data={this.props.products}
             columns={columns}
             defaultPageSize={this.props.products.length}
             pageSize={this.props.products.length}
