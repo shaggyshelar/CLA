@@ -57,10 +57,10 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
             <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.selectMore })} onClick={this.props.addProductsWait}>{this.context.intl.formatMessage({ ...messages.selectMore })}</Button>
             <Button title={this.context.intl.formatMessage({ ...messages.cancel })} onClick={() => { browserHistory.push(`/EditQuote${this.props.location.search}`); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
           </ButtonGroup>
-          <select className="lang" onChange={this.languageChange} value={this.props.language}>
+          {/* <select className="lang" onChange={this.languageChange} value={this.props.language}>
             <option value="en">En</option>
             <option value="fr">Fr</option>
-          </select>
+          </select> */}
         </Col>
 
       </Row>

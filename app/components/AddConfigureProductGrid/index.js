@@ -73,37 +73,35 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
     return input;
   }
   render() {
-    const columns = [{
-      columns: [
-        {
+    const columns = [
+      {
          // Header: <input type="checkbox" className="checkAll" onChange={this.props.toggleCheckAll} />,
-          accessor: 'id',
-          id: 'id',
-          sortable: false,
-          width: 50,
-          style: { textAlign: 'center' },
-          Cell: this.renderActionItems,
-        },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
-          accessor: 'code',
-          style: { textAlign: 'left' },
-          headerStyle: { textAlign: 'left' },
-        },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
-          accessor: 'name',
-          style: { textAlign: 'left' },
-          headerStyle: { textAlign: 'left' },
-        },
-        {
-          Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
+        accessor: 'id',
+        id: 'id',
+        sortable: false,
+        width: 50,
+        style: { textAlign: 'center' },
+        Cell: this.renderActionItems,
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
+        accessor: 'code',
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
+        accessor: 'name',
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
           // accessor: '',
-          style: { textAlign: 'left' },
-          headerStyle: { textAlign: 'left' },
-        },
-      ],
-    }];
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
+      },
+    ];
     return (
       <div>
         <div className="table-wrap" id="configureGridId">
