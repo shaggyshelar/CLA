@@ -2,7 +2,7 @@
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import { generateGuid,removeQuery } from 'containers/App/constants';
+import { generateGuid, removeQuery } from 'containers/App/constants';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ReactDOM from 'react-dom';
@@ -176,9 +176,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         }
         return this;
       });
-      
+
       this.props.deleteSelectedLines(selectedLines);
-      
+
       if (ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked) {
         ReactDOM.findDOMNode(this).getElementsByClassName('check')[0].checked = false;
       }

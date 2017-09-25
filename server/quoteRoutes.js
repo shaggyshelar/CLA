@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const quotes = require('./data');
 // Create the express router object for Photos
 const quoteRouter = express.Router();
 
@@ -8243,10 +8242,10 @@ quoteRouter.post('/SaveQuote', (req, res) => {
   const response = { config: {}, quote: {} };
   let error = [];
   response.quote = req.body;
-  if (!response.quote.forceSave) {
+  if (!response.quote.isForceSave) {
     error = [{ id: 123, type: 'alert', message: 'Invalid Products' }, { id: 123, type: 'as', message: 'Invalid Data' }];
   } else {
-    response.quote.forceSave = false;
+    response.quote.isForceSave = false;
     error = [{ id: 123, type: 'asa', message: 'Invalid Products' }, { id: 123, type: 'as', message: 'Invalid Data' }];
   }
   response.quote.errorMessages = error;

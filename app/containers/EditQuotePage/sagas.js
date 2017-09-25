@@ -1,6 +1,5 @@
-import { take, call, put, select, actionChannel, flush } from 'redux-saga/effects';
+import { take, call, put, select, actionChannel } from 'redux-saga/effects';
 import request from 'utils/request';
-import { LOCATION_CHANGE } from 'react-router-redux';
 import _ from 'lodash';
 import { SAVE_CUSTOM_SEGMENT_DATA } from './constants';
 import { selectGlobal } from '../App/selectors';
@@ -134,7 +133,7 @@ export function* saveQuoteLines() {
     }
   }
 }
-export function* saveQuoteDetails(data, action) {
+export function* saveQuoteDetails(data) {
   try {
     const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/SaveQuote`}`;
     const options = {

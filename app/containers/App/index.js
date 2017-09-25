@@ -73,7 +73,6 @@ App.propTypes = {
   children: React.PropTypes.node,
   getAllData: React.PropTypes.func,
   data: React.PropTypes.any,
-  language: React.PropTypes.any,
   changeLocale: React.PropTypes.func,
   error: React.PropTypes.any,
   cancel: React.PropTypes.any,

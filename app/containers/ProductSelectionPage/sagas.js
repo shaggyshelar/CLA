@@ -1,10 +1,10 @@
-import { LOCATION_CHANGE } from 'react-router-redux';
-import { take, call, select, put, cancel, takeLatest, takeEvery, fork, actionChannel } from 'redux-saga/effects';
+import { take, call, select, put, actionChannel } from 'redux-saga/effects';
 import request from 'utils/request';
+import { toast } from 'react-toastify';
 import { LOAD_PRODUCTS_DATA, LOAD_SEARCH_DATA } from './constants';
 import { dataLoaded, dataLoadingError } from '../App/actions';
 import { selectGlobal } from '../App/selectors';
-import { toast } from 'react-toastify';
+
 import {
   SERVER_URL,
   EntityURLs,
