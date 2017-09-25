@@ -234,8 +234,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   //     if (additionalDiscount !== '') {
   //       const totalDiscount = listUnitPrice -((parseFloat(additionalDiscount) / 100) * listUnitPrice);
   //       const totalAmount=totalDiscount*parseInt(item['QUANTITY']);
-  //       item['NET UNIT PRICE'] = '$ ' + totalAmount.toLocaleString('en', {     minimumFractionDigits: 2 });
-  //       item['NET TOTAL'] ='$ ' +totalAmount.toLocaleString('en', {     minimumFractionDigits: 2 });
+  //       item['NET UNIT PRICE'] = '$ ' + totalAmount.toLocaleString('en', {     minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  //       item['NET TOTAL'] ='$ ' +totalAmount.toLocaleString('en', {     minimumFractionDigits: 2, maximumFractionDigits: 2 });
   //     }
   //     return item;
   // });

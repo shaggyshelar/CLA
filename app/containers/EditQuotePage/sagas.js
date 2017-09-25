@@ -1,6 +1,7 @@
 import { take, call, put, select, actionChannel } from 'redux-saga/effects';
 import request from 'utils/request';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
 import { SAVE_CUSTOM_SEGMENT_DATA } from './constants';
 import { selectGlobal } from '../App/selectors';
 import { dataLoadingError, dataLoaded } from '../App/actions';
@@ -124,6 +125,9 @@ export function* saveQuoteLines() {
         yield put(dataLoadingError(repos.quote.errorMessages));
         yield put(dataLoaded(repos));
       } else {
+        toast.success('Saved Successfully', {
+          position: toast.POSITION.TOP_CENTER,
+        });
         yield put(dataLoaded(repos));
       }
     } catch (err) {
@@ -155,5 +159,5 @@ export default [
   saveCustomSegmentData,
   calculateQuotes,
   saveQuoteLines,
-  segmentCall,
+  // segmentCall,
 ];

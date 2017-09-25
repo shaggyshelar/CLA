@@ -231,7 +231,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isBundled ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
+        Cell: (cellInfo) => (cellInfo.original.isBundled || cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       }];
     const data = Object.assign({}, this.props.data[0]);
     let segmentTotal = 0;
@@ -243,7 +243,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       const c = this.props.data.map((j) => _.filter(j.segmentData.columns, { name: i.name }).map((d) => total += d.netTotal));
       columns.push({
         Header: () => <span className="upper-case" title={i.name}>{i.name}</span>,
-        Footer: (<span className="sub-footer-table">{total.toLocaleString('en', { minimumFractionDigits: 2 })}</span>),
+        Footer: (<span className="sub-footer-table">{total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>),
         accessor: `segmentData.columns[${index}].netTotal`,
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
@@ -254,7 +254,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     columns.push({
       Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
       accessor: 'segmentTotal',
-      Footer: (<span className="sub-footer-table">{segmentTotal.toLocaleString('en', { minimumFractionDigits: 2 })}</span>),
+      Footer: (<span className="sub-footer-table">{segmentTotal.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>),
       id: 'segmentTotal',
       style: { textAlign: 'right' },
       headerStyle: { textAlign: 'right' },
@@ -266,20 +266,20 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     const data = e.original.segmentData.columns[index];
     const tooltip = (
       <Tooltip id={`${e.original.id}-${e.original.segmentData.columns[index].name}`} bsClass="tooltip" className="hover-tip">
-        <div className="lab">{this.context.intl.formatMessage({ ...messages.quantity })}</div><div className="val">{data.quantity.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
-        <div className="lab">{this.context.intl.formatMessage({ ...messages.listPrice })}</div><div className="val">{this.props.currency} {data.listPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
-        <div className="lab">{this.context.intl.formatMessage({ ...messages.uplift })}</div><div className="val">{this.props.currency} {data.uplift.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
-        <div className="lab">{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</div><div className="val">{data.additionalDiscount.value.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
-        <div className="lab">{this.context.intl.formatMessage({ ...messages.netunitPrice })}</div><div className="val">{this.props.currency} {data.netunitPrice.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
-        <div className="lab">{this.context.intl.formatMessage({ ...messages.netTotal })}</div><div className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.quantity })}</div><div className="val">{data.quantity.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.listPrice })}</div><div className="val">{this.props.currency} {data.listPrice.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.uplift })}</div><div className="val">{this.props.currency} {data.uplift.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</div><div className="val">{data.additionalDiscount.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.netunitPrice })}</div><div className="val">{this.props.currency} {data.netunitPrice.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div><br />
+        <div className="lab">{this.context.intl.formatMessage({ ...messages.netTotal })}</div><div className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div><br />
       </Tooltip>
     );
     return (<OverlayTrigger placement="top" overlay={tooltip}>
-      <span>{e.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>
+      <span>{e.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
     </OverlayTrigger>);
   }
   renderTotal(cellInfo) {
-    return (<span>{this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2 })}</span>);
+    return (<span>{this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>);
   }
   render() {
     const data = this.props.data;
