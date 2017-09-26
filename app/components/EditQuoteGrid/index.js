@@ -172,6 +172,9 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       }
       return this;
     });
+    if (cellInfo.original[cellInfo.column.id].isEditable === false) {
+      return (<span> {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {selectedOption.text}</span>);
+    }
     return (
       <div>
         <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>

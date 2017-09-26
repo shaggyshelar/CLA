@@ -86,7 +86,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           isTaxable: true,
           additionalDiscount: {
             value: 123,
-            isEditable: true,
+            isEditable: false,
             isVisible: true,
             dataType: 'select',
             selectValues: [
@@ -178,7 +178,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 endDate: 'Date',
                 additionalDiscount: {
                   value: 44535,
-                  isEditable: true,
+                  isEditable: false,
                   isVisible: true,
                   dataType: 'select',
                   selectValues: [
@@ -245,7 +245,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           isTaxable: true,
           additionalDiscount: {
             value: 123,
-            isEditable: true,
+            isEditable: false,
             isVisible: true,
             dataType: 'select',
             selectValues: [
@@ -5596,7 +5596,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
                 endDate: 'Date',
                 additionalDiscount: {
                   value: 123,
-                  isEditable: true,
+                  isEditable: false,
                   isVisible: true,
                   dataType: 'select',
                   selectValues: [
