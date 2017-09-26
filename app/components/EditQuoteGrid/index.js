@@ -298,6 +298,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.listPrice })}>{this.context.intl.formatMessage({ ...messages.listPrice })}</span>,
         accessor: 'listPrice.value',
+        
         id: 'listPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
@@ -320,6 +321,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netPrice })}>{this.context.intl.formatMessage({ ...messages.netPrice })}</span>,
         accessor: 'netUnitPrice',
+        Footer: (<span>{this.context.intl.formatMessage({ ...messages.subTotal })}</span>),
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>,
@@ -327,6 +329,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
         accessor: 'netTotal',
+        Footer: (<span className="sub-footer-table">{this.props.currency } {total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>),
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>,
@@ -353,9 +356,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           value={this.state.value}
           selectedLine={this.state.selectedLine}
         />
-        <div className="sub-footer upper-case">
-          {this.context.intl.formatMessage({ ...messages.subTotal })} : {this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-        </div>
+        
 
       </div>
     );

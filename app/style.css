@@ -14,6 +14,7 @@
 
 body {
     overflow: hidden;
+    border: 1px solid #ddd;
 }
 .actionItems .glyphicon {
     padding-top: 3px;
@@ -261,11 +262,10 @@ position: relative;
     border-radius: 4px;
     padding: 4px;
 }
-.cartFont {
+.cartFont span {
     color: #54698d;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 600;
     padding:5px;
 }
 
@@ -628,8 +628,9 @@ height:100%;
     height: 45px;
     display: block;
     font-size: 20px;
-    font-weight: 400;
-    color: #16325C;
+    font-weight: 600;
+    color: #54698d;
+    font-size: 20px;
     border-style: solid;
     border-width: 1px 0px 0px 0px;
     text-transform: none;
@@ -645,9 +646,9 @@ height:100%;
     width: 100%;
     height: 45px;
     display: block;
+    font-weight: 600;
+    color: #54698d;
     font-size: 20px;
-    font-weight: 400;
-    color: #16325C;
     border-style: solid;
     border-width: 1px 0px 0px 0px;
     padding-top: 10px;
@@ -819,7 +820,7 @@ height:100%;
 
 .sub-footer-seg {    
     height: auto!important;
-    font-size: 16px!important;
+    font-size: 20px!important;
     font-weight: 600!important;
 }
 .inline-select {
@@ -871,11 +872,29 @@ input[type=number]::-webkit-inner-spin-button {
 }
 .sub-footer{
     width: 100%!important;
-	height: auto!important;
+	height: 35px!important;
     font-size: 16px!important;
     font-weight: 600!important;
 	padding-top: 4px;
     padding-bottom: 4px;
+}
+.sub-footer-new{
+    width: 100%!important;
+	height: auto!important;
+    font-size: 16px!important;
+    font-weight: 600!important;
+    padding-top: 8px;
+    background: #ececec;
+    padding-bottom: 8px;
+    text-align: right;
+    color: #54698d;
+    padding-right: 28px;
+
+}
+.sub-footer-seg-new{
+    width: 100%!important;
+	height: 65px!important;
+
 }
 @media (max-width: 767px){
 	.group-card .badge {
@@ -944,48 +963,50 @@ strong {
 	overflow-y: auto;
 }
 .table-wrap.edit-grid-segment .ReactTable {
-    padding: 0px !important;
+    
     overflow: auto;
 }
-
-.qoute-container.segmented .table-wrap.edit-grid-quote {
-    min-height: 77vh !important;
-	height: 77vh !important;
-	overflow-y:auto;
+.ReactTable {
+    overflow: auto;
 }
 .qoute-container.segmented .table-wrap.edit-grid-quote {
-    min-height: 77vh !important;
-	height: 77vh !important;
-	overflow-y:auto;
+    min-height: 15vh!important;
+    overflow: auto;
+    height: 100vh !important;
+}
+.qoute-container.segmented .table-wrap.edit-grid-quote {
+    min-height: 15vh!important;
+    overflow: auto;
+    height: 100vh !important;
 }
 .qoute-container.segmented .group  .edit-grid-quote {
-    min-height: 75vh !important;
-	height: 75vh !important;
-	overflow-y:auto;
+    min-height: 15vh!important;
+    overflow: auto;
+    height: 100vh !important;
 }
 .group .qoute-container.segmented .table-wrap.edit-grid-quote { 
-    min-height: 54vh !important;
-	height: 54vh !important;
-	overflow-y:auto;
+    min-height: 15vh!important;
+    overflow: auto;
+    height: 100vh !important;
 }
 .group .qoute-container.segmented  .table-wrap.edit-grid-segment { 
-    min-height: 55vh !important;
-    height: 55vh !important;
+    min-height: 15vh!important;
+    overflow: auto;
+    height: 100vh !important;
     padding-bottom: 0px !important;
-	overflow-y:auto;
 }
 .group .qoute-container.segmented  .table-wrap.edit-grid-segment .ReactTable{ 
     padding-bottom: 0px !important;
 }
 .table-container .group .table-wrap.edit-grid-quote { 
-    min-height: 60vh !important;
-	height: 60vh !important;
-	overflow-y:auto;
+    min-height: 15vh!important;
+    overflow: auto;
+    height: 100vh !important;
 }
 .table-container .table-wrap.edit-grid-quote { 
-    min-height: 85vh!important;
+    min-height: 15vh!important;
     overflow: auto;
-    height: 85vh !important;
+    height: 100vh !important;
 }
 .glyphicon {    position: initial;}
 /* height management */
@@ -1568,18 +1589,45 @@ body.modal-open {
     margin-bottom: -7px;
     overflow: hidden;
 }
+.qoute-container.segmented .ReactTable .rt-thead {
+    padding-bottom: 35px;
+}
+.qoute-container.table-container .ReactTable .rt-thead {
+    padding-bottom: 35px;
+}
 .ReactTable .rt-tfoot {
     font-size: 16px!important;
     font-weight: 600!important;
-    height: 50px;
-    bottom:0;
-    position: relative;
+    height: 35px;
+    bottom:0px;
+    width: 100%;
+    position: absolute;
     background: #ececec;
-    color: #16325C;
+    color: rgb(84, 105, 141);;
     box-shadow: none !important;
-    padding: 10px 10px!important;
+    padding: 2px 10px!important;
 }
 .ReactTable .rt-tfoot .rt-td {
     border: 0px !important;
 
+}
+
+/* Sub total footer */
+.qoute-container .edit-grid-quote .ReactTable .rt-tfoot {
+    bottom: 89.5vh !important;
+}
+.qoute-container.segmented .edit-grid-segment .rt-tfoot {
+    bottom: 67.5vh !important;
+}
+.qoute-container.segmented .edit-grid-quote .rt-tfoot{
+    bottom: 66.5vh !important;
+}
+.group .qoute-container .edit-grid-quote .ReactTable .rt-tfoot {
+    bottom: 89.5vh !important;
+}
+.group .qoute-container.segmented .edit-grid-segment .rt-tfoot {
+    bottom: 89.5vh !important;
+}
+.group .qoute-container.segmented .edit-grid-quote .rt-tfoot{
+    bottom: 43.5vh !important;
 }
