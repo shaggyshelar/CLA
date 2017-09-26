@@ -135,9 +135,9 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
   }
   cancelReconfiguration() {
     let url = '/EditQuote';
-    if (this.props.location.query.groupId) {
+    if (this.props.location.query.groupId !== 'null') {
       url = `/EditQuote?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`;
-    } else {
+    } else if (this.props.location.query.mainTab !== 'undefined' && this.props.location.query.tab !== 'undefined') {
       url = `/EditQuote?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`;
     }
     browserHistory.push(url);

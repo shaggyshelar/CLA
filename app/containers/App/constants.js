@@ -90,3 +90,4 @@ export const CANCEL = 'app/EditQuote/CANCEL';
 export const CONTINUE = 'app/EditQuote/CONTINUE';
 export const UPDATE_SELECT_BUNDLE = 'app/EditQuote/UPDATE_SELECT_BUNDLE';
 export const SAVE_APP_CUSTOM_SEGMENT_DATA = 'app/EditQuote/SAVE_APP_CUSTOM_SEGMENT_DATA';
+export const SAVECONFIGURATION_SUCCESS = 'app/EditQuote/SAVECONFIGURATION_SUCCESS';
