@@ -87,6 +87,9 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       }
       return this;
     });
+    if (cellInfo.original[col].isEditable === false) {
+      return (<span> {cellInfo.original[col].value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {selectedOption.text}</span>);
+    }
     return (
       <div>
         <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
@@ -236,8 +239,9 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           });
           break;
         case 'additionalDiscount':
+        
           data.segmentData.columns.map((j, index) => {
-            dataSet[i][j.name] = { id: data.id, value: j.additionalDiscount.value, selectValues: data.segmentData.columns[index].additionalDiscount.selectValues };
+            dataSet[i][j.name] = { isEditable: data.additionalDiscount.isEditable, id: data.id, value: j.additionalDiscount.value, selectValues: data.segmentData.columns[index].additionalDiscount.selectValues };
             dataSet[i].editable = j.additionalDiscount.isEditable;
             dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parentLineId;
