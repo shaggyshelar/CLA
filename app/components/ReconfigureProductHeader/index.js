@@ -48,10 +48,10 @@ class ReconfigureProductHeader extends React.Component { // eslint-disable-line 
             <Button onClick={this.props.cancelReconfiguration}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
             <Button bsStyle="primary" onClick={this.props.saveProducts}>{this.context.intl.formatMessage({ ...messages.save })}</Button>
           </ButtonGroup>
-          <select className="lang" onChange={this.languageChange} value={this.props.language}>
+          {/* <select className="lang" onChange={this.languageChange} value={this.props.language}>
             <option value="en">En</option>
             <option value="fr">Fr</option>
-          </select>
+          </select> */}
         </Col>
 
       </Row>
@@ -68,7 +68,7 @@ ReconfigureProductHeader.propTypes = {
   quoteName: PropTypes.any,
   addProducts: PropTypes.any,
   languageChange: React.PropTypes.func,
-  language: React.PropTypes.any,
+  // language: React.PropTypes.any,
   cancelReconfiguration: React.PropTypes.any,
 };
 

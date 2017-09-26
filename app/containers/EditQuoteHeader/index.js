@@ -85,10 +85,10 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
             <Button title={this.context.intl.formatMessage({ ...messages.calculate })} onClick={this.props.calculateTotal}><FormattedMessage {...messages.calculate} /></Button>
             <Button title={this.context.intl.formatMessage({ ...messages.save })} onClick={this.props.quickSave}><FormattedMessage {...messages.save} /></Button>
           </ButtonGroup>
-          <select className="lang" onChange={this.languageChange} value={this.props.language}>
+          {/* <select className="lang" onChange={this.languageChange} value={this.props.language}>
             <option value="en">En</option>
             <option value="fr">Fr</option>
-          </select>
+          </select> */}
         </Col>
       </Row>
     );
