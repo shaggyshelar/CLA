@@ -38,6 +38,7 @@ import {
   SAVE_APP_CUSTOM_SEGMENT_DATA,
   CANCEL,
   CONTINUE,
+  SAVECONFIGURATION_SUCCESS,
 } from './constants';
 
 export function defaultAction() {
@@ -282,5 +283,12 @@ export function segment(id, value) {
 export function saveAppCustomSegmentData() {
   return {
     type: SAVE_APP_CUSTOM_SEGMENT_DATA,
+  };
+}
+
+export function saveConfiguration(data) {
+  return {
+    type: SAVECONFIGURATION_SUCCESS,
+    data,
   };
 }
