@@ -42,10 +42,10 @@ class AddConfigureProductHeader extends React.Component { // eslint-disable-line
             <Button onClick={() => { browserHistory.goBack(); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
             <Button bsStyle="primary" onClick={this.props.addOptions}>{this.context.intl.formatMessage({ ...messages.add })}</Button>
           </ButtonGroup>
-          <select className="lang" onChange={this.languageChange} value={this.props.language}>
+          {/* <select className="lang" onChange={this.languageChange} value={this.props.language}>
             <option value="en">En</option>
             <option value="fr">Fr</option>
-          </select>
+          </select> */}
         </Col>
       </Row>
     );
@@ -61,7 +61,7 @@ AddConfigureProductHeader.propTypes = {
   addOptions: PropTypes.func,
   quoteName: PropTypes.any,
   languageChange: PropTypes.func,
-  language: PropTypes.any,
+  // language: PropTypes.any,
 };
 
 export default AddConfigureProductHeader;
