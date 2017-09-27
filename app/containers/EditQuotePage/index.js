@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ReactDOM from 'react-dom';
 import { createStructuredSelector } from 'reselect';
-import { getLanguage, makeSelectData, makeSelectError, makeSelectLoading, getCustomSegments, getCheckAll } from './selectors';
+import { getLanguage, makeDataChanged, makeSelectData, makeSelectError, makeSelectLoading, getCustomSegments, getCheckAll } from './selectors';
 import { EditQuoteHeader } from '../EditQuoteHeader';
 import { GroupQuote } from '../GroupQuote';
 import { SegmentedQuote } from '../SegmentedQuote';
@@ -35,6 +35,7 @@ import { cloneLine,
   updateSelectBundle,
   saveAppCustomSegmentData,
   segment,
+  loadData,
  } from '../App/actions';
 
 import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData, clearCustomSegmentsData, toggleCheckAll } from './actions';
@@ -110,8 +111,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   group() {
     const data = this.props.data.toJS();
     const randomID = generateGuid();
+    const groupLength = _.filter(data.groups, { isDeleted: false }).length;
     if (data.linesGrouped) {
-      const name = `New Group #${data.groups.length + 1}`;
+      const name = `New Group #${groupLength + 1}`;
       data.groups.push({
         id: randomID,
         name,
@@ -120,7 +122,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         description: '',
         additionaldiscount: '',
         subscriptionTerm: '',
-        netTotal: this.props.data.toJS().netAmount,
+        netTotal: '0.00',
       });
     } else {
       data.lines.forEach((i, index) => { data.lines[index].groupId = randomID; });
@@ -287,6 +289,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             data={this.props.data ? this.props.data.toJS() : []}
             cloneLine={this.cloneCheckedLines}
             deleteLine={this.deleteCheckedLines}
+            dataChanged={this.props.dataChanged}
+            getAllData={this.props.getAllData}
             clone={this.cloneCheckedLines}
             calculateTotal={this.calculateTotal}
             quickSave={this.quickSaveQuoteLines}
@@ -447,6 +451,7 @@ EditQuotePage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   data: makeSelectData(),
   loading: makeSelectLoading(),
+  dataChanged: makeDataChanged(),
   error: makeSelectError(),
   customSegments: getCustomSegments(),
   isCheckAll: getCheckAll(),
@@ -461,6 +466,9 @@ function mapDispatchToProps(dispatch) {
     },
     deleteLine: (data) => {
       dispatch(deleteLine(data));
+    },
+    getAllData: (quoteId) => {
+      dispatch(loadData(quoteId));
     },
     deleteSelectedLines: (data) => {
       dispatch(deleteMultipleLines(data));

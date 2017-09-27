@@ -32,9 +32,30 @@ export function* getData(action) {
   }
 }
 export function* dataSaga() {
-  const watcher = yield takeLatest(LOAD_DATA, getData);
-  yield take(LOCATION_CHANGE);
-  yield cancel(watcher);
+  while (true) {
+    const chan = yield actionChannel(LOAD_DATA);
+    const action = yield take(chan);
+    console.log(action)
+    const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/EditQuote?QuoteId=${action.quoteId}`}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    };
+    try {
+      const repos = yield call(request, requestURL, options);
+      if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
+        yield put(dataLoadingError(repos.quote.errorMessages));
+        yield put(dataLoaded(repos));
+      } else {
+        yield put(dataLoaded(repos));
+      }
+    } catch (err) {
+      yield put(dataLoadingError(err));
+    }
+  }
 }
 export function* continueSave() {
   while (true) {
