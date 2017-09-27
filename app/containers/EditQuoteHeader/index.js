@@ -28,17 +28,29 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
     screenfull.toggle(document.getElementById('app'));
   }
   cancel() {
-    window.location.reload();
+    const location = Object.assign({}, browserHistory.getCurrentLocation());
+    location.query = {};
+    browserHistory.push(location);
+    let quoteId = '';
+    if (process.env.NODE_ENV === 'production') {
+      if (window.parent.Xrm !== undefined) {
+        quoteId = window.parent.Xrm.Page.data.entity.getId().replace('{', '').replace('}', '');
+      }
+    }
+    if (process.env.NODE_ENV === 'development') {
+      quoteId = '41861B38-8094-E711-812B-C4346BDCDF81';
+    }
+    this.props.getAllData(quoteId);
   }
   addProducts() {
+    console.log(Object.keys(this.props.location.query).length)
     let url = `/ProductSelection${this.props.location.search}`;
-    if (!('PriceBookId' in this.props.location.query) && this.props.location.query.length) {
-      url += `&PriceBookId=${this.props.data.priceBookId}`;
-      if (!('QuoteId' in this.props.location.query)) {
-        url += `&QuoteId=${this.props.data.id}`;
+    if (!('PriceBookId' in this.props.location.query)) {
+      if (Object.keys(this.props.location.query).length) {
+        url += `&PriceBookId=${this.props.data.priceBookId}`;
+      } else {
+        url += `?PriceBookId=${this.props.data.priceBookId}`;
       }
-    } else {
-      url += `?PriceBookId=${this.props.data.priceBookId}`;
       if (!('QuoteId' in this.props.location.query)) {
         url += `&QuoteId=${this.props.data.id}`;
       }
@@ -58,7 +70,7 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
               { name: 'description', content: 'Description of TableHeader' },
             ]}
           />
-          <EditQuoteHeaderCard currency={this.props.data.currency} name={this.props.data.name} total={this.props.data.netAmount} />
+          <EditQuoteHeaderCard dataChanged={this.props.dataChanged} currency={this.props.data.currency} name={this.props.data.name} total={this.props.data.netAmount} />
         </Col>
         <Col xs={12} sm={12} md={8} style={{ textAlign: 'right' }}>
           {this.props.grouped ?
@@ -82,7 +94,7 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
           </ButtonGroup>
           {/* <Button title="Go to Full Screen" className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
           <ButtonGroup className="margin">
-            <Button title={this.context.intl.formatMessage({ ...messages.calculate })} onClick={this.props.calculateTotal}><FormattedMessage {...messages.calculate} /></Button>
+            <Button bsStyle={this.props.dataChanged ? 'primary' : 'default'} title={this.context.intl.formatMessage({ ...messages.calculate })} onClick={this.props.calculateTotal}><FormattedMessage {...messages.calculate} /></Button>
             <Button title={this.context.intl.formatMessage({ ...messages.save })} onClick={this.props.quickSave}><FormattedMessage {...messages.save} /></Button>
           </ButtonGroup>
           {/* <select className="lang" onChange={this.languageChange} value={this.props.language}>

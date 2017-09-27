@@ -55,6 +55,7 @@ const initialState = fromJS({
   errorMessage: '',
   showPrice: false,
   data: {},
+  dataChanged: false,
 });
 
 function appReducer(state = initialState, action) {
@@ -68,6 +69,7 @@ function appReducer(state = initialState, action) {
     case LOAD_DATA_SUCCESS:
       return state
         .set('data', fromJS(action.data.quote))
+        .set('dataChanged', false)
         .set('loading', false);
     case LOAD_DATA_ERROR:
       {
@@ -100,7 +102,7 @@ function appReducer(state = initialState, action) {
         const cloneData = Object.assign({}, data[index]);
         cloneData.id = generateGuid();
         data.splice(index, 0, cloneData);
-        return state.setIn(['data', 'lines'], fromJS(data));
+        return state.setIn(['data', 'lines'], fromJS(data)).set('dataChanged', true);
       }
     case ADD_PRODUCTS:
       return state.set('loading', true);
@@ -116,7 +118,7 @@ function appReducer(state = initialState, action) {
       data = state.getIn(['data', 'lines']).toJS();
       _.remove(data, (n) => n.id === action.data);
       _.remove(data, (n) => n.parentLineId === action.data);
-      return state.setIn(['data', 'lines'], fromJS(data));
+      return state.setIn(['data', 'lines'], fromJS(data)).set('dataChanged', true);
 
     case DELETE_MULTIPLE_LINES:
       data = state.getIn(['data', 'lines']).toJS();
@@ -124,7 +126,7 @@ function appReducer(state = initialState, action) {
         _.filter(data, { id: item }).map((j) => { j.isDeleted = true; });
         _.filter(data, { parentLineId: item }).map((j) => { j.isDeleted = true; });
       }, this);
-      return state.setIn(['data', 'lines'], fromJS(data));
+      return state.setIn(['data', 'lines'], fromJS(data)).set('dataChanged', true);
     case CLONE_MULTIPLE_LINES:
       {
         data = state.getIn(['data', 'lines']).toJS();
@@ -141,7 +143,7 @@ function appReducer(state = initialState, action) {
             data.splice(index + i + 1, 0, cloneBundleLine);
           }
         }, this);
-        return state.setIn(['data', 'lines'], fromJS(data));
+        return state.setIn(['data', 'lines'], fromJS(data)).set('dataChanged', true);
       }
     case LOAD_XRM_DATA:
       return state
@@ -153,7 +155,7 @@ function appReducer(state = initialState, action) {
         .set('xrmData', action.xrmData)
         .set('loading', false);
     case UPDTATE_PROPS:
-      return state.setIn(['data', 'lines'], fromJS(action.data));
+      return state.setIn(['data', 'lines'], fromJS(action.data)).set('dataChanged', true);
     case CLONE_GROUP:
       return state
         .setIn(['data', 'lines'], fromJS(action.lines))
@@ -161,7 +163,7 @@ function appReducer(state = initialState, action) {
     case DELETE_GROUP:
       return state
         .setIn(['data', 'lines'], fromJS(action.lines))
-        .setIn(['data', 'groups'], fromJS(action.groups));
+        .setIn(['data', 'groups'], fromJS(action.groups)).set('dataChanged', true);
     case UNGROUP:
       return state
         .setIn(['data'], fromJS(action.data));
@@ -173,21 +175,22 @@ function appReducer(state = initialState, action) {
         const groups = state.getIn(['data', 'groups']).toJS();
         const group = _.filter(groups, { id: action.id });
         group[0][action.field] = action.data;
-        return state.setIn(['data', 'groups'], fromJS(groups));
+        return state.setIn(['data', 'groups'], fromJS(groups)).set('dataChanged', true);
       }
     case UPDATE_GROUP_VAL:
       {
         const groups = state.getIn(['data', 'groups']).toJS();
         const group = _.filter(groups, { id: action.id });
         group[0][action.field] = action.data;
-        return state.setIn(['data', 'groups'], fromJS(groups));
+        return state.setIn(['data', 'groups'], fromJS(groups)).set('dataChanged', true);
       }
     case UPDATE:
       {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
         line[0][action.field].value = action.data;
-        return state.setIn(['data', 'lines'], fromJS(lines));
+        return state.setIn(['data', 'lines'], fromJS(lines))
+                    .set('dataChanged', true);
       }
     case UPDATE_BUNDLE:
       {
@@ -195,7 +198,7 @@ function appReducer(state = initialState, action) {
         const lineBundle = _.filter(linesBundle, { id: action.parentLineId });
         const bundleLine = _.filter(lineBundle[0].bundleProducts, { id: action.id });
         bundleLine[0][action.field].value = action.data;
-        return state.setIn(['data', 'lines'], fromJS(linesBundle));
+        return state.setIn(['data', 'lines'], fromJS(linesBundle)).set('dataChanged', true);
       }
     case UPDATE_SELECT:
       {
@@ -209,7 +212,7 @@ function appReducer(state = initialState, action) {
             line[0][action.field].selectValues[index].isSelected = false;
           }
         });
-        return state.setIn(['data', 'lines'], fromJS(lines));
+        return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
     case UPDATE_SELECT_BUNDLE:
       {
@@ -224,7 +227,7 @@ function appReducer(state = initialState, action) {
             bundleLine[0][action.field].selectValues[index].isSelected = false;
           }
         });
-        return state.setIn(['data', 'lines'], fromJS(linesBundle));
+        return state.setIn(['data', 'lines'], fromJS(linesBundle)).set('dataChanged', true);
       }
     case UPDATE_SEG:
       {
@@ -236,7 +239,7 @@ function appReducer(state = initialState, action) {
         } else {
           segLine[0][action.field] = action.data;
         }
-        return state.setIn(['data', 'lines'], fromJS(lines));
+        return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
     case UPDATE_SEG_BUNDLE:
       {
@@ -245,7 +248,7 @@ function appReducer(state = initialState, action) {
         const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
         const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
         segLine[0][action.field] = action.data;
-        return state.setIn(['data', 'lines'], fromJS(lines));
+        return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
     case UPDATE_SEG_SELECT:
       {
@@ -260,7 +263,7 @@ function appReducer(state = initialState, action) {
             segLine[0][action.field].selectValues[index].isSelected = false;
           }
         });
-        return state.setIn(['data', 'lines'], fromJS(lines));
+        return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
     case UPDATE_SEG_BUNDLE_SELECT:
       {
@@ -269,7 +272,7 @@ function appReducer(state = initialState, action) {
         const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
         const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
         segLine[0][action.field] = action.data;
-        return state.setIn(['data', 'lines'], fromJS(lines));
+        return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
     case SEGMENT:
       {
@@ -277,10 +280,10 @@ function appReducer(state = initialState, action) {
         const line = _.filter(lines, { id: action.id });
         line[0].isSegmented = action.value;
         // return state.set('loading', true);
-        return state.setIn(['data', 'lines'], fromJS(lines));
+        return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
     case SAVE_APP_CUSTOM_SEGMENT_DATA : {
-      return state.set('loading', true)
+      return state.set('loading', true).set('dataChanged', true)
         .set('error', false);
     }
     case SAVECONFIGURATION_SUCCESS: {
@@ -304,7 +307,7 @@ function appReducer(state = initialState, action) {
       }
       return state
         .set('data', fromJS(quoteData))
-        .set('loading', false);
+        .set('loading', false).set('dataChanged', false);
     }
     default:
       return state;

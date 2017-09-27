@@ -122,15 +122,15 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     let groupLines = [];
     groupLines = _.filter(this.props.lines, { groupId: this.state.selectedGroup });
     group = _.filter(this.props.groups, { id: this.state.selectedGroup })[0];
-    const optionalTooltip = (
-      <Tooltip id="tooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.optionalTT })}</strong></Tooltip>
-    );
+    // const optionalTooltip = (
+    //   <Tooltip id="tooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.optionalTT })}</strong></Tooltip>
+    // );
     const discountTooltip = (
       <Tooltip id="dtooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.addDiscountTT })}</strong></Tooltip>
     );
-    // const subscriptionTooltip = (
-    //   <Tooltip id="stooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.subTermTT })}</strong></Tooltip>
-    // );
+    const subscriptionTooltip = (
+      <Tooltip id="stooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.subTermTT })}</strong></Tooltip>
+    );
     const segmented = _.filter(groupLines, { isSegmented: true }).length;
     return (
       <div className="group">
@@ -177,7 +177,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               >{this.context.intl.formatMessage({ ...messages.editDesc })}</span><Glyphicon glyph="pencil" className="inline-edit" />
             </Col>
             <Col md={4} sm={6} xs={12} className="containers">
-              <Row>
+              {/* <Row>
                 <Col md={8} sm={8} xs={8}>
 
                   <span className="group-label" >{this.context.intl.formatMessage({ ...messages.optional })}</span>
@@ -188,7 +188,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 <Col md={4} sm={4} xs={4}>
                   <input className="input-group" value={group.isOptional} id="isOptional" onChange={this.changeOptional} name={group.id} type="checkbox" checked={group.isOptional} />
                 </Col>
-              </Row>
+              </Row> */}
               <Row>
                 <Col md={8} sm={8} xs={8}>
                   <span className="group-label" >{this.context.intl.formatMessage({ ...messages.addDiscount })}</span>
@@ -208,7 +208,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   {/* <input className="input-group input-text" step="0.1" onChange={this.valueChanged} id="additionaldiscount" type="text" name={group.id} value={group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} /> */}
                 </Col>
               </Row>
-              {/* <Row>
+               <Row>
                 <Col md={8} sm={8} xs={8}>
                   <span className="group-label" >{this.context.intl.formatMessage({ ...messages.subTerm })}</span>
                   <OverlayTrigger placement="top" overlay={subscriptionTooltip}>
@@ -224,9 +224,9 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                     change={this.dataChanged}
                     validate={this.validate}
                   /><Glyphicon glyph="pencil" className="inline-edit" />
-                  {/* <input className="input-group input-text" onChange={this.valueChanged} id="subscriptionTerm" type="text" name={group.id} value={group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} />
+                
                 </Col>
-              </Row> */}
+              </Row> 
             </Col>
             <Col md={4} sm={6} xs={12} className="containers">
               <div>
