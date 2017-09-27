@@ -177,12 +177,14 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       },
     ];
     data.segmentData.columns.map((i) => {
-      columns.push({
-        accessor: `${i.name}.value`,
-        sortable: false,
-        style: { textAlign: 'right' },
-        Cell: this.renderEditable,
-      });
+      if (!i.isDeleted) {
+        columns.push({
+          accessor: `${i.name}.value`,
+          sortable: false,
+          style: { textAlign: 'right' },
+          Cell: this.renderEditable,
+        });
+      }
       return this;
     });
     columns.push({
