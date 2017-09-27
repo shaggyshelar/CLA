@@ -38,11 +38,9 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     const groupLen = _.find(this.props.groups, { id: this.props.location.query.groupId });
     if (this.state.selectedGroup === null) {
       if (this.props.location.query.groupId && groupLen) {
-        console.log("1", this.props.location.query)
         this.setState({ selectedGroup: this.props.location.query.groupId });
         addQuery({ groupId: this.props.location.query.groupId });
       } else {
-        console.log("2", this.props.location.query)
         this.setState({ selectedGroup: this.props.groups[0].id });
         addQuery({ groupId: this.props.groups[0].id });
       }

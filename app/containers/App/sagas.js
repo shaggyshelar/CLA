@@ -35,7 +35,6 @@ export function* dataSaga() {
   while (true) {
     const chan = yield actionChannel(LOAD_DATA);
     const action = yield take(chan);
-    console.log(action)
     const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/EditQuote?QuoteId=${action.quoteId}`}`;
     const options = {
       method: 'GET',
