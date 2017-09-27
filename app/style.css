@@ -265,7 +265,7 @@ position: relative;
     color: #54698d;
     font-size: 18px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     padding:5px;
 }
 
@@ -1582,4 +1582,10 @@ body.modal-open {
 .ReactTable .rt-tfoot .rt-td {
     border: 0px !important;
 
+}
+.calculateSign {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #ff9800;
+    font-size: 21px;
 }
