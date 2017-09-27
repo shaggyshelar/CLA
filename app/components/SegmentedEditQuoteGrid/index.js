@@ -240,16 +240,19 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     });
     data.segmentData.columns.map((i, index) => {
       let total = 0;
+      
       const c = this.props.data.map((j) => _.filter(j.segmentData.columns, { name: i.name }).map((d) => total += d.netTotal));
-      columns.push({
-        Header: () => <span className="upper-case" title={i.name}>{i.name}</span>,
-        Footer: (<span className="sub-footer-table">{total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>),
-        accessor: `segmentData.columns[${index}].netTotal`,
-        style: { textAlign: 'right' },
-        headerStyle: { textAlign: 'right' },
-        className: 'table-edit',
-        Cell: this.renderCell.bind(this, index),
-      });
+      if (!i.isDeleted) {
+        columns.push({
+          Header: () => <span className="upper-case" title={i.name}>{i.name}</span>,
+          Footer: (<span className="sub-footer-table">{total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>),
+          accessor: `segmentData.columns[${index}].netTotal`,
+          style: { textAlign: 'right' },
+          headerStyle: { textAlign: 'right' },
+          className: 'table-edit',
+          Cell: this.renderCell.bind(this, index),
+        });
+      }
     });
     columns.push({
       Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
@@ -284,6 +287,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   render() {
     const data = this.props.data;
     const columns = this.renderColumns();
+    console.log(data)
     // const total = this.calculateTotal();
     return (
       <div>

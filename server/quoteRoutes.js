@@ -333,6 +333,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -556,6 +557,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -582,6 +584,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Custom 1',
                 quantity: 123,
+                isDeleted: false,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -714,6 +717,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 345,
                 listPrice: 3453453,
                 uplift: 345345,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -742,6 +746,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -868,6 +873,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 name: 'Month 1',
                 quantity: 123,
                 listPrice: 123,
+                isDeleted: false,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
@@ -896,6 +902,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 name: 'Month 2',
                 quantity: 123,
                 listPrice: 123,
+                isDeleted: false,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
@@ -924,6 +931,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 name: 'Month 3',
                 quantity: 123,
                 listPrice: 123,
+                isDeleted: false,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
@@ -1052,6 +1060,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123123,
                 listPrice: 12541,
                 uplift: 12541,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -1082,6 +1091,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
+                isDeleted: false,
                 additionalDiscount: {
                   value: 123,
                   isEditable: true,
@@ -1207,6 +1217,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -1234,6 +1245,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 name: 'Custom 1',
                 quantity: 123,
                 listPrice: 123,
+                isDeleted: false,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
@@ -1361,6 +1373,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 name: 'Month 1',
                 quantity: 123,
                 listPrice: 123,
+                isDeleted: false,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
@@ -1390,6 +1403,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -1416,6 +1430,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Month 4',
                 quantity: 123,
+                isDeleted: false,                
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -1545,6 +1560,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,                
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -1671,6 +1687,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 name: 'Year 1',
                 quantity: 123,
                 listPrice: 123,
+                isDeleted: false,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
@@ -1797,6 +1814,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Quater 1',
                 quantity: 123,
+                isDeleted: false,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -1826,6 +1844,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 name: 'Quater 2',
                 quantity: 6,
                 listPrice: 123,
+                isDeleted: false,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
@@ -1855,6 +1874,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -1983,6 +2003,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 isDefault: true,
                 quantity: 123,
                 listPrice: 123,
+                isDeleted: false,
                 uplift: 123,
                 startDate: new Date().toISOString(),
                 endDate: new Date().toISOString(),
@@ -2011,6 +2032,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 name: 'Custom 1',
                 isDefault: false,
                 quantity: 123,
+                isDeleted: false,
                 listPrice: 123,
                 uplift: 123,
                 startDate: new Date().toISOString(),
@@ -2141,6 +2163,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
+                isDeleted: false,
                 endDate: 'Date',
                 additionalDiscount: {
                   value: 123,
@@ -2166,6 +2189,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Month 2',
                 quantity: 123,
+                isDeleted: false,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -2194,6 +2218,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Month 5',
                 quantity: 123,
+                isDeleted: false,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -2221,6 +2246,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               },
               {
                 name: 'Month 6',
+                isDeleted: false,
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2250,6 +2276,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Month 7',
                 quantity: 123,
+                isDeleted: true,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -2278,6 +2305,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Month 8',
                 quantity: 123,
+                isDeleted: true,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -2307,6 +2335,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 name: 'Month 121',
                 quantity: 123,
                 listPrice: 123,
+                isDeleted: true,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
@@ -2334,6 +2363,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Month 9',
                 quantity: 123,
+                isDeleted: true,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -2362,6 +2392,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Month 10',
                 quantity: 123,
+                isDeleted: true,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -2389,6 +2420,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               },
               {
                 name: 'Month 11',
+                isDeleted: true,
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
@@ -2418,6 +2450,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Month 12',
                 quantity: 123,
+                isDeleted: true,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -2446,6 +2479,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Month 13',
                 quantity: 1231,
+                isDeleted: true,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -2576,6 +2610,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -2604,6 +2639,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -2630,6 +2666,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Quater 3',
                 quantity: 123,
+                isDeleted: false,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -3177,6 +3214,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
                 name: 'Custom',
                 quantity: 345,
                 listPrice: 3453453,
+                isDeleted: false,
                 uplift: 345345,
                 startDate: 'Date',
                 endDate: 'Date',
@@ -3205,6 +3243,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
                 name: 'Custom 1',
                 quantity: 123,
                 listPrice: 123,
+                isDeleted: false,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
@@ -3335,6 +3374,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -3556,6 +3596,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -3582,6 +3623,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
               {
                 name: 'Custom 1',
                 quantity: 123,
+                isDeleted: false,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -3714,6 +3756,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
                 listPrice: 3453453,
                 uplift: 345345,
                 startDate: 'Date',
+                isDeleted: false,
                 endDate: 'Date',
                 additionalDiscount: {
                   value: 23243,
@@ -3739,6 +3782,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
               {
                 name: 'Custom 1',
                 quantity: 123,
+                isDeleted: false,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -3866,6 +3910,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
                 name: 'Month 1',
                 quantity: 123,
                 listPrice: 123,
+                isDeleted: false,
                 uplift: 123,
                 startDate: 'Date',
                 endDate: 'Date',
