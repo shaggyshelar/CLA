@@ -28,6 +28,9 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
     screenfull.toggle(document.getElementById('app'));
   }
   cancel() {
+    const location = Object.assign({}, browserHistory.getCurrentLocation());
+    location.query = {};
+    browserHistory.push(location);
     let quoteId = '';
     if (process.env.NODE_ENV === 'production') {
       if (window.parent.Xrm !== undefined) {
