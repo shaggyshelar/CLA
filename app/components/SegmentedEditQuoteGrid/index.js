@@ -287,7 +287,6 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   render() {
     const data = this.props.data;
     const columns = this.renderColumns();
-    console.log(data)
     // const total = this.calculateTotal();
     return (
       <div>
