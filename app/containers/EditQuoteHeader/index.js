@@ -43,14 +43,14 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
     this.props.getAllData(quoteId);
   }
   addProducts() {
+    console.log(Object.keys(this.props.location.query).length)
     let url = `/ProductSelection${this.props.location.search}`;
-    if (!('PriceBookId' in this.props.location.query) && this.props.location.query.length) {
-      url += `&PriceBookId=${this.props.data.priceBookId}`;
-      if (!('QuoteId' in this.props.location.query)) {
-        url += `&QuoteId=${this.props.data.id}`;
+    if (!('PriceBookId' in this.props.location.query)) {
+      if (Object.keys(this.props.location.query).length) {
+        url += `&PriceBookId=${this.props.data.priceBookId}`;
+      } else {
+        url += `?PriceBookId=${this.props.data.priceBookId}`;
       }
-    } else {
-      url += `?PriceBookId=${this.props.data.priceBookId}`;
       if (!('QuoteId' in this.props.location.query)) {
         url += `&QuoteId=${this.props.data.id}`;
       }
