@@ -9,6 +9,10 @@ const makeSelectLoading = () => createSelector(
   (homeState) => homeState.get('loading')
 );
 
+const makeDataChanged = () => createSelector(
+  global,
+  (homeState) => homeState.get('dataChanged')
+);
 const makeSelectError = () => createSelector(
   global,
   (homeState) => homeState.get('error')
@@ -53,4 +57,5 @@ export {
   getCustomSegments,
   getCheckAll,
   getLanguage,
+  makeDataChanged,
 };
