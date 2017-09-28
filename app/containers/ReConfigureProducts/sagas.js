@@ -7,9 +7,18 @@ import { saveConfiguration } from '../App/actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
 export function* getProductBundleSaga(data) {
-  const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/ReconfigureProduct?ProductId=${data.productId}&PriceListId=${data.priceBookId}&QuoteId=${data.quoteId}&LineId=${data.quoteLineId}&GroupId=${data.groupId}`}`;
+  // const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/ReconfigureProduct?ProductId=${data.productId}&PriceListId=${data.priceBookId}&QuoteId=${data.quoteId}&LineId=${data.quoteLineId}&GroupId=${data.groupId}`}`;
   try {
-    const repos = yield call(request, requestURL);
+   // const repos = yield call(request, requestURL);
+    const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/ReconfigureProduct`}`;
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    const repos = yield call(request, requestURL, options);
     yield put(loadReConfigureProductsDataSuccess(repos));
   } catch (err) {
     yield put(reconfigureDataLoadingError(err));
@@ -30,13 +39,13 @@ export function* saveProducts(data, locationQuery) {
     if (quotes.quote.errorMessages && quotes.quote.errorMessages.length) {
       yield put(reconfigureDataLoadingError(quotes.quote.errorMessages));
     } else {
-      let url = '/EditQuote';
-      if (locationQuery.groupId !== 'null') {
-        url = `/EditQuote?groupId=${locationQuery.groupId}&mainTab=${locationQuery.mainTab}&tab=${locationQuery.tab}`;
-      } else if (locationQuery.mainTab !== 'undefined' && locationQuery.tab !== 'undefined') {
-        url = `/EditQuote?mainTab=${locationQuery.mainTab}&tab=${locationQuery.tab}`;
+      if (locationQuery.groupId !== null && locationQuery.groupId !== undefined && locationQuery.mainTab !== undefined && locationQuery.tab !== undefined) {
+        browserHistory.push(`/EditQuote?groupId=${locationQuery.groupId}&mainTab=${locationQuery.mainTab}&tab=${locationQuery.tab}`);
+      } else if ((locationQuery.groupId === null || locationQuery.groupId === undefined) && locationQuery.mainTab !== undefined) {
+        browserHistory.push(`/EditQuote?mainTab=${locationQuery.mainTab}&tab=${locationQuery.tab}`);
+      } else {
+        browserHistory.push('/EditQuote');
       }
-      browserHistory.push(url);
       yield put(saveConfiguration(quotes));
     }
   } catch (err) {

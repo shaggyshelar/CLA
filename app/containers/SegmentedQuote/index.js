@@ -161,6 +161,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     toggleCheckAll={this.props.toggleCheckAll}
                     isCheckAll={this.props.isCheckAll}
                     location={this.props.location}
+                    toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
                   />
                 </Tab>
               :
@@ -184,6 +185,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
                     quoteData={this.props.quoteData}
                     location={this.props.location}
+                    toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
@@ -204,6 +206,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
                     quoteData={this.props.quoteData}
                     location={this.props.location}
+                    toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
@@ -224,6 +227,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
                     quoteData={this.props.quoteData}
                     location={this.props.location}
+                    toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
                   />
                 </Tab> : '' }
             </Tabs>
@@ -244,6 +248,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               updateSelectBundle={this.props.updateSelectBundle}
               quoteData={this.props.quoteData}
               location={this.props.location}
+              toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
             />
           </Tab>
         </Tabs>
@@ -282,6 +287,7 @@ SegmentedQuote.propTypes = {
   toggleCheckAll: PropTypes.func,
   isCheckAll: PropTypes.any,
   location: PropTypes.any,
+  toggleReconfigureLineStatus: PropTypes.any,
 };
 SegmentedQuote.contextTypes = {
   intl: React.PropTypes.object.isRequired,

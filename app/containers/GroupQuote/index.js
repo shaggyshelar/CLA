@@ -272,6 +272,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               quoteData={this.props.quoteData}
               toggleCheckAll={this.props.toggleCheckAll}
               isCheckAll={this.props.isCheckAll}
+              toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
             />
           :
               <EditQuoteGrid
@@ -289,6 +290,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 updateSelectBundle={this.props.updateSelectBundle}
                 quoteData={this.props.quoteData}
                 location={this.props.location}
+                toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
               />
           }
         </div>
@@ -335,6 +337,7 @@ GroupQuote.propTypes = {
   toggleCheckAll: PropTypes.func,
   isCheckAll: PropTypes.any,
   disableButton: PropTypes.any,
+  toggleReconfigureLineStatus: PropTypes.func,
 };
 const mapStateToProps = createStructuredSelector({
 });

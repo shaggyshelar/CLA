@@ -39,6 +39,7 @@ import {
   CANCEL,
   CONTINUE,
   SAVECONFIGURATION_SUCCESS,
+  TOGGLE_RECONFIGURELINE_STATUS,
 } from './constants';
 
 export function defaultAction() {
@@ -290,5 +291,12 @@ export function saveConfiguration(data) {
   return {
     type: SAVECONFIGURATION_SUCCESS,
     data,
+  };
+}
+
+export function toggleReconfigureLineStatus(reconfigureObj) {
+  return {
+    type: TOGGLE_RECONFIGURELINE_STATUS,
+    reconfigureObj,
   };
 }
