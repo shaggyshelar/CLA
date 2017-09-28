@@ -27,6 +27,7 @@ const initialState = fromJS({
   reConfigureProductData: {},
   fromAddOptions: false,
   activeTab: 0,
+  quoteData: {},
 });
 
 function reConfigureProductsReducer(state = initialState, action) {
@@ -39,8 +40,9 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('error', false);
     case LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS: {
       const reConfigureProducts = {};
-      const productBundelData = action.productBundelData;
-      if (!_.isUndefined(action) && !_.isUndefined(action.productBundelData)) {
+      const productBundelData = action.productBundelData.quoteProductData;
+      const quoteData = action.productBundelData.quoteProductData.quote;
+      if (!_.isUndefined(action) && !_.isUndefined(action.productBundelData) && !_.isUndefined(action.productBundelData.quoteProductData)) {
         let categories = [];
         let features = [];
         let products = [];
@@ -196,7 +198,8 @@ function reConfigureProductsReducer(state = initialState, action) {
         }
       }
       return state
-        .set('productBundleData', fromJS(action.productBundelData))
+        .set('productBundleData', fromJS(action.productBundelData.quoteProductData.productBundle))
+        .set('quoteData', fromJS(quoteData))
         .set('loading', false)
         .set('reConfigureProductData', fromJS(reConfigureProducts))
         .set('activeTab', 0);
