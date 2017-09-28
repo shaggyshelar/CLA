@@ -1809,7 +1809,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           canSegment: true,
           isSegmented: true,
           segmentData: {
-            type: 'Quaterly',
+            type: 'Quarterly',
             columns: [
               {
                 name: 'Quater 1',
@@ -2603,7 +2603,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           canSegment: true,
           isSegmented: false,
           segmentData: {
-            type: 'Quaterly',
+            type: 'Quarterly',
             columns: [
               {
                 name: 'Quater 1',
@@ -4829,7 +4829,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
           canSegment: true,
           isSegmented: true,
           segmentData: {
-            type: 'Quaterly',
+            type: 'Quarterly',
             columns: [
               {
                 name: 'Quater 1',
@@ -5574,7 +5574,7 @@ quoteRouter.post('/AddProducts', (req, res) => {
           canSegment: true,
           isSegmented: false,
           segmentData: {
-            type: 'Quaterly',
+            type: 'Quarterly',
             columns: [
               {
                 name: 'Quater 1',
@@ -7552,7 +7552,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
           canSegment: true,
           isSegmented: true,
           segmentData: {
-            type: 'Quaterly',
+            type: 'Quarterly',
             columns: [
               {
                 name: 'Quater 1',
@@ -8102,7 +8102,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
           canSegment: true,
           isSegmented: false,
           segmentData: {
-            type: 'Quaterly',
+            type: 'Quarterly',
             columns: [
               {
                 name: 'Quater 1',
@@ -10119,7 +10119,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
           canSegment: true,
           isSegmented: true,
           segmentData: {
-            type: 'Quaterly',
+            type: 'Quarterly',
             columns: [
               {
                 name: 'Quater 1',
@@ -10924,7 +10924,7 @@ quoteRouter.post('/SaveConfigurations', (req, res) => {
           canSegment: true,
           isSegmented: false,
           segmentData: {
-            type: 'Quaterly',
+            type: 'Quarterly',
             columns: [
               {
                 name: 'Quater 1',
