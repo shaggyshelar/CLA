@@ -1381,18 +1381,6 @@ body.modal-open {
 .ReactTable .rt-noData {
     margin-top: 25px!important;
 }
-<<<<<<< HEAD
-.table-wrap {
-    /*padding-bottom: 10px!important;*/
-}
-.tab-pane{   overflow: hidden!important;    overflow-x: auto!important;}.qoute-container {    height: auto!important;}.group {    height: auto!important;}.show-grid.row{   margin-right:0!important;}
-.show-grid.row {
-    margin-left: 0px !important;
-    margin-right: 0px !important;
-}
-=======
-
->>>>>>> 9c023214470aeb6dcc94ef0b24775e083c69f0aa
 /*** For filter ***/
 @media(min-width:768px){
 	.headerFix {
