@@ -32,7 +32,7 @@ export default defineMessages({
   },
   quaterly: {
     id: 'app.containers.SegmentedQuote.quaterly',
-    defaultMessage: 'Quaterly',
+    defaultMessage: 'Quarterly',
   },
   subtotal: {
     id: 'app.containers.SegmentedQuote.subtotal',

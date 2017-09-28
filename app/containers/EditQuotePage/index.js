@@ -36,6 +36,7 @@ import { cloneLine,
   saveAppCustomSegmentData,
   segment,
   loadData,
+  toggleReconfigureLineStatus,
  } from '../App/actions';
 
 import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData, clearCustomSegmentsData, toggleCheckAll } from './actions';
@@ -301,6 +302,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             language={this.props.language}
             languageChange={this.props.changeLocale}
             disabledButton={this.state.disabledButton}
+            toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
           />
         </div>
         {grouped ?
@@ -343,6 +345,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               quoteData={quoteData}
               toggleCheckAll={this.props.toggleCheckAll}
               isCheckAll={this.props.isCheckAll}
+              toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
             />
           </div>
         :
@@ -379,6 +382,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                 quoteData={quoteData}
                 toggleCheckAll={this.props.toggleCheckAll}
                 isCheckAll={this.props.isCheckAll}
+                toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
               />
             :
                 <EditQuoteGrid
@@ -396,6 +400,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                   updateSelectBundle={this.props.updateSelectBundle}
                   quoteData={quoteData}
                   location={this.props.location}
+                  toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
                 />
             }
           </div>
@@ -446,6 +451,7 @@ EditQuotePage.propTypes = {
   isCheckAll: PropTypes.any,
   language: PropTypes.any,
   changeLocale: PropTypes.any,
+  toggleReconfigureLineStatus: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -562,6 +568,9 @@ function mapDispatchToProps(dispatch) {
     },
     changeLocale: (locale) => {
       dispatch(changeLocale(locale));
+    },
+    toggleReconfigureLineStatus: (reconfigureObj) => {
+      dispatch(toggleReconfigureLineStatus(reconfigureObj));
     },
   };
 }

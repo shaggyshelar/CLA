@@ -99,8 +99,8 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     data.MonthlyLines = data.MonthlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Monthly' } }));
     data.YearlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Yearly' } });
     data.YearlyLines = data.YearlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Yearly' } }));
-    data.QuaterlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Quaterly' } });
-    data.QuaterlyLines = data.QuaterlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Quaterly' } }));
+    data.QuaterlyLines = _.filter(this.props.data, { isSegmented: true, segmentData: { type: 'Quarterly' } });
+    data.QuaterlyLines = data.QuaterlyLines.concat(_.filter(bundleLines, { segmentData: { type: 'Quarterly' } }));
     return data;
   }
   renderButton() {
@@ -119,7 +119,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     } else if (data.MonthlyLines.length > 0) {
       selected = 'Monthly';
     } else if (data.QuaterlyLines.length > 0) {
-      selected = 'Quaterly';
+      selected = 'Quarterly';
     } else if (data.YearlyLines.length > 0) {
       selected = 'Yearly';
     }
@@ -161,6 +161,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     toggleCheckAll={this.props.toggleCheckAll}
                     isCheckAll={this.props.isCheckAll}
                     location={this.props.location}
+                    toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
                   />
                 </Tab>
               :
@@ -184,10 +185,11 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
                     quoteData={this.props.quoteData}
                     location={this.props.location}
+                    toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
-                <Tab unmountOnExit eventKey={'Quaterly'} tabClassName={'quaterly'} title={this.context.intl.formatMessage({ ...messages.quaterly })}>
+                <Tab unmountOnExit eventKey={'Quarterly'} tabClassName={'quaterly'} title={this.context.intl.formatMessage({ ...messages.quaterly })}>
                   <SegmentedEditQuoteGrid
                     data={data.QuaterlyLines}
                     cloneLine={this.props.cloneLine}
@@ -204,6 +206,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
                     quoteData={this.props.quoteData}
                     location={this.props.location}
+                    toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
@@ -224,6 +227,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     updateSegBundleSelect={this.props.updateSegBundleSelect}
                     quoteData={this.props.quoteData}
                     location={this.props.location}
+                    toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
                   />
                 </Tab> : '' }
             </Tabs>
@@ -244,6 +248,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               updateSelectBundle={this.props.updateSelectBundle}
               quoteData={this.props.quoteData}
               location={this.props.location}
+              toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
             />
           </Tab>
         </Tabs>
@@ -282,6 +287,7 @@ SegmentedQuote.propTypes = {
   toggleCheckAll: PropTypes.func,
   isCheckAll: PropTypes.any,
   location: PropTypes.any,
+  toggleReconfigureLineStatus: PropTypes.any,
 };
 SegmentedQuote.contextTypes = {
   intl: React.PropTypes.object.isRequired,

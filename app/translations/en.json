@@ -132,7 +132,7 @@
   "app.containers.SegmentedQuote.custom": "Custom",
   "app.containers.SegmentedQuote.header": "This is SegmentedQuote container !",
   "app.containers.SegmentedQuote.monthly": "Monthly",
-  "app.containers.SegmentedQuote.quaterly": "Quaterly",
+  "app.containers.SegmentedQuote.quaterly": "Quarterly",
   "app.containers.SegmentedQuote.segment": "Segment",
   "app.containers.SegmentedQuote.standard": "Standard",
   "app.containers.SegmentedQuote.subtotal": "Subtotal",

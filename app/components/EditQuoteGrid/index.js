@@ -49,8 +49,22 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.checkAll = this.checkAll.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.clickEdit = this.clickEdit.bind(this);
+    this.onReconfigureLineClick = this.onReconfigureLineClick.bind(this);
   }
-
+  onReconfigureLineClick(item) {
+    const reconfigureObj = {
+      id: item.id,
+      reconfigured: true,
+    };
+    this.props.toggleReconfigureLineStatus(reconfigureObj);
+    if (this.props.location.query.groupId !== null && this.props.location.query.groupId !== undefined && this.props.location.query.mainTab !== undefined && this.props.location.query.tab !== undefined) {
+      browserHistory.push(`/reconfigureproducts?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else if ((this.props.location.query.groupId === null || this.props.location.query.groupId === undefined) && this.props.location.query.mainTab !== undefined) {
+      browserHistory.push(`/reconfigureproducts?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else {
+      browserHistory.push('/reconfigureproducts');
+    }
+  }
   setTableOption(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -147,7 +161,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   renderActionItems(cellInfo) {
     // const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : <span className="blank"></span>;
     // const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
-    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?productId=${cellInfo.original.productId}&quoteId=${this.props.quoteData.id}&priceBookId=${this.props.quoteData.priceBookId}&quoteName=${this.props.quoteData.name}&quoteLineId=${cellInfo.original.id}&groupId=${cellInfo.original.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
+    // const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?productId=${cellInfo.original.productId}&quoteId=${this.props.quoteData.id}&priceBookId=${this.props.quoteData.priceBookId}&quoteName=${this.props.quoteData.name}&quoteLineId=${cellInfo.original.id}&groupId=${cellInfo.original.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
+    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
     // const bundle = cellInfo.original.isBundled ? <a title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : <span className="blank"></span>;
     // const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" style={{ color: '#449D44' }} /></a> : <span className="blank"></span>;
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
@@ -376,8 +391,8 @@ EditQuoteGrid.propTypes = {
   segment: PropTypes.func,
   updateSelect: PropTypes.func,
   updateSelectBundle: PropTypes.func,
-  quoteData: PropTypes.any,
   location: PropTypes.any,
+  toggleReconfigureLineStatus: PropTypes.func,
 };
 
 
