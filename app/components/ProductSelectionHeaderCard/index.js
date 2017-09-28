@@ -11,7 +11,7 @@ import { Glyphicon } from 'react-bootstrap/lib';
 class ProductSelectionHeaderCard extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div className="card  margin" >
+      <div className="card" >
         <div className="card-icon"><Glyphicon className="cartIcon" glyph="barcode" /></div>
         <div className="card-detail">
           <div>

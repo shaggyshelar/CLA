@@ -1,4 +1,4 @@
-import ReactTable from 'react-table';
+import ReactTable from '../ReactTable';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Glyphicon } from 'react-bootstrap/lib';
@@ -324,6 +324,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netPrice })}>{this.context.intl.formatMessage({ ...messages.netPrice })}</span>,
         accessor: 'netUnitPrice',
         style: { textAlign: 'right' },
+        Footer: (<span>{this.context.intl.formatMessage({ ...messages.subTotal })}</span>),
         headerStyle: { textAlign: 'right' },
         Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>,
       },
@@ -331,6 +332,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
         accessor: 'netTotal',
         style: { textAlign: 'right' },
+        Footer: (<span>{this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>),
         headerStyle: { textAlign: 'right' },
         Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>,
       },
@@ -356,10 +358,6 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           value={this.state.value}
           selectedLine={this.state.selectedLine}
         />
-        <div className="sub-footer upper-case">
-          {this.context.intl.formatMessage({ ...messages.subTotal })} : {this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-        </div>
-
       </div>
     );
   }

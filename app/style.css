@@ -14,6 +14,8 @@
 
 body {
     overflow: hidden;
+    border: 1px solid #ddd;
+    line-height: 0;
 }
 .actionItems .glyphicon {
     padding-top: 3px;
@@ -464,7 +466,11 @@ height:100%;
 }
 .card-icon {
     margin-right:5px;
-    padding-top: 5px;
+    padding-top: 15px;
+}
+.card-detail {
+    margin-right:5px;
+    padding-top: 22px;
 }
 .pro-name {
     display: inline-block;
@@ -658,6 +664,7 @@ height:100%;
     padding: 0px;    
     height: 100%;    
     overflow-y: auto;
+    
 }
 @media (max-width:767px){    
     .containers{ 
@@ -741,8 +748,10 @@ height:100%;
 .minMaxMessage {
     color: #54698d; 
     font-size: 14px;
-    margin: -10px 0px 10px 20px;
+    margin: -10px 0px 10px 14px;
+    line-height: 1.4;
 }
+
 
 /*** D. 28 Aug 2017 **/
 
@@ -1335,7 +1344,8 @@ strong {
     min-height: auto !important;
 }
 .ReactTable {
-	padding-bottom:10px!important;
+    padding-bottom:10px!important;
+    line-height: 1.42857143;
 }
 .rbt-aux button.close {
     margin-top: -21px;
@@ -1530,6 +1540,7 @@ body.modal-open {
 }
 .show-grid.row{   
     margin-right:0!important;
+    margin-left:0!important;
 }
 .qoute-container .sub-footer-seg {    
     padding: 7px 15px!important;
@@ -1571,13 +1582,13 @@ body.modal-open {
 .ReactTable .rt-tfoot {
     font-size: 16px!important;
     font-weight: 600!important;
-    height: 50px;
+    height: 35px;
     bottom:0;
     position: relative;
     background: #ececec;
     color: #16325C;
     box-shadow: none !important;
-    padding: 10px 10px!important;
+    padding: 3px 0px!important;
 }
 .ReactTable .rt-tfoot .rt-td {
     border: 0px !important;

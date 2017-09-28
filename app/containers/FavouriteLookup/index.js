@@ -6,13 +6,13 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import ReactTable from 'react-table';
 import { browserHistory } from 'react-router';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import options from 'exampleData';
 import { Glyphicon, Row, Col, Button, ButtonGroup, Modal, FormControl } from 'react-bootstrap/lib';
-import 'react-table/react-table.css';
+//import 'react-table/react-table.css';
 import { createStructuredSelector } from 'reselect';
+import ReactTable from '../../components/ReactTable';
 
 import makeSelectFavouriteLookup from './selectors';
 export class FavouriteLookup extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -97,7 +97,7 @@ export class FavouriteLookup extends React.Component { // eslint-disable-line re
         <div >
           <Row className="show-grid">
             <Col xs={12} md={3}>
-              <div className="card  margin" >
+              <div className="card" >
                 <div className="card-icon"><Glyphicon className="cartIcon" glyph="star" /></div>
                 <div className="card-detail">
                   <div>
