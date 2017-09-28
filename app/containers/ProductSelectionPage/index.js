@@ -180,11 +180,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       }
     }
     this.props.addProductsToQuote(data);
-    if (this.props.location.query.groupId) {
-      browserHistory.push(`/EditQuote?groupId=${this.props.location.search}`);
-    } else {
-      browserHistory.push('/EditQuote');
-    }
+    browserHistory.push(`/EditQuote${this.props.location.search}`);
   }
 
   render() {
