@@ -5,7 +5,7 @@
 */
 
 import React from 'react';
-import ReactTable from 'react-table';
+import ReactTable from '../ReactTable';
 import { RIENumber, RIESelect } from 'riek';
 import { Glyphicon } from 'react-bootstrap/lib';
 import messages from './messages';
