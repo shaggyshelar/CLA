@@ -204,6 +204,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             params={params}
             toggleAddOptionsState={this.props.toggleAddOptionsState}
             activeTab={this.props.activeTab}
+            currency={quote.currency}
           />
         </div>
       </div>

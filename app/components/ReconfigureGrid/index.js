@@ -97,22 +97,21 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   }
 
   renderEditable(cellInfo) {
-    if (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected) {
+    if ((this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected) && cellInfo.original[cellInfo.column.id].isEditable === true) {
       return (
         <div>
           <RIENumber
             className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
             classEditing="table-edit-input"
-            value={cellInfo.value}
+            value={cellInfo.value.toFixed(2)}
             propName={`${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-            staticElement="div"
             change={this.dataChanged}
             validate={this.validate}
             format={this.format}
-            title={cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             id={cellInfo.original.id}
+            classInvalid="invalid"
           />
-          <div className="edit-icon"><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+          <div className="edit-icon" style={{ cursor: 'pointer' }}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         </div>);
     }
     return (<span className="cellColor">{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>);
@@ -191,7 +190,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         id: 'listPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
-        Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.listPrice.value}</span> : <span className="cellColor">{cellInfo.original.listPrice.value}</span>),
+        Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{this.props.currency}{cellInfo.original.listPrice.value}</span> : <span className="cellColor">{this.props.currency}{cellInfo.original.listPrice.value}</span>),
       },
     ];
 
@@ -236,6 +235,7 @@ ReconfigureGrid.propTypes = {
   categoryId: React.PropTypes.any,
   deleteProduct: React.PropTypes.func,
   updateField: React.PropTypes.func,
+  currency: React.PropTypes.any,
 };
 
 export default ReconfigureGrid;
