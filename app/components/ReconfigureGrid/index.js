@@ -3,7 +3,7 @@
 * ReconfigureGrid
 *
 */
-import ReactTable from 'react-table';
+import ReactTable from '../ReactTable';
 import React from 'react';
 import _ from 'lodash';
 import 'react-table/react-table.css';

@@ -12,7 +12,7 @@ import messages from './messages';
 class ReconfigureProductHeaderCard extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div className="card  margin" >
+      <div className="card" >
         <div className="card-icon"><Glyphicon className="cartIcon" glyph="wrench" /></div>
         <div className="card-detail">
           <div>

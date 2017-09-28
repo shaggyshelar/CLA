@@ -1,4 +1,4 @@
-import ReactTable from 'react-table';
+import ReactTable from '../ReactTable';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
