@@ -1,4 +1,4 @@
-import ReactTable from 'react-table';
+import ReactTable from '../ReactTable';
 import React from 'react';
 import 'react-table/react-table.css';
 import messages from './messages';
