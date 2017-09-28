@@ -6,14 +6,16 @@
  */
 
 import React, { PropTypes } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
-import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError, getLanguage } from './selectors';
+import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError, getLanguage, getGlobalQuoteData, getReconfigureQuoteData } from './selectors';
 import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
 import { changeLocale } from '../LanguageProvider/actions';
+import { toggleReconfigureLineStatus } from '../App/actions';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -72,20 +74,15 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
 
   componentDidMount() {
     if (!this.props.fromAddOption) {
-      const data = {
-        productId: this.props.location.query.productId,
-        quoteId: this.props.location.query.quoteId,
-        priceBookId: this.props.location.query.priceBookId,
-        quoteLineId: this.props.location.query.quoteLineId,
-        groupId: this.props.location.query.groupId,
-      };
-      this.props.getProductsData(data);
+      const quote = this.props.quote.toJS();
+      this.props.getProductsData(quote);
     } else {
       this.props.toggleAddOptionsState(false);
     }
   }
 
   saveProducts() {
+    const updatedQuote = this.props.reconfigureQuote.toJS();
     const updatedProducts = [];
     const intialProductBundleData = this.props.productBundleData.toJS();
     const updatedProductBundleData = this.props.reConfigureProductData.toJS();
@@ -122,9 +119,14 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       }, this);
     }
 
-    intialProductBundleData.productBundle.products = [];
-    intialProductBundleData.productBundle.products = updatedProducts;
-    this.props.saveConfiguredProducts(intialProductBundleData.productBundle, this.props.location.query);
+    intialProductBundleData.products = [];
+    intialProductBundleData.products = updatedProducts;
+
+    const quoteProductData = {
+      quote: updatedQuote,
+      productBundle: intialProductBundleData,
+    };
+    this.props.saveConfiguredProducts(quoteProductData, this.props.location.query);
   }
 
   toggleSidebar() {
@@ -134,13 +136,22 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     this.forceUpdate();
   }
   cancelReconfiguration() {
-    let url = '/EditQuote';
-    if (this.props.location.query.groupId !== 'null') {
-      url = `/EditQuote?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`;
-    } else if (this.props.location.query.mainTab !== 'undefined' && this.props.location.query.tab !== 'undefined') {
-      url = `/EditQuote?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`;
+    const quote = this.props.quote.toJS();
+    const line = _.find(quote.lines, { reconfigured: true });
+    if (line) {
+      const reconfigureObj = {
+        id: line.id,
+        reconfigured: false,
+      };
+      this.props.toggleReconfigureLineStatus(reconfigureObj);
     }
-    browserHistory.push(url);
+    if (this.props.location.query.groupId !== null && this.props.location.query.groupId !== undefined && this.props.location.query.mainTab !== undefined && this.props.location.query.tab !== undefined) {
+      browserHistory.push(`/EditQuote?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else if ((this.props.location.query.groupId === null || this.props.location.query.groupId === undefined) && this.props.location.query.mainTab !== undefined) {
+      browserHistory.push(`/EditQuote?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else {
+      browserHistory.push('/EditQuote');
+    }
   }
   toggleCheckboxChange(productObj) {
     this.props.toggleCheckboxChange(productObj);
@@ -148,10 +159,11 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
 
   render() {
     const reconfigurationData = this.props.reConfigureProductData.toJS();
+    const quote = this.props.quote.toJS();
     const params = {
       bundleId: reconfigurationData.productBundleId,
-      quoteName: this.props.location.query.quoteName,
-      priceBookId: this.props.location.query.priceBookId,
+      quoteName: quote.name,
+      priceBookId: quote.priceBookId,
       quoteId: reconfigurationData.productBundleQuoteId,
       bundleLineId: reconfigurationData.quoteLineId,
       groupId: reconfigurationData.groupId,
@@ -217,6 +229,9 @@ ReConfigureProducts.propTypes = {
   loading: PropTypes.any,
   language: PropTypes.any,
   changeLocale: PropTypes.any,
+  quote: PropTypes.any,
+  reconfigureQuote: PropTypes.any,
+  toggleReconfigureLineStatus: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -228,6 +243,8 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
   language: getLanguage(),
+  quote: getGlobalQuoteData(),
+  reconfigureQuote: getReconfigureQuoteData(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -253,6 +270,9 @@ function mapDispatchToProps(dispatch) {
     },
     changeLocale: (locale) => {
       dispatch(changeLocale(locale));
+    },
+    toggleReconfigureLineStatus: (reconfigureObj) => {
+      dispatch(toggleReconfigureLineStatus(reconfigureObj));
     },
   };
 }

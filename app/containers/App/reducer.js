@@ -48,6 +48,7 @@ import {
   CANCEL,
   CONTINUE,
   SAVECONFIGURATION_SUCCESS,
+  TOGGLE_RECONFIGURELINE_STATUS,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -287,27 +288,18 @@ function appReducer(state = initialState, action) {
         .set('error', false);
     }
     case SAVECONFIGURATION_SUCCESS: {
-      const quoteData = state.get('data').toJS();
-      const newLines = [];
-      if (quoteData && quoteData.lines && action.data.quote && action.data.quote.lines) {
-        quoteData.netAmount = action.data.quote.netAmount;
-        action.data.quote.lines.forEach((line) => {
-          let quoteLine = _.find(quoteData.lines, { id: line.id });
-          if (quoteLine) {
-            quoteLine = line;
-          } else {
-            newLines.push(line);
-          }
-        }, this);
-      }
-      if (newLines.length > 0) {
-        newLines.forEach((newLine) => {
-          quoteData.lines.push(newLine);
-        }, this);
+      return state
+        .set('data', fromJS(action.data.quote))
+        .set('loading', false);
+    }
+    case TOGGLE_RECONFIGURELINE_STATUS : {
+      const quote = state.get('data').toJS();
+      const line = _.find(quote.lines, { id: action.reconfigureObj.id });
+      if (line) {
+        line.reconfigured = action.reconfigureObj.reconfigured;
       }
       return state
-        .set('data', fromJS(quoteData))
-        .set('loading', false).set('dataChanged', false);
+         .set('data', fromJS(quote));
     }
     default:
       return state;

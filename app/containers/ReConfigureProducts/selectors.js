@@ -5,6 +5,7 @@ import { createSelector } from 'reselect';
  */
 const selectReConfigureProductsDomain = () => (state) => state.get('reConfigureProducts');
 const language = (state) => state.get('language');
+const global = (state) => state.get('global');
 
 /**
  * Other specific selectors
@@ -53,6 +54,18 @@ const makeSelectError = () => createSelector(
   (homeState) => homeState.get('error')
 );
 
+const getGlobalQuoteData = () =>
+ createSelector(
+  global,
+  (homeState) => homeState.get('data')
+);
+
+const getReconfigureQuoteData = () =>
+ createSelector(
+ selectReConfigureProductsDomain(),
+  (homeState) => homeState.get('quoteData')
+);
+
 const getLanguage = () =>
  createSelector(
   language,
@@ -69,4 +82,6 @@ export {
   makeSelectLoading,
   makeSelectError,
   getLanguage,
+  getGlobalQuoteData,
+  getReconfigureQuoteData,
 };

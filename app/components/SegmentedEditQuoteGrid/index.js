@@ -49,6 +49,21 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     this.renderCell = this.renderCell.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.renderTotal = this.renderTotal.bind(this);
+    this.onReconfigureLineClick = this.onReconfigureLineClick.bind(this);
+  }
+  onReconfigureLineClick(item) {
+    const reconfigureObj = {
+      id: item.id,
+      reconfigured: true,
+    };
+    this.props.toggleReconfigureLineStatus(reconfigureObj);
+    if (this.props.location.query.groupId !== null && this.props.location.query.groupId !== undefined && this.props.location.query.mainTab !== undefined && this.props.location.query.tab !== undefined) {
+      browserHistory.push(`/reconfigureproducts?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else if ((this.props.location.query.groupId === null || this.props.location.query.groupId === undefined) && this.props.location.query.mainTab !== undefined) {
+      browserHistory.push(`/reconfigureproducts?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else {
+      browserHistory.push('/reconfigureproducts');
+    }
   }
   setTableOption(event) {
     const target = event.target;
@@ -156,7 +171,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   }
   renderActionItems(cellInfo) {
     // const discount = cellInfo.original.canShowDiscountScheduler ? <a><Glyphicon glyph="calendar" onClick={this.handleToggle.bind(this, cellInfo.index)} /></a> : '';
-    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?productId=${cellInfo.original.productId}&quoteId=${this.props.quoteData.id}&priceBookId=${this.props.quoteData.priceBookId}&quoteName=${this.props.quoteData.name}&quoteLineId=${cellInfo.original.id}&groupId=${cellInfo.original.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
+    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
     // const bundle = cellInfo.original.isBundled ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
     // const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
     const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Resegment"><Glyphicon glyph="transfer" /></a> : '';
@@ -373,6 +388,7 @@ SegmentedEditQuoteGrid.propTypes = {
   toggleCheckAll: PropTypes.func,
   isCheckAll: PropTypes.any,
   location: PropTypes.any,
+  toggleReconfigureLineStatus: PropTypes.func,
 };
 
 export default SegmentedEditQuoteGrid;
