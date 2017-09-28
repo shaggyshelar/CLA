@@ -62,7 +62,6 @@ input[type=number]::-webkit-outer-spin-button {
  
 .table-edit-quantity, .table-edit {
     cursor:pointer;
-    /*display: inline-block;*/
     width:70%;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -70,27 +69,26 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .inline-select-edit {
      height:22px;
-width: 50px !important;
-padding-right: 60px !important;
-     /* padding-right:0px 3px 0px 2px !important; */
+    width: 50px !important;
+    padding-right: 60px !important;
 }
 .inline-select {
-     display:inline-block;
-     padding-left:5px!important;
+    display:inline-block;
+    padding-left:5px!important;
     cursor: pointer;
- padding-left:5px !important;
-padding-right:60px !important;
+    padding-left:5px !important;
+    padding-right:60px !important;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 	
 }
 .table-edit-input .inline-edit {
-     display:none !important;
+    display:none !important;
 }
 
 .invalid {
-   border: 1px solid orangered !important;
+    border: 1px solid orangered !important;
 }
 .table-edit-input{
     height:22px;
@@ -146,7 +144,7 @@ padding-right:60px !important;
     font-size: 20px;
 }
 .group-side .center {
-position: relative;
+    position: relative;
     top: 35%;
 }
 .group-side .panel-text {
@@ -177,10 +175,8 @@ position: relative;
  }
 .group-desc-edit-on{
     background-color: white;
-    /* margin-left: 15px; */
     color: #54698d;
     font-size: 16px;
-    /* padding-left:5px; */
  }
 .group {
     margin: 0!important;     
@@ -193,7 +189,6 @@ position: relative;
     position: relative!important;    
     overflow-x: hidden!important;
 }
-
 .group .dropdown {
     margin: 10px 0 0 0;
     float: right;
@@ -207,7 +202,6 @@ position: relative;
     margin-right: 20px;
     color: #54698d;
     font-size: 17px;
-    /* padding: 5px; */
     line-height: 2.0;
 }
 .left {
@@ -218,7 +212,6 @@ position: relative;
 }
 .input-group{
         background: white;
-    /* border: azure; */
     margin-top: 7px;
     height: 28px;
     border-radius: 2px;
@@ -226,7 +219,6 @@ position: relative;
     text-align: right;
     padding-right:8px;
 }
-
 .vertically {
     border-left: 2px solid #ccc;
     display: inline-block;
@@ -301,8 +293,6 @@ position: relative;
     width:100%;
 }
 .cartFontTitle{
-
-
     color: #16325c;
     font-size: 20px;
     font-style: normal;
@@ -311,42 +301,38 @@ position: relative;
 }
 
 .autoCompleteWidth .rbt-input input {
-background-image:url(p2qes_searchIcon.png); 
-background-repeat: no-repeat; 
-background-position: 2px 3px;
-width:100%;
-height:100%;
-font-size: 18px;
-color: black;
-padding-left: 30px !important;
-background-position-x: 8px;
-background-position-y: 8px;
-background-size: 16px;
-
+    background-image:url(p2qes_searchIcon.png); 
+    background-repeat: no-repeat; 
+    background-position: 2px 3px;
+    width:100%;
+    height:100%;
+    font-size: 18px;
+    color: black;
+    padding-left: 30px !important;
+    background-position-x: 8px;
+    background-position-y: 8px;
+    background-size: 16px;
 }
 .rbt-input input {
-
-
-
-width:100%;
-height:100%;
-font-size: 15px;
-color: black;
-padding-left: 10px;
+    width:100%;
+    height:100%;
+    font-size: 15px;
+    color: black;
+    padding-left: 10px;
 
 }
 .rbt-input {
-width:100%;
-height:100%;
+    width:100%;
+    height:100%;
 }
 
 .rbt-input div:first-child {
-width:100%;
-height:100%;
+    width:100%;
+    height:100%;
 }
 .rbt-input div:nth-child(2) {
-width:100%;
-height:100%;
+    width:100%;
+    height:100%;
 }
 
 .rbt-input-aux {
@@ -822,10 +808,6 @@ height:100%;
     height:25px!important;
 	padding-bottom:0!important;	
 }
-/*.rt-tr-group, .rt-tr {
-	height:27px!important;
-}*/
-
 .sub-footer-seg {    
     height: auto!important;
     font-size: 16px!important;
@@ -848,24 +830,10 @@ height:100%;
 .inline-edit{
     opacity:0!important;
 }
-/*.edit-icon {
-    float: left!important;
-}*/
 .rt-tr:hover .inline-edit{
     opacity:1!important;
 	display:inline;
 }
-/*.table-edit > input[type='number'] { 
-    -webkit-appearance: none!important;
-    -moz-appearance: none!important;
-    appearance: none!important;   
-	margin: 0!important; 
-}
-input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none!important;
-    -moz-appearance: none!important;
-    appearance: none!important; 
-}*/
 .autoCompleteWidth {
     width: 100%;
     height: 34px;
@@ -947,54 +915,55 @@ strong {
     flex: initial!important;
 }
 /* height management */
-.qoute-container.segmented .table-wrap.edit-grid-segment {
-	min-height: 78vh!important;
-	height: 78vh!important;
+.qoute-container.segmented .table-wrap.edit-grid-segment .ReactTable {
+	min-height: 15vh!important;
+	max-height: 75vh!important;
 	overflow-y: auto;
 }
-.table-wrap.edit-grid-segment .ReactTable {
+.table-wrap.edit-grid-segment {
     padding: 0px !important;
     overflow: auto;
 }
 
-.qoute-container.segmented .table-wrap.edit-grid-quote {
-    min-height: 77vh !important;
-	height: 77vh !important;
+.qoute-container.segmented .table-wrap.edit-grid-quote .ReactTable {
+    min-height: 15vh !important;
+	max-height: 84vh !important;
 	overflow-y:auto;
 }
-.qoute-container.segmented .table-wrap.edit-grid-quote {
-    min-height: 77vh !important;
-	height: 77vh !important;
+.qoute-container.segmented .group  .edit-grid-quote .ReactTable {
+    min-height: 15vh !important;
+	max-height: 75vh !important;
 	overflow-y:auto;
 }
-.qoute-container.segmented .group  .edit-grid-quote {
-    min-height: 75vh !important;
-	height: 75vh !important;
+.group .qoute-container.segmented .table-wrap.edit-grid-quote .ReactTable { 
+    min-height: 15vh !important;
+	max-height: 62vh !important;
 	overflow-y:auto;
 }
-.group .qoute-container.segmented .table-wrap.edit-grid-quote { 
-    min-height: 54vh !important;
-	height: 54vh !important;
-	overflow-y:auto;
-}
-.group .qoute-container.segmented  .table-wrap.edit-grid-segment { 
-    min-height: 55vh !important;
-    height: 55vh !important;
+.group .qoute-container.segmented  .table-wrap.edit-grid-segment .ReactTable { 
+    min-height: 15vh !important;
+    max-height: 54vh !important;
     padding-bottom: 0px !important;
 	overflow-y:auto;
 }
-.group .qoute-container.segmented  .table-wrap.edit-grid-segment .ReactTable{ 
+.group .qoute-container.segmented  .table-wrap.edit-grid-segment{ 
     padding-bottom: 0px !important;
 }
-.table-container .group .table-wrap.edit-grid-quote { 
-    min-height: 60vh !important;
-	height: 60vh !important;
+.table-container .group .table-wrap.edit-grid-quote .ReactTable { 
+    min-height: 15vh !important;
+	max-height: 69vh !important;
 	overflow-y:auto;
 }
-.table-container .table-wrap.edit-grid-quote { 
-    min-height: 85vh!important;
+.table-container .table-wrap.edit-grid-quote .ReactTable { 
+    min-height: 15vh!important;
     overflow: auto;
-    height: 85vh !important;
+    max-height: 91vh !important;
+}
+.table-wrap.productTopPadding .ReactTable {
+    min-height: 15vh !important;
+    max-height: 91vh;
+    /* display: grid; */
+    overflow: auto;
 }
 .glyphicon {    position: initial;}
 /* height management */
@@ -1226,12 +1195,6 @@ strong {
         width: 100%;
 	}
 }
-
-
-/*.qoute-container.segmented{
-	padding-top:65px;
-}*/
-
 .hideSpan{
     visibility: hidden !important;
 } 
@@ -1259,14 +1222,14 @@ strong {
     z-index: 9999999999999!important;
 }
 
-@media (max-width: 1400px) and (min-width: 1300px)
+/* @media (max-width: 1400px) and (min-width: 1300px)
 {
 	.qoute-container .group #inner-tab-example-pane-custom .table-wrap {
 		min-height: 48vh;
 		height: 48vh !important;
 		overflow-y: auto !important;
 	}
-}
+} */
 
 .checkboxWidth{
 	height:auto!important;
@@ -1316,23 +1279,10 @@ strong {
     padding: 0px 14px;
     font-size: 13px;
 }
- .qoute-container .group #inner-tab-example-tab-monthly .table-wrap {
-	min-height: 48vh!important;
-	height: 48vh!important;
-	overflow-y: auto;
-}
-
-.qoute-container .group #inner-tab-example-tab-monthly .table-wrap {
-    min-height: 52vh;
-    height: 52vh;
-    overflow-y: auto;
-}
-
 .customPencilIcon {
    margin-left: 8px;
    color :grey; 
 }
-
 .customPencilIcon:hover {
     color: #166bbf;
 }
@@ -1344,7 +1294,7 @@ strong {
     min-height: auto !important;
 }
 .ReactTable {
-    padding-bottom:10px!important;
+    
     line-height: 1.42857143;
 }
 .rbt-aux button.close {
@@ -1376,7 +1326,7 @@ body.modal-open {
     position: fixed!important;
     z-index: 999999999!important;
 }
-@media (max-width: 1400px) and (min-width: 1300px){
+/* @media (max-width: 1400px) and (min-width: 1300px){
 	.qoute-container .group #inner-tab-example-pane-custom .table-wrap {    
 		overflow-y: auto;
 		max-height: calc(60vh - 100px)!important;
@@ -1387,8 +1337,8 @@ body.modal-open {
 		min-height: calc(66vh - 100px)!important;
 		height: calc(66vh - 100px)!important;
 	}
-}
-@media (max-width: 1500px) and (min-width: 1401px){
+} */
+/* @media (max-width: 1500px) and (min-width: 1401px){
 	.qoute-container #inner-tab-example-pane-custom .table-wrap {   
 		overflow-y: auto;
 		min-height: calc(66vh - 100px)!important;
@@ -1399,7 +1349,7 @@ body.modal-open {
 		min-height: calc(70vh - 100px)!important;
 		height: calc(70vh - 100px)!important;
 	}
-}
+} */
 
 
 .customSegModal, .customModal{
@@ -1430,9 +1380,6 @@ body.modal-open {
 }
 .ReactTable .rt-noData {
     margin-top: 25px!important;
-}
-.table-wrap {
-    /*padding-bottom: 10px!important;*/
 }
 
 /*** For filter ***/
@@ -1526,12 +1473,9 @@ body.modal-open {
     width : 90% !important;
     margin-left: 0px !important;
 }
-
 .cellColor {
     color: grey;
 }
-
-
 .qoute-container {    
     height: auto!important;
 }
@@ -1546,22 +1490,14 @@ body.modal-open {
     padding: 7px 15px!important;
 }
 
-/* .ReactTable .rt-thead.-header {
-    position: fixed;
-    background:#eee;
-    width: 100%
-} */
 .sub-seg .ReactTable .rt-tbody {
    height: 64px !important;
    margin-top: 0px !important;
 }
-/* .table-wrap .ReactTable .rt-tbody {
-  
-    margin-top: 30px;
-} */
+
 .sub-footer-seg{ height:64px;}
 .sub-seg .ReactTable.sub-component{ height: 150px !important;padding-bottom: 0px!important;}
-/* Harshit */
+
 .ReactTable .rt-tr-group {
     display: inline-block !important;
 }
@@ -1569,12 +1505,6 @@ body.modal-open {
 .ReactTable .rt-tr {
    width: 100%;
 }
-/* .table-wrap .ReactTable .rt-tbody {
-   height: 75vh;
-}
-.sub-seg .ReactTable .rt-tbody {
-   height: auto !important;
-}*/
 .sub-component .rt-tbody .rt-tr-group {
     margin-bottom: -7px;
     overflow: hidden;
@@ -1588,15 +1518,16 @@ body.modal-open {
     background: #ececec;
     color: #16325C;
     box-shadow: none !important;
-    padding: 3px 0px!important;
+    padding: 3px 0px 30px!important;
 }
 .ReactTable .rt-tfoot .rt-td {
     border: 0px !important;
-
 }
 .calculateSign {
     margin-left: 10px;
     cursor: pointer;
     color: #ff9800;
-    font-size: 21px;
+    font-size: 22px;
+    position: absolute;
+    padding-top: 11px;
 }
