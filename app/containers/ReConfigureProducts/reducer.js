@@ -208,13 +208,13 @@ function reConfigureProductsReducer(state = initialState, action) {
       if (action.error && action.error instanceof Array) {
         action.error.map((i) => {
           toast.error(i.message, {
-            position: toast.POSITION.TOP_CENTER,
+            position: toast.POSITION.TOP_LEFT,
           });
           return this;
         });
       } else {
         toast.error('Something went wrong.', {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
       }
       return state
