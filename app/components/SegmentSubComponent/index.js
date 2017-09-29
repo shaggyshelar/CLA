@@ -38,11 +38,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       },
     };
   }
-  dataChanged(data) {
+  dataChanged(decimal, data) {
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const data1 = data[key];
-    this.props.updateSeg(field[1], field[2], field[3], parseFloat(data1));
+    this.props.updateSeg(field[1], field[2], field[3], parseFloat(data1).toFixed(decimal) / 1);
   }
   selectDataChanged(data) {
     const key = Object.keys(data)[0];
@@ -63,8 +63,8 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     const data1 = data[key];
     this.props.updateSegBundle(field[0], field[1], field[2], field[3], parseFloat(data1));
   }
-  formatt(e) {
-    return (e.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+  formatt(e, d) {
+    return (d.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e }));
   }
   validate(string) {
     const number = parseFloat(string);
@@ -88,7 +88,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       return this;
     });
     if (cellInfo.original[col].isEditable === false) {
-      return (<span> {cellInfo.original[col].value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {selectedOption.text}</span>);
+      return (<span> {cellInfo.original[col].value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })} {selectedOption.text}</span>);
     }
     return (
       <div>
@@ -96,10 +96,10 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         <RIENumber
           className={'table-edit-quantity'}
           classEditing="table-edit-input"
-          value={cellInfo.value}
+          value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
           propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
-          format={this.formatt}
-          change={this.dataChanged}
+          format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
+          change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
           validate={this.validate}
           classInvalid="invalid"
         />
@@ -117,7 +117,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
   }
   renderEditable(cellInfo) {
     if (cellInfo.original.editable === false) {
-      return (<span> {cellInfo.original.prop === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>);
+      return (<span> {cellInfo.original.prop === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>);
     }
     if (cellInfo.original.prop === 'additionalDiscount') {
       return this.renderDiscount(cellInfo);
@@ -132,11 +132,10 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           <RIENumber
             className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
             classEditing="table-edit-input"
-            value={cellInfo.value}
+            value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
             propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
-            change={this.dataChanged}
-            validate={this.validate}
-            format={this.formatt}
+            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}            validate={this.validate}
+            format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
             classInvalid="invalid"
           />
         </div>);
@@ -219,6 +218,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             dataSet[i].editable = data.quantity.isEditable;
             dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parent;
+            dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
           });
           break;
@@ -228,6 +228,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             dataSet[i].editable = data.listPrice.isEditable;
             dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parent;
+            dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
           });
           break;
@@ -237,6 +238,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             dataSet[i].editable = false;
             dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parent;
+            dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
           });
           break;
@@ -247,6 +249,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             dataSet[i].editable = j.additionalDiscount.isEditable;
             dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parentLineId;
+            dataSet[i].decimalsSupported = data.decimalsSupported;
             dataSet[i].selectValues = data.segmentData.columns[index].additionalDiscount.selectValues;
             return this;
           });
@@ -257,6 +260,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             dataSet[i].editable = false;
             dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parent;
+            dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
           });
           break;
@@ -264,6 +268,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           data.segmentData.columns.map((j) => {
             dataSet[i][j.name] = { id: data.id, value: j.netTotal };
             dataSet[i].editable = false;
+            dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
           });
           break;

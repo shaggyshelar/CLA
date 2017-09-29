@@ -26,6 +26,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
       lines: [
         {
           id: '111',
+          decimalsSupported: 3,
           code: 'Dom154',
           isBundled: false,
           parentLineId: null,
@@ -124,6 +125,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           parentId: '111',
           parentLineId: '111',
+          decimalsSupported: 2,
           parentName: 'Porche',
           id: '12456',
           isBundled: false,
@@ -283,6 +285,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: 's',
           parentId: '111',
+          decimalsSupported: 3,
           parentLineId: '111',
           isDeleted: false,
           parentName: 'Porche',
@@ -414,6 +417,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         },
         {
           id: '123ass',
+          decimalsSupported: 3,
           isDeleted: false,
           code: 'Car154',
           name: 'Ferrari',
@@ -511,6 +515,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           id: '222',
           code: 'Car3422',
           name: 'Lamborghini',
+          decimalsSupported: 3,
           type: 'Bundle',
           isDeleted: false,
           isBundled: false,
@@ -667,6 +672,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '3453453',
           parentId: '222',
+          decimalsSupported: 3,
           parentLineId: '222',
           parentName: 'Lamborghini',
           isBundled: true,
@@ -827,6 +833,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '333',
           code: 'Car348',
+          decimalsSupported: 3,
           name: 'Pagani',
           type: 'Product/Bundle',
           isBundled: false,
@@ -1013,6 +1020,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '444',
           code: 'Bike123',
+          decimalsSupported: 3,
           name: 'Ducatti',
           type: 'Product/Bundle',
           isBundled: false,
@@ -1172,6 +1180,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           code: 'Bike489',
           name: 'Harley Davidson',
           type: 'Product/Bundle',
+          decimalsSupported: 3,
           isBundled: false,
           isDeleted: false,
           isDisableReconfiguration: false,
@@ -1328,6 +1337,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           id: '666',
           code: 'Bike 121',
           name: 'BMW',
+          decimalsSupported: 3,
           type: 'Product/Bundle',
           isBundled: false,
           isDeleted: false,
@@ -1514,6 +1524,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           id: '777',
           code: 'P121',
           name: 'Classic',
+          decimalsSupported: 3,
           type: 'Product/Bundle',
           isBundled: false,
           isDeleted: false,
@@ -1641,6 +1652,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '888',
           code: 'Mob',
+          decimalsSupported: 3,
           name: 'Mobile',
           type: 'Product/Bundle',
           isBundled: false,
@@ -1769,6 +1781,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
         {
           id: '999',
           code: 'M123',
+          decimalsSupported: 3,
           name: 'Mobile Smart',
           type: 'Product/Bundle',
           isBundled: false,
@@ -1956,6 +1969,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           id: '112',
           code: 'T132',
           productId: '111',
+          decimalsSupported: 3,
           name: 'Android',
           type: 'Product/Bundle',
           isBundled: false,
@@ -2116,6 +2130,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           id: '113',
           code: 'Light254',
           name: 'LED',
+          decimalsSupported: 3,
           type: 'Product/Bundle',
           isBundled: false,
           isDisableReconfiguration: false,
@@ -2564,6 +2579,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           id: '115',
           code: 'Cam325',
           name: 'Camera',
+          decimalsSupported: 3,
           type: 'Product/Bundle',
           isBundled: false,
           isDisableReconfiguration: false,

@@ -106,11 +106,11 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   deleteLine(id) {
     this.props.deleteLine(id);
   }
-  dataChanged(data) {
+  dataChanged(decimal, data) {
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const data1 = data[key];
-    this.props.update(field[1], parseFloat(data1), field[2]);
+    this.props.update(field[1], parseFloat(data1).toFixed(decimal) / 1, field[2]);
   }
 
   bundleDataChanged(data) {
@@ -152,19 +152,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     });
     return total;
   }
-  formatt(e) {
-    return (e.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+  formatt(e,d) {
+    return (d.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e }));
   }
   clickEdit(e) {
     e.currentTarget.nextSibling.focus();
   }
   renderActionItems(cellInfo) {
-    // const discount = cellInfo.original.canShowDiscountScheduler ? <a title="View Discount Schedule" onClick={this.handleToggle.bind(this, cellInfo.index)} ><Glyphicon glyph="calendar" /></a> : <span className="blank"></span>;
-    // const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?id=${cellInfo.original.id}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
-    // const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { browserHistory.push(`/reconfigureproducts?productId=${cellInfo.original.productId}&quoteId=${this.props.quoteData.id}&priceBookId=${this.props.quoteData.priceBookId}&quoteName=${this.props.quoteData.name}&quoteLineId=${cellInfo.original.id}&groupId=${cellInfo.original.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
     const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
-    // const bundle = cellInfo.original.isBundled ? <a title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : <span className="blank"></span>;
-    // const clone = cellInfo.original.canClone ? <a title="Clone Line" onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" style={{ color: '#449D44' }} /></a> : <span className="blank"></span>;
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
     return (
       <div className="actionItems" >
@@ -188,7 +183,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       return this;
     });
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
-      return (<span> {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {selectedOption.text}</span>);
+      return (<span> {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })} {selectedOption.text}</span>);
     }
     return (
       <div>
@@ -196,10 +191,10 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         <RIENumber
           className={'table-edit-quantity'}
           classEditing="table-edit-input"
-          value={cellInfo.value.toFixed(2)}
+          value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
           propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-          format={this.formatt}
-          change={this.dataChanged}
+          format={this.formatt.bind(this, cellInfo.original.decimalsSupported)}
+          change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 )}
           validate={this.validate}
           classInvalid="invalid"
         />
@@ -218,7 +213,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
-      return (<span>{cellInfo.column.id === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>);
+      return (<span>{cellInfo.column.id === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>);
     }
     return (
       cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice') ?
@@ -229,10 +224,10 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           <RIENumber
             className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
             classEditing="table-edit-input"
-            value={cellInfo.value.toFixed(2)}
+            value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
             propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-            format={this.formatt}
-            change={this.dataChanged}
+            format={this.formatt.bind(this, cellInfo.original.decimalsSupported)}
+            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 )}
             validate={this.validate}
             classInvalid="invalid"
           />
@@ -333,7 +328,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       //   Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.markup })}>{this.context.intl.formatMessage({ ...messages.markup })}</span>,
       //   accessor: 'markup',
       //   style: { textAlign: 'right' },
-      //   Cell: (props) => <span>{props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} %</span>,
+      //   Cell: (props) => <span>{props.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} %</span>,
       // },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netPrice })}>{this.context.intl.formatMessage({ ...messages.netPrice })}</span>,
@@ -341,15 +336,15 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         style: { textAlign: 'right' },
         Footer: (<span>{this.context.intl.formatMessage({ ...messages.subTotal })}</span>),
         headerStyle: { textAlign: 'right' },
-        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>,
+        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: props.original.decimalsSupported ? props.original.decimalsSupported : 2 })}</span>,
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
         accessor: 'netTotal',
         style: { textAlign: 'right' },
-        Footer: (<span>{this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>),
+        Footer: (<span>{this.props.currency} {total.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>),
         headerStyle: { textAlign: 'right' },
-        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>,
+        Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: props.original.decimalsSupported ? props.original.decimalsSupported : 2 })}</span>,
       },
     ];
     return (
