@@ -8,7 +8,7 @@
     background-image:url(loadingDots.gif); 
     background-repeat: no-repeat;
     background-position: 50%; 
-    opacity: .7;
+    opacity: 1;
     z-index: 9999999;
 }
 
