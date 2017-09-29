@@ -170,7 +170,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 </DropdownButton><br />
 
               </span>
-              <span className="group-header" >{this.context.intl.formatMessage({ ...messages.subTotal })}: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </span><br />
+              <span className="group-header" >{this.context.intl.formatMessage({ ...messages.subTotal })}: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} </span><br />
               <span
                 className="group-description"
                 onClick={this.toggleEditor}
@@ -200,12 +200,12 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   <RIEInput
                     className="group-input"
                     classEditing="input-group input-text"
-                    value={group.additionaldiscount === '' ? '0.00' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    value={group.additionaldiscount === '' ? '0.00' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
                     propName={`${group.id}*($)*additionaldiscount`}
                     change={this.dataChanged}
                     validate={this.validate}
                   /><Glyphicon glyph="pencil" className="inline-edit" />
-                  {/* <input className="input-group input-text" step="0.1" onChange={this.valueChanged} id="additionaldiscount" type="text" name={group.id} value={group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} /> */}
+                  {/* <input className="input-group input-text" step="0.1" onChange={this.valueChanged} id="additionaldiscount" type="text" name={group.id} value={group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} /> */}
                 </Col>
               </Row>
                <Row>
@@ -219,7 +219,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   <RIEInput
                     className="group-input"
                     classEditing="input-group input-text"
-                    value={group.subscriptionTerm === '' ? '0.00' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    value={group.subscriptionTerm === '' ? '0.00' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
                     propName={`${group.id}*($)*subscriptionTerm`}
                     change={this.dataChanged}
                     validate={this.validate}
