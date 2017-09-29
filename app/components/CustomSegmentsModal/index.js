@@ -74,23 +74,23 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     }
     if (isDateNull) {
       toast.error(this.context.intl.formatMessage({ ...messages.dateEmptyValidation }), {
-        position: toast.POSITION.TOP_CENTER,
+        position: toast.POSITION.TOP_LEFT,
       });
     } else if (startDateEndDateError) {
       toast.error(this.context.intl.formatMessage({ ...messages.startDateEndDateError }), {
-        position: toast.POSITION.TOP_CENTER,
+        position: toast.POSITION.TOP_LEFT,
       });
     } else if ((currentIndex > -1 || isDuplicate) && dateError) {
       toast.error(this.context.intl.formatMessage({ ...messages.startDateSegementLabelError }), {
-        position: toast.POSITION.TOP_CENTER,
+        position: toast.POSITION.TOP_LEFT,
       });
     } else if ((currentIndex > -1 || isDuplicate)) {
       toast.error(this.context.intl.formatMessage({ ...messages.segmentLabelError }), {
-        position: toast.POSITION.TOP_CENTER,
+        position: toast.POSITION.TOP_LEFT,
       });
     } else if (dateError) {
       toast.error(this.context.intl.formatMessage({ ...messages.startDateError }), {
-        position: toast.POSITION.TOP_CENTER,
+        position: toast.POSITION.TOP_LEFT,
       });
     } else {
       const customLines = [];
