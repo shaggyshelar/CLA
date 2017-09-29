@@ -82,13 +82,13 @@ export function* addProducts() {
       const repos = yield call(request, requestURL, options);
       if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
         toast.success(' Products Added with errors', {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
         yield put(dataLoadingError(repos.quote.errorMessages));
         yield put(dataLoaded(repos));
       } else {
         toast.success(' Products Added', {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
         yield put(dataLoaded(repos));
       }
