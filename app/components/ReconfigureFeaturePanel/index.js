@@ -62,6 +62,7 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
           categoryId={this.props.categoryId}
           deleteProduct={this.props.deleteProduct}
           updateField={this.props.updateField}
+          currency={this.props.currency}
         />
         {addButton}
       </div>);
@@ -99,6 +100,7 @@ ReconfigureFeaturePanel.propTypes = {
   params: PropTypes.any,
   toggleAddOptionsState: PropTypes.any,
   activeTab: PropTypes.any,
+  currency: PropTypes.any,
 };
 
 export default ReconfigureFeaturePanel;

@@ -41,6 +41,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         params={this.props.params}
         toggleAddOptionsState={this.props.toggleAddOptionsState}
         activeTab={this.state.activeTab}
+        currency={this.props.currency}
       />
     </Tab>);
   }
@@ -60,6 +61,8 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         updateField={this.props.updateField}
         params={this.props.params}
         toggleAddOptionsState={this.props.toggleAddOptionsState}
+        activeTab={this.state.activeTab}
+        currency={this.props.currency}
       />);
   }
 
@@ -82,7 +85,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
     return (
       <div className="qoute-container">
         <div className="margin-tabs">
-          <Row>
+          <Row className="configureRow">
             <Col md={12} sm={12} xs={12}>
               <span className="categoryLabel">{this.props.reConfigureData.productBundleName}</span>
             </Col>
@@ -112,6 +115,7 @@ ReconfigureProductTab.propTypes = {
   toggleAddOptionsState: PropTypes.any,
   params: PropTypes.any,
   activeTab: PropTypes.any,
+  currency: PropTypes.any,
 };
 
 export default ReconfigureProductTab;

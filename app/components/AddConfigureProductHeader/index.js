@@ -35,9 +35,9 @@ class AddConfigureProductHeader extends React.Component { // eslint-disable-line
         </Col>
 
         <Col xs={12} md={6} style={{ textAlign: 'right' }}>
-          <ButtonGroup className="margin">
+          {/* <ButtonGroup className="margin">
             <Button onClick={this.props.addProducts}><Glyphicon glyph="filter" /></Button>
-          </ButtonGroup>
+          </ButtonGroup> */}
           <ButtonGroup className="margin">
             <Button onClick={() => { browserHistory.goBack(); }}>{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
             <Button bsStyle="primary" onClick={this.props.addOptions}>{this.context.intl.formatMessage({ ...messages.add })}</Button>
@@ -57,7 +57,7 @@ AddConfigureProductHeader.contextTypes = {
 };
 
 AddConfigureProductHeader.propTypes = {
-  addProducts: PropTypes.func,
+  // addProducts: PropTypes.func,
   addOptions: PropTypes.func,
   quoteName: PropTypes.any,
   languageChange: PropTypes.func,
