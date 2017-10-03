@@ -959,7 +959,7 @@ strong {
     max-height: 91vh !important;
 }
 .table-wrap.productTopPadding .ReactTable {
-    min-height: 15vh !important;
+    min-height: 23vh !important;
     max-height: 91vh;
     /* display: grid; */
     overflow: auto;
