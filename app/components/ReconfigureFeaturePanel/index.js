@@ -22,31 +22,31 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
   renderAddButton(feature, index) {
     if (feature.dynamicAddEnabled) {
       if (feature.categoryId) {
-        return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&categoryId=${feature.categoryId}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
+        return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&featureName=${feature.name}&categoryId=${feature.categoryId}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
       }
-      return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
+      return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&featureName=${feature.name}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
     }
     return (<span></span>);
   }
   renderMinMaxMessage(feature) {
     let text = '';
     if (feature.minOption && feature.maxOption) {
-      text = `Add at least ${feature.minOption} but no more than ${feature.maxOption} of the following:`;
+      text = `Add at least ${feature.minOption} but no more than ${feature.maxOption} of the following`;
     } else if (feature.minOption && feature.maxOption == null) {
-      text = `Add at least ${feature.minOption} of the following:`;
+      text = `Add at least ${feature.minOption} of the following`;
     } else if (feature.minOption == null && feature.maxOption) {
-      text = `Add at most ${feature.maxOption} of the following:`;
+      text = `Add at most ${feature.maxOption} of the following`;
     }
-    return (<div className="minMaxMessage"><span>{text}</span></div>);
+    return (<span className="minMaxMessage">{text}</span>);
   }
 
   renderFeatureGrid(feature, index) {
     let addButton = {};
     if (feature !== undefined) {
       addButton = this.renderAddButton(feature, index);
-      return (<div key={index} className="group panelMargin">
+      return (<div key={index} className="group panelMargin reconfigurePanel">
         <div className="group-card">
-          <span className="group-header">{feature.name}</span>
+          <span className="group-header configureGroupHeader">{feature.name}</span>
           {this.renderMinMaxMessage(feature)}
         </div>
         <ReconfigureGrid
