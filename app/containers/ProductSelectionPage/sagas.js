@@ -60,13 +60,29 @@ export function* searchedData() {
   while (true) {
     const chan = yield actionChannel(LOAD_SEARCH_DATA);
     const { searchObj } = yield take(chan);
-    yield call(searchedProducts, searchObj);
+    try {
+      if (searchObj.fromSearch && searchObj.searchValue === '') {
+        yield put(searchBtnDataLoaded(null, true));
+      } else {
+        const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProducts?PriceListId=${searchObj.priceBookId}&QuoteId=${searchObj.quoteId}&SearchValue=${searchObj.searchValue}`}`;
+        const repos = yield call(request, requestURL);
+        if (!searchObj.fromSearch) {
+          yield put(searchedDataLoaded(repos));
+        } else {
+          yield put(searchBtnDataLoaded(repos, false));
+        }
+      }
+    } catch (error) {
+      yield put(dataLoadingError(error));
+    } finally {
+      chan.close();
+    }
   }
 }
 export function* addProducts() {
   while (true) {
+    const chan = yield actionChannel(ADD_PRODUCTS);
     try {
-      const chan = yield actionChannel(ADD_PRODUCTS);
       const { data } = yield take(chan);
       const lines = yield select(selectGlobal);
       const postLines = Object.assign({}, lines.toJS().data);
@@ -94,6 +110,8 @@ export function* addProducts() {
       }
     } catch (err) {
       yield put(dataLoadingError(err));
+    } finally {
+      chan.close();
     }
   }
 }
