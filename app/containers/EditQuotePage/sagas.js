@@ -126,7 +126,7 @@ export function* saveQuoteLines() {
         yield put(dataLoaded(repos));
       } else {
         toast.success('Saved Successfully', {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
         yield put(dataLoaded(repos));
       }

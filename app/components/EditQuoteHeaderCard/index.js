@@ -17,7 +17,7 @@ class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line r
           <div>
             <div className="cartFont">
               <span style={{ marginTop: '0px', fontSize: '20px' }}>
-                Grand Total: {this.props.currency} {this.props.total.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                Grand Total: {this.props.currency} {this.props.total.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
               </span>
               {this.props.dataChanged ? <Glyphicon title="Please Calculate to get updated values" className="calculateSign" glyph="warning-sign" /> : ''}
             </div>

@@ -83,14 +83,14 @@ function appReducer(state = initialState, action) {
               errorMsg = i.message;
             } else {
               toast.error(i.message === '' ? 'Something Went Wrong' : i.message, {
-                position: toast.POSITION.TOP_CENTER,
+                position: toast.POSITION.TOP_LEFT,
               });
             }
             return this;
           });
         } else {
           toast.error(action.error.message === '' ? 'Something Went Wrong' : action.error.message, {
-            position: toast.POSITION.TOP_CENTER,
+            position: toast.POSITION.TOP_LEFT,
           });
         }
         return state.set('loading', false).set('error', error).set('errorMessage', errorMsg);

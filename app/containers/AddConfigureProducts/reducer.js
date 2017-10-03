@@ -39,13 +39,13 @@ function addConfigureProductsReducer(state = initialState, action) {
       if (action.error) {
         action.error.map((i) => {
           toast.error(i.message, {
-            position: toast.POSITION.TOP_CENTER,
+            position: toast.POSITION.TOP_LEFT,
           });
           return this;
         });
       } else {
         toast.error('Server connection problem ! Please try again later.', {
-          position: toast.POSITION.TOP_CENTER,
+          position: toast.POSITION.TOP_LEFT,
         });
       }
       return state

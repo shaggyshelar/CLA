@@ -80,7 +80,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
         accessor: 'listPrice.value',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
-        Cell: (props) => <span>₹ {props.value.toLocaleString('en', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>,
+        Cell: (props) => <span>₹ {props.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>,
       },
     ];
     return (
