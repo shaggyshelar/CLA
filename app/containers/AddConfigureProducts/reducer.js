@@ -5,6 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
+import React from 'react';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
 import {
@@ -38,7 +39,7 @@ function addConfigureProductsReducer(state = initialState, action) {
     case LOAD_PRODUCTS_DATA_ERROR: {
       if (action.error) {
         action.error.map((i) => {
-          toast.error(i.message, {
+          toast.error(<p>{i.message}</p>, {
             position: toast.POSITION.TOP_LEFT,
           });
           return this;
