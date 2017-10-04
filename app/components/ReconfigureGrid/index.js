@@ -40,6 +40,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     this.dataChanged = this.dataChanged.bind(this);
     this.renderEditable = this.renderEditable.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
+    this.clickEdit = this.clickEdit.bind(this);
   }
 
   setTableOption(event) {
@@ -54,6 +55,11 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     });
   }
 
+  clickEdit(e) {
+    if (e.currentTarget.previousSibling) {
+      e.currentTarget.previousSibling.focus();
+    }
+  }
   dataChanged(data) {
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
@@ -111,7 +117,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
             id={cellInfo.original.id}
             classInvalid="invalid"
           />
-          <div className="edit-icon" style={{ cursor: 'pointer' }}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+          <div className="reconfigure-edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit} ><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         </div>);
     }
     return (<span className="cellColor">{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>);
@@ -160,8 +166,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         accessor: 'quantity.value',
         id: 'quantity',
         className: 'table-edit-row',
-        style: { textAlign: 'right' },
-        headerStyle: { textAlign: 'right' },
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
         Cell: this.renderEditable,
       },
       {
@@ -188,8 +194,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.unitPrice })}>{this.context.intl.formatMessage({ ...messages.unitPrice })}</span>,
         accessor: 'listPrice.value',
         id: 'listPrice',
-        style: { textAlign: 'right' },
-        headerStyle: { textAlign: 'right' },
+        style: { textAlign: 'left' },
+        headerStyle: { textAlign: 'left' },
         Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{this.props.currency}{cellInfo.original.listPrice.value}</span> : <span className="cellColor">{this.props.currency}{cellInfo.original.listPrice.value}</span>),
       },
     ];

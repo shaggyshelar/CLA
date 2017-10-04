@@ -70,11 +70,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
     }
     return (
       <div>
-        <div
-          style={{
-            zIndex: '9999999',
-          }}
-        >
+        <div style={{ zIndex: '9999999' }}>
           <AddConfigureProductHeader
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
@@ -85,6 +81,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
             languageChange={this.props.changeLocale}
           />
           <div className="qoute-container">
+            <span className="categoryLabel addConfigurationLabel">{this.props.location.query.featureName}</span>
             <AddConfigureProductGrid
               products={this.props.productsData.toJS().products ? this.props.productsData.toJS().products : []}
               showFilter={this.props.showFilter}
