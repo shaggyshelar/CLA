@@ -466,6 +466,9 @@ input[type=number]::-webkit-outer-spin-button {
     text-overflow: ellipsis;
     cursor:pointer;
 }
+.toastify {
+    word-break: break-all;
+}
 .pro-icon {
     display: inline-block;
     float: right;

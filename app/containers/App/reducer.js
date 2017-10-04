@@ -11,6 +11,7 @@
  */
 import { fromJS } from 'immutable';
 import _ from 'lodash';
+import React from 'react';
 import { toast } from 'react-toastify';
 // The initial state of the App
 import {
@@ -82,14 +83,14 @@ function appReducer(state = initialState, action) {
               error = true;
               errorMsg = i.message;
             } else {
-              toast.error(i.message === '' ? 'Something Went Wrong' : i.message, {
+              toast.error(i.message === '' ? 'Something Went Wrong' : <p>{i.message}</p>, {
                 position: toast.POSITION.TOP_LEFT,
               });
             }
             return this;
           });
         } else {
-          toast.error(action.error.message === '' ? 'Something Went Wrong' : action.error.message, {
+          toast.error(action.error.message === '' ? 'Something Went Wrong' : <p>{action.error.message}</p>, {
             position: toast.POSITION.TOP_LEFT,
           });
         }
