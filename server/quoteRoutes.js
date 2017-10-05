@@ -8319,6 +8319,14 @@ quoteRouter.post('/Calculate', (req, res) => {
   response.quote.errorMessages = error;
   res.json(response);
 });
+quoteRouter.post('/DeleteQuoteline', (req, res) => {
+  // req.params.QuoteID;
+  const response = { config: {}, quote: {} };
+  const error = [];
+  response.quote = req.body;
+  response.quote.errorMessages = error;
+  res.json(response);
+});
 quoteRouter.post('/SegmentDeSegmentQuoteline', (req, res) => {
   // req.params.QuoteID;
   const response = { config: {}, quote: {} };
