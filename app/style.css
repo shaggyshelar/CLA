@@ -23,6 +23,13 @@ body {
 .toastify {
     z-index: 999999999999999999 !important;
 }
+.toastify__body {
+    word-break: break-word;
+
+}
+.toastify__body p{
+    font-family: sans-serif;
+}
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none;
@@ -468,6 +475,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .toastify {
     word-break: break-all;
+
 }
 .pro-icon {
     display: inline-block;
