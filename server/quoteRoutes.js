@@ -73,7 +73,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           canShowDiscountScheduler: false,
           listPrice: {
             value: 123,
-            isEditable: true,
+            isEditable: false,
             isVisible: true,
             dataType: 'text/select/textarea/inputSelect',
             selectValues: [
