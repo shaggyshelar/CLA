@@ -10,6 +10,7 @@ import {
   EntityURLs,
   CALCULATE_SELECTED,
   QUICK_SAVE_QUOTES,
+  DELETE_MULTIPLE_LINES,
   SEGMENT,
 } from '../App/constants';
 export function* saveSegmentData(data) {
@@ -137,6 +138,46 @@ export function* saveQuoteLines() {
     }
   }
 }
+export function* deleteLines() {
+  while (true) {
+    const chan = yield actionChannel(DELETE_MULTIPLE_LINES);
+    const action = yield take(chan);
+    const lines = yield select(selectGlobal);
+    const postLines = Object.assign({}, lines.toJS().data);
+    const data = postLines.lines;
+    action.data.forEach((item) => {
+      _.filter(data, { id: item }).map((j) => { j.isDeleted = true; });
+      _.filter(data, { parentLineId: item }).map((j) => { j.isDeleted = true; });
+    }, this);
+    _.remove(data, (n) => n.id === action.data);
+    _.remove(data, (n) => n.parentLineId === action.data);
+    try {
+      const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/DeleteQuoteline`}`;
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postLines),
+      };
+
+      const repos = yield call(request, requestURL, options);
+      if (repos.quote.errorMessages && repos.quote.errorMessages.length) {
+        yield put(dataLoadingError(repos.quote.errorMessages));
+        yield put(dataLoaded(repos));
+      } else {
+        toast.success('Deleted Successfully', {
+          position: toast.POSITION.TOP_LEFT,
+        });
+        yield put(dataLoaded(repos));
+      }
+    } catch (err) {
+      yield put(dataLoadingError(err));
+    } finally {
+      chan.close();
+    }
+  }
+}
 export function* saveQuoteDetails(data) {
   try {
     const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/SaveQuote`}`;
@@ -159,5 +200,6 @@ export default [
   saveCustomSegmentData,
   calculateQuotes,
   saveQuoteLines,
+  deleteLines,
   // segmentCall,
 ];

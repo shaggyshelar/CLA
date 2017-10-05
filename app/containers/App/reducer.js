@@ -11,6 +11,7 @@
  */
 import { fromJS } from 'immutable';
 import _ from 'lodash';
+import React from 'react';
 import { toast } from 'react-toastify';
 // The initial state of the App
 import {
@@ -82,14 +83,14 @@ function appReducer(state = initialState, action) {
               error = true;
               errorMsg = i.message;
             } else {
-              toast.error(i.message === '' ? 'Something Went Wrong' : i.message, {
+              toast.error(i.message === '' ? 'Something Went Wrong' : <p>{i.message}</p>, {
                 position: toast.POSITION.TOP_LEFT,
               });
             }
             return this;
           });
         } else {
-          toast.error(action.error.message === '' ? 'Something Went Wrong' : action.error.message, {
+          toast.error(action.error.message === '' ? 'Something Went Wrong' : <p>{action.error.message}</p>, {
             position: toast.POSITION.TOP_LEFT,
           });
         }
@@ -116,18 +117,18 @@ function appReducer(state = initialState, action) {
     case CALCULATE_SELECTED:
       return state.set('loading', true);
     case DELETE_LINE:
-      data = state.getIn(['data', 'lines']).toJS();
-      _.remove(data, (n) => n.id === action.data);
-      _.remove(data, (n) => n.parentLineId === action.data);
-      return state.setIn(['data', 'lines'], fromJS(data)).set('dataChanged', true);
+      // data = state.getIn(['data', 'lines']).toJS();
+      // _.remove(data, (n) => n.id === action.data);
+      // _.remove(data, (n) => n.parentLineId === action.data);
+      return state.set('loading', true);
 
     case DELETE_MULTIPLE_LINES:
-      data = state.getIn(['data', 'lines']).toJS();
-      action.data.forEach((item) => {
-        _.filter(data, { id: item }).map((j) => { j.isDeleted = true; });
-        _.filter(data, { parentLineId: item }).map((j) => { j.isDeleted = true; });
-      }, this);
-      return state.setIn(['data', 'lines'], fromJS(data)).set('dataChanged', true);
+      // data = state.getIn(['data', 'lines']).toJS();
+      // action.data.forEach((item) => {
+      //   _.filter(data, { id: item }).map((j) => { j.isDeleted = true; });
+      //   _.filter(data, { parentLineId: item }).map((j) => { j.isDeleted = true; });
+      // }, this);
+      return state.set('loading', true);
     case CLONE_MULTIPLE_LINES:
       {
         data = state.getIn(['data', 'lines']).toJS();
