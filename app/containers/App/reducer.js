@@ -117,18 +117,18 @@ function appReducer(state = initialState, action) {
     case CALCULATE_SELECTED:
       return state.set('loading', true);
     case DELETE_LINE:
-      data = state.getIn(['data', 'lines']).toJS();
-      _.remove(data, (n) => n.id === action.data);
-      _.remove(data, (n) => n.parentLineId === action.data);
-      return state.setIn(['data', 'lines'], fromJS(data)).set('dataChanged', true);
+      // data = state.getIn(['data', 'lines']).toJS();
+      // _.remove(data, (n) => n.id === action.data);
+      // _.remove(data, (n) => n.parentLineId === action.data);
+      return state.set('loading', true);
 
     case DELETE_MULTIPLE_LINES:
-      data = state.getIn(['data', 'lines']).toJS();
-      action.data.forEach((item) => {
-        _.filter(data, { id: item }).map((j) => { j.isDeleted = true; });
-        _.filter(data, { parentLineId: item }).map((j) => { j.isDeleted = true; });
-      }, this);
-      return state.setIn(['data', 'lines'], fromJS(data)).set('dataChanged', true);
+      // data = state.getIn(['data', 'lines']).toJS();
+      // action.data.forEach((item) => {
+      //   _.filter(data, { id: item }).map((j) => { j.isDeleted = true; });
+      //   _.filter(data, { parentLineId: item }).map((j) => { j.isDeleted = true; });
+      // }, this);
+      return state.set('loading', true);
     case CLONE_MULTIPLE_LINES:
       {
         data = state.getIn(['data', 'lines']).toJS();
