@@ -168,6 +168,7 @@ export function* deleteLines() {
       } else {
         toast.success('Deleted Successfully', {
           position: toast.POSITION.TOP_LEFT,
+          autoClose: 500000,
         });
         yield put(dataLoaded(repos));
       }

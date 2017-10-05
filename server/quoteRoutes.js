@@ -28,7 +28,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           id: '111',
           decimalsSupported: 3,
           code: 'Dom154',
-          isBundled: false,
+          isBundled: true,
           parentLineId: null,
           isDeleted: false,
           name: 'Porche',
@@ -128,7 +128,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           decimalsSupported: 2,
           parentName: 'Porche',
           id: '12456',
-          isBundled: false,
+          isBundled: true,
           isDeleted: false,
           code: 'Dom154AC',
           name: 'Porche AC',
@@ -8302,10 +8302,10 @@ quoteRouter.post('/SaveQuote', (req, res) => {
   let error = [];
   response.quote = req.body;
   if (!response.quote.isForceSave) {
-    error = [{ id: 123, type: 'alert', message: 'Invalid Products' }, { id: 123, type: 'as', message: 'Invalid Data' }];
+    error = [{ id: 123, type: 'alert', message: 'Invalid Products for the product of the day that is samsung mobile' }, { id: 123, type: 'as', message: 'Invalid Data' }];
   } else {
     response.quote.isForceSave = false;
-    error = [{ id: 123, type: 'asa', message: 'Invalid Products' }, { id: 123, type: 'as', message: 'Invalid Data' }];
+    error = [{ id: 123, type: 'asa', message: 'Invalid Products for the product of the day that is samsung mobile' }, { id: 123, type: 'as', message: 'Invalid Data' }];
   }
   response.quote.errorMessages = error;
   res.json(response);
