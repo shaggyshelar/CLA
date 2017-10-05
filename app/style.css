@@ -1569,3 +1569,11 @@ body.modal-open {
 .addConfigurationLabel {
     margin-left: 15px;
 }
+#configureProductsList .tab-content {
+    overflow-y: auto;
+    height: 75vh;
+}
+.reconfigureDivScroll {
+    overflow-y: auto;
+    height: 80vh; 
+}
