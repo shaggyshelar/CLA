@@ -149,7 +149,6 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     currentTab={this.state.selectedTab}
                     isCustomModalOpen={this.state.isCustomModalOpen}
                     handleCustomModalToggle={this.hideCustomModalToggle}
-                    loadCustomSegmentsData={this.props.loadCustomSegmentsData}
                     addCustomSegmentData={this.props.addCustomSegmentData}
                     deleteCustomSegmentData={this.props.deleteCustomSegmentData}
                     changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
