@@ -117,7 +117,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
   }
   renderEditable(cellInfo) {
     if (cellInfo.original.editable === false) {
-      return (<span> {cellInfo.original.prop === 'quantity' ? '' : this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>);
+      return (<span> {cellInfo.original.prop === 'quantity' || (cellInfo.original.isBundled && cellInfo.column.id === 'listPrice') ? '' : this.props.currency}
+        { cellInfo.original.isBundled && (cellInfo.original.prop === 'listPrice') ?
+          <span>Included</span>
+        :
+        cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>);
     }
     if (cellInfo.original.prop === 'additionalDiscount') {
       return this.renderDiscount(cellInfo);

@@ -96,7 +96,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
             <Tabs defaultActiveKey={this.props.activeTab} id="configureProductsList" onSelect={this.onTabSelect}>
               {tabtitleList}
             </Tabs>
-        : <div>{ tabtitleList }</div>
+        : <div className="reconfigureDivScroll">{ tabtitleList }</div>
         }
         </div>
       </div>
