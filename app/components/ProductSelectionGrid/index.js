@@ -1,6 +1,6 @@
 import ReactTable from '../ReactTable';
 import React from 'react';
-import 'react-table/react-table.css';
+
 import messages from './messages';
 class ProductSelectionGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {

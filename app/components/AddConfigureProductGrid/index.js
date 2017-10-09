@@ -1,6 +1,6 @@
 import ReactTable from '../ReactTable';
 import React from 'react';
-import 'react-table/react-table.css';
+
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
 import messages from './messages';
