@@ -340,7 +340,6 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
             display: 'inline-flex',
           }}
           customLines={this.props.data}
-          loadCustomSegmentsData={this.props.loadCustomSegmentsData}
           addCustomSegmentData={this.props.addCustomSegmentData}
           deleteCustomSegmentData={this.props.deleteCustomSegmentData}
           changeCustomSegmentFieldData={this.props.changeCustomSegmentFieldData}
@@ -374,7 +373,6 @@ SegmentedEditQuoteGrid.propTypes = {
   updateSegSelect: PropTypes.func,
   updateSegBundleSelect: PropTypes.func,
   isCustomModalOpen: PropTypes.any,
-  loadCustomSegmentsData: PropTypes.func,
   addCustomSegmentData: PropTypes.func,
   deleteCustomSegmentData: PropTypes.func,
   changeCustomSegmentFieldData: PropTypes.func,

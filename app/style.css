@@ -475,7 +475,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .toastify {
     word-break: break-all;
-
+    width : auto !important;
 }
 .pro-icon {
     display: inline-block;
