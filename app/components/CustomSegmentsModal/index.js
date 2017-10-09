@@ -42,7 +42,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
   }
 
   saveCustomSegments() {
-    const customSegments = this.props.customSegments.toJS();
+    const customSegments = _.filter(this.props.customSegments.toJS(), { isDeleted: false });
     const nameArray = customSegments.map((item) => item.name);
     const isDuplicate = nameArray.some((item, id) => nameArray.indexOf(item) !== id);
     const currentIndex = _.findIndex(customSegments, { name: '' });
@@ -93,23 +93,15 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
         position: toast.POSITION.TOP_LEFT,
       });
     } else {
-      const customLines = [];
-      const quote = {};
-      quote.id = this.props.quoteData.id;
-      this.props.customLines.forEach((item) => {
-        const line = {
-          id: item.id,
-          productId: item.productId,
-          code: item.code,
-          name: item.name,
-          segmentData: {
-            type: item.type,
-            columns: customSegments,
-          },
-        };
-        customLines.push(line);
+      const allCustomSegments = this.props.customSegments.toJS();
+      const quote = this.props.quoteData;
+      this.props.customLines.forEach((customLine) => {
+        const line = _.find(quote.lines, { id: customLine.id });
+        if (line && line.segmentData) {
+          line.segmentData.columns = [];
+          line.segmentData.columns = allCustomSegments;
+        }
       }, this);
-      quote.lines = customLines;
       this.props.saveCustomSegmentData(quote);
     }
   }
@@ -117,7 +109,8 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
   render() {
     let rows = [];
     if (this.props.customSegments !== undefined) {
-      rows = this.props.customSegments.toJS().map((item, index) => (<tr key={index}>
+      const customSegments = _.filter(this.props.customSegments.toJS(), { isDeleted: false });
+      rows = customSegments.map((item, index) => (<tr key={index}>
         <td>{!item.isDefault ? <input type="checkbox" className="check" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check hideSpan" />}</td>
         <td>
           <FormControl
