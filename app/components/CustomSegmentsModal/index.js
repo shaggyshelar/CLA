@@ -98,8 +98,18 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
       this.props.customLines.forEach((customLine) => {
         const line = _.find(quote.lines, { id: customLine.id });
         if (line && line.segmentData) {
-          line.segmentData.columns = [];
-          line.segmentData.columns = allCustomSegments;
+          const columns = [];
+          const oneTimeColumn = _.find(line.segmentData.columns, { type: 'One Time' });
+          if (oneTimeColumn) {
+            columns.push(oneTimeColumn);
+            allCustomSegments.forEach((item) => {
+              columns.push(item);
+            }, this);
+            line.segmentData.columns = columns;
+          } else {
+            line.segmentData.columns = [];
+            line.segmentData.columns = allCustomSegments;
+          }
         }
       }, this);
       this.props.saveCustomSegmentData(quote);

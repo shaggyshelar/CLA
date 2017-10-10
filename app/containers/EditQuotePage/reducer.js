@@ -31,13 +31,15 @@ function editQuoteReducer(state = initialState, action) {
       const customSegments = state.get('customSegments').toJS();
       if (action && customSegments) {
         action.customSegments.forEach((item) => {
-          const rec = item;
-          rec.id = generateGuid();
-          rec.isSelected = false;
-          rec.isAdded = false;
-          rec.startDate = item.startDate.substring(0, 10);
-          rec.endDate = item.endDate.substring(0, 10);
-          customSegments.push(rec);
+          if (item.type !== 'One Time') {
+            const rec = item;
+            rec.id = generateGuid();
+            rec.isSelected = false;
+            rec.isAdded = false;
+            rec.startDate = item.startDate !== null ? item.startDate.substring(0, 10) : new Date().toISOString().substring(0, 10);
+            rec.endDate = item.endDate !== null ? item.endDate.substring(0, 10) : new Date().toISOString().substring(0, 10);
+            customSegments.push(rec);
+          }
         }, this);
       }
       return state
