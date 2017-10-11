@@ -34,6 +34,7 @@ function editQuoteReducer(state = initialState, action) {
           const rec = item;
           rec.id = generateGuid();
           rec.isSelected = false;
+          rec.isAdded = false;
           rec.startDate = item.startDate.substring(0, 10);
           rec.endDate = item.endDate.substring(0, 10);
           customSegments.push(rec);
@@ -52,6 +53,8 @@ function editQuoteReducer(state = initialState, action) {
         endDate: '',
         isSelected: false,
         isDefault: false,
+        isAdded: true,
+        isDeleted: false,
       };
       customSegments.push(customSegement);
       if (isCheckAll) {
@@ -71,8 +74,20 @@ function editQuoteReducer(state = initialState, action) {
     case DELETE_CUSTOM_SEGMENT_DATA: {
       const customSegments = state.get('customSegments').toJS();
       let isCheckAll = state.get('isCheckAll');
-      const updatedSegments = _.filter(customSegments, { isSelected: false });
-      if (updatedSegments.length === 1) {
+      const updatedSegments = [];
+      customSegments.forEach((customSegment) => {
+        const updatedSegment = customSegment;
+        if (customSegment.isSelected === true) {
+          if (!customSegment.isAdded) {
+            updatedSegment.isDeleted = true;
+            updatedSegment.isSelected = false;
+            updatedSegments.push(updatedSegment);
+          }
+        } else {
+          updatedSegments.push(updatedSegment);
+        }
+      }, this);
+      if (_.filter(updatedSegments, { isDeleted: false }).length === 1) {
         isCheckAll = false;
       }
       return state

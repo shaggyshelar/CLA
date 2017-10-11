@@ -263,11 +263,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     let quoteData = {};
     const data = this.props.data.toJS();
     if (data) {
-      quoteData = {
-        id: data.id,
-        name: data.name,
-        priceBookId: data.priceBookId,
-      };
+      quoteData = data;
     }
     if (this.props.loading) {
       return (<div className="loader" style={style}></div>);
