@@ -6,7 +6,7 @@
 import ReactTable from '../ReactTable';
 import React from 'react';
 import _ from 'lodash';
-import 'react-table/react-table.css';
+
 import { RIENumber } from 'riek';
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
