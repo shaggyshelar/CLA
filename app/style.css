@@ -252,10 +252,17 @@ input[type=number]::-webkit-outer-spin-button {
     line-height: 2.5;
 }
 .group-description {
-    margin: 10px 10px 15px;
     color: #54698d;
     font-size: 16px;
-    padding:5px;
+    margin-left: 6px;
+    color: #54698d;
+    font-size: 16px;
+    padding: 10px;
+    display: inline-block;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .cartIcon {
     background: #904d4c;
