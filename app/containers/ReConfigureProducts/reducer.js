@@ -210,12 +210,14 @@ function reConfigureProductsReducer(state = initialState, action) {
         action.error.map((i) => {
           toast.error(<p>{i.message}</p>, {
             position: toast.POSITION.TOP_LEFT,
+            autoClose: false,
           });
           return this;
         });
       } else {
         toast.error('Something went wrong.', {
           position: toast.POSITION.TOP_LEFT,
+          autoClose: false,
         });
       }
       return state

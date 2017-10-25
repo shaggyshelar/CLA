@@ -85,6 +85,7 @@ function appReducer(state = initialState, action) {
             } else {
               toast.error(i.message === '' ? 'Something Went Wrong' : <p>{i.message}</p>, {
                 position: toast.POSITION.TOP_LEFT,
+                autoClose: false,
               });
             }
             return this;
@@ -92,6 +93,7 @@ function appReducer(state = initialState, action) {
         } else {
           toast.error(action.error.message === '' ? 'Something Went Wrong' : <p>{action.error.message}</p>, {
             position: toast.POSITION.TOP_LEFT,
+            autoClose: false,
           });
         }
         return state.set('loading', false).set('error', error).set('errorMessage', errorMsg);

@@ -41,12 +41,14 @@ function addConfigureProductsReducer(state = initialState, action) {
         action.error.map((i) => {
           toast.error(<p>{i.message}</p>, {
             position: toast.POSITION.TOP_LEFT,
+            autoClose: false,
           });
           return this;
         });
       } else {
         toast.error('Server connection problem ! Please try again later.', {
           position: toast.POSITION.TOP_LEFT,
+          autoClose: false,
         });
       }
       return state

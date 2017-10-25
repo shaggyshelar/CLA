@@ -19,6 +19,7 @@ body {
     overflow: hidden;
     border: 1px solid #ddd;
     line-height: 0;
+    padding-right: 0px !important;
 }
 .actionItems .glyphicon {
     padding-top: 3px;
@@ -486,6 +487,8 @@ input[type=number]::-webkit-outer-spin-button {
 .toastify {
     word-break: break-all;
     width : auto !important;
+    max-width: 300px !important;
+    min-width: 120px !important;
 }
 .pro-icon {
     display: inline-block;
@@ -1390,7 +1393,15 @@ body.modal-open {
     position: absolute!important;
     z-index: 999999999!important;
 }
-
+.confirm-delete {
+    font-size: 18px;
+    color: #54698d;
+    text-align: center;
+    padding-top: 35px;
+}
+.confirm-delete-modal {
+    top: 0%;
+}
 .modal-body input{
 	margin-left:0!important;
 }
