@@ -23,6 +23,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.state = {
       selectedGroup: null,
       showEditor: false,
+      showDelete: false,
     };
     this.changeGroup = this.changeGroup.bind(this);
     this.addProducts = this.addProducts.bind(this);
@@ -33,6 +34,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     this.toggleEditor = this.toggleEditor.bind(this);
     this.editorTextChange = this.editorTextChange.bind(this);
     this.descUpdate = this.descUpdate.bind(this);
+    this.toggleDelete = this.toggleDelete.bind(this);
   }
   componentWillMount() {
     const groupLen = _.find(this.props.groups, { id: this.props.location.query.groupId });
@@ -48,7 +50,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   }
   changeGroup(e) {
     addQuery({ groupId: e });
-    this.setState({ selectedGroup: e });
+    this.props.changeGroup(e);
   }
   toggleEditor() {
     this.setState({ showEditor: !this.state.showEditor });
@@ -72,21 +74,24 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     groups.push(group);
     this.props.cloneGroup(lines, groups);
   }
-
+  toggleDelete() {
+    this.setState({ showDelete: !this.state.showDelete });
+  }
   deleteGroupIn() {
     const group = Object.assign({},
-      _.filter(this.props.groups, { id: this.state.selectedGroup })[0]);
+      _.filter(this.props.groups, { id: this.props.selectedGroup !== '' ? this.props.selectedGroup : this.state.selectedGroup })[0]);
     const lines = this.props.lines;
     const groups = this.props.groups;
     _.filter(lines, (i) => i.groupId === group.id).map((j) => { j.isDeleted = true; });
     _.filter(groups, (j) => j.id === group.id).map((j) => { j.isDeleted = true; });
     addQuery({ groupId: _.filter(this.props.groups, { isDeleted: false })[0].id });
     this.setState({ selectedGroup: _.filter(this.props.groups, { isDeleted: false })[0].id });
+    this.setState({ showDelete: !this.state.showDelete });
     this.props.deleteGroup(lines, groups);
   }
   descUpdate() {
     this.toggleEditor();
-    this.props.updateGroupData(this.state.selectedGroup, 'description', this.state.desc);
+    this.props.updateGroupData(this.props.selectedGroup !== '' ? this.props.selectedGroup : this.state.selectedGroup, 'description', this.state.desc);
   }
   addProducts() {
     let url = `/ProductSelection${this.props.location.search}`;
@@ -120,8 +125,9 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   render() {
     let group = {};
     let groupLines = [];
-    groupLines = _.filter(this.props.lines, { groupId: this.state.selectedGroup });
-    group = _.filter(this.props.groups, { id: this.state.selectedGroup })[0];
+
+    groupLines = _.filter(this.props.lines, { groupId: this.props.selectedGroup !== '' ? this.props.selectedGroup : this.state.selectedGroup });
+    group = _.filter(this.props.groups, { id: this.props.selectedGroup !== '' ? this.props.selectedGroup : this.state.selectedGroup })[0];
     // const optionalTooltip = (
     //   <Tooltip id="tooltip" bsClass="tooltip"><strong>{this.context.intl.formatMessage({ ...messages.optionalTT })}</strong></Tooltip>
     // );
@@ -148,6 +154,21 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
           <Modal.Footer>
             <Button onClick={this.toggleEditor}>Close</Button>
             <Button onClick={this.descUpdate} bsStyle="primary">Save</Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal
+          show={this.state.showDelete}
+          onHide={this.toggleDelete}
+          className="confirm-delete-modal"
+          style={{ width: '50%' }}
+          aria-labelledby="contained-modal-title"
+        >
+          <Modal.Body className="confirm-delete">
+            <span>Are you sure you want to delete <b>{group.name}</b> ?</span>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.toggleDelete}>No</Button>
+            <Button onClick={this.deleteGroupIn} bsStyle="primary">Yes</Button>
           </Modal.Footer>
         </Modal>
         <div className="group-card">
@@ -199,44 +220,48 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                     <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
                 </Col>
-                <Col md={4} sm={4} xs={4}>
-                  <RIEInput
-                    className="group-input"
-                    classEditing="input-group input-text"
-                    value={group.additionaldiscount === '' ? '0.00' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
-                    propName={`${group.id}*($)*additionaldiscount`}
-                    change={this.dataChanged}
-                    validate={this.validate}
-                  /><Glyphicon glyph="pencil" className="inline-edit" />
-                  {/* <input className="input-group input-text" step="0.1" onChange={this.valueChanged} id="additionaldiscount" type="text" name={group.id} value={group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} /> */}
-                </Col>
+                  <Col md={4} sm={4} xs={4}>
+                    <RIEInput
+                      className="group-input"
+                      classEditing="input-group input-text"
+                      value={group.additionaldiscount === '' ? '0.00' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
+                      propName={`${group.id}*($)*additionaldiscount`}
+                      change={this.dataChanged}
+                      validate={this.validate}
+                      isDisabled={groupLines.length <= 0}
+                    /><Glyphicon glyph="pencil" className="inline-edit" />
+
+                    {/* <input className="input-group input-text" step="0.1" onChange={this.valueChanged} id="additionaldiscount" type="text" name={group.id} value={group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} /> */}
+                  </Col>
               </Row>
               <Row>
-                 <Col md={8} sm={8} xs={8}>
+
+                <Col md={8} sm={8} xs={8}>
                   <span className="group-label" >{this.context.intl.formatMessage({ ...messages.subTerm })}</span>
                   <OverlayTrigger placement="top" overlay={subscriptionTooltip}>
                     <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
                 </Col>
-                 <Col md={4} sm={4} xs={4}>
-                  <RIEInput
-                    className="group-input"
-                    classEditing="input-group input-text"
-                    value={group.subscriptionTerm === '' ? '0.00' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
-                    propName={`${group.id}*($)*subscriptionTerm`}
-                    change={this.dataChanged}
-                    validate={this.validate}
-                  /><Glyphicon glyph="pencil" className="inline-edit" />
+                  <Col md={4} sm={4} xs={4}>
+                    <RIEInput
+                      className="group-input"
+                      classEditing="input-group input-text"
+                      value={group.subscriptionTerm === '' ? '0.00' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
+                      propName={`${group.id}*($)*subscriptionTerm`}
+                      change={this.dataChanged}
+                      validate={this.validate}
+                      isDisabled={groupLines.length <= 0}
+                    /><Glyphicon glyph="pencil" className="inline-edit" />
 
-                </Col>
-               </Row>
+                  </Col>
+              </Row>
             </Col>
             <Col md={4} sm={6} xs={12} className="containers">
               <div>
                 <Button className="margin" title={this.context.intl.formatMessage({ ...messages.addProducts })} onClick={this.addProducts}>{this.context.intl.formatMessage({ ...messages.addProducts })}</Button>
                 <ButtonGroup className="margin">
                   {/* <Button onClick={this.cloneGroupIn} title={this.context.intl.formatMessage({ ...messages.cloneGroup })}>{this.context.intl.formatMessage({ ...messages.cloneGroup })}</Button> */}
-                  <Button onClick={this.deleteGroupIn} bsStyle="danger" title={this.context.intl.formatMessage({ ...messages.deleteGroup })} disabled={this.props.groups.length === 1}>{this.context.intl.formatMessage({ ...messages.deleteGroup })}</Button>
+                  <Button onClick={this.toggleDelete} bsStyle="danger" title={this.context.intl.formatMessage({ ...messages.deleteGroup })} disabled={this.props.groups.length === 1}>{this.context.intl.formatMessage({ ...messages.deleteGroup })}</Button>
                 </ButtonGroup>
               </div>
             </Col>
@@ -312,6 +337,7 @@ GroupQuote.propTypes = {
   deleteGroup: PropTypes.func,
   data: PropTypes.any,
   groups: PropTypes.any,
+  selectedGroup: PropTypes.any,
   lines: PropTypes.any,
   toggleAllCheckBox: PropTypes.func,
   updateProps: PropTypes.func,

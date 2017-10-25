@@ -2,7 +2,7 @@
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import { generateGuid, removeQuery } from 'containers/App/constants';
+import { generateGuid, removeQuery, addQuery } from 'containers/App/constants';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ReactDOM from 'react-dom';
@@ -52,12 +52,15 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       segLines: [],
       loading: false,
       disabledButton: true,
+      selectedGroup: '',
     };
 
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
+    this.changeGroup = this.changeGroup.bind(this);
     this.deleteCheckedLines = this.deleteCheckedLines.bind(this);
     this.cloneCheckedLines = this.cloneCheckedLines.bind(this);
     this.checkAll = this.checkAll.bind(this);
+    this.deleteGroup = this.deleteGroup.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.quickSaveQuoteLines = this.quickSaveQuoteLines.bind(this);
     this.updateProps = this.updateProps.bind(this);
@@ -82,10 +85,18 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     //   console.log(window.parent.Xrm.Page.data.entity.getEntityName());
     // }
   }
-
+  deleteGroup(lines, groups) {
+    this.setState({
+      selectedGroup: '',
+    });
+    this.props.deleteGroup(lines, groups);
+  }
+  changeGroup(groupId) {
+    this.setState({ selectedGroup: groupId });
+  }
   ungroup() {
     const data = this.props.data.toJS();
-    data.lines.forEach((i, index) => { data.lines[index].groupId = null; });
+    // data.lines.forEach((i, index) => { data.lines[index].groupId = null; });
     data.groups.map((j, index) => { data.groups[index].isDeleted = true; return this; });
     data.linesGrouped = false;
     removeQuery('groupId');
@@ -125,6 +136,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         subscriptionTerm: '',
         netTotal: '0.00',
       });
+      addQuery({ groupId: randomID });
+      this.setState({ selectedGroup: randomID });
     } else {
       data.lines.forEach((i, index) => { data.lines[index].groupId = randomID; });
       data.groups.push({
@@ -137,9 +150,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         subscriptionTerm: '',
         netTotal: this.props.data.toJS().netAmount,
       });
+      addQuery({ groupId: randomID });
+      this.setState({ selectedGroup: randomID });
       data.linesGrouped = true;
     }
-
     this.props.group(data);
   }
 
@@ -314,10 +328,12 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               toggleQuoteCheckbox={this.toggleCheckboxChange}
               updateProps={this.updateProps}
               cloneGroup={this.props.cloneGroup}
-              deleteGroup={this.props.deleteGroup}
+              deleteGroup={this.deleteGroup}
               segmented={segmented}
               segment={this.segment}
+              selectedGroup={this.state.selectedGroup}
               disableButton={this.disabledButton}
+              changeGroup={this.changeGroup}
               update={this.props.update}
               updateBundle={this.props.updateBundle}
               updateSeg={this.props.updateSeg}
