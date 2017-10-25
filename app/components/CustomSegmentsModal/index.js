@@ -75,22 +75,27 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     if (isDateNull) {
       toast.error(this.context.intl.formatMessage({ ...messages.dateEmptyValidation }), {
         position: toast.POSITION.TOP_LEFT,
+        autoClose: false,
       });
     } else if (startDateEndDateError) {
       toast.error(this.context.intl.formatMessage({ ...messages.startDateEndDateError }), {
         position: toast.POSITION.TOP_LEFT,
+        autoClose: false,
       });
     } else if ((currentIndex > -1 || isDuplicate) && dateError) {
       toast.error(this.context.intl.formatMessage({ ...messages.startDateSegementLabelError }), {
         position: toast.POSITION.TOP_LEFT,
+        autoClose: false,
       });
     } else if ((currentIndex > -1 || isDuplicate)) {
       toast.error(this.context.intl.formatMessage({ ...messages.segmentLabelError }), {
         position: toast.POSITION.TOP_LEFT,
+        autoClose: false,
       });
     } else if (dateError) {
       toast.error(this.context.intl.formatMessage({ ...messages.startDateError }), {
         position: toast.POSITION.TOP_LEFT,
+        autoClose: false,
       });
     } else {
       const allCustomSegments = this.props.customSegments.toJS();
