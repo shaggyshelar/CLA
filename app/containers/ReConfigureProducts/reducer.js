@@ -36,6 +36,7 @@ function reConfigureProductsReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case LOAD_CONFIGURE_PRODUCTS_DATA:
+      toast.dismiss();
       return state
         .set('loading', true)
         .set('error', false);
@@ -206,6 +207,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('activeTab', 0);
     }
     case LOAD_CONFIGURE_PRODUCTS_DATA_ERROR: {
+      toast.dismiss();
       if (action.error && action.error instanceof Array) {
         action.error.map((i) => {
           toast.error(<p>{i.message}</p>, {
