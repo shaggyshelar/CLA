@@ -66,15 +66,18 @@ function appReducer(state = initialState, action) {
     case SAVE_ACTION:
       return state.setIn(['data', 'priceList'], fromJS(action.data));
     case LOAD_DATA:
+      toast.dismiss();
       return state.set('loading', true)
         .set('error', false);
     case LOAD_DATA_SUCCESS:
+      //toast.dismiss();
       return state
         .set('data', fromJS(action.data.quote))
         .set('dataChanged', false)
         .set('loading', false);
     case LOAD_DATA_ERROR:
       {
+        toast.dismiss();
         let error = false;
         let errorMsg = false;
         if (action.error instanceof Array) {
