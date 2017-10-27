@@ -6,6 +6,7 @@
 
 import { fromJS } from 'immutable';
 import _ from 'lodash';
+import { toast } from 'react-toastify';
 import {
   DEFAULT_ACTION,
   SHOW_FILTER,
@@ -34,6 +35,7 @@ function productSelectionPageReducer(state = initialState, action) {
       return state
         .set('showFilter', action.data);
     case LOAD_PRODUCTS_DATA:
+      toast.dismiss();
       return state
         .set('loading', true)
         .set('error', false);
@@ -44,6 +46,7 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('loading', false);
     }
     case LOAD_DATA_ERROR:
+      toast.dismiss();
       return state
         .set('error', action.error)
         .set('loading', false);
