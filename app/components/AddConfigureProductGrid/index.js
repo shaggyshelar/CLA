@@ -97,7 +97,7 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
-          // accessor: '',
+        accessor: 'description',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
       },
