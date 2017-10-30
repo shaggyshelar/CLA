@@ -10,7 +10,7 @@ import { browserHistory } from 'react-router';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import options from 'exampleData';
 import { Glyphicon, Row, Col, Button, ButtonGroup, Modal, FormControl } from 'react-bootstrap/lib';
-//import 'react-table/react-table.css';
+//
 import { createStructuredSelector } from 'reselect';
 import ReactTable from '../../components/ReactTable';
 

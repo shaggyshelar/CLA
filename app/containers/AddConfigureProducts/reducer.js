@@ -28,6 +28,7 @@ function addConfigureProductsReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case LOAD_PRODUCTS_DATA:
+      toast.dismiss();
       return state
         .set('loading', true)
         .set('error', false);
@@ -37,16 +38,19 @@ function addConfigureProductsReducer(state = initialState, action) {
         .set('loading', false);
     }
     case LOAD_PRODUCTS_DATA_ERROR: {
+      toast.dismiss();
       if (action.error) {
         action.error.map((i) => {
           toast.error(<p>{i.message}</p>, {
             position: toast.POSITION.TOP_LEFT,
+            autoClose: false,
           });
           return this;
         });
       } else {
         toast.error('Server connection problem ! Please try again later.', {
           position: toast.POSITION.TOP_LEFT,
+          autoClose: false,
         });
       }
       return state

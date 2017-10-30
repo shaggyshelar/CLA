@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Glyphicon } from 'react-bootstrap/lib';
 import { browserHistory } from 'react-router';
-import 'react-table/react-table.css';
+
 import { RIENumber, RIESelect } from 'riek';
 import _ from 'lodash';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
