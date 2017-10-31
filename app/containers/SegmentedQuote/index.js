@@ -134,6 +134,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                 <Tab unmountOnExit eventKey={'Custom'} tabClassName={'custom'} title={this.renderButton()}>
                   <SegmentedEditQuoteGrid
                     data={data.CustomLines}
+                    selectTab="Custom"
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
@@ -170,6 +171,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                 <Tab unmountOnExit eventKey={'Monthly'} tabClassName={'monthly'} title={this.context.intl.formatMessage({ ...messages.monthly })}>
                   <SegmentedEditQuoteGrid
                     data={data.MonthlyLines}
+                    selectTab="Monthly"
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
@@ -192,6 +194,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                   <SegmentedEditQuoteGrid
                     data={data.QuaterlyLines}
                     cloneLine={this.props.cloneLine}
+                    selectTab="Quarterly"
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
                     toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
@@ -213,6 +216,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                   <SegmentedEditQuoteGrid
                     data={data.YearlyLines}
                     cloneLine={this.props.cloneLine}
+                    selectTab="Yearly"
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
                     toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
