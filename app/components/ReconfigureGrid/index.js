@@ -80,7 +80,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     return !isNaN(number);
   }
 
-  formatt(e,d) {
+  formatt(e, d) {
     return (d.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e }));
   }
 
@@ -111,9 +111,9 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
             classEditing="table-edit-input"
             value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
             propName={`${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 )}
+            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
             validate={this.validate}
-            format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 )}
+            format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
             id={cellInfo.original.id}
             classInvalid="invalid"
           />
@@ -197,7 +197,21 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         id: 'listPrice',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
-        Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.currency} {cellInfo.original.listPrice.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span> : <span className="cellColor">{cellInfo.original.currency} {cellInfo.original.listPrice.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>),
+        Cell: (cellInfo) => {
+          if (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected) {
+            return (
+              cellInfo.original.isBundled ? <span> Included </span> :
+              <span>
+                {cellInfo.original.currency} {cellInfo.original.listPrice.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}
+              </span>);
+          } else {
+            return (
+            cellInfo.original.isBundled ? <span> Included </span> :
+            <span className="cellColor">
+              {cellInfo.original.currency} {cellInfo.original.listPrice.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}
+            </span>);
+          }
+        },
       },
     ];
 

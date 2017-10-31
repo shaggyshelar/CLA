@@ -200,7 +200,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 </DropdownButton><br />
 
               </span>
-              <span className="group-header" >{this.context.intl.formatMessage({ ...messages.subTotal })}: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} </span><br />
+              <span className="group-header" >Group Total: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} </span><br />
               <span
                 className="group-description"
                 onClick={this.toggleEditor}
@@ -224,7 +224,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               </Row> */}
               <Row>
                 <Col md={8} sm={8} xs={8}>
-                  <span className="group-label" >{this.context.intl.formatMessage({ ...messages.addDiscount })}</span>
+                  <span className="group-label" >Group Discount (%)</span>
                   <OverlayTrigger placement="top" overlay={discountTooltip}>
                     <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
@@ -248,7 +248,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 <Col md={8} sm={8} xs={8}>
                   <span className="group-label" >{this.context.intl.formatMessage({ ...messages.subTerm })}</span>
                   <OverlayTrigger placement="top" overlay={subscriptionTooltip}>
-                    <Glyphicon glyph="question-sign" style={{ paddingLeft: '17px', paddingBottom: '2px' }} />
+                    <Glyphicon glyph="question-sign" style={{ paddingLeft: '11px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
                 </Col>
                   <Col md={4} sm={4} xs={4}>

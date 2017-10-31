@@ -242,7 +242,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
         accessor: 'name',
-        Footer: (<span>{this.context.intl.formatMessage({ ...messages.subTotal })}</span>),
+        Footer: (<span>Segmented {this.props.selectTab} Total</span>),
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
