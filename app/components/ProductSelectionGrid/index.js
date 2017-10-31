@@ -53,6 +53,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
         accessor: 'code',
+        width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
       },
@@ -60,12 +61,14 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
         accessor: 'name',
+        width: 250,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productFamily })}>{this.context.intl.formatMessage({ ...messages.productFamily })}</span>,
         accessor: 'type',
+        width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
       },
@@ -73,6 +76,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
         style: { textAlign: 'left' },
         accessor: 'description',
+        width: 400,
         headerStyle: { textAlign: 'left', title: 'PRODUCT DESCRIPTION' },
         Cell: (cellInfo) => <span title={cellInfo.original.description}>{cellInfo.original.description}</span>,
       },
@@ -81,7 +85,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
         accessor: 'listPrice.value',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
-        Cell: (props) => <span>₹ {props.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>,
+        Cell: (cellInfo) => <span>{cellInfo.original.currency} {cellInfo.original.listPrice.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>,
       },
     ];
     return (
