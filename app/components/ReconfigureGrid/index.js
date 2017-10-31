@@ -117,10 +117,10 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
             id={cellInfo.original.id}
             classInvalid="invalid"
           />
-          <div className="reconfigure-edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit} ><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+          <div className="reconfigure-edit-icon" style={{ cursor: 'pointer', float: 'left' }} onClick={this.clickEdit} ><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
         </div>);
     }
-    return (<span className="cellColor" style={{ paddingRight: '16px' }}>{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>);
+    return (<span className="cellColor" >{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>);
   }
 
 
