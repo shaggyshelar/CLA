@@ -246,7 +246,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isBundled || cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
+        Cell: (cellInfo) => (cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       }];
     const data = Object.assign({}, this.props.data[0]);
     let segmentTotal = 0;

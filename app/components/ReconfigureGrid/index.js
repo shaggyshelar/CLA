@@ -60,14 +60,14 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       e.currentTarget.previousSibling.focus();
     }
   }
-  dataChanged(data) {
+  dataChanged(decimal, data) {
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const value = data[key];
     const productObj = {
       id: field[0],
       field: field[1],
-      value: parseFloat(value),
+      value: parseFloat(value).toFixed(decimal) / 1,
       categoryId: this.props.categoryId,
       featureId: this.props.feature.id,
     };
@@ -80,8 +80,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     return !isNaN(number);
   }
 
-  format(e) {
-    return (e.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 }));
+  formatt(e,d) {
+    return (d.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e }));
   }
 
   deleteProduct(product) {
@@ -109,11 +109,11 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
           <RIENumber
             className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
             classEditing="table-edit-input"
-            value={cellInfo.value.toFixed(2)}
+            value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
             propName={`${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-            change={this.dataChanged}
+            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 )}
             validate={this.validate}
-            format={this.format}
+            format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 )}
             id={cellInfo.original.id}
             classInvalid="invalid"
           />
@@ -166,8 +166,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         accessor: 'quantity.value',
         id: 'quantity',
         className: 'table-edit-row',
-        style: { textAlign: 'left' },
-        headerStyle: { textAlign: 'left' },
+        style: { textAlign: 'right' },
+        headerStyle: { textAlign: 'right' },
         Cell: this.renderEditable,
       },
       {
@@ -186,17 +186,18 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
-          // accessor: '',
+        accessor: 'description',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
+        Cell: (cellInfo) => <span title={cellInfo.original.description}>{cellInfo.original.description}</span>,
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.unitPrice })}>{this.context.intl.formatMessage({ ...messages.unitPrice })}</span>,
         accessor: 'listPrice.value',
         id: 'listPrice',
-        style: { textAlign: 'left' },
-        headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{this.props.currency}{cellInfo.original.listPrice.value}</span> : <span className="cellColor">{this.props.currency}{cellInfo.original.listPrice.value}</span>),
+        style: { textAlign: 'right' },
+        headerStyle: { textAlign: 'right' },
+        Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{this.props.currency} {cellInfo.original.listPrice.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span> : <span className="cellColor">{this.props.currency} {cellInfo.original.listPrice.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>),
       },
     ];
 
