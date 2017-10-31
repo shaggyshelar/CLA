@@ -8637,6 +8637,7 @@ quoteRouter.post('/SaveQuote', (req, res) => {
     error = [{ id: 123, type: 'asa', message: 'Invalid Products for the product of the day that is samsung mobile' }, { id: 123, type: 'as', message: 'Invalid Data' }];
   }
   response.quote.errorMessages = error;
+  response.quote.groups[3].id = '1234567890';
   res.json(response);
 });
 
