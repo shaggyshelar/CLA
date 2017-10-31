@@ -74,6 +74,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
         style: { textAlign: 'left' },
         accessor: 'description',
         headerStyle: { textAlign: 'left', title: 'PRODUCT DESCRIPTION' },
+        Cell: (cellInfo) => <span title={cellInfo.original.description}>{cellInfo.original.description}</span>,
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.listPrice })}>{this.context.intl.formatMessage({ ...messages.listPrice })}</span>,
