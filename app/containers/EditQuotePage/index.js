@@ -134,7 +134,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         description: '',
         additionaldiscount: '',
         subscriptionTerm: '',
-        netTotal: '0.00',
+        netTotal: '0',
       });
       addQuery({ groupId: randomID });
       this.setState({ selectedGroup: randomID });
@@ -271,6 +271,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.setState({ disabledButton: true });
   }
   quickSaveQuoteLines() {
+    this.setState({
+      selectedGroup: '',
+    });
     this.props.quickSaveQuote();
   }
   render() {

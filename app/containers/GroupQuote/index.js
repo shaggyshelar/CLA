@@ -48,6 +48,15 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
       }
     }
   }
+  componentWillReceiveProps(nextProps) {
+    const groupLen = _.find(nextProps.groups, { id: this.props.location.query.groupId });
+    if (this.state.selectedGroup !== null) {
+      if (this.props.location.query.groupId && !groupLen) {
+        this.setState({ selectedGroup: this.props.groups[0].id });
+        addQuery({ groupId: this.props.groups[0].id });
+      }
+    }
+  }
   changeGroup(e) {
     addQuery({ groupId: e });
     this.props.changeGroup(e);
@@ -224,7 +233,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                     <RIEInput
                       className="group-input"
                       classEditing="input-group input-text"
-                      value={group.additionaldiscount === '' ? '0.00' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
+                      value={group.additionaldiscount === '' ? '0' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
                       propName={`${group.id}*($)*additionaldiscount`}
                       change={this.dataChanged}
                       validate={this.validate}
@@ -239,14 +248,14 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 <Col md={8} sm={8} xs={8}>
                   <span className="group-label" >{this.context.intl.formatMessage({ ...messages.subTerm })}</span>
                   <OverlayTrigger placement="top" overlay={subscriptionTooltip}>
-                    <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
+                    <Glyphicon glyph="question-sign" style={{ paddingLeft: '17px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
                 </Col>
                   <Col md={4} sm={4} xs={4}>
                     <RIEInput
                       className="group-input"
                       classEditing="input-group input-text"
-                      value={group.subscriptionTerm === '' ? '0.00' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
+                      value={group.subscriptionTerm === '' ? '0' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
                       propName={`${group.id}*($)*subscriptionTerm`}
                       change={this.dataChanged}
                       validate={this.validate}
