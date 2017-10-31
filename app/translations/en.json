@@ -117,7 +117,7 @@
   "app.containers.GroupQuote.optional": "Optional",
   "app.containers.GroupQuote.optionalTT": "Marks the entire group as optional.",
   "app.containers.GroupQuote.subTerm": "Subscription Term",
-  "app.containers.GroupQuote.subTermTT": "Subscription term used to prorate eligible products in this group.",
+  "app.containers.GroupQuote.subTermTT": "Subscription term used to prorate eligible products in months.",
   "app.containers.GroupQuote.subTotal": "Sub Total",
   "app.containers.PriceBook.header": "This is PriceBook container !",
   "app.containers.ProductSelectionHeader.cancel": "Cancel",
