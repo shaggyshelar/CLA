@@ -100,6 +100,7 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
         accessor: 'description',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
+        Cell: (cellInfo) => <span title={cellInfo.original.description}>{cellInfo.original.description}</span>,
       },
     ];
     return (
