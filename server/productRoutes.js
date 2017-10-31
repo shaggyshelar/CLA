@@ -5370,7 +5370,7 @@ productRouter.post('/ReconfigureProduct', (req, res) => {
             ],
           },
           listPrice: {
-            value: 123,
+            value: 45965896,
             isEditable: true,
             isVisible: true,
             dataType: 'text/select/textarea/inputSelect',
