@@ -16,7 +16,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     this.selectMainTab = this.selectMainTab.bind(this);
     this.state = {
       selectedTab: '',
-      selectedMainTab: '1',
+      selectedMainTab: '2',
       isCustomModalOpen: false,
       data: [],
     };
@@ -30,7 +30,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     if (this.props.location.query.mainTab) {
       this.setState({ selectedMainTab: this.props.location.query.mainTab });
     } else {
-      addQuery({ mainTab: 1 });
+      addQuery({ mainTab: 2 });
     }
     if (this.props.location.query.tab && lines1.length) {
       this.setState({ selectedTab: this.props.location.query.tab });
@@ -126,7 +126,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
 
     return (
       <div className="qoute-container segmented">
-        <Tabs activeKey={this.state.selectedMainTab} onSelect={this.selectMainTab} animation={false} defaultActiveKey={1} id="noanim-tab-example">
+        <Tabs activeKey={this.state.selectedMainTab} onSelect={this.selectMainTab} animation={false} defaultActiveKey={2} id="noanim-tab-example">
           <Tab unmountOnExit eventKey={'1'} title={this.context.intl.formatMessage({ ...messages.segment })}>
 
             <Tabs animation={false} activeKey={this.state.selectedTab === '' ? selected : this.state.selectedTab} onSelect={this.selectTab} id="inner-tab-example">
@@ -134,6 +134,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                 <Tab unmountOnExit eventKey={'Custom'} tabClassName={'custom'} title={this.renderButton()}>
                   <SegmentedEditQuoteGrid
                     data={data.CustomLines}
+                    selectTab="Custom"
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
@@ -170,6 +171,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                 <Tab unmountOnExit eventKey={'Monthly'} tabClassName={'monthly'} title={this.context.intl.formatMessage({ ...messages.monthly })}>
                   <SegmentedEditQuoteGrid
                     data={data.MonthlyLines}
+                    selectTab="Monthly"
                     cloneLine={this.props.cloneLine}
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
@@ -192,6 +194,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                   <SegmentedEditQuoteGrid
                     data={data.QuaterlyLines}
                     cloneLine={this.props.cloneLine}
+                    selectTab="Quarterly"
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
                     toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}
@@ -213,6 +216,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                   <SegmentedEditQuoteGrid
                     data={data.YearlyLines}
                     cloneLine={this.props.cloneLine}
+                    selectTab="Yearly"
                     deleteLine={this.props.deleteLine}
                     toggleAllCheckBox={this.props.toggleAllCheckBox}
                     toggleQuoteCheckbox={this.props.toggleQuoteCheckbox}

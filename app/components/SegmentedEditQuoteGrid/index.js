@@ -58,9 +58,9 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     };
     this.props.toggleReconfigureLineStatus(reconfigureObj);
     if (this.props.location.query.groupId !== null && this.props.location.query.groupId !== undefined && this.props.location.query.mainTab !== undefined && this.props.location.query.tab !== undefined) {
-      browserHistory.push(`/reconfigureproducts?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+      browserHistory.push(`/reconfigureproducts?groupId=${this.props.location.query.groupId}&mainTab=2`);
     } else if ((this.props.location.query.groupId === null || this.props.location.query.groupId === undefined) && this.props.location.query.mainTab !== undefined) {
-      browserHistory.push(`/reconfigureproducts?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+      browserHistory.push('/reconfigureproducts?mainTab=2');
     } else {
       browserHistory.push('/reconfigureproducts');
     }
@@ -242,7 +242,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
         accessor: 'name',
-        Footer: (<span>{this.context.intl.formatMessage({ ...messages.subTotal })}</span>),
+        Footer: (<span>Segmented {this.props.selectTab} Total</span>),
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
@@ -270,12 +270,13 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     });
     columns.push({
       Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
-      accessor: 'segmentTotal',
+      // /accessor: 'segmentTotal',
       Footer: (<span className="sub-footer-table">{segmentTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>),
       id: 'segmentTotal',
       style: { textAlign: 'right' },
       headerStyle: { textAlign: 'right' },
       className: 'table-edit',
+      Cell: (cellInfo) => (<span>{cellInfo.original.segmentTotal ? cellInfo.original.segmentTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : 0 }</span>),
     });
     return columns;
   }
