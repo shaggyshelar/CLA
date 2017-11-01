@@ -340,7 +340,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 }
 .rbt-input {
-    width:100%;
+    width:250px;
     height:100%;
 }
 
