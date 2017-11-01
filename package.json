@@ -224,7 +224,7 @@
     "minimist": "1.2.0",
     "react": "^0.14.0 || ^15.5.4",
     "react-bootstrap": "^0.31.1",
-    "react-bootstrap-typeahead": "^2.0.0-alpha.1",
+    "react-bootstrap-typeahead": "^2.0.0-rc.2",
     "react-ckeditor-component": "^1.0.3",
     "react-dom": "^0.14.0 || ^15.5.4",
     "react-edit-inline": "^1.0.8",
