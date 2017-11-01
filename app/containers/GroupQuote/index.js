@@ -24,6 +24,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
       selectedGroup: null,
       showEditor: false,
       showDelete: false,
+      desc: '',
     };
     this.changeGroup = this.changeGroup.bind(this);
     this.addProducts = this.addProducts.bind(this);
@@ -43,7 +44,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
         this.setState({ selectedGroup: this.props.location.query.groupId });
         addQuery({ groupId: this.props.location.query.groupId });
       } else {
-        this.setState({ selectedGroup: this.props.groups[0].id });
+        this.setState({ selectedGroup: this.props.groups[0].id, desc: this.props.groups[0].description });
         addQuery({ groupId: this.props.groups[0].id });
       }
     }
@@ -52,13 +53,14 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     const groupLen = _.find(nextProps.groups, { id: this.props.location.query.groupId });
     if (this.state.selectedGroup !== null) {
       if (this.props.location.query.groupId && !groupLen) {
-        this.setState({ selectedGroup: this.props.groups[0].id });
+        this.setState({ selectedGroup: this.props.groups[0].id, desc: this.props.groups[0].description });
         addQuery({ groupId: this.props.groups[0].id });
       }
     }
   }
   changeGroup(e) {
     addQuery({ groupId: e });
+    this.setState({ desc: '' });
     this.props.changeGroup(e);
   }
   toggleEditor() {
@@ -95,7 +97,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     _.filter(groups, (j) => j.id === group.id).map((j) => { j.isDeleted = true; });
     addQuery({ groupId: _.filter(this.props.groups, { isDeleted: false })[0].id });
     this.setState({ selectedGroup: _.filter(this.props.groups, { isDeleted: false })[0].id });
-    this.setState({ showDelete: !this.state.showDelete });
+    this.setState({ showDelete: !this.state.showDelete, desc: '' });
     this.props.deleteGroup(lines, groups);
   }
   descUpdate() {
@@ -129,7 +131,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     return !isNaN(number);
   }
   editorTextChange(e) {
-    this.setState({ desc: e });
+    this.setState({ desc: e.editor.getData() });
   }
   render() {
     let group = {};
@@ -158,7 +160,11 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             <Modal.Title id="contained-modal-title" style={{ textAlign: 'center' }}>Edit Description for {group.name} </Modal.Title>
           </Modal.Header>
           <Modal.Body className="group-des-edit">
-            <CKEditor content={group.description} onChange={this.editorTextChange}></CKEditor>
+            <CKEditor
+              content={group.description} events={{
+                change: this.editorTextChange,
+              }}
+            ></CKEditor>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.toggleEditor}>Close</Button>
@@ -182,34 +188,39 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
         </Modal>
         <div className="group-card">
           <Row>
-            <Col md={4} sm={6} xs={12} className="containers">
-              <RIEInput
-                className="group-header group-edit"
-                classEditing="group-edit-on"
-                value={group.name}
-                propName={`${group.id}*($)*name`}
-                change={this.dataChanged}
-              /><Glyphicon glyph="pencil" className="inline-edit" />
-              <span>
-                <Badge pullRight>{this.props.groups.length}</Badge>
-                <DropdownButton title={this.context.intl.formatMessage({ ...messages.changeGroup })} bsStyle="primary" id="bg-nested-dropdown" >
-                  {this.props.groups.map((item, index) => (
-                    <MenuItem onSelect={this.changeGroup} key={index} eventKey={item.id} value={item.id}>{item.name}</MenuItem>
+            <Col md={3} sm={6} xs={12} className="containers">
+              {/* <Badge pullleft>{this.props.groups.length}</Badge> */}
+              <DropdownButton title="" id="bg-nested-dropdown" className="changeGroup" >
+                {this.props.groups.map((item, index) => (
+                  <MenuItem onSelect={this.changeGroup} key={index} eventKey={item.id} value={item.id}>{item.name}</MenuItem>
                   ))
                   }
-                </DropdownButton><br />
+              </DropdownButton>
+              <div className="group-header-div">
+                <RIEInput
+                  className="group-header group-edit"
+                  classEditing="group-edit-on"
+                  value={group.name}
+                  propName={`${group.id}*($)*name`}
+                  change={this.dataChanged}
+                /><Glyphicon glyph="pencil" className="inline-edit" />
+              </div>
+              <br /><span className="group-total" >Total: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} </span>
 
-              </span>
-              <span className="group-header" >Group Total: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} </span><br />
+            </Col>
+            <Col md={3} sm={6} xs={12} className="containers" style={{ paddingTop: '15px' }}>
+
+              <label className="desc" title={group.description.trim()}>
+                {group.description.trim() === '' ? 'No Description' : group.description}
+              </label><hr />
               <span
                 className="group-description"
                 onClick={this.toggleEditor}
               >
-                { group.description.trim() === '' ?
-              this.context.intl.formatMessage({ ...messages.editDesc })
-              : group.description}</span><Glyphicon glyph="pencil" className="inline-edit" />
+                {this.context.intl.formatMessage({ ...messages.editDesc })}
+              </span>
             </Col>
-            <Col md={4} sm={6} xs={12} className="containers">
+            <Col md={3} sm={6} xs={12} className="containers">
               {/* <Row>
                 <Col md={8} sm={8} xs={8}>
 
@@ -223,49 +234,51 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 </Col>
               </Row> */}
               <Row>
-                <Col md={8} sm={8} xs={8}>
-                  <span className="group-label" >Group Discount (%)</span>
+                <Col md={8} sm={8} xs={8} style={{ height: '25px' }}>
                   <OverlayTrigger placement="top" overlay={discountTooltip}>
                     <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
-                </Col>
-                  <Col md={4} sm={4} xs={4}>
-                    <RIEInput
-                      className="group-input"
-                      classEditing="input-group input-text"
-                      value={group.additionaldiscount === '' ? '0' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
-                      propName={`${group.id}*($)*additionaldiscount`}
-                      change={this.dataChanged}
-                      validate={this.validate}
-                      isDisabled={groupLines.length <= 0}
-                    /><Glyphicon glyph="pencil" className="inline-edit" />
+                  <span className="group-label" >Group Discount (%)</span>
 
-                    {/* <input className="input-group input-text" step="0.1" onChange={this.valueChanged} id="additionaldiscount" type="text" name={group.id} value={group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} /> */}
-                  </Col>
+                </Col>
+                <Col md={4} sm={4} xs={4} style={{ paddingTop: '10px' }} >
+                  <RIEInput
+                    className="group-input"
+                    classEditing="input-group input-text"
+                    value={group.additionaldiscount === '' ? '0' : group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
+                    propName={`${group.id}*($)*additionaldiscount`}
+                    change={this.dataChanged}
+                    validate={this.validate}
+                    isDisabled={groupLines.length <= 0}
+                  /><Glyphicon glyph="pencil" className="inline-edit" />
+
+                  {/* <input className="input-group input-text" step="0.1" onChange={this.valueChanged} id="additionaldiscount" type="text" name={group.id} value={group.additionaldiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} /> */}
+                </Col>
               </Row>
               <Row>
 
-                <Col md={8} sm={8} xs={8}>
-                  <span className="group-label" >{this.context.intl.formatMessage({ ...messages.subTerm })}</span>
+                <Col md={8} sm={8} xs={8} style={{ height: '25px' }}>
                   <OverlayTrigger placement="top" overlay={subscriptionTooltip}>
-                    <Glyphicon glyph="question-sign" style={{ paddingLeft: '11px', paddingBottom: '2px' }} />
+                    <Glyphicon glyph="question-sign" style={{ paddingLeft: '2px', paddingBottom: '2px' }} />
                   </OverlayTrigger>
-                </Col>
-                  <Col md={4} sm={4} xs={4}>
-                    <RIEInput
-                      className="group-input"
-                      classEditing="input-group input-text"
-                      value={group.subscriptionTerm === '' ? '0' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
-                      propName={`${group.id}*($)*subscriptionTerm`}
-                      change={this.dataChanged}
-                      validate={this.validate}
-                      isDisabled={groupLines.length <= 0}
-                    /><Glyphicon glyph="pencil" className="inline-edit" />
+                  <span className="group-label" >{this.context.intl.formatMessage({ ...messages.subTerm })}</span>
 
-                  </Col>
+                </Col>
+                <Col md={4} sm={4} xs={4} style={{ paddingTop: '10px' }}>
+                  <RIEInput
+                    className="group-input"
+                    classEditing="input-group input-text"
+                    value={group.subscriptionTerm === '' ? '0' : group.subscriptionTerm.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
+                    propName={`${group.id}*($)*subscriptionTerm`}
+                    change={this.dataChanged}
+                    validate={this.validate}
+                    isDisabled={groupLines.length <= 0}
+                  /><Glyphicon glyph="pencil" className="inline-edit" />
+
+                </Col>
               </Row>
             </Col>
-            <Col md={4} sm={6} xs={12} className="containers">
+            <Col md={3} sm={6} xs={12} className="containers">
               <div>
                 <Button className="margin" title={this.context.intl.formatMessage({ ...messages.addProducts })} onClick={this.addProducts}>{this.context.intl.formatMessage({ ...messages.addProducts })}</Button>
                 <ButtonGroup className="margin">
@@ -274,6 +287,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 </ButtonGroup>
               </div>
             </Col>
+
           </Row>
         </div>
         <div>

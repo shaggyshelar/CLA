@@ -115,6 +115,12 @@ input[type=number]::-webkit-outer-spin-button {
     border: 2px solid #ddd;
     border-radius: 6px;
 }
+#inner-tab-example .nav-tabs > li.active > a {
+    color: #0070d2 !important;
+}
+#inner-tab-example > ul > li > a:hover {
+    color: #aaa !important;
+}
 #inner-tab-example > ul > li{
     border-right: 2px solid white;
     border-radius: 6px;
@@ -124,11 +130,11 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 6px;
 }
 #noanim-tab-example > .nav > li.active {
-    background: #EDEDED;
+    background: #aaa;
     border-radius: 6px;
 }
 #noanim-tab-example > .nav  > li {
-    background:white;
+    background:#EDEDED;
     width:50%;
     border-radius: 6px;
 }
@@ -140,9 +146,8 @@ input[type=number]::-webkit-outer-spin-button {
    color: #54698d;
  }
 .show-grid {
-    background-color: rgba(0,0,0,0.05);
-    border-bottom: 2px solid #d0d0d0;
-    padding-bottom: 10px;
+    background-color: white;
+    border-bottom: 1px solid #d0d0d0;
 }
 .group-side {
     width: 16px;
@@ -179,15 +184,14 @@ input[type=number]::-webkit-outer-spin-button {
 .group-edit-on{
     background-color: white;
     color: #54698d;
-    font-size: 20px;
+    font-size: 14px;
     height:25px;
-    margin:5px ;
     width: 200px
  }
 .group-desc-edit-on{
     background-color: white;
     color: #54698d;
-    font-size: 16px;
+    font-size: 14px;
  }
 .group {
     margin: 0!important;     
@@ -202,18 +206,17 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .group .dropdown {
     margin: 10px 0 0 0;
-    float: right;
+    float: left;
 }
 .group-card {
-    background-color: rgba(0,0,0,0.05);
     border-bottom: 2px solid #d0d0d0;
     margin-bottom: 10px;
 }
 .group-input {
     margin-right: 20px;
     color: #54698d;
-    font-size: 17px;
-    line-height: 2.0;
+    font-size: 14px;
+    line-height: 1.5;
 }
 .left {
     text-align: left;
@@ -222,13 +225,11 @@ input[type=number]::-webkit-outer-spin-button {
     text-align: right;
 }
 .input-group{
-        background: white;
-    margin-top: 7px;
-    height: 28px;
+    background: white;
+    height: 20px;
     border-radius: 2px;
     border: 1px solid #CCCCCC;
     text-align: right;
-    padding-right:8px;
 }
 .vertically {
     border-left: 2px solid #ccc;
@@ -239,27 +240,43 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 4px;
 }
 .group-header{
-    margin: 10px 15px 15px;
     color: #54698d;
-    font-size: 20px;
-    padding:5px;
-    line-height: 2.5;
+    font-size: 16px;
+    line-height: 1.5;
+    padding-right: 10px;
+    font-weight: 600;
 }
-.group-label{
+.group-header-div {    
+    padding-left: 55px;
+    padding-top: 5px;
+}
+.group-total{
     margin: 10px 15px 15px;
     color: #54698d;
     font-size: 16px;
+    line-height: 1.5;
+}
+.group-label{
+    color: #54698d;
+    font-size: 14px;
     padding:5px;
     line-height: 2.5;
+}
+.desc {
+    font-size: 14px;
+    width: 250px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-weight: 500;
+    vertical-align: top;
+}
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover {
+    color: #fff !important;
 }
 .group-description {
     color: #54698d;
-    font-size: 16px;
-    margin-left: 6px;
-    color: #54698d;
-    font-size: 16px;
-    padding: 10px;
-    display: inline-block;
+    font-size: 14px;
     width: 250px;
     white-space: nowrap;
     overflow: hidden;
@@ -288,10 +305,26 @@ input[type=number]::-webkit-outer-spin-button {
 .dropdown {
     margin: 15px;
 }
-.btn-default {
-    color: #0070d2 !important;
+.changeGroup {
+    padding: 0px 5px 0px 5px !important;
+    background-color: #eee;
+    margin-left: 20px !important;
 }
-
+.btn-default {
+    color: #333;
+    background-color: #eee !important;
+    border-color: #ddd;
+}
+/* .btn-danger {
+    color: #d43f3a;
+    background-color: #fff;
+    border-color: #d43f3a;
+}
+.btn-primary {
+    color: #337ab7;
+    background-color: #fff;
+    border-color: #2e6da4;
+} */
 .btn-group>.btn+.dropdown-toggle {
     height:34px
 }
@@ -682,10 +715,7 @@ input[type=number]::-webkit-outer-spin-button {
         border-bottom:1px solid #ddd;     
     }
 }
-.containers:nth-child(2) {
-    border-left: 1px solid #ddd!important; 
-	border-right: 1px solid #ddd!important;         
-}
+
 /*styles for bootstrap tab on reconfigure lines page*/
 .margin-tabs{
     width: 98%;    
@@ -701,12 +731,22 @@ input[type=number]::-webkit-outer-spin-button {
 .nav-tabs > li > a { 
     border: none; color: #666;
 }
-.nav-tabs > li.active > a, .nav-tabs > li > a:hover {
+.nav-tabs > li.active > a{
     border: none; 
-    color: #166bbf !important; 
+    color: #fff !important; 
     background: transparent; 
 }
-.nav-tabs > li > a::after { 
+.nav-tabs > li.active > a:hover{
+    border: none; 
+    color: #fff !important; 
+    background: transparent; 
+}
+.nav-tabs > li > a:hover {
+    border: none; 
+    color: #aaa !important; 
+    background: transparent; 
+}
+/* .nav-tabs > li > a::after { 
     content: ""; 
     background: #4285F4; 
     height: 2px; 
@@ -716,7 +756,7 @@ input[type=number]::-webkit-outer-spin-button {
     bottom: -1px; 
     transition: all 250ms ease 0s; 
     transform: scale(0); 
-}
+} */
 .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { 
     transform: scale(1); 
 }
@@ -755,7 +795,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 20px;
     line-height: 2.5;
     font-weight: 600;
-    margin-left: 6px;
+    margin-left: 12px;
 }
 
 .minMaxMessage {
@@ -770,11 +810,9 @@ input[type=number]::-webkit-outer-spin-button {
 /*** D. 28 Aug 2017 **/
 
 .nav-tabs > li.active > a{
-	background:#EDEDED!important;
+	background:#aaa !important;
 }
-.show-grid {
-    padding-bottom: 0px!important;
-}
+
 .group-card .badge {
     position: absolute!important;
     right: 0!important;
@@ -784,13 +822,11 @@ input[type=number]::-webkit-outer-spin-button {
     height: 20px!important;
 }
 .containers {
-   /* border-right: 1px solid #ddd!important;*/
-	border-left: none!important;
-	padding-bottom: 15px;
+    border-right: 1px solid #ddd!important;
+    border-left: none!important;
+    height: 65px;
 }
-.show-grid {
-    border-bottom: 0px solid #d0d0d0!important;
-}
+
 #inner-tab-example > ul {
     background: #fff!important;
     border-radius: 0!important;
@@ -819,7 +855,10 @@ input[type=number]::-webkit-outer-spin-button {
 	border-radius: 0px!important;
     text-align: center;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 14px;
+}
+.nav>li>a {
+    padding: 5px 15px !important;
 }
 .inline-edit {
     font-size: 11px!important;
@@ -838,7 +877,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .sub-footer-seg {    
     height: auto!important;
-    font-size: 16px!important;
+    font-size: 14px!important;
     font-weight: 600!important;
 }
 .inline-select {
@@ -877,10 +916,17 @@ input[type=number]::-webkit-outer-spin-button {
 .sub-footer{
     width: 100%!important;
 	height: auto!important;
-    font-size: 16px!important;
+    font-size: 14px!important;
     font-weight: 600!important;
 	padding-top: 4px;
     padding-bottom: 4px;
+}
+.group-card hr {
+    margin-top: 0px !important;
+    margin-bottom: 12px !important;
+}
+.group-card label{
+    line-height: 16px;
 }
 @media (max-width: 767px){
 	.group-card .badge {
@@ -907,10 +953,7 @@ strong {
     font-weight: 700!important;
     font-size: 12px;
 }
-.group-header {
-    font-weight: 600;
-	padding:0;
-}
+
 .group {
 	border-radius:0!important;
 }
@@ -1064,16 +1107,10 @@ strong {
         margin-right: 15px;
     }
     
-	.group-label {
-		font-size: 14px;
-	}
 	.group-input {
 		font-size: 15px;
 	}
-	.containers {
-		padding-bottom: 10px;
-		padding-top: 10px;
-	}
+
 	.Sidebar.modal {		
 		right: 0!important;
 		left: 50%!important;
@@ -1187,9 +1224,6 @@ strong {
     padding: 10px 2em!important;
 }
 
-.show-grid {
-	background-color: #EDEDED!important;
-}
 @media (min-width:768px){
 	.header-container {
 		border-bottom: 1px solid #d0d0d0!important;
@@ -1333,6 +1367,9 @@ strong {
     right: 0;
     margin-right: 10px;
 }
+.group-header.group-edit.group-edit-on + .inline-edit{
+    display :none!important;
+}
 .group-header:hover +.inline-edit{
 	opacity:1!important;
 	display : inline-block!important;
@@ -1340,6 +1377,9 @@ strong {
 .group-description:hover +.inline-edit{
 	opacity:1!important;
 	display : inline-block!important;
+}
+.group-input.input-text.input-group + .inline-edit{
+    display :none!important;
 }
 .group-input:hover +.inline-edit{
 	opacity:1!important;
@@ -1546,15 +1586,15 @@ body.modal-open {
     overflow: hidden;
 }
 .ReactTable .rt-tfoot {
-    font-size: 16px!important;
+    font-size: 14px!important;
     font-weight: 600!important;
-    height: 35px;
+    height: 25px;
     bottom:0;
     position: relative;
     background: #ececec;
     color: #16325C;
     box-shadow: none !important;
-    padding: 3px 0px 30px!important;
+    /* padding: 3px 0px 30px!important; */
 }
 .ReactTable .rt-tfoot .rt-td {
     border: 0px !important;
@@ -1589,13 +1629,14 @@ body.modal-open {
 .configureGroupHeader {
     line-height: 2;
     font-size: 17px;
+    margin-left: 12px;
 }
 .reconfigure-edit-icon {
     display: inline-block!important;
     margin-left: 5px;
 }
 .addConfigurationLabel {
-    margin-left: 15px;
+    margin-left: 21px;
 }
 #configureProductsList .tab-content {
     overflow-y: auto;
