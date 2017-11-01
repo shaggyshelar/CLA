@@ -12,2410 +12,3221 @@ productRouter.get('/GetProducts', (req, res) => {
   const productData = {
     products: [
       {
-        id: '123',
-        code: 'P121',
-        name: 'Car',
-        isSegmented: false,
+        id: 'c9a9b317-86b9-e711-8131-c4346bdcdf81',
+        code: 'Win_server',
+        name: 'Win Server 2016',
+        description: 'Windows Server 2016bring the innovation behind the worlds largest cloud data center to yours.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 8959,
-          isEditable: true,
+          value: 50000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 50000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1234',
-        isSegmented: false,
-        code: 'car12',
-        name: 'car2',
+        id: '62bf5e79-86b9-e711-8131-c4346bdcdf81',
+        code: 'Win_DOS',
+        name: 'MS DOS',
+        description: 'MS-DOS is a non-graphical command line operating system derived from 86-DOS',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 635,
-          isEditable: true,
+          value: 4000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 4000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1235',
-        code: 'car3',
-        isSegmented: false,
-        name: 'car',
-        type: 'Product/Bundle',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
-        canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
-        canShowDiscountScheduler: true,
-        listPrice: {
-          value: 85225123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
-        pricingMethod: {
-          values: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
-            },
-          ],
-        },
-      },
-      {
-        id: '123',
-        code: 'P121',
-        name: 'Car',
-        isSegmented: false,
+        id: 'e9ced9cd-86b9-e711-8131-c4346bdcdf81',
+        code: 'Win_OS10',
+        name: 'Win 10 Professional',
+        description: 'Windows 10 Professional is a personal computer operating system developed and released by Microsoft as part of the Windows NT family of operating systems.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 8959,
-          isEditable: true,
+          value: 15000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 15000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1234',
-        isSegmented: false,
-        code: 'car12',
-        name: 'car2',
+        id: 'cccfd2fd-86b9-e711-8131-c4346bdcdf81',
+        code: 'Win_Off365',
+        name: 'Office 365',
+        description: 'New Office 365 provides the features which make it easy to create and work together.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 635,
-          isEditable: true,
+          value: 3600.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 3600.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1235',
-        code: 'car3',
-        isSegmented: false,
-        name: 'car',
-        type: 'Product/Bundle',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
-        canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
-        canShowDiscountScheduler: true,
-        listPrice: {
-          value: 85225123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
-        pricingMethod: {
-          values: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
-            },
-          ],
-        },
-      },
-      {
-        id: '123',
-        code: 'P121',
-        name: 'Car',
-        isSegmented: false,
+        id: '33f62133-87b9-e711-8131-c4346bdcdf81',
+        code: 'Win_Off',
+        name: 'MS Office 2016',
+        description: 'Microsoft Office 2016 is an office suite of applications, servers, and services developed by Microsoft.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 8959,
-          isEditable: true,
+          value: 4500.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 4500.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1234',
-        isSegmented: false,
-        code: 'car12',
-        name: 'car2',
+        id: 'e0d9c952-87b9-e711-8131-c4346bdcdf81',
+        code: 'Win_Libre',
+        name: 'Libre Office',
+        description: 'LibreOffice is a free and open source office suite, a project of The Document Foundation. It was forked from OpenOffice.org in 2010, which was an open-sourced.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 635,
-          isEditable: true,
+          value: 20000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 20000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1235',
-        code: 'car3',
-        isSegmented: false,
-        name: 'car',
-        type: 'Product/Bundle',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
-        canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
-        canShowDiscountScheduler: true,
-        listPrice: {
-          value: 85225123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
-        pricingMethod: {
-          values: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
-            },
-          ],
-        },
-      },
-      {
-        id: '123',
-        code: 'P121',
-        name: 'Car',
-        isSegmented: false,
+        id: '9f072489-87b9-e711-8131-c4346bdcdf81',
+        code: 'Win_SE',
+        name: 'Security Essentials',
+        description: 'Windows Defender is built into the latest versions of Windows and helps guard your PC against viruses and other malware. ',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 8959,
-          isEditable: true,
+          value: 1000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 1000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1234',
-        isSegmented: false,
-        code: 'car12',
-        name: 'car2',
+        id: '4ba2a655-88b9-e711-8131-c4346bdcdf81',
+        code: 'Win_Cam',
+        name: 'WebCam',
+        description: 'A webcam is a video camera that feeds or streams its image in real time to or through a computer to a computer network.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 635,
-          isEditable: true,
+          value: 3000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 3000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1235',
-        code: 'car3',
-        isSegmented: false,
-        name: 'car',
-        type: 'Product/Bundle',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
-        canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
-        canShowDiscountScheduler: true,
-        listPrice: {
-          value: 85225123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
-        pricingMethod: {
-          values: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
-            },
-          ],
-        },
-      },
-      {
-        id: '123',
-        code: 'P121',
-        name: 'Car',
-        isSegmented: false,
+        id: '181b128e-88b9-e711-8131-c4346bdcdf81',
+        code: 'Win_HS',
+        name: 'Headset',
+        description: 'A headset combines a headphone with a microphone. Headsets are made with either a single-earpiece (mono) or a double-earpiece (mono to both ears or stereo).',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 8959,
-          isEditable: true,
+          value: 0.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 0.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1234',
-        isSegmented: false,
-        code: 'car12',
-        name: 'car2',
+        id: 'a302782c-13ba-e711-8132-c4346bdcdf81',
+        code: 'Win_PM',
+        name: 'Win Product Maintenance',
+        description: 'Maintenance activity refers to an application or process that helps maintain the health and performance of a Windows PC.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 635,
-          isEditable: true,
+          value: 1000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 1000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1235',
-        code: 'car3',
-        isSegmented: false,
-        name: 'car',
-        type: 'Product/Bundle',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
-        canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
-        canShowDiscountScheduler: true,
-        listPrice: {
-          value: 85225123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
-        pricingMethod: {
-          values: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
-            },
-          ],
-        },
-      },
-      {
-        id: '123',
-        code: 'P121',
-        name: 'Car',
-        isSegmented: false,
+        id: 'e541f64d-44ba-e711-8132-c4346bdcdf81',
+        code: 'Win_NA',
+        name: 'Norton Antivirus',
+        description: 'Norton provides award-winning antivirus and security software for your PC, Mac, and mobile devices. ',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 8959,
-          isEditable: true,
+          value: 2000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 2000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1234',
-        isSegmented: false,
-        code: 'car12',
-        name: 'car2',
+        id: '4264be79-44ba-e711-8132-c4346bdcdf81',
+        code: 'Win_AF',
+        name: 'Akmai Firewall',
+        description: 'Protect against application-layer attacks with a WAF. A web application firewall (WAF) is an essential element in your defense against rapidly emerging web security threats.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 635,
-          isEditable: true,
+          value: 3000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 3000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1235',
-        code: 'car3',
-        isSegmented: false,
-        name: 'car',
-        type: 'Product/Bundle',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
-        canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
-        canShowDiscountScheduler: true,
-        listPrice: {
-          value: 85225123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
-        pricingMethod: {
-          values: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
-            },
-          ],
-        },
-      },
-      {
-        id: '123',
-        code: 'P121',
-        name: 'Car',
-        isSegmented: false,
+        id: '8f0c9d79-45ba-e711-8132-c4346bdcdf81',
+        code: 'Win_Processor',
+        name: 'Core i-7',
+        description: '8th Gen Intel® Core i7 Processors',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 8959,
-          isEditable: true,
+          value: 20000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 20000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1234',
-        isSegmented: false,
-        code: 'car12',
-        name: 'car2',
+        id: '721452c1-45ba-e711-8132-c4346bdcdf81',
+        code: 'HG6T77AA',
+        name: 'HP - DDR3 (16GB)',
+        description: null,
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 635,
-          isEditable: true,
+          value: 14916.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 14916.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1235',
-        code: 'car3',
-        isSegmented: false,
-        name: 'car',
-        type: 'Product/Bundle',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
-        canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
-        canShowDiscountScheduler: true,
-        listPrice: {
-          value: 85225123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
-        pricingMethod: {
-          values: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
-            },
-          ],
-        },
-      },
-      {
-        id: '123',
-        code: 'P121',
-        name: 'Car',
-        isSegmented: false,
+        id: '383ab3da-45ba-e711-8132-c4346bdcdf81',
+        code: 'Win_LS',
+        name: 'LED Screen',
+        description: 'The Best Quality of LED Screen in full HD resolution.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 8959,
-          isEditable: true,
+          value: 15000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 15000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1234',
-        isSegmented: false,
-        code: 'car12',
-        name: 'car2',
+        id: 'bfe9fefb-45ba-e711-8132-c4346bdcdf81',
+        code: 'Win_LTS',
+        name: 'LED Touch Screen',
+        description: ' IPS (In-Plane-Switching) is a technology for LCD displays that offers users wider viewing angles and bolder colors.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 635,
-          isEditable: true,
+          value: 18000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 18000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1235',
-        code: 'car3',
-        isSegmented: false,
-        name: 'car',
-        type: 'Product/Bundle',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
-        canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
-        canShowDiscountScheduler: true,
-        listPrice: {
-          value: 85225123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
-        pricingMethod: {
-          values: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
-            },
-          ],
-        },
-      },
-      {
-        id: '123',
-        code: 'P121',
-        name: 'Car',
-        isSegmented: false,
+        id: 'fb349db2-45ba-e711-8132-c4346bdcdf81',
+        code: 'H2P6SAA',
+        name: 'HP - DDR3 (8GB)',
+        description: null,
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 8959,
-          isEditable: true,
+          value: 10236.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 10236.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1234',
-        isSegmented: false,
-        code: 'car12',
-        name: 'car2',
+        id: 'adee20cd-46ba-e711-8132-c4346bdcdf81',
+        code: 'Win_MsD',
+        name: 'MS Dynamics',
+        description: 'Microsoft Dynamics 365 consists of intelligent cloud application that unifies CRM and ERP capabilities to help you run your business end to end.',
+        parentId: null,
+        parentName: null,
         type: 'Product',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 635,
-          isEditable: true,
+          value: 50000.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 50000.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 2,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
       {
-        id: '1235',
-        code: 'car3',
-        isSegmented: false,
-        name: 'car',
-        type: 'Product/Bundle',
-        isBundled: true,
-        isDisableReconfiguration: true,
-        groupId: 123,
-        markup: 123,
-        quantity: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        discountSchedule: {
-          id: 123,
-          name: 'Diwali',
-          discountUnit: 'Percent/Amount',
-          type: 'Range/Slab',
-          tiers: [
-            {
-              id: 123,
-              name: 'tier1',
-              lowerBound: 1,
-              upperBound: 10,
-              discountpercent: 10,
-              discountamount: 123,
-            },
-          ],
-        },
-        canClone: true,
+        id: '1556123e-47ba-e711-8132-c4346bdcdf81',
+        code: 'Win_LC',
+        name: 'LAN Cable',
+        description: 'A local area network (LAN) is a computer network that interconnects computers within a limited area.',
+        parentId: null,
+        parentName: null,
+        type: 'Product',
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
         canSegment: false,
-        segmentData: null,
-        canReconfigure: true,
+        canReconfigure: false,
         canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
         listPrice: {
-          value: 85225123,
-          isEditable: true,
+          value: 100.0000,
+          isEditable: false,
           isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
+          dataType: 'text',
           selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
+
           ],
         },
-        isTaxable: true,
-        additionalDiscount: {
-          value: 123,
-          isEditable: true,
-          isVisible: true,
-          dataType: 'text/select/textarea/inputSelect',
-          selectValues: [
-            {
-              id: 123,
-              value: ':List',
-              isSelected: true,
-            },
-          ],
-        },
-        netUnitPrice: 123,
-        totalPrice: 123,
-        netTotal: 123,
         pricingMethod: {
-          values: [
+          value: [
             {
-              id: 123,
-              value: ':List',
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'Block Pricing',
               isSelected: true,
-            },
-            {
-              id: 123,
-              value: ':Cost',
-              isSelected: false,
+              Amount: 100.0000,
+              Percent: 0.0,
             },
           ],
         },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+          {
+            blockId: '823f2064-47ba-e711-8132-c4346bdcdf81',
+            blockName: 'Block 1',
+            LowerBound: 1,
+            UpperBound: 10,
+            Price: 100.0000,
+          },
+          {
+            blockId: '015a4d77-47ba-e711-8132-c4346bdcdf81',
+            blockName: 'Block 2',
+            LowerBound: 11,
+            UpperBound: 20,
+            Price: 80.0000,
+          },
+          {
+            blockId: '2223ed7f-47ba-e711-8132-c4346bdcdf81',
+            blockName: 'Block 3',
+            LowerBound: 21,
+            UpperBound: null,
+            Price: 50.0000,
+          },
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
+      },
+      {
+        id: '8096c9a7-47ba-e711-8132-c4346bdcdf81',
+        code: 'Win_NC',
+        name: 'Router',
+        description: 'A router is a networking device that forwards data packets between computer networks. Routers perform the traffic directing functions on the Internet.',
+        parentId: null,
+        parentName: null,
+        type: 'Product',
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
+        canSegment: false,
+        canReconfigure: false,
+        canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        listPrice: {
+          value: 4000.0000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        pricingMethod: {
+          value: [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
+              isSelected: true,
+              Amount: 4000.0000,
+              Percent: 0.0,
+            },
+          ],
+        },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 2,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
+      },
+      {
+        id: 'fefd176a-09bb-e711-8132-c4346bdcdf81',
+        code: 'Win_eCPQ',
+        name: 'E-CPQ',
+        description: 'Configure Price Quote software is a term used in the business-to-business industry to describe software systems that help sellers quote complex and configurable products.',
+        parentId: null,
+        parentName: null,
+        type: 'Product',
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
+        canSegment: false,
+        canReconfigure: false,
+        canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        listPrice: {
+          value: 200000.0000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        pricingMethod: {
+          value: [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
+              isSelected: true,
+              Amount: 200000.0000,
+              Percent: 0.0,
+            },
+          ],
+        },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
+      },
+      {
+        id: '76330fec-43be-e711-8132-c4346bdcdf81',
+        code: 'Win_AMC',
+        name: 'AMC',
+        description: null,
+        parentId: null,
+        parentName: null,
+        type: 'Product',
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
+        canSegment: false,
+        canReconfigure: false,
+        canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        listPrice: {
+          value: 5000.0000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        pricingMethod: {
+          value: [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
+              isSelected: true,
+              Amount: 5000.0000,
+              Percent: 0.0,
+            },
+          ],
+        },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
+      },
+      {
+        id: 'e917ae89-e1be-e711-8132-c4346bdcdf81',
+        code: 'Win-Intellicus',
+        name: 'Intellicus',
+        description: null,
+        parentId: null,
+        parentName: null,
+        type: 'Product',
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
+        canSegment: false,
+        canReconfigure: false,
+        canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        listPrice: {
+          value: 10000.0000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        pricingMethod: {
+          value: [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
+              isSelected: true,
+              Amount: 10000.0000,
+              Percent: 0.0,
+            },
+          ],
+        },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
+      },
+      {
+        id: '1eba5ea4-e3be-e711-8132-c4346bdcdf81',
+        code: 'Win-1year',
+        name: '1 Year Warranty',
+        description: null,
+        parentId: null,
+        parentName: null,
+        type: 'Product',
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
+        canSegment: false,
+        canReconfigure: false,
+        canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        listPrice: {
+          value: 10000.0000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        pricingMethod: {
+          value: [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
+              isSelected: true,
+              Amount: 10000.0000,
+              Percent: 0.0,
+            },
+          ],
+        },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
+      },
+      {
+        id: 'a9c07615-e4be-e711-8132-c4346bdcdf81',
+        code: 'Win-3year',
+        name: '3 Year Warranty',
+        description: null,
+        parentId: null,
+        parentName: null,
+        type: 'Product',
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
+        canSegment: false,
+        canReconfigure: false,
+        canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        listPrice: {
+          value: 20000.0000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        pricingMethod: {
+          value: [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
+              isSelected: true,
+              Amount: 20000.0000,
+              Percent: 0.0,
+            },
+          ],
+        },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
+      },
+      {
+        id: 'a97ecf00-e5be-e711-8132-c4346bdcdf81',
+        code: '663324B21',
+        name: 'HP - DDR4 (8GB)',
+        description: null,
+        parentId: null,
+        parentName: null,
+        type: 'Product',
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
+        canSegment: false,
+        canReconfigure: false,
+        canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        listPrice: {
+          value: 13583.0000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        pricingMethod: {
+          value: [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
+              isSelected: true,
+              Amount: 13583.0000,
+              Percent: 0.0,
+            },
+          ],
+        },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
+      },
+      {
+        id: '7e0c7125-e5be-e711-8132-c4346bdcdf81',
+        code: '669324B70',
+        name: 'HP - DDR4 (16GB)',
+        description: null,
+        parentId: null,
+        parentName: null,
+        type: 'Product',
+        isBundle: false,
+        productStructure: 'Product',
+        isBundled: false,
+        canClone: false,
+        canSegment: false,
+        canReconfigure: false,
+        canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        listPrice: {
+          value: 18916.0000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        pricingMethod: {
+          value: [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
+              isSelected: true,
+              Amount: 18916.0000,
+              Percent: 0.0,
+            },
+          ],
+        },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
+      },
+      {
+        id: '1496ce5e-00bb-e711-8132-c4346bdcdf81',
+        code: 'Win_HighPC',
+        name: 'High Performance PC',
+        description: null,
+        parentId: null,
+        parentName: null,
+        type: 'Bundle',
+        isBundle: true,
+        productStructure: 'Bundle',
+        isBundled: false,
+        canClone: false,
+        canSegment: false,
+        canReconfigure: false,
+        canShowDiscountScheduler: true,
+        optional: false,
+        taxable: false,
+        isReconfigurationDisabled: false,
+        currency: '?',
+        quoteId: 'f91562f0-13ba-e711-8132-c4346bdcdf81',
+        groupId: null,
+        lineId: null,
+        parentLineId: null,
+        decimalsSupported: 2,
+        defaultQuantity: 1.0000000000,
+        quantity: {
+          value: 1.0000000000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        listPrice: {
+          value: 150000.0000,
+          isEditable: false,
+          isVisible: true,
+          dataType: 'text',
+          selectValues: [
+
+          ],
+        },
+        pricingMethod: {
+          value: [
+            {
+              id: '00000000-0000-0000-0000-000000000000',
+              value: 'List',
+              isSelected: true,
+              Amount: 150000.0000,
+              Percent: 0.0,
+            },
+          ],
+        },
+        priceListId: 'e171145c-86b9-e711-8131-c4346bdcdf81',
+        discountSchedule: {
+          id: '',
+          name: null,
+          discountUnit: null,
+          type: null,
+          tiers: [
+
+          ],
+        },
+        decimalSupported: null,
+        blockPrices: [
+
+        ],
+        subscriptionPricing: null,
+        subscriptionTerm: 0,
+        termDiscountLevel: 'Line',
+        segmentData: null,
+        additionalDiscount: {
+          value: 0.0,
+          isEditable: false,
+          isVisible: false,
+          dataType: 'inputSelect',
+          selectValues: [
+            {
+              id: '11111',
+              value: '%',
+              isSelected: true,
+            },
+            {
+              id: '22222',
+              value: 'Amount',
+              isSelected: true,
+            },
+          ],
+        },
+        markup: 0.0,
+        netUnitPrice: 0.0,
+        totalPrice: 0.0,
+        netTotal: 0.0,
+        featureId: null,
+        categoryId: null,
+        isDependent: false,
+        isExclusion: false,
+        dependentProductId: null,
+        dependentBy: null,
+        isSelected: true,
+        isRequired: false,
+        isDisable: false,
+        optionLayout: null,
+        categories: [
+
+        ],
+        features: [
+
+        ],
+        products: [
+
+        ],
       },
     ],
-    config: {},
+    config: {
+
+    },
   };
 
   if (req.query.SearchValue) {

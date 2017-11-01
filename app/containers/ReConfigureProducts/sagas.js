@@ -40,9 +40,9 @@ export function* saveProducts(data, locationQuery) {
       yield put(reconfigureDataLoadingError(quotes.quote.errorMessages));
     } else {
       if (locationQuery.groupId !== null && locationQuery.groupId !== undefined && locationQuery.mainTab !== undefined && locationQuery.tab !== undefined) {
-        browserHistory.push(`/EditQuote?groupId=${locationQuery.groupId}&mainTab=${locationQuery.mainTab}&tab=${locationQuery.tab}`);
+        browserHistory.push(`/EditQuote?groupId=${locationQuery.groupId}&mainTab=2&tab=${locationQuery.tab}`);
       } else if ((locationQuery.groupId === null || locationQuery.groupId === undefined) && locationQuery.mainTab !== undefined) {
-        browserHistory.push(`/EditQuote?mainTab=${locationQuery.mainTab}&tab=${locationQuery.tab}`);
+        browserHistory.push(`/EditQuote?mainTab=2&tab=${locationQuery.tab}`);
       } else {
         browserHistory.push('/EditQuote');
       }
