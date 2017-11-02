@@ -106,7 +106,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           netUnitPrice: 123,
           totalPrice: 123,
           netTotal: 123,
-          segmentTotal: 123,
+          segmentTotal: 123123131,
           pricingMethod: {
             values: [
               {
@@ -266,7 +266,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           netUnitPrice: 123,
           totalPrice: 123,
           netTotal: 123,
-          segmentTotal: 123,
+          segmentTotal: 112312323,
           pricingMethod: {
             values: [
               {
@@ -399,7 +399,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
           netUnitPrice: 123,
           totalPrice: 123,
           netTotal: 123,
-          segmentTotal: 123,
+          segmentTotal: 1223233,
           pricingMethod: {
             values: [
               {
@@ -5898,7 +5898,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
           netUnitPrice: 123,
           totalPrice: 123,
           netTotal: 123,
-          segmentTotal: 123,
+          segmentTotal: 1232323,
           pricingMethod: {
             values: [
               {
@@ -6058,7 +6058,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
           netUnitPrice: 123,
           totalPrice: 123,
           netTotal: 123,
-          segmentTotal: 123,
+          segmentTotal: 122323,
           pricingMethod: {
             values: [
               {
@@ -6191,7 +6191,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
           netUnitPrice: 123,
           totalPrice: 123,
           netTotal: 123,
-          segmentTotal: 123,
+          segmentTotal: 12356567,
           pricingMethod: {
             values: [
               {

@@ -16,7 +16,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     this.selectMainTab = this.selectMainTab.bind(this);
     this.state = {
       selectedTab: '',
-      selectedMainTab: '1',
+      selectedMainTab: '2',
       isCustomModalOpen: false,
       data: [],
     };
@@ -30,7 +30,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     if (this.props.location.query.mainTab) {
       this.setState({ selectedMainTab: this.props.location.query.mainTab });
     } else {
-      addQuery({ mainTab: 1 });
+      addQuery({ mainTab: 2 });
     }
     if (this.props.location.query.tab && lines1.length) {
       this.setState({ selectedTab: this.props.location.query.tab });
@@ -126,7 +126,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
 
     return (
       <div className="qoute-container segmented">
-        <Tabs activeKey={this.state.selectedMainTab} onSelect={this.selectMainTab} animation={false} defaultActiveKey={1} id="noanim-tab-example">
+        <Tabs activeKey={this.state.selectedMainTab} onSelect={this.selectMainTab} animation={false} defaultActiveKey={2} id="noanim-tab-example">
           <Tab unmountOnExit eventKey={'1'} title={this.context.intl.formatMessage({ ...messages.segment })}>
 
             <Tabs animation={false} activeKey={this.state.selectedTab === '' ? selected : this.state.selectedTab} onSelect={this.selectTab} id="inner-tab-example">
