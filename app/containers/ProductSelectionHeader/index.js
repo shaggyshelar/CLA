@@ -42,6 +42,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
             data={this.props.data}
             searchInputChange={this.props.searchInputChange}
             onSearchClick={this.props.onSearchClick}
+            location={this.props.location}
             onSearchItemSelected={this.props.onSearchItemSelected}
             place={this.context.intl.formatMessage({ ...messages.searchProducts })}
           />
