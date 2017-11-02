@@ -21,6 +21,7 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
     this.handleChange = this.handleChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSearchClick = this.onSearchClick.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
   }
 
   onSearchClick() {
@@ -59,6 +60,11 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
     });
     //this.props.searchInputChange(selection);
   }
+  onInputChange(text) {
+    if (text === '') {
+      this.props.onSearchClick(text);
+    }
+  }
 
   render() {
     return (
@@ -66,8 +72,8 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
         <Typeahead
           options={this.props.data}
           onChange={this.handleChange}
-          filterBy={(options) => options}
           placeholder={this.props.place}
+          onInputChange={this.onInputChange}
           clearButton
         />
         <Button bsStyle="primary" onClick={this.onSearchClick}><Glyphicon glyph="search" /></Button>
