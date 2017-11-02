@@ -205,10 +205,10 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   change={this.dataChanged}
                 /><Glyphicon glyph="pencil" className="inline-edit" />
               </div>
-              <br /><span className="group-total" >Total: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} </span>
+              <br /><span className="group-total" >Group Total: {this.props.data.currency} {group.netTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} </span>
 
             </Col>
-            <Col md={3} sm={6} xs={12} className="containers" style={{ paddingTop: '15px' }}>
+            <Col md={3} sm={6} xs={12} className="containers" style={{ paddingTop: '10px' }}>
 
               <label className="desc" title={group.description.trim()}>
                 {group.description.trim() === '' ? 'No Description' : group.description}
@@ -241,7 +241,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   <span className="group-label" >Group Discount (%)</span>
 
                 </Col>
-                <Col md={4} sm={4} xs={4} style={{ paddingTop: '10px' }} >
+                <Col md={4} sm={4} xs={4} style={{ paddingTop: '4px' }} >
                   <RIEInput
                     className="group-input"
                     classEditing="input-group input-text"
@@ -264,7 +264,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                   <span className="group-label" >{this.context.intl.formatMessage({ ...messages.subTerm })}</span>
 
                 </Col>
-                <Col md={4} sm={4} xs={4} style={{ paddingTop: '10px' }}>
+                <Col md={4} sm={4} xs={4} style={{ paddingTop: '5px' }}>
                   <RIEInput
                     className="group-input"
                     classEditing="input-group input-text"
