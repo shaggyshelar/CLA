@@ -14,7 +14,7 @@ productRouter.get('/GetProducts', (req, res) => {
       {
         id: '123',
         code: 'P121',
-        name: 'Car',
+        name: 'High Peformnace Pc',
         isSegmented: false,
         type: 'Product',
         isBundled: true,

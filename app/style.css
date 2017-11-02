@@ -251,7 +251,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding-top: 5px;
 }
 .group-total{
-    margin: 10px 15px 15px;
+    margin: 10px 55px 15px;
     color: #54698d;
     font-size: 16px;
     line-height: 1.5;
@@ -306,7 +306,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 15px;
 }
 .changeGroup {
-    padding: 0px 5px 0px 5px !important;
+    padding: 5px 5px !important;
     background-color: #eee;
     margin-left: 20px !important;
 }
@@ -339,7 +339,9 @@ input[type=number]::-webkit-outer-spin-button {
     height:35px;
     padding:0px;
 }
-
+.rbt-input-main {
+    width:135px !important;
+}
 .dropdown-menu {
     width:100%;
 }
@@ -375,6 +377,7 @@ input[type=number]::-webkit-outer-spin-button {
 .rbt-input {
     width:250px;
     height:100%;
+    border-radius: 4px 0px 0px 4px !important;
 }
 
 .rbt-input div:first-child {
@@ -824,7 +827,7 @@ input[type=number]::-webkit-outer-spin-button {
 .containers {
     border-right: 1px solid #ddd!important;
     border-left: none!important;
-    height: 65px;
+    height: 60px;
 }
 
 #inner-tab-example > ul {
