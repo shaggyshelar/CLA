@@ -340,7 +340,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding:0px;
 }
 .rbt-input-main {
-    width:135px !important;
+    width:230px !important;
 }
 .dropdown-menu {
     width:100%;
@@ -832,7 +832,10 @@ mark {
 .containers {
     border-right: 1px solid #ddd!important;
     border-left: none!important;
-    height: 60px;
+    height: 55px;
+}
+#searchId {
+    height: 35px;
 }
 
 #inner-tab-example > ul {
@@ -1602,6 +1605,7 @@ body.modal-open {
     background: #ececec;
     color: #16325C;
     box-shadow: none !important;
+    display: inline-block;
     /* padding: 3px 0px 30px!important; */
 }
 .ReactTable .rt-tfoot .rt-td {
