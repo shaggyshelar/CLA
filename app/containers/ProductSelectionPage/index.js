@@ -207,7 +207,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
             location={this.props.location}
-            data={this.state.searchedProducts}
+            data={this.props.products.toJS().map((item) => item.name)}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
             onSearchItemSelected={this.onSearchItemSelected}

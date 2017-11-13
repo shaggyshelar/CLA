@@ -8,7 +8,7 @@ import React from 'react';
 // import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
-import { Modal, Button, Glyphicon, Row, FormControl, Table } from 'react-bootstrap/lib';
+import { Modal, Button, ButtonGroup, Glyphicon, Row, FormControl, Table } from 'react-bootstrap/lib';
 import messages from './messages';
 
 class CustomSegmentsModal extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -126,7 +126,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     if (this.props.customSegments !== undefined) {
       const customSegments = _.filter(this.props.customSegments.toJS(), { isDeleted: false });
       rows = customSegments.map((item, index) => (<tr key={index}>
-        <td>{!item.isDefault ? <input type="checkbox" className="check" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check hideSpan" />}</td>
+        <td>{!item.isDefault ? <input type="checkbox" className="check checkBox" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check hideSpan" />}</td>
         <td>
           <FormControl
             type="text"
@@ -176,7 +176,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
               <Table responsive bsClass="modal-table">
                 <thead>
                   <tr>
-                    <th>{<input type="checkbox" className="check checkboxWidth" checked={this.props.isCheckAll} onChange={this.toggleCheckAll} />}</th>
+                    <th>{<input type="checkbox" className="check checkAll checkboxWidth" checked={this.props.isCheckAll} onChange={this.toggleCheckAll} />}</th>
                     <th className="upper-case">{this.context.intl.formatMessage({ ...messages.segmentLabel })}</th>
                     <th className="upper-case">{this.context.intl.formatMessage({ ...messages.startDate })}</th>
                     <th className="upper-case">{this.context.intl.formatMessage({ ...messages.endDate })}</th>
@@ -192,10 +192,14 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.props.onHide} >{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
-            <Button onClick={this.props.addCustomSegmentData} >{this.context.intl.formatMessage({ ...messages.add })}</Button>
-            <Button onClick={this.props.deleteCustomSegmentData} >{this.context.intl.formatMessage({ ...messages.delete })}</Button>
-            <Button onClick={this.saveCustomSegments} >{this.context.intl.formatMessage({ ...messages.save })}</Button>
+            <ButtonGroup className="margin">
+              <Button onClick={this.props.addCustomSegmentData} >{this.context.intl.formatMessage({ ...messages.add })}</Button>
+              <Button bsStyle="danger" onClick={this.props.deleteCustomSegmentData} >{this.context.intl.formatMessage({ ...messages.delete })}</Button>
+            </ButtonGroup>  
+            <ButtonGroup className="margin">
+              <Button onClick={this.props.onHide} >{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
+              <Button bsStyle="primary" onClick={this.saveCustomSegments} >{this.context.intl.formatMessage({ ...messages.save })}</Button>
+            </ButtonGroup>
           </Modal.Footer>
         </Modal.Dialog>
       </Modal>
