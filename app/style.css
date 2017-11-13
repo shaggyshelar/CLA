@@ -301,7 +301,6 @@ input[type=number]::-webkit-outer-spin-button {
 .margin {
     margin: 10px;
 }
-
 .dropdown {
     margin: 15px;
 }
@@ -903,6 +902,12 @@ mark {
 	display: inline!important;
 	padding:1px!important;
 	margin-left: -25px;
+	
+}
+.table-edit-seg{
+    display: inline!important;
+	padding:1px!important;
+	margin-left: 0 !important;
 	
 }
 .inline-edit{

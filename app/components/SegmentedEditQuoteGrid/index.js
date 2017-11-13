@@ -259,11 +259,11 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       if (!i.isDeleted) {
         columns.push({
           Header: () => <span className="upper-case" title={i.name}>{i.name}</span>,
-          Footer: (<span className="sub-footer-table">{total.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>),
+          Footer: (<span className="table-edit table-edit-seg sub-footer-table">{total.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>),
           accessor: `segmentData.columns[${index}].netTotal`,
           style: { textAlign: 'right' },
           headerStyle: { textAlign: 'right' },
-          className: 'table-edit',
+          className: '',
           Cell: this.renderCell.bind(this, index),
         });
       }
@@ -271,17 +271,20 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     columns.push({
       Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.netTotal })}>{this.context.intl.formatMessage({ ...messages.netTotal })}</span>,
       // /accessor: 'segmentTotal',
-      Footer: (<span className="sub-footer-table">{segmentTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>),
+      Footer: (<span className="table-edit table-edit-seg sub-footer-table">{segmentTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>),
       id: 'segmentTotal',
       style: { textAlign: 'right' },
       headerStyle: { textAlign: 'right' },
-      className: 'table-edit',
-      Cell: (cellInfo) => (<span>{cellInfo.original.segmentTotal ? cellInfo.original.segmentTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : 0 }</span>),
+      className: '',
+      Cell: (cellInfo) => (<span className="table-edit table-edit-seg">{cellInfo.original.segmentTotal ? cellInfo.original.segmentTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 }) : 0 }</span>),
     });
     return columns;
   }
   renderCell(index, e) {
     const data = e.original.segmentData.columns[index];
+    if (data.isOneTime === false && data.type === 'One Time') {
+      return (<span className="blank-before"></span>);
+    }
     const tooltip = (
       <Tooltip id={`${e.original.id}-${e.original.segmentData.columns[index].name}`} bsClass="tooltip" className="hover-tip">
         <div className="lab">{this.context.intl.formatMessage({ ...messages.quantity })}</div><div className="val">{data.quantity.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />
@@ -293,11 +296,11 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       </Tooltip>
     );
     return (<OverlayTrigger placement="top" overlay={tooltip}>
-      <span>{e.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</span>
+      <span className="table-edit table-edit-seg">{e.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</span>
     </OverlayTrigger>);
   }
   renderTotal(cellInfo) {
-    return (<span>{this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>);
+    return (<span className="table-edit table-edit-seg">{this.props.currency} {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>);
   }
   render() {
     const data = this.props.data;
