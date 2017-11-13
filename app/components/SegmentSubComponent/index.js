@@ -115,7 +115,10 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
 
       </div>);
   }
-  renderEditable(cellInfo) {
+  renderEditable(row, cellInfo) {
+    if (!row.isOneTime && row.type === 'One Time') {
+      return (<span></span>)
+    }
     if (cellInfo.original.editable === false) {
       return (<span> {cellInfo.original.prop === 'quantity' || (cellInfo.original.isBundled && cellInfo.column.id === 'listPrice') ? '' : this.props.currency}
         { cellInfo.original.isBundled && (cellInfo.original.prop === 'listPrice') ?
@@ -185,7 +188,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           accessor: `${i.name}.value`,
           sortable: false,
           style: { textAlign: 'right' },
-          Cell: this.renderEditable,
+          Cell: (row) => (this.renderEditable(i, row)),
         });
       }
       return this;
@@ -218,9 +221,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       switch (dataSet[i].prop) {
         case 'quantity':
           data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.quantity };
+            dataSet[i][j.name] = { id: data.id, value: j.quantity, type: j.type, isOneTime: j.isOneTime };
             dataSet[i].editable = data.quantity.isEditable;
             dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].parent = data.parent;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
@@ -228,9 +233,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           break;
         case 'listPrice':
           data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.listPrice };
+            dataSet[i][j.name] = { id: data.id, value: j.listPrice, type: j.type, isOneTime: j.isOneTime };
             dataSet[i].editable = data.listPrice.isEditable;
             dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].parent = data.parent;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
@@ -238,9 +245,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           break;
         case 'uplift':
           data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.uplift };
+            dataSet[i][j.name] = { id: data.id, value: j.uplift, type: j.type, isOneTime: j.isOneTime };
             dataSet[i].editable = false;
             dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].parent = data.parent;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
@@ -249,10 +258,12 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         case 'additionalDiscount':
         
           data.segmentData.columns.map((j, index) => {
-            dataSet[i][j.name] = { isEditable: j.additionalDiscount.isEditable, id: data.id, value: j.additionalDiscount.value, selectValues: data.segmentData.columns[index].additionalDiscount.selectValues };
+            dataSet[i][j.name] = { isEditable: j.additionalDiscount.isEditable, type: j.type, isOneTime: j.isOneTime, id: data.id, value: j.additionalDiscount.value, selectValues: data.segmentData.columns[index].additionalDiscount.selectValues };
             dataSet[i].editable = j.additionalDiscount.isEditable;
             dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parentLineId;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             dataSet[i].selectValues = data.segmentData.columns[index].additionalDiscount.selectValues;
             return this;
@@ -260,9 +271,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           break;
         case 'netunitPrice':
           data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.netunitPrice };
+            dataSet[i][j.name] = { id: data.id, value: j.netunitPrice, type: j.type, isOneTime: j.isOneTime };
             dataSet[i].editable = false;
             dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].parent = data.parent;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
@@ -270,8 +283,10 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           break;
         case 'netTotal':
           data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.netTotal };
+            dataSet[i][j.name] = { id: data.id, value: j.netTotal, type: j.type, isOneTime: j.isOneTime };
             dataSet[i].editable = false;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
           });
