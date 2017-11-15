@@ -51,7 +51,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   }
   componentWillReceiveProps(nextProps) {
     const groupLen = _.find(nextProps.groups, { id: this.props.location.query.groupId });
-    if (this.state.selectedGroup !== null) {
+    if (this.state.selectedGroup !== null && groupLen) {
       if (this.props.location.query.groupId && !groupLen) {
         this.setState({ selectedGroup: this.props.groups[0].id, desc: this.props.groups[0].description });
         addQuery({ groupId: this.props.groups[0].id });
@@ -136,7 +136,6 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   render() {
     let group = {};
     let groupLines = [];
-
     groupLines = _.filter(this.props.lines, { groupId: this.props.selectedGroup !== '' ? this.props.selectedGroup : this.state.selectedGroup });
     group = _.filter(this.props.groups, { id: this.props.selectedGroup !== '' ? this.props.selectedGroup : this.state.selectedGroup })[0];
     // const optionalTooltip = (
