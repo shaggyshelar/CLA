@@ -282,7 +282,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   }
   renderCell(index, e) {
     const data = e.original.segmentData.columns[index];
-    if (data.isOneTime === false && data.type === 'One Time') {
+    if (data.isOneTime === false && data.type === 'OneTime') {
       return (<span className="blank-before"></span>);
     }
     const tooltip = (

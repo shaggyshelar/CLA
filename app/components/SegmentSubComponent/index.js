@@ -116,7 +116,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       </div>);
   }
   renderEditable(row, cellInfo) {
-    if (!row.isOneTime && row.type === 'One Time') {
+    if (!row.isOneTime && row.type === 'OneTime') {
       return (<span></span>)
     }
     if (cellInfo.original.editable === false) {

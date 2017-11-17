@@ -104,7 +104,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
         const line = _.find(quote.lines, { id: customLine.id });
         if (line && line.segmentData) {
           const columns = [];
-          const oneTimeColumn = _.find(line.segmentData.columns, { type: 'One Time' });
+          const oneTimeColumn = _.find(line.segmentData.columns, { type: 'OneTime' });
           if (oneTimeColumn) {
             columns.push(oneTimeColumn);
             allCustomSegments.forEach((item) => {
