@@ -28,9 +28,8 @@ body {
     z-index: 999999999999999999 !important;
 }
 .toastify__body {
-    word-break: break-word;
-
-}
+    line-height: 1;
+    word-break: break-word;}
 .toastify__body p{
     font-family: sans-serif;
 }
@@ -525,11 +524,11 @@ mark {
     cursor:pointer;
 }
 .toastify {
-    word-break: break-all;
+     word-break: break-all;
     width : auto !important;
     max-width: 300px !important;
-    min-width: 120px !important;
-}
+    min-width: 120px !important; 
+} 
 .pro-icon {
     display: inline-block;
     float: right;
