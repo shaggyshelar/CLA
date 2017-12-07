@@ -38,6 +38,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
 
   componentWillMount() {
     const priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+    
     if (process.env.NODE_ENV === 'production') {
       this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId, this.props.location.query.QuoteId);
     }
@@ -56,6 +57,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       searchedProducts: [],
     });
     let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+    
     if (process.env.NODE_ENV === 'production') {
       priceBookId = this.props.location.query.PriceBookId;
     }
@@ -87,7 +89,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         selectedProducts: [],
       });
     }
-    let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+   let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+   
     if (process.env.NODE_ENV === 'production') {
       priceBookId = this.props.location.query.PriceBookId;
     }
@@ -170,7 +173,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.setState({ disabledButton: true });
   }
   addProducts() {
-    const data = [];
+    const data =  [];
+    
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i += 1) {
       if (d[i].checked && this.props.location.query.groupId) {
@@ -178,12 +182,20 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       } else if (d[i].checked && !this.props.location.query.groupId) {
         data.push({ productId: d[i].value });
       }
+     
     }
     this.props.addProductsToQuote(data);
     browserHistory.push(`/EditQuote${this.props.location.search}`);
   }
 
   render() {
+    let products = []; 
+    products =  _.filter(this.props.products.toJS(),function(item){
+          if(!item.productComponent){
+            return item;
+          }
+    });
+
     const style = this.props.loading ? { display: 'inline' } : this.props.globalLoading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
@@ -207,7 +219,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
             location={this.props.location}
-            data={this.props.products.toJS().map((item) => item.name)}
+            data={this.props.products.toJS().map((item) => !item.productComponent?item.name:'')}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
             onSearchItemSelected={this.onSearchItemSelected}
@@ -218,7 +230,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         </div>
         <div>
           <ProductSelectionGrid
-            products={this.props.products.toJS()}
+            products={ products }
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             toggleCheckboxChange={this.toggleCheckboxChange}
