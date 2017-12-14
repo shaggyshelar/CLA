@@ -531,6 +531,9 @@ mark {
 } 
 .pro-icon {
     display: inline-block;
+    position: relative;
+    margin-left: 10px;
+    z-index: 1;
     float: right;
     cursor:pointer;
 }
