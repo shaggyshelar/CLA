@@ -49,7 +49,11 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     let startDateEndDateError = false;
     let dateError = false;
     let isDateNull = false;
+    let segNameNull = false;
     for (let index = 0; index <= customSegments.length - 1; index++) {
+      if(customSegments[index].name === null || customSegments[index].startDate === '' ){
+        segNameNull = true;
+      }
       if (customSegments[index].startDate === null || customSegments[index].startDate === '' || customSegments[index].endDate === null || customSegments[index].endDate === '') {
         isDateNull = true;
         break;
@@ -75,27 +79,32 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     if (isDateNull) {
       toast.error(this.context.intl.formatMessage({ ...messages.dateEmptyValidation }), {
         position: toast.POSITION.TOP_LEFT,
-        autoClose: false,
+        autoClose: true,
+      });
+    } else if(segNameNull){
+      toast.error(this.context.intl.formatMessage({ ...messages.segNameError }), {
+        position: toast.POSITION.TOP_LEFT,
+        autoClose: true,
       });
     } else if (startDateEndDateError) {
-      toast.error(this.context.intl.formatMessage({ ...messages.startDateEndDateError }), {
+      toast.success(this.context.intl.formatMessage({ ...messages.startDateEndDateError }), {
         position: toast.POSITION.TOP_LEFT,
-        autoClose: false,
+        autoClose: true,
       });
     } else if ((currentIndex > -1 || isDuplicate) && dateError) {
       toast.error(this.context.intl.formatMessage({ ...messages.startDateSegementLabelError }), {
         position: toast.POSITION.TOP_LEFT,
-        autoClose: false,
+        autoClose: true,
       });
     } else if ((currentIndex > -1 || isDuplicate)) {
       toast.error(this.context.intl.formatMessage({ ...messages.segmentLabelError }), {
         position: toast.POSITION.TOP_LEFT,
-        autoClose: false,
+        autoClose: true,
       });
     } else if (dateError) {
       toast.error(this.context.intl.formatMessage({ ...messages.startDateError }), {
         position: toast.POSITION.TOP_LEFT,
-        autoClose: false,
+        autoClose: true,
       });
     } else {
       const allCustomSegments = this.props.customSegments.toJS();
