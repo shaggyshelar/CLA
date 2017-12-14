@@ -8,6 +8,7 @@ import { RIEInput } from 'riek';
 import _ from 'lodash';
 import SegmentSubComponent from 'components/SegmentSubComponent';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
+import TermDiscountScheduleEditor from '../TermDiscountScheduleEditor';
 import CustomSegmentsModal from '../CustomSegmentsModal';
 import messages from './messages';
 
@@ -15,7 +16,9 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   constructor(props) {
     super(props);
     this.renderEditable = this.renderEditable.bind(this);
+    this.renderCommonDiscount = this.renderCommonDiscount.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleTermToggle = this.handleTermToggle.bind(this);
     this.renderColumns = this.renderColumns.bind(this);
     this.checkAll = this.checkAll.bind(this);
 
@@ -36,9 +39,11 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         defaultExpanded: {},
         freezeWhenExpanded: false,
         selectedLine: {},
+        termDiscount: {},
       },
       data: this.props.data,
       isModalOpen: false,
+      isModalOpen1: false,
       isCustomModalOpen: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
@@ -80,8 +85,23 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     const selectedData = this.props.data[index];
     if (selectedData !== undefined) {
       this.setState({
-        isModalOpen: !this.state.isModalOpen,
+        isModalOpen1: !this.state.isModalOpen1,
         selectedLine: selectedData.discountSchedule,
+        termDiscount: selectedData.termDiscountSchedule,
+      });
+    } else {
+      this.setState({
+        isModalOpen1: !this.state.isModalOpen1,
+      });
+    }
+  }
+
+  handleTermToggle(index) {
+    const selectedData = this.props.data[index];
+    if (selectedData !== undefined) {
+      this.setState({
+        isModalOpen: !this.state.isModalOpen,
+        termDiscount: selectedData.termDiscountSchedule,
       });
     } else {
       this.setState({
@@ -89,6 +109,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       });
     }
   }
+
   cloneLine(id) {
     this.props.cloneLine(id);
   }
@@ -171,16 +192,51 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   }
   renderActionItems(cellInfo) {
     // const discount = cellInfo.original.canShowDiscountScheduler ? <a><Glyphicon glyph="calendar" onClick={this.handleToggle.bind(this, cellInfo.index)} /></a> : '';
-    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
+    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : '';
     // const bundle = cellInfo.original.isBundled ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
     // const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
+    const notification = cellInfo.original.lineNotification.messageFlag ? <a title={cellInfo.original.lineNotification.message } className={cellInfo.original.lineNotification.messageFlag ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a>:'';
     const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Resegment"><Glyphicon glyph="transfer" /></a> : '';
+    
     return (
       <div className="actionItems" >
         {reconfigure}
         {segment}
+        {notification}
       </div>
     );
+  }
+
+  renderCommonDiscount(cellInfo){
+    if(cellInfo.original.canShowDiscountScheduler && (cellInfo.original.termDiscountSchedule !== null)){
+      return(
+        <div>
+        <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
+        <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a>
+        <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+        </div>
+      );
+    }
+    else{
+        if(cellInfo.original.canShowDiscountScheduler){
+          return(
+          <div>
+          <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
+          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+           </div>
+          );
+        }
+        else{
+          if(cellInfo.original.termDiscountSchedule !== null){
+            return(
+            <div>
+              <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a>
+              <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+           </div>
+          );
+          }
+        }
+    }
   }
 
   renderEditable(cellInfo) {
@@ -236,7 +292,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span title={cellInfo.original.code} className="pro-name">{cellInfo.original.code}</span>),
+        Cell: this.renderCommonDiscount,
       },
 
       {
@@ -329,8 +385,16 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
             )}
           />
         </div>
+        <TermDiscountScheduleEditor
+          show={this.state.isModalOpen} onHide={this.handleTermToggle}
+          style={{
+            display: 'inline-flex',
+          }}
+          value={this.state.value}
+          termDiscount={this.state.termDiscount}
+        />
         <DiscountScheduleEditor
-          show={this.state.isModalOpen} onHide={this.handleToggle}
+          show={this.state.isModalOpen1} onHide={this.handleToggle}
           style={{
             display: 'inline-flex',
           }}
