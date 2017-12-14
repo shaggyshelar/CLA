@@ -283,11 +283,11 @@ function appReducer(state = initialState, action) {
       }
     case SEGMENT:
       {
-        const lines = state.getIn(['data', 'lines']).toJS();
-        const line = _.filter(lines, { id: action.id });
-        line[0].isSegmented = action.value;
-        // return state.set('loading', true);
-        return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
+        //const lines = state.getIn(['data', 'lines']).toJS();
+        //const line = _.filter(lines, { id: action.id });
+        //line[0].isSegmented = action.value;
+         return state.set('loading', true);
+        //return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
     case SAVE_APP_CUSTOM_SEGMENT_DATA : {
       return state.set('loading', true).set('dataChanged', true)

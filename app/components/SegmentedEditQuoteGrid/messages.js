@@ -51,6 +51,10 @@ export default defineMessages({
     id: 'app.components.SegmentedEditQuoteGrid.segment',
     defaultMessage: 'Segment',
   },
+  notification:{
+    id: 'app.components.SegmentedEditQuoteGrid.notification',
+    defaultMessage: 'Product added successfully',
+  },
   reconfigure: {
     id: 'app.components.SegmentedEditQuoteGrid.reconfigure',
     defaultMessage: 'Reconfigure Lines',

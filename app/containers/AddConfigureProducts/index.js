@@ -5,7 +5,7 @@ import _ from 'lodash';
 import AddConfigureProductHeader from 'components/AddConfigureProductHeader';
 import AddConfigureProductGrid from 'components/AddConfigureProductGrid';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectAddConfigureProducts, makeProductsData, makeSelectLoading, makeSelectError, getLanguage } from './selectors';
+import { getReConfigureProductData, getReConfigureQuoteData, makeSelectAddConfigureProducts, makeProductsData, makeSelectLoading, makeSelectError, getLanguage } from './selectors';
 import { loadProductsData, toggleCheckbox, toggleCheckAll } from './actions';
 import { addOptions } from '../ReConfigureProducts/actions';
 import { changeLocale } from '../LanguageProvider/actions';
@@ -24,6 +24,11 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   componentDidMount() {
+  //  console.log('reConfigureProductData', this.props.reConfigureProductData.toJS());
+   // const productData = this.props.reConfigureProductData.toJS().categories.feat;
+   // console.log('productData', productData);
+    const quoteData = this.props.reConfigureQuoteData.toJS();
+    //console.log('productData', quoteData);
     const params = {
       featureId: this.props.location.query.featureId,
       bundleId: this.props.location.query.bundleId,
@@ -31,8 +36,9 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
       quoteId: this.props.location.query.quoteId,
       bundleLineId: this.props.location.query.bundleLineId,
       groupId: this.props.location.query.groupId,
+      isDynamic: this.props.location.query.isDynamic,
+      quoteData: quoteData,
     };
-
     this.props.getProductsData(params);
   }
 
@@ -110,6 +116,8 @@ AddConfigureProducts.propTypes = {
   changeLocale: PropTypes.any,
   toggleCheckboxChange: PropTypes.func,
   toggleCheckAllChange: PropTypes.func,
+  reConfigureQuoteData: PropTypes.any,
+  reConfigureProductData: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -118,6 +126,8 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
   language: getLanguage(),
+  reConfigureQuoteData: getReConfigureQuoteData(),
+  reConfigureProductData: getReConfigureProductData(),
 });
 
 function mapDispatchToProps(dispatch) {

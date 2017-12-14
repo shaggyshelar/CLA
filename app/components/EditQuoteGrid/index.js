@@ -7,14 +7,17 @@ import { browserHistory } from 'react-router';
 import { RIENumber, RIESelect } from 'riek';
 import _ from 'lodash';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
+import TermDiscountScheduleEditor from '../TermDiscountScheduleEditor';
 import messages from './messages';
 
 class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.renderEditable = this.renderEditable.bind(this);
+    this.renderCommonDiscount = this.renderCommonDiscount.bind(this);
     this.renderDiscount = this.renderDiscount.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleTermToggle = this.handleTermToggle.bind(this);
     this.renderData = this.renderData.bind(this);
     this.validate = this.validate.bind(this);
     this.state = {
@@ -33,9 +36,11 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         expander: true,
         freezeWhenExpanded: true,
         selectedLine: {},
+        termDiscount: {},
       },
       data: this.props.data,
       isModalOpen: false,
+      isModalOpen1: false
     };
     this.setTableOption = this.setTableOption.bind(this);
     this.cloneLine = this.cloneLine.bind(this);
@@ -81,8 +86,22 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     const selectedData = this.props.data[index];
     if (selectedData !== undefined) {
       this.setState({
-        isModalOpen: !this.state.isModalOpen,
+        isModalOpen1: !this.state.isModalOpen1,
         selectedLine: selectedData.discountSchedule,
+      });
+    } else {
+      this.setState({
+        isModalOpen1: !this.state.isModalOpen1,
+      });
+    }
+  }
+
+  handleTermToggle(index) {
+    const selectedData = this.props.data[index];
+    if (selectedData !== undefined) {
+      this.setState({
+        isModalOpen: !this.state.isModalOpen,
+        termDiscount: selectedData.termDiscountSchedule,
       });
     } else {
       this.setState({
@@ -159,11 +178,13 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     e.currentTarget.nextSibling.focus();
   }
   renderActionItems(cellInfo) {
-    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : <span className="blank"></span>;
+    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> :'';
+    const notification = cellInfo.original.lineNotification.messageFlag ? <a title={cellInfo.original.lineNotification.message } className={cellInfo.original.lineNotification.messageFlag ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a>:'';
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
     return (
       <div className="actionItems" >
         {reconfigure}
+        {notification}
         {segment}
         {/* <a><Glyphicon glyph="star-empty" /></a> */}
       </div>
@@ -211,6 +232,39 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
 
       </div>);
   }
+
+  renderCommonDiscount(cellInfo){
+    if(cellInfo.original.canShowDiscountScheduler && (cellInfo.original.termDiscountSchedule !== null)){
+      return(
+        <div>
+        <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
+        <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a>
+        <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+        </div>
+      );
+    }
+    else{
+        if(cellInfo.original.canShowDiscountScheduler){
+          return(
+          <div>
+          <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
+          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+           </div>
+          );
+        }
+        else{
+          if(cellInfo.original.termDiscountSchedule !== null){
+            return(
+            <div>
+              <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a>
+              <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+           </div>
+          );
+          }
+        }
+    }
+  }
+//(cellInfo) => (cellInfo.original.canShowDiscountScheduler  ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a><span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>),
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (
@@ -295,7 +349,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'code',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.canShowDiscountScheduler ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>),
+        Cell: this.renderCommonDiscount, 
       },
 
       {
@@ -367,8 +421,16 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             {...this.state.tableOptions}
           />
         </div>
+        <TermDiscountScheduleEditor
+          show={this.state.isModalOpen} onHide={this.handleTermToggle}
+          style={{
+            display: 'inline-flex',
+          }}
+          value={this.state.value}
+          termDiscount={this.state.termDiscount}
+        />
         <DiscountScheduleEditor
-          show={this.state.isModalOpen} onHide={this.handleToggle}
+          show={this.state.isModalOpen1} onHide={this.handleToggle}
           style={{
             display: 'inline-flex',
           }}

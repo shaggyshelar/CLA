@@ -96,7 +96,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
   ungroup() {
     const data = this.props.data.toJS();
-    // data.lines.forEach((i, index) => { data.lines[index].groupId = null; });
+    data.lines.forEach((i, index) => { data.lines[index].groupId = null; });
     data.groups.map((j, index) => { data.groups[index].isDeleted = true; return this; });
     data.linesGrouped = false;
     removeQuery('groupId');
