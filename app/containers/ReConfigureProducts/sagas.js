@@ -1,7 +1,7 @@
 import request from 'utils/request';
 import { browserHistory } from 'react-router';
 import { take, call, put, actionChannel } from 'redux-saga/effects';
-import { LOAD_CONFIGURE_PRODUCTS_DATA, SAVE_CONFIGURE_PRODUCTS_DATA } from './constants';
+import { LOAD_CONFIGURE_PRODUCTS_DATA, SAVE_CONFIGURE_PRODUCTS_DATA, APPLY_IMMEDIATELY } from './constants';
 import { loadReConfigureProductsDataSuccess, reconfigureDataLoadingError } from './actions';
 import { saveConfiguration } from '../App/actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
@@ -53,11 +53,36 @@ export function* saveProducts(data, locationQuery) {
   }
 }
 
+export function* applyImmediateConfig(data, locationQuery) {
+  try {
+    const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/ApplyImmediateConfiguration`}`;
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    const quotes = yield call(request, requestURL, options);
+    yield put(loadReConfigureProductsDataSuccess(quotes));
+  } catch (err) {
+    yield put(reconfigureDataLoadingError(err));
+}
+}
+
 export function* saveConfiguredProducts() {
   while (true) {
     const chan = yield actionChannel(SAVE_CONFIGURE_PRODUCTS_DATA);
     const { data, locationQuery } = yield take(chan);
     yield call(saveProducts, data, locationQuery);
+  }
+}
+
+export function* applyImmediateConfigProd() {
+  while (true) {
+    const chan = yield actionChannel(APPLY_IMMEDIATELY);
+    const { data, locationQuery } = yield take(chan);
+    yield call(applyImmediateConfig , data, locationQuery);
   }
 }
 
@@ -71,6 +96,7 @@ export function* loadProductBundleData() {
 
 // All sagas to be loaded
 export default [
+  applyImmediateConfigProd,
   loadProductBundleData,
-  saveConfiguredProducts,
+  saveConfiguredProducts
 ];
