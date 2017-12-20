@@ -180,7 +180,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
   renderActionItems(cellInfo) {
     const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> :'';
-    const notification = cellInfo.original.lineNotification.messageFlag ? <a title={cellInfo.original.lineNotification.message } className={cellInfo.original.lineNotification.messageFlag ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a>:'';
+    const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map(item => item + "\n" )  } className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a>:'';
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
     return (
       <div className="actionItems" >
