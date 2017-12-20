@@ -52,6 +52,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     this.deleteLine = this.deleteLine.bind(this);
     this.renderChecbox = this.renderChecbox.bind(this);
     this.renderCell = this.renderCell.bind(this);
+    this.renderOverlay = this.renderOverlay.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
     this.renderTotal = this.renderTotal.bind(this);
     this.onReconfigureLineClick = this.onReconfigureLineClick.bind(this);
@@ -195,7 +196,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : '';
     // const bundle = cellInfo.original.isBundled ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
     // const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
-    const notification = cellInfo.original.lineNotification.messageFlag ? <a title={cellInfo.original.lineNotification.message } className={cellInfo.original.lineNotification.messageFlag ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a>:'';
+    const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map(item => item + "\n" )  } className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a>:'';
     const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Resegment"><Glyphicon glyph="transfer" /></a> : '';
     
     return (
@@ -293,25 +294,30 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
         Cell: this.renderCommonDiscount,
-      },
+      }
 
-      {
+      ];
+    const data = Object.assign({}, this.props.data[0]);
+    let segmentTotal = 0;
+    _.forEach(this.props.data, (value) => {
+      segmentTotal += value.segmentTotal;
+    });
+    columns.push(
+        {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
         accessor: 'name',
         Footer: (<span>Segmented {this.props.selectTab} Total</span>),
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
-      }];
-    const data = Object.assign({}, this.props.data[0]);
-    let segmentTotal = 0;
-    _.forEach(this.props.data, (value) => {
-      segmentTotal += value.segmentTotal;
-    });
+        Cell: this.renderOverlay.bind(this), 
+      //  (cellInfo) => (cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
+      }
+      );
     data.segmentData.columns.map((i, index) => {
       let total = 0;
       const c = this.props.data.map((j) => _.filter(j.segmentData.columns, { name: i.name }).map((d) => total += d.netTotal));
+      
       if (!i.isDeleted) {
         columns.push({
           Header: () => <span className="upper-case" title={i.name}>{i.name}</span>,
@@ -336,6 +342,22 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     });
     return columns;
   }
+  renderOverlay(e) {
+      const tooltip = (
+      <Tooltip id={`${e.original.id}-${e.original.name}`} bsClass="tooltip" className="hover-tip">
+      <div className="lab"><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${e.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={e.original.name}>{e.original.name}</span></div>
+        </Tooltip>
+      );
+      return (<OverlayTrigger placement="bottom" overlay={tooltip}>
+      <span >{e.original.name}</span>
+    </OverlayTrigger>);
+    /*}else{
+    <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>
+  }
+    
+        //<div >{this.context.intl.formatMessage({ ...messages.name })}</div><div className="val">{data.name}</div><br /> 
+*/
+  }
   renderCell(index, e) {
     const data = e.original.segmentData.columns[index];
     if (data.isOneTime === false && data.type === 'OneTime') {
@@ -351,7 +373,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         <div className="lab">{this.context.intl.formatMessage({ ...messages.netTotal })}</div><div className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />
       </Tooltip>
     );
-    return (<OverlayTrigger placement="top" overlay={tooltip}>
+    return (<OverlayTrigger placement="bottom" overlay={tooltip}>
       <span className="table-edit table-edit-seg">{e.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</span>
     </OverlayTrigger>);
   }

@@ -1,7 +1,7 @@
 import ReactTable from '../ReactTable';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Glyphicon } from 'react-bootstrap/lib';
+import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
 import { browserHistory } from 'react-router';
 
 import { RIENumber, RIESelect } from 'riek';
@@ -19,6 +19,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.handleToggle = this.handleToggle.bind(this);
     this.handleTermToggle = this.handleTermToggle.bind(this);
     this.renderData = this.renderData.bind(this);
+    this.renderOverlay = this.renderOverlay.bind(this);
     this.validate = this.validate.bind(this);
     this.state = {
       tableOptions: {
@@ -179,7 +180,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
   renderActionItems(cellInfo) {
     const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> :'';
-    const notification = cellInfo.original.lineNotification.messageFlag ? <a title={cellInfo.original.lineNotification.message } className={cellInfo.original.lineNotification.messageFlag ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a>:'';
+    const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map(item => item + "\n" )  } className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a>:'';
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
     return (
       <div className="actionItems" >
@@ -316,6 +317,16 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     });
     return data;
   }
+  renderOverlay(e){
+      const tooltip = (
+      <Tooltip id={`${e.original.id}-${e.original.name}`} bsClass="tooltip" className="hover-tip">
+      <div className="lab"><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${e.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={e.original.name}>{e.original.name}</span></div>
+        </Tooltip>
+      );
+      return (<OverlayTrigger placement="bottom" overlay={tooltip}>
+      <span >{e.original.name}</span>
+    </OverlayTrigger>);
+  }
   render() {
     const data = this.props.data;
     const total = this.calculateTotal();
@@ -357,7 +368,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
+        Cell: this.renderOverlay.bind(this), 
+        //(cellInfo) => (cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.quantity })}>{this.context.intl.formatMessage({ ...messages.quantity })}</span>,
