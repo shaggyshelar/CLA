@@ -41,7 +41,7 @@ export function generateGuid() {
   return guid;
 }
 if (process.env.NODE_ENV === 'development') {
-  serverUrl = 'http://localhost:3000/api';
+  serverUrl = 'http://localhost:60910/api';
   entityUrls = {
     PRODUCTS: '/Product',
     QUOTE: '/Quote',
@@ -50,6 +50,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 export const SERVER_URL = serverUrl;
 export const EntityURLs = entityUrls;
+export const tempQuoteId = '02ea5f56-68cf-e711-812c-c4346bdd8041';
+export const tempPriceBookId = '079f247c-b29e-e711-8124-c4346bdc0e01';
+
 // export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
 // export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
 // export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';

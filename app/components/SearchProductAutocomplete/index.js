@@ -8,7 +8,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AsyncTypeahead, Typeahead } from 'react-bootstrap-typeahead';
 import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap/lib';
-import { SERVER_URL, EntityURLs } from 'containers/App/constants';
+import { SERVER_URL, EntityURLs, tempPriceBookId } from 'containers/App/constants';
 class SearchProductAutocomplete extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props) {
@@ -40,9 +40,11 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
         isLoding: true,
       });
     }
-    let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+    let priceBookId = '';
     if (process.env.NODE_ENV === 'production') {
       priceBookId = this.props.location.query.PriceBookId;
+    } else {
+      priceBookId = tempPriceBookId;
     }
     const searchObj = {
       searchValue: selection,
