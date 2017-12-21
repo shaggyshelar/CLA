@@ -10,6 +10,7 @@ import {
   LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   LOAD_CONFIGURE_PRODUCTS_DATA_ERROR,
   ADD_OPTIONS,
+  APPLY_IMMEDIATELY,
   SAVE_CONFIGURE_PRODUCTS_DATA,
   SAVE_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   DELETE_PRODUCT,
@@ -60,6 +61,14 @@ export function addOptions(productObj) {
 export function saveConfiguredProductsData(data, locationQuery) {
   return {
     type: SAVE_CONFIGURE_PRODUCTS_DATA,
+    data,
+    locationQuery,
+  };
+}
+
+export function applyImmediateConfig(data, locationQuery) {
+  return {
+    type: APPLY_IMMEDIATELY,
     data,
     locationQuery,
   };

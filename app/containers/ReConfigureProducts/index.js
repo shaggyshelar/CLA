@@ -13,7 +13,7 @@ import { createStructuredSelector } from 'reselect';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
 import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError, getLanguage, getGlobalQuoteData, getReconfigureQuoteData } from './selectors';
-import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
+import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState, applyImmediateConfig } from './actions';
 import { changeLocale } from '../LanguageProvider/actions';
 import { toggleReconfigureLineStatus } from '../App/actions';
 
@@ -70,6 +70,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.saveProducts = this.saveProducts.bind(this);
     this.cancelReconfiguration = this.cancelReconfiguration.bind(this);
+    this.applyImmediateConfig = this.applyImmediateConfig.bind(this);
   }
 
   componentDidMount() {
@@ -153,7 +154,66 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       browserHistory.push('/EditQuote');
     }
   }
+
+  applyImmediateConfig(){
+    const updatedQuote = this.props.reconfigureQuote.toJS();
+    const updatedProducts = [];
+    const intialProductBundleData = this.props.productBundleData.toJS();
+    const updatedProductBundleData = this.props.reConfigureProductData.toJS();
+    if (updatedProductBundleData.categories.length > 0) {
+      updatedProductBundleData.categories.forEach((category) => {
+        category.features.forEach((feature) => {
+          feature.products.forEach((currrentProduct) => {
+            const product = currrentProduct;
+            if (product.tempId) {
+              product.id = product.tempId;
+            }
+            if (category.name === 'Other') {
+              product.categoryId = null;
+            }
+            if (feature.name === 'Other Options') {
+              product.featureId = null;
+            }
+            updatedProducts.push(product);
+          }, this);
+        }, this);
+      }, this);
+    } else if (updatedProductBundleData.features.length > 0) {
+      updatedProductBundleData.features.forEach((feature) => {
+        feature.products.forEach((currrentProduct) => {
+          const product = currrentProduct;
+          if (product.tempId) {
+            product.id = product.tempId;
+          }
+          if (feature.name === 'Other Options') {
+            product.featureId = null;
+          }
+          updatedProducts.push(product);
+        }, this);
+      }, this);
+    }
+
+    intialProductBundleData.products = [];
+    intialProductBundleData.products = updatedProducts;
+
+    const quoteProductData = {
+      quote: updatedQuote,
+      productBundle: intialProductBundleData,
+    };
+    this.props.applyImmediateConfigData(quoteProductData, this.props.location.query);
+  }
+
   toggleCheckboxChange(productObj) {
+      let currentScope = this;
+      const intialProductBundleData = this.props.productBundleData.toJS().products;
+      const updatedQuote = this.props.reconfigureQuote.toJS();
+      const updatedProducts = [];
+      const updatedProductBundleData = this.props.reConfigureProductData.toJS();
+    _.forEach(intialProductBundleData, function(value) {
+        if(value.applyImmediately && value.id === productObj.id){
+           currentScope.applyImmediateConfig();
+        }
+      });
     this.props.toggleCheckboxChange(productObj);
   }
 
@@ -220,6 +280,7 @@ ReConfigureProducts.propTypes = {
   productBundleData: PropTypes.any,
   getProductsData: PropTypes.func,
   saveConfiguredProducts: PropTypes.func,
+  applyImmediateConfigData: PropTypes.func,
   deleteProduct: PropTypes.func,
   location: PropTypes.any,
   updateField: PropTypes.func,
@@ -256,6 +317,9 @@ function mapDispatchToProps(dispatch) {
     },
     saveConfiguredProducts: (data, locationQuery) => {
       dispatch(saveConfiguredProductsData(data, locationQuery));
+    },
+    applyImmediateConfigData: (data, locationQuery) => {
+      dispatch(applyImmediateConfig(data, locationQuery));
     },
     deleteProduct: (product) => {
       dispatch(deleteProduct(product));
