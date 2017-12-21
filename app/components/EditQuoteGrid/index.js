@@ -16,6 +16,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.renderEditable = this.renderEditable.bind(this);
     this.renderCommonDiscount = this.renderCommonDiscount.bind(this);
     this.renderDiscount = this.renderDiscount.bind(this);
+    this.renderPartnerDiscount = this.renderPartnerDiscount.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.handleTermToggle = this.handleTermToggle.bind(this);
     this.renderData = this.renderData.bind(this);
@@ -192,6 +193,48 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     );
   }
 
+  renderPartnerDiscount(cellInfo) {
+    const selected = cellInfo.original[cellInfo.column.id].selectValues;
+    const options = [];
+    const selectedOption = {};
+    selected.map((i) => {
+      options.push({ id: i.id, text: i.value });
+      if (i.isSelected) {
+        selectedOption.id = i.id;
+        selectedOption.text = i.value;
+      }
+      return this;
+    });
+    if (cellInfo.original[cellInfo.column.id].isEditable === false) {
+      return (<span> {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })} {selectedOption.text}</span>);
+    }
+    return (
+      <div>
+        <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+        <RIENumber
+          className={'table-edit-quantity'}
+          classEditing="table-edit-input"
+          value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
+          propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+          format={this.formatt.bind(this, cellInfo.original.decimalsSupported)}
+          change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 )}
+          validate={this.validate}
+          classInvalid="invalid"
+        />
+        <RIESelect
+          className={'inline-select'}
+          classEditing="inline-select-edit"
+          value={selectedOption}
+          options={options}
+          propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+          change={this.selectDataChanged}
+          classInvalid="invalid"
+          editProps={{ width: '40px' }}
+        />
+
+      </div>);
+  }
+
   renderDiscount(cellInfo) {
     const selected = cellInfo.original[cellInfo.column.id].selectValues;
     const options = [];
@@ -329,6 +372,12 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
   render() {
     const data = this.props.data;
+    // TODO: To replace with actual data from server
+    _.forEach(data, (value) => {
+      if (!value.partnerDiscount) {
+        value.partnerDiscount = { dataType: 'inputSelect', isEditable: true, isVisible: true, value: 5, selectValues: [{ id: '11111', value: '%', isSelected: true }] };
+      }
+    });
     const total = this.calculateTotal();
     const columns = [
       {
@@ -360,7 +409,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'code',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: this.renderCommonDiscount, 
+        Cell: this.renderCommonDiscount,
       },
 
       {
@@ -368,7 +417,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: this.renderOverlay.bind(this), 
+        Cell: this.renderOverlay.bind(this),
         //(cellInfo) => (cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       },
       {
@@ -388,6 +437,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
         Cell: this.renderEditable,
+      },
+      {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.partnerDiscount })}>{this.context.intl.formatMessage({ ...messages.partnerDiscount })}</span>,
+        accessor: 'partnerDiscount.value',
+        id: 'partnerDiscount',
+        style: { textAlign: 'right' },
+        headerStyle: { textAlign: 'right' },
+        Cell: this.renderPartnerDiscount,
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.additionalDiscount })}>{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</span>,
