@@ -15,7 +15,7 @@ let entityUrls = {};
 if (process.env.NODE_ENV === 'production') {
   // serverUrl = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/';
   // serverUrl = window.parent.Xrm.Page.context.getClientUrl();
-  serverUrl = 'http://localhost:3000/api';
+  serverUrl = 'http://localhost:60910/api';
   entityUrls = {
     PRODUCTS: '/Product',
     QUOTE: '/Quote',
@@ -33,7 +33,7 @@ export function addQuery(query) {
 
 export function removeQuery(...queryNames) {
   const location = Object.assign({}, browserHistory.getCurrentLocation());
-  queryNames.forEach((q) => delete location.query[q]);
+  queryNames.forEach(q => delete location.query[q]);
   browserHistory.push(location);
 }
 export function generateGuid() {

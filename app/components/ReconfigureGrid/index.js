@@ -125,15 +125,21 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
 
 
   renderActionItems(cellInfo) {
+    const dependencyList = cellInfo.original.dependencyList.map(item => item);
+    
+    //console.log("dependencyList array", dependencyList);
     let input;
     let title;
-    if (cellInfo.original.isDependent && cellInfo.original.isExclusion) {
-      title = `Required: ${cellInfo.original.dependentBy} / Exclusion: ${cellInfo.original.dependentBy}`;
-    } else if (cellInfo.original.isExclusion) {
-      title = `Exclusion: ${cellInfo.original.dependentBy}`;
-    } else if (cellInfo.original.isDependent) {
-      title = `Required: ${cellInfo.original.dependentBy}`;
+    _.forEach(dependencyList, function(value) {
+  if (value.isDependent && value.isExclusion) {
+      title = `Required: ${value.dependentBy} / Exclusion: ${value.dependentBy}`;
+    } else if (value.isExclusion) {
+      title = `Exclusion: ${value.dependentBy}`;
+    } else if (value.isDependent) {
+      title = `Required: ${value.dependentBy}`;
     }
+});
+
     if (this.props.feature.dynamicAddEnabled) {
       if (cellInfo.original.isRequired) {
         input = (<a title={this.context.intl.formatMessage({ ...messages.deleteLine })} className="disabled-link"><Glyphicon glyph="trash" /></a>);

@@ -204,17 +204,14 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
   }
 
   toggleCheckboxChange(productObj) {
-      let currentScope = this;
-      const intialProductBundleData = this.props.productBundleData.toJS().products;
-      const updatedQuote = this.props.reconfigureQuote.toJS();
-      const updatedProducts = [];
-      const updatedProductBundleData = this.props.reConfigureProductData.toJS();
+    this.props.toggleCheckboxChange(productObj);
+     let currentScope = this;
+    const intialProductBundleData = this.props.productBundleData.toJS().products;
     _.forEach(intialProductBundleData, function(value) {
         if(value.applyImmediately && value.id === productObj.id){
            currentScope.applyImmediateConfig();
         }
       });
-    this.props.toggleCheckboxChange(productObj);
   }
 
   render() {

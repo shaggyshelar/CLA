@@ -336,6 +336,7 @@ function reConfigureProductsReducer(state = initialState, action) {
       }
     case TOGGLE_CHECKBOX_CHANGE: {
       const reConfigureProduct = state.get('reConfigureProductData').toJS();
+      console.log("reConfigureProduct",reConfigureProduct);
       if (reConfigureProduct.categories.length > 0) {
         const category = _.find(reConfigureProduct.categories, { id: action.product.categoryId });
         if (category) {
@@ -381,32 +382,47 @@ function reConfigureProductsReducer(state = initialState, action) {
         }
       } else if (reConfigureProduct.features.length > 0) {
         const feature = _.find(reConfigureProduct.features, { id: action.product.featureId });
+        const checkBoxArray = [];
         if (feature) {
           const product = _.find(feature.products, { id: action.product.id });
           if (product) {
             product.isSelected = !product.isSelected;
+            console.log('product',product);
+            console.log('id',product.id);
             const featureArray = [];
             reConfigureProduct.features.forEach((featureData) => {
               const featureObj = featureData;
               const productArray = [];
+              
               featureData.products.forEach((productData) => {
                 const productObj = productData;
                 let isDeleted = false;
-                if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
+                if (productObj.dependencyList.length > 0) {
+                productObj.dependencyList.forEach( item => {
+                  console.log('dependentProductId', item.dependentProductId);
+                  console.log('productid', product.id);
+                  if(item.dependentProductId === product.id && product.isSelected ){
+                      checkBoxArray.push(item.isDependent && item.dependentProductId === product.id);
+                  }
+                  
+                if (item.isExclusion && item.isDependent && item.dependentProductId === product.id) {
                   productObj.isDisable = true;
-                } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
+                } else if (item.isExclusion && item.dependentProductId === product.id) {
                   if (productObj.isAdded) {
                     isDeleted = true;
                   }
                   productObj.isDisable = !productObj.isDisable;
-                } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
+                } else if (item.isDependent && item.dependentProductId === product.id) {
                   productObj.isDisable = !productObj.isDisable;
                   productObj.isSelected = false;
                 }
+              });}
+              
                 if (!isDeleted) {
                   productArray.push(productObj);
                 }
               });
+              console.log('checkBoxArray',checkBoxArray);
               featureObj.products = productArray;
               featureArray.push(featureObj);
             });
