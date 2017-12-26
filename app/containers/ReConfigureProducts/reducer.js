@@ -30,8 +30,9 @@ const initialState = fromJS({
   activeTab: 0,
   quoteData: {},
 });
-
+let output = [];
 function reConfigureProductsReducer(state = initialState, action) {
+  
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
@@ -336,7 +337,17 @@ function reConfigureProductsReducer(state = initialState, action) {
       }
     case TOGGLE_CHECKBOX_CHANGE: {
       const reConfigureProduct = state.get('reConfigureProductData').toJS();
-      console.log("reConfigureProduct",reConfigureProduct);
+     const productBundle = !_.isUndefined(state.get('productBundleData').toJS())? state.get('productBundleData').toJS():'nothing';
+      console.log("productBundle",productBundle.products);
+      const productBundleArray = [];
+      productBundle.products.forEach((product) => {
+        const productObj1 = product;
+        if(productBundle.isSelected && productObj1.id === action.product.id){
+        productObj1.isSelected = productBundle.isSelected;
+        }
+      productBundleArray.push(productObj1);
+      });
+      productBundle.products = productBundleArray;
       if (reConfigureProduct.categories.length > 0) {
         const category = _.find(reConfigureProduct.categories, { id: action.product.categoryId });
         if (category) {
@@ -382,28 +393,42 @@ function reConfigureProductsReducer(state = initialState, action) {
         }
       } else if (reConfigureProduct.features.length > 0) {
         const feature = _.find(reConfigureProduct.features, { id: action.product.featureId });
-        const checkBoxArray = [];
         if (feature) {
           const product = _.find(feature.products, { id: action.product.id });
           if (product) {
             product.isSelected = !product.isSelected;
-            console.log('product',product);
-            console.log('id',product.id);
+            let temp = null;
             const featureArray = [];
             reConfigureProduct.features.forEach((featureData) => {
               const featureObj = featureData;
               const productArray = [];
-              
+              let check= false;
+              let selectedArray =[];
               featureData.products.forEach((productData) => {
+                output=[];
+
                 const productObj = productData;
                 let isDeleted = false;
+                selectedArray.push(productObj.isSelected);
+                console.log('selectedArray',selectedArray);
+                
                 if (productObj.dependencyList.length > 0) {
-                productObj.dependencyList.forEach( item => {
-                  console.log('dependentProductId', item.dependentProductId);
-                  console.log('productid', product.id);
-                  if(item.dependentProductId === product.id && product.isSelected ){
-                      checkBoxArray.push(item.isDependent && item.dependentProductId === product.id);
-                  }
+               // let i=0;
+                  productObj.dependencyList.forEach( item => {
+                 //if(product.isSelected && item.isDependent && item.dependentProductId === product.id){
+                     temp = item.isDependent && item.dependentProductId === product.id;
+                    if(temp){
+                       let prodcheck=false;
+                        console.log('product.isSelected', product.isSelected);
+                       if(product.isSelected ) {  prodcheck= true; } else {prodcheck =false;}
+                        output.push(prodcheck); 
+                    }
+                     
+                     for(let i=0;i< output.length;i++)
+                      {
+                      console.log('check:', check , '||' , output[i]);
+                      check = check || output[i] || selectedArray[i];
+                      }
                   
                 if (item.isExclusion && item.isDependent && item.dependentProductId === product.id) {
                   productObj.isDisable = true;
@@ -413,16 +438,15 @@ function reConfigureProductsReducer(state = initialState, action) {
                   }
                   productObj.isDisable = !productObj.isDisable;
                 } else if (item.isDependent && item.dependentProductId === product.id) {
-                  productObj.isDisable = !productObj.isDisable;
+                  productObj.isDisable = !check;
                   productObj.isSelected = false;
-                }
+                } 
               });}
               
                 if (!isDeleted) {
                   productArray.push(productObj);
                 }
-              });
-              console.log('checkBoxArray',checkBoxArray);
+              });            
               featureObj.products = productArray;
               featureArray.push(featureObj);
             });
@@ -431,7 +455,8 @@ function reConfigureProductsReducer(state = initialState, action) {
         }
       }
       return state
-        .set('reConfigureProductData', fromJS(reConfigureProduct));
+        .set('reConfigureProductData', fromJS(reConfigureProduct))
+     //   .set('productBundleData', fromJS(productBundle));
     }
 
     case TOGGLE_ADDOPTIONS_STATE: {
@@ -451,7 +476,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('error', false);
     default:
       return state;
-  }
+  }   
 }
 
 export default reConfigureProductsReducer;
