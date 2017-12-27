@@ -63,6 +63,10 @@ export default defineMessages({
     id: 'app.components.SegmentedEditQuoteGrid.discountSchedule',
     defaultMessage: 'View Discount Schedule',
   },
+  termDiscountSchedule: {
+    id: 'app.components.SegmentedEditQuoteGrid.termDiscountSchedule',
+    defaultMessage: 'View Term Discount Schedule',
+  },
   required: {
     id: 'app.components.SegmentedEditQuoteGrid.required',
     defaultMessage: 'Required By',
