@@ -80,6 +80,7 @@
   "app.components.SegmentSubComponent.uplift": "Uplift",
   "app.components.SegmentedEditQuoteGrid.additionalDiscount": "Additional Discount",
   "app.components.SegmentedEditQuoteGrid.discountSchedule": "View Discount Schedule",
+  "app.components.SegmentedEditQuoteGrid.termDiscountSchedule": "View Term Discount Schedule",
   "app.components.SegmentedEditQuoteGrid.header": "This is the SegmentedEditQuoteGrid component !",
   "app.components.SegmentedEditQuoteGrid.listPrice": "List Unit Price",
   "app.components.SegmentedEditQuoteGrid.markup": "Markup",
