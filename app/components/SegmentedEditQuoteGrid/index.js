@@ -212,7 +212,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       return(
         <div>
         <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
-        <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a>
+        <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.termDiscountSchedule })}><Glyphicon glyph="tags" /></a>
         <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
         </div>
       );
