@@ -84,11 +84,10 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   }
   handleToggle(index) {
     const selectedData = this.props.data[index];
-    if (selectedData !== undefined) {
+    if (selectedData !== undefined) { 
       this.setState({
         isModalOpen1: !this.state.isModalOpen1,
         selectedLine: selectedData.discountSchedule,
-        termDiscount: selectedData.termDiscountSchedule,
       });
     } else {
       this.setState({
