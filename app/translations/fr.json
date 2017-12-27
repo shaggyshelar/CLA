@@ -80,6 +80,7 @@
   "app.components.SegmentSubComponent.uplift": "Soulèvement",
   "app.components.SegmentedEditQuoteGrid.additionalDiscount": "Remise additionnelle",
   "app.components.SegmentedEditQuoteGrid.discountSchedule": "Voir l'horaire de réduction",
+  "app.components.SegmentedEditQuoteGrid.termDiscountSchedule": "Voir le calendrier des remises à terme",
   "app.components.SegmentedEditQuoteGrid.header": "",
   "app.components.SegmentedEditQuoteGrid.listPrice": "Liste des prix",
   "app.components.SegmentedEditQuoteGrid.markup": "Balisage",
