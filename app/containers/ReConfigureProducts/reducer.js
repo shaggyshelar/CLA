@@ -30,9 +30,8 @@ const initialState = fromJS({
   activeTab: 0,
   quoteData: {},
 });
-let output = [];
+const output = [];
 function reConfigureProductsReducer(state = initialState, action) {
-  
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
@@ -337,17 +336,6 @@ function reConfigureProductsReducer(state = initialState, action) {
       }
     case TOGGLE_CHECKBOX_CHANGE: {
       const reConfigureProduct = state.get('reConfigureProductData').toJS();
-     const productBundle = !_.isUndefined(state.get('productBundleData').toJS())? state.get('productBundleData').toJS():'nothing';
-      console.log("productBundle",productBundle.products);
-      const productBundleArray = [];
-      productBundle.products.forEach((product) => {
-        const productObj1 = product;
-        if(productBundle.isSelected && productObj1.id === action.product.id){
-        productObj1.isSelected = productBundle.isSelected;
-        }
-      productBundleArray.push(productObj1);
-      });
-      productBundle.products = productBundleArray;
       if (reConfigureProduct.categories.length > 0) {
         const category = _.find(reConfigureProduct.categories, { id: action.product.categoryId });
         if (category) {
@@ -365,22 +353,54 @@ function reConfigureProductsReducer(state = initialState, action) {
                   const productArray = [];
                   featureData.products.forEach((productData) => {
                     const productObj = productData;
-                    let isDeleted = false;
-                    if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
-                      productObj.isDisable = true;
-                    } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
-                      if (productObj.isAdded) {
-                        isDeleted = true;
+                    const selectedDependentItems = [];
+                    const selectedExclusionItems = [];
+                    if (productObj.dependencyList.length > 0) {
+                      const dependentExclusionItems = _.filter(productObj.dependencyList, (item) => item.isDependent || item.isExclusion);
+                      if (dependentExclusionItems.length > 0) {
+                        productObj.dependencyList.forEach((dependentProduct) => {
+                          reConfigureProduct.categories.forEach((reconfigureCategoryData) => {
+                            reconfigureCategoryData.features.forEach((reconfigureFeatureData) => {
+                              reconfigureFeatureData.products.forEach((reconfigureProductData) => {
+                                if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
+                                  selectedDependentItems.push(reconfigureProductData.isSelected);
+                                }
+                                if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
+                                  selectedExclusionItems.push(reconfigureProductData.isSelected);
+                                }
+                              });
+                            });
+                          });
+                        });
+
+                        const filteredDependentArray = selectedDependentItems.filter((value) => value === false);
+                        if (selectedDependentItems.length === filteredDependentArray.length && selectedDependentItems.length !== 0) {
+                          productObj.isDisable = true;
+                          productObj.isSelected = false;
+                        } else {
+                          productObj.isDisable = false;
+                        }
+
+                        const filteredExclusionArray = selectedExclusionItems.filter((value) => value === true);
+                        if (filteredExclusionArray.length !== 0) {
+                          if (filteredExclusionArray.length > 0) {
+                            productObj.isDisable = true;
+                            productObj.isSelected = false;
+                          } else {
+                            productObj.isDisable = false;
+                          }
+                        }
                       }
-                      productObj.isDisable = !productObj.isDisable;
-                    } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
-                      productObj.isDisable = !productObj.isDisable;
-                      productObj.isSelected = false;
-                    }
-                    if (!isDeleted) {
-                      productArray.push(productObj);
                     }
                   });
+    //              isDeleted = false;
+    //              else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
+    //               if (productObj.isAdded) {
+    //                 isDeleted = true;
+    //               }
+    //              if (!isDeleted) {
+    //                productArray.push(productObj);
+    //              }
                   featureObj.products = productArray;
                   featureArray.push(featureObj);
                 });
@@ -397,56 +417,51 @@ function reConfigureProductsReducer(state = initialState, action) {
           const product = _.find(feature.products, { id: action.product.id });
           if (product) {
             product.isSelected = !product.isSelected;
-            let temp = null;
             const featureArray = [];
             reConfigureProduct.features.forEach((featureData) => {
               const featureObj = featureData;
               const productArray = [];
-              let check= false;
-              let selectedArray =[];
               featureData.products.forEach((productData) => {
-                output=[];
-
                 const productObj = productData;
-                let isDeleted = false;
-                selectedArray.push(productObj.isSelected);
-                console.log('selectedArray',selectedArray);
-                
+                const selectedDependentItems = [];
+                const selectedExclusionItems = [];
                 if (productObj.dependencyList.length > 0) {
-               // let i=0;
-                  productObj.dependencyList.forEach( item => {
-                 //if(product.isSelected && item.isDependent && item.dependentProductId === product.id){
-                     temp = item.isDependent && item.dependentProductId === product.id;
-                    if(temp){
-                       let prodcheck=false;
-                        console.log('product.isSelected', product.isSelected);
-                       if(product.isSelected ) {  prodcheck= true; } else {prodcheck =false;}
-                        output.push(prodcheck); 
+                  const dependentExclusionItems = _.filter(productObj.dependencyList, (item) => item.isDependent || item.isExclusion);
+                  if (dependentExclusionItems.length > 0) {
+                    productObj.dependencyList.forEach((dependentProduct) => {
+                      reConfigureProduct.features.forEach((reconfigureFeatureData) => {
+                        reconfigureFeatureData.products.forEach((reconfigureProductData) => {
+                          if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
+                            selectedDependentItems.push(reconfigureProductData.isSelected);
+                          }
+                          if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
+                            selectedExclusionItems.push(reconfigureProductData.isSelected);
+                          }
+                        });
+                      });
+                    });
+
+                    const filteredDependentArray = selectedDependentItems.filter((value) => value === false);
+                    if (selectedDependentItems.length === filteredDependentArray.length && selectedDependentItems.length !== 0) {
+                      productObj.isDisable = true;
+                      productObj.isSelected = false;
+                    } else {
+                      productObj.isDisable = false;
                     }
-                     
-                     for(let i=0;i< output.length;i++)
-                      {
-                      console.log('check:', check , '||' , output[i]);
-                      check = check || output[i] || selectedArray[i];
+
+                    const filteredExclusionArray = selectedExclusionItems.filter((value) => value === true);
+                    if (filteredExclusionArray.length !== 0) {
+                      if (filteredExclusionArray.length > 0) {
+                        productObj.isDisable = true;
+                        productObj.isSelected = false;
+                      } else {
+                        productObj.isDisable = false;
                       }
-                  
-                if (item.isExclusion && item.isDependent && item.dependentProductId === product.id) {
-                  productObj.isDisable = true;
-                } else if (item.isExclusion && item.dependentProductId === product.id) {
-                  if (productObj.isAdded) {
-                    isDeleted = true;
+                    }
                   }
-                  productObj.isDisable = !productObj.isDisable;
-                } else if (item.isDependent && item.dependentProductId === product.id) {
-                  productObj.isDisable = !check;
-                  productObj.isSelected = false;
-                } 
-              });}
-              
-                if (!isDeleted) {
-                  productArray.push(productObj);
                 }
-              });            
+                productArray.push(productObj);
+              });
               featureObj.products = productArray;
               featureArray.push(featureObj);
             });
@@ -455,8 +470,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         }
       }
       return state
-        .set('reConfigureProductData', fromJS(reConfigureProduct))
-     //   .set('productBundleData', fromJS(productBundle));
+        .set('reConfigureProductData', fromJS(reConfigureProduct));
     }
 
     case TOGGLE_ADDOPTIONS_STATE: {
@@ -476,7 +490,7 @@ function reConfigureProductsReducer(state = initialState, action) {
         .set('error', false);
     default:
       return state;
-  }   
+  }
 }
 
 export default reConfigureProductsReducer;

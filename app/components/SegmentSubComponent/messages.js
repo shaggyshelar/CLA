@@ -22,6 +22,10 @@ export default defineMessages({
     id: 'app.components.SegmentSubComponent.listPrice',
     defaultMessage: 'List Unit Price',
   },
+  partnerDiscount: {
+    id: 'app.components.SegmentSubComponent.partnerDiscount',
+    defaultMessage: 'Partner Discount',
+  },
   additionalDiscount: {
     id: 'app.components.SegmentSubComponent.additionalDiscount',
     defaultMessage: 'Additional Discount',

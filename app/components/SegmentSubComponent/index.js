@@ -117,7 +117,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
   }
   renderEditable(row, cellInfo) {
     if (!row.isOneTime && row.type === 'OneTime') {
-      return (<span></span>)
+      return (<span></span>);
     }
     if (cellInfo.original.editable === false) {
       return (<span> {cellInfo.original.prop === 'quantity' || (cellInfo.original.isBundled && cellInfo.column.id === 'listPrice') ? '' : this.props.currency}
@@ -141,7 +141,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             classEditing="table-edit-input"
             value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
             propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
-            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}            validate={this.validate}
+            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)} validate={this.validate}
             format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
             classInvalid="invalid"
           />
@@ -208,6 +208,9 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         prop: 'uplift',
       },
       {
+        prop: 'partnerDiscount',
+      },
+      {
         prop: 'additionalDiscount',
       },
       {
@@ -255,8 +258,20 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             return this;
           });
           break;
+        case 'partnerDiscount':
+          data.segmentData.columns.map((j) => {
+            dataSet[i][j.name] = { id: data.id, value: j.partnerDiscount === null ? 0 : j.partnerDiscount, type: j.type, isOneTime: j.isOneTime };
+            dataSet[i].editable = true;
+            dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
+            dataSet[i].parent = data.parent;
+            dataSet[i].decimalsSupported = data.decimalsSupported;
+            return this;
+          });
+          break;
         case 'additionalDiscount':
-        
+
           data.segmentData.columns.map((j, index) => {
             dataSet[i][j.name] = { isEditable: j.additionalDiscount.isEditable, type: j.type, isOneTime: j.isOneTime, id: data.id, value: j.additionalDiscount.value, selectValues: data.segmentData.columns[index].additionalDiscount.selectValues };
             dataSet[i].editable = j.additionalDiscount.isEditable;

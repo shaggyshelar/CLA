@@ -98,6 +98,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       id: product.id,
       featureId: this.props.feature.id,
       categoryId: this.props.categoryId,
+      applyImmediately: product.applyImmediately,
+      isSelected: product.isSelected,
     };
     this.props.toggleCheckboxChange(productObj);
   }
