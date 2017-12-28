@@ -5,6 +5,7 @@
 */
 
 import React from 'react';
+import _ from 'lodash';
 import ReactTable from '../ReactTable';
 import { RIENumber, RIESelect } from 'riek';
 import { Glyphicon } from 'react-bootstrap/lib';
@@ -311,6 +312,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       }
     }
 
+    if (!this.props.quoteData.configure.showPartnerDiscount) {
+      _.remove(columns, {
+        id: 'partnerDiscount',
+      });
+    }
     return { columns, dataSet };
   }
   render() {
@@ -340,6 +346,7 @@ SegmentSubComponent.propTypes = {
   updateSegBundleSelect: React.PropTypes.func,
   updateSegBundle: React.PropTypes.func,
   currency: React.PropTypes.any,
+  quoteData: React.PropTypes.any,
 };
 
 export default SegmentSubComponent;

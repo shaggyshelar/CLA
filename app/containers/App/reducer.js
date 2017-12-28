@@ -70,7 +70,7 @@ function appReducer(state = initialState, action) {
       return state.set('loading', true)
         .set('error', false);
     case LOAD_DATA_SUCCESS:
-      //toast.dismiss();
+      // toast.dismiss();
       return state
         .set('data', fromJS(action.data.quote))
         .set('dataChanged', false)
@@ -195,7 +195,11 @@ function appReducer(state = initialState, action) {
       {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
-        line[0][action.field].value = action.data;
+        if (action.field === 'partnerDiscount') {
+          line[0][action.field] = action.data;
+        } else {
+          line[0][action.field].value = action.data;
+        }
         return state.setIn(['data', 'lines'], fromJS(lines))
                     .set('dataChanged', true);
       }
@@ -283,11 +287,11 @@ function appReducer(state = initialState, action) {
       }
     case SEGMENT:
       {
-        //const lines = state.getIn(['data', 'lines']).toJS();
-        //const line = _.filter(lines, { id: action.id });
-        //line[0].isSegmented = action.value;
-         return state.set('loading', true);
-        //return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
+        // const lines = state.getIn(['data', 'lines']).toJS();
+        // const line = _.filter(lines, { id: action.id });
+        // line[0].isSegmented = action.value;
+        return state.set('loading', true);
+        // return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
     case SAVE_APP_CUSTOM_SEGMENT_DATA : {
       return state.set('loading', true).set('dataChanged', true)

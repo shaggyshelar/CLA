@@ -402,6 +402,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
                 updateSegBundle={this.props.updateSegBundle}
                 updateSegSelect={this.props.updateSegSelect}
                 updateSegBundleSelect={this.props.updateSegBundleSelect}
+                quoteData={this.props.quoteData}
               />
             )}
           />
