@@ -48,7 +48,7 @@ export function* saveProducts(data, locationQuery) {
       } else {
         browserHistory.push('/EditQuote');
       }
-      yield put(loadReConfigureProductsDataSuccess(quotes));
+      yield put(saveConfiguration(quotes));
     }
   } catch (err) {
     yield put(reconfigureDataLoadingError(err));
