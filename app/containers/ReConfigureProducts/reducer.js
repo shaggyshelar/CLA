@@ -392,6 +392,7 @@ function reConfigureProductsReducer(state = initialState, action) {
                         }
                       }
                     }
+                    productArray.push(productObj);
                   });
     //              isDeleted = false;
     //              else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
