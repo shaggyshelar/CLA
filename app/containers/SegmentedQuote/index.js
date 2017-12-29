@@ -252,6 +252,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
               quoteData={this.props.quoteData}
               location={this.props.location}
               toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+              toggleSuggestionStatus={this.props.toggleSuggestionStatus}
             />
           </Tab>
         </Tabs>
@@ -291,6 +292,7 @@ SegmentedQuote.propTypes = {
   isCheckAll: PropTypes.any,
   location: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.any,
+  toggleSuggestionStatus: PropTypes.any,
 };
 SegmentedQuote.contextTypes = {
   intl: React.PropTypes.object.isRequired,
