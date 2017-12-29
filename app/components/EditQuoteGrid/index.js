@@ -42,7 +42,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       },
       data: this.props.data,
       isModalOpen: false,
-      isModalOpen1: false
+      isModalOpen1: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
     this.cloneLine = this.cloneLine.bind(this);
@@ -57,6 +57,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.calculateTotal = this.calculateTotal.bind(this);
     this.clickEdit = this.clickEdit.bind(this);
     this.onReconfigureLineClick = this.onReconfigureLineClick.bind(this);
+    this.onSuggestionLinkClick = this.onSuggestionLinkClick.bind(this);
   }
   onReconfigureLineClick(item) {
     const reconfigureObj = {
@@ -70,6 +71,21 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       browserHistory.push(`/reconfigureproducts?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
     } else {
       browserHistory.push('/reconfigureproducts');
+    }
+  }
+
+  onSuggestionLinkClick(item) {
+    const suggestionObj = {
+      id: item.id,
+      suggested: true,
+    };
+    this.props.toggleSuggestionStatus(suggestionObj);
+    if (this.props.location.query.groupId !== null && this.props.location.query.groupId !== undefined && this.props.location.query.mainTab !== undefined && this.props.location.query.tab !== undefined) {
+      browserHistory.push(`/suggestionpage?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else if ((this.props.location.query.groupId === null || this.props.location.query.groupId === undefined) && this.props.location.query.mainTab !== undefined) {
+      browserHistory.push(`/suggestionpage?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else {
+      browserHistory.push('/suggestionpage');
     }
   }
   setTableOption(event) {
@@ -173,19 +189,21 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     });
     return total;
   }
-  formatt(e,d) {
+  formatt(e, d) {
     return (d.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e }));
   }
   clickEdit(e) {
     e.currentTarget.nextSibling.focus();
   }
   renderActionItems(cellInfo) {
-    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> :'';
-    const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map(item => item + "\n" )  } className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a>:'';
+    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : '';
+    const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map((item) => `${item}\n`)} className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a> : '';
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
+    const suggestion = <a title={this.context.intl.formatMessage({ ...messages.suggestions })} onClick={() => { this.onSuggestionLinkClick(cellInfo.original); }}><Glyphicon glyph="link" /></a>;
     return (
       <div className="actionItems" >
         {reconfigure}
+        {suggestion}
         {notification}
         {segment}
         {/* <a><Glyphicon glyph="star-empty" /></a> */}
@@ -217,7 +235,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
           propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
           format={this.formatt.bind(this, cellInfo.original.decimalsSupported)}
-          change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 )}
+          change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
           validate={this.validate}
           classInvalid="invalid"
         />
@@ -259,7 +277,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
           propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
           format={this.formatt.bind(this, cellInfo.original.decimalsSupported)}
-          change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 )}
+          change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
           validate={this.validate}
           classInvalid="invalid"
         />
@@ -277,38 +295,32 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       </div>);
   }
 
-  renderCommonDiscount(cellInfo){
-    if(cellInfo.original.canShowDiscountScheduler && (cellInfo.original.termDiscountSchedule !== null)){
-      return(
+  renderCommonDiscount(cellInfo) {
+    if (cellInfo.original.canShowDiscountScheduler && (cellInfo.original.termDiscountSchedule !== null)) {
+      return (
         <div>
-        <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
-        <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a>
-        <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+          <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
+          <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={'Term Discount'}><Glyphicon glyph="tags" /></a>
+          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+        </div>
+      );
+    } else if (cellInfo.original.canShowDiscountScheduler) {
+      return (
+        <div>
+          <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
+          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+        </div>
+      );
+    } else if (cellInfo.original.termDiscountSchedule !== null) {
+      return (
+        <div>
+          <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={'Term Discount'}><Glyphicon glyph="tags" /></a>
+          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
         </div>
       );
     }
-    else{
-        if(cellInfo.original.canShowDiscountScheduler){
-          return(
-          <div>
-          <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
-          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
-           </div>
-          );
-        }
-        else{
-          if(cellInfo.original.termDiscountSchedule !== null){
-            return(
-            <div>
-              <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a>
-              <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
-           </div>
-          );
-          }
-        }
-    }
   }
-//(cellInfo) => (cellInfo.original.canShowDiscountScheduler  ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a><span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>),
+// (cellInfo) => (cellInfo.original.canShowDiscountScheduler  ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a><span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>),
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (
@@ -332,7 +344,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
             propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
             format={this.formatt.bind(this, cellInfo.original.decimalsSupported)}
-            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 )}
+            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
             validate={this.validate}
             classInvalid="invalid"
           />
@@ -360,13 +372,13 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     });
     return data;
   }
-  renderOverlay(e){
-      const tooltip = (
+  renderOverlay(e) {
+    const tooltip = (
       <Tooltip id={`${e.original.id}-${e.original.name}`} bsClass="tooltip" className="hover-tip">
-      <div className="lab"><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${e.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={e.original.name}>{e.original.name}</span></div>
-        </Tooltip>
+        <div className="lab"><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${e.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={e.original.name}>{e.original.name}</span></div>
+      </Tooltip>
       );
-      return (<OverlayTrigger placement="bottom" overlay={tooltip}>
+    return (<OverlayTrigger placement="bottom" overlay={tooltip}>
       <span >{e.original.name}</span>
     </OverlayTrigger>);
   }
@@ -418,7 +430,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
         Cell: this.renderOverlay.bind(this),
-        //(cellInfo) => (cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
+        // (cellInfo) => (cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.quantity })}>{this.context.intl.formatMessage({ ...messages.quantity })}</span>,
@@ -526,6 +538,7 @@ EditQuoteGrid.propTypes = {
   updateSelectBundle: PropTypes.func,
   location: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.func,
+  toggleSuggestionStatus: PropTypes.func,
 };
 
 

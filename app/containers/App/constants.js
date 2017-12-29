@@ -50,8 +50,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 export const SERVER_URL = serverUrl;
 export const EntityURLs = entityUrls;
-export const tempQuoteId = '02ea5f56-68cf-e711-812c-c4346bdd8041';
-export const tempPriceBookId = '079f247c-b29e-e711-8124-c4346bdc0e01';
+// export const tempQuoteId = '02ea5f56-68cf-e711-812c-c4346bdd8041';
+// export const tempPriceBookId = '079f247c-b29e-e711-8124-c4346bdc0e01';
+
+export const tempQuoteId = 'b981d7de-77ec-e711-813b-c4346bdcdf81';
+export const tempPriceBookId = '391a00e1-08a8-e711-8124-c4346bdd8041';
 
 // export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
 // export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
@@ -95,3 +98,5 @@ export const UPDATE_SELECT_BUNDLE = 'app/EditQuote/UPDATE_SELECT_BUNDLE';
 export const SAVE_APP_CUSTOM_SEGMENT_DATA = 'app/EditQuote/SAVE_APP_CUSTOM_SEGMENT_DATA';
 export const SAVECONFIGURATION_SUCCESS = 'app/EditQuote/SAVECONFIGURATION_SUCCESS';
 export const TOGGLE_RECONFIGURELINE_STATUS = 'app/EditQuote/TOGGLE_RECONFIGURELINE_STATUS';
+export const TOGGLE_SUGGESTION_STATUS = 'app/EditQuote/TOGGLE_SUGGESTION_STATUS';
+export const SAVESUGGESTION_SUCCESS = 'app/EditQuote/SAVESUGGESTION_SUCCESS';

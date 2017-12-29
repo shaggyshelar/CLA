@@ -51,7 +51,7 @@ export default defineMessages({
     id: 'app.components.SegmentedEditQuoteGrid.segment',
     defaultMessage: 'Segment',
   },
-  notification:{
+  notification: {
     id: 'app.components.SegmentedEditQuoteGrid.notification',
     defaultMessage: 'Product added successfully',
   },
@@ -70,5 +70,9 @@ export default defineMessages({
   uplift: {
     id: 'app.components.SegmentedEditQuoteGrid.uplift',
     defaultMessage: 'Uplift',
+  },
+  suggestions: {
+    id: 'app.components.SegmentedEditQuoteGrid.suggestions',
+    defaultMessage: 'suggestions',
   },
 });
