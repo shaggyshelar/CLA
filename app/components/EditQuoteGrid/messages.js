@@ -66,4 +66,8 @@ export default defineMessages({
     id: 'app.components.EditQuoteGrid.required',
     defaultMessage: 'Required By',
   },
+  suggestions: {
+    id: 'app.components.EditQuoteGrid.suggestions',
+    defaultMessage: 'suggestions',
+  },
 });

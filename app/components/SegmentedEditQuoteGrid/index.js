@@ -56,6 +56,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     this.calculateTotal = this.calculateTotal.bind(this);
     this.renderTotal = this.renderTotal.bind(this);
     this.onReconfigureLineClick = this.onReconfigureLineClick.bind(this);
+    this.onSuggestionLinkClick = this.onSuggestionLinkClick.bind(this);
   }
   onReconfigureLineClick(item) {
     const reconfigureObj = {
@@ -69,6 +70,21 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       browserHistory.push('/reconfigureproducts?mainTab=2');
     } else {
       browserHistory.push('/reconfigureproducts');
+    }
+  }
+
+  onSuggestionLinkClick(item) {
+    const suggestionObj = {
+      id: item.id,
+      suggested: true,
+    };
+    this.props.toggleSuggestionStatus(suggestionObj);
+    if (this.props.location.query.groupId !== null && this.props.location.query.groupId !== undefined && this.props.location.query.mainTab !== undefined && this.props.location.query.tab !== undefined) {
+      browserHistory.push(`/suggestionpage?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else if ((this.props.location.query.groupId === null || this.props.location.query.groupId === undefined) && this.props.location.query.mainTab !== undefined) {
+      browserHistory.push(`/suggestionpage?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else {
+      browserHistory.push('/suggestionpage');
     }
   }
   setTableOption(event) {
@@ -196,39 +212,37 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : '';
     // const bundle = cellInfo.original.isBundled ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
     // const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
-    const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map(item => item + "\n" )  } className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a>:'';
+    const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map((item) => `${item}\n`)} className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a> : '';
     const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Resegment"><Glyphicon glyph="transfer" /></a> : '';
-    
+    const suggestion = <a title={this.context.intl.formatMessage({ ...messages.suggestions })} onClick={() => { this.onSuggestionLinkClick(cellInfo.original); }}><Glyphicon glyph="link" /></a>;
+
     return (
       <div className="actionItems" >
         {reconfigure}
+        {suggestion}
         {segment}
         {notification}
       </div>
     );
   }
 
-  renderCommonDiscount(cellInfo){
-    if(cellInfo.original.canShowDiscountScheduler && (cellInfo.original.termDiscountSchedule !== null)){
-      return(
+  renderCommonDiscount(cellInfo) {
+    if (cellInfo.original.canShowDiscountScheduler && (cellInfo.original.termDiscountSchedule !== null)) {
+      return (
         <div>
-        <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
-        <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a>
-        <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+          <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
+          <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={'Term Discount'}><Glyphicon glyph="tags" /></a>
+          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
         </div>
       );
-    }
-    else{
-        if(cellInfo.original.canShowDiscountScheduler){
-          return(
-          <div>
-          <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
-          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
-           </div>
+    } else if (cellInfo.original.canShowDiscountScheduler) {
+      return (
+            <div>
+            <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
+            <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+          </div>
           );
-        }
-        else{
-          if(cellInfo.original.termDiscountSchedule !== null){
+    }        else  if(cellInfo.original.termDiscountSchedule !== null){
             return(
             <div>
               <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a>
@@ -236,8 +250,6 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
            </div>
           );
           }
-        }
-    }
   }
 
   renderEditable(cellInfo) {
@@ -294,30 +306,30 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
         Cell: this.renderCommonDiscount,
-      }
+      },
 
-      ];
+    ];
     const data = Object.assign({}, this.props.data[0]);
     let segmentTotal = 0;
     _.forEach(this.props.data, (value) => {
       segmentTotal += value.segmentTotal;
     });
     columns.push(
-        {
+      {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
         accessor: 'name',
         Footer: (<span>Segmented {this.props.selectTab} Total</span>),
         width: 200,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: this.renderOverlay.bind(this), 
+        Cell: this.renderOverlay.bind(this),
       //  (cellInfo) => (cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       }
       );
     data.segmentData.columns.map((i, index) => {
       let total = 0;
       const c = this.props.data.map((j) => _.filter(j.segmentData.columns, { name: i.name }).map((d) => total += d.netTotal));
-      
+
       if (!i.isDeleted) {
         columns.push({
           Header: () => <span className="upper-case" title={i.name}>{i.name}</span>,
@@ -343,19 +355,19 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     return columns;
   }
   renderOverlay(e) {
-      const tooltip = (
+    const tooltip = (
       <Tooltip id={`${e.original.id}-${e.original.name}`} bsClass="tooltip" className="hover-tip">
-      <div className="lab"><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${e.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={e.original.name}>{e.original.name}</span></div>
+          <div className="lab"><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${e.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={e.original.name}>{e.original.name}</span></div>
         </Tooltip>
       );
-      return (<OverlayTrigger placement="bottom" overlay={tooltip}>
+    return (<OverlayTrigger placement="bottom" overlay={tooltip}>
       <span >{e.original.name}</span>
     </OverlayTrigger>);
-    /*}else{
+    /* }else{
     <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>
   }
-    
-        //<div >{this.context.intl.formatMessage({ ...messages.name })}</div><div className="val">{data.name}</div><br /> 
+
+        //<div >{this.context.intl.formatMessage({ ...messages.name })}</div><div className="val">{data.name}</div><br />
 */
   }
   renderCell(index, e) {
@@ -476,6 +488,7 @@ SegmentedEditQuoteGrid.propTypes = {
   isCheckAll: PropTypes.any,
   location: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.func,
+  toggleSuggestionStatus: PropTypes.func,
 };
 
 export default SegmentedEditQuoteGrid;

@@ -37,6 +37,7 @@ import { cloneLine,
   segment,
   loadData,
   toggleReconfigureLineStatus,
+  toggleSuggestionStatus,
  } from '../App/actions';
 
 import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData, clearCustomSegmentsData, toggleCheckAll } from './actions';
@@ -361,6 +362,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               toggleCheckAll={this.props.toggleCheckAll}
               isCheckAll={this.props.isCheckAll}
               toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+              toggleSuggestionStatus={this.props.toggleSuggestionStatus}
             />
           </div>
         :
@@ -398,6 +400,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                 toggleCheckAll={this.props.toggleCheckAll}
                 isCheckAll={this.props.isCheckAll}
                 toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+                toggleSuggestionStatus={this.props.toggleSuggestionStatus}
               />
             :
                 <EditQuoteGrid
@@ -416,6 +419,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                   quoteData={quoteData}
                   location={this.props.location}
                   toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+                  toggleSuggestionStatus={this.props.toggleSuggestionStatus}
                 />
             }
           </div>
@@ -467,6 +471,7 @@ EditQuotePage.propTypes = {
   language: PropTypes.any,
   changeLocale: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.func,
+  toggleSuggestionStatus: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -586,6 +591,9 @@ function mapDispatchToProps(dispatch) {
     },
     toggleReconfigureLineStatus: (reconfigureObj) => {
       dispatch(toggleReconfigureLineStatus(reconfigureObj));
+    },
+    toggleSuggestionStatus: (suggestionObj) => {
+      dispatch(toggleSuggestionStatus(suggestionObj));
     },
   };
 }
