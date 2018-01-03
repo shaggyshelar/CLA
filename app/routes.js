@@ -196,14 +196,14 @@ export default function createRoutes(store) {
     }, {
       path: '/suggestionpage',
       name: 'suggestionPage',
-      getComponent(nextState, cb) {
+      getComponent: memoizeComponent((renderRoute) => {
         const importModules = Promise.all([
           import('containers/SuggestionPage/reducer'),
           import('containers/SuggestionPage/sagas'),
           import('containers/SuggestionPage'),
         ]);
 
-        const renderRoute = loadModule(cb);
+        // const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('suggestionPage', reducer.default);
@@ -212,7 +212,7 @@ export default function createRoutes(store) {
         });
 
         importModules.catch(errorLoading);
-      },
+      }),
     }, {
       path: '*',
       name: 'notfound',
