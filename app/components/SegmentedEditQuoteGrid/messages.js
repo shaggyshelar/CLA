@@ -27,6 +27,10 @@ export default defineMessages({
     id: 'app.components.SegmentedEditQuoteGrid.listPrice',
     defaultMessage: 'List Unit Price',
   },
+  partnerDiscount: {
+    id: 'app.components.EditQuoteGrid.partnerDiscount',
+    defaultMessage: 'Partner Discount',
+  },
   additionalDiscount: {
     id: 'app.components.SegmentedEditQuoteGrid.additionalDiscount',
     defaultMessage: 'Additional Discount',
