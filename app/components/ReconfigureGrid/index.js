@@ -127,12 +127,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   renderActionItems(cellInfo) {
     let input;
     let title;
-    if (cellInfo.original.isDependent && cellInfo.original.isExclusion) {
-      title = `Required: ${cellInfo.original.dependentBy} / Exclusion: ${cellInfo.original.dependentBy}`;
-    } else if (cellInfo.original.isExclusion) {
-      title = `Exclusion: ${cellInfo.original.dependentBy}`;
-    } else if (cellInfo.original.isDependent) {
-      title = `Required: ${cellInfo.original.dependentBy}`;
+    if (cellInfo.original.constraintMessage) {
+      title = cellInfo.original.constraintMessage;
     }
     if (this.props.feature.dynamicAddEnabled) {
       if (cellInfo.original.isRequired) {

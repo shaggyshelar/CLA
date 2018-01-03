@@ -3,7 +3,7 @@
  * SuggestionPage reducer
  *
  */
-
+import { generateGuid } from 'containers/App/constants';
 import { fromJS } from 'immutable';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
@@ -33,10 +33,22 @@ function suggestionPageReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false);
-    case LOAD_SUGGESTIONS_SUCCESS:
+    case LOAD_SUGGESTIONS_SUCCESS: {
+      const quoteProductData = action.suggestionsData.quoteProductData;
+      if (quoteProductData && quoteProductData.productRelatedData && quoteProductData.productRelatedData.relatedProducts) {
+        const relatedProducts = [];
+        quoteProductData.productRelatedData.relatedProducts.forEach((item) => {
+          const updatedItem = item;
+          updatedItem.relatedProduct.tempId = generateGuid();
+          relatedProducts.push(updatedItem);
+        }, this);
+        quoteProductData.productRelatedData.relatedProducts = relatedProducts;
+      }
+
       return state
-        .set('suggestionsData', fromJS(action.suggestionsData.quoteProductData))
+        .set('suggestionsData', fromJS(quoteProductData))
         .set('loading', false);
+    }
 
     case LOAD_SUGGESTIONS_ERROR: {
       toast.dismiss();
@@ -61,7 +73,7 @@ function suggestionPageReducer(state = initialState, action) {
 
     case TOGGLE_CHECKBOX_CHANGE: {
       const suggestionsData = state.get('suggestionsData').toJS();
-      const product = _.filter(suggestionsData.productRelatedData.relatedProducts, (item) => item.relatedProduct.id === action.item.id);
+      const product = _.filter(suggestionsData.productRelatedData.relatedProducts, (item) => item.relatedProduct.tempId === action.item.tempId);
       if (product && product.length > 0) {
         product[0].relatedProduct.isSelected = !product[0].relatedProduct.isSelected;
       }
@@ -77,7 +89,7 @@ function suggestionPageReducer(state = initialState, action) {
 
     case UPDATE_PRODUCT: {
       const suggestionsData = state.get('suggestionsData').toJS();
-      const product = _.filter(suggestionsData.productRelatedData.relatedProducts, (item) => item.relatedProduct.id === action.productObj.id);
+      const product = _.filter(suggestionsData.productRelatedData.relatedProducts, (item) => item.relatedProduct.tempId === action.productObj.tempId);
       if (product && product.length > 0) {
         product[0].relatedProduct[action.productObj.field].value = action.productObj.value;
       }
