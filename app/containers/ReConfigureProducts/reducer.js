@@ -471,7 +471,8 @@ function reConfigureProductsReducer(state = initialState, action) {
         }
       }
       return state
-        .set('reConfigureProductData', fromJS(reConfigureProduct));
+        .set('reConfigureProductData', fromJS(reConfigureProduct))
+        .set('loading', true);
     }
 
     case TOGGLE_ADDOPTIONS_STATE: {
