@@ -119,7 +119,7 @@ EditQuoteHeader.propTypes = {
   languageChange: React.PropTypes.func,
   language: React.PropTypes.any,
   disabledButton: React.PropTypes.bool,
-  location: React.PropTypes.any,
+  dataChanged: React.PropTypes.any,
 };
 EditQuoteHeader.contextTypes = {
   intl: React.PropTypes.object.isRequired,
