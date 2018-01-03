@@ -30,7 +30,7 @@ class SuggestionProductPanel extends React.Component { // eslint-disable-line re
     }
     return (
       <div>
-        <div className="qoute-container reconfigureContainer">
+        <div className="quote-container reconfigureContainer">
           <div>
             <span className="categoryLabel">{name}</span>
           </div>

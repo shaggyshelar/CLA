@@ -321,7 +321,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         </div>
         {grouped ?
 
-          <div className="qoute-container table-container">
+          <div className="quote-container table-container">
             <GroupQuote
               data={this.props.data ? this.props.data.toJS() : []}
               groups={this.props.data ? _.filter(this.props.data.toJS().groups, { isDeleted: false }) : []}
@@ -366,7 +366,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             />
           </div>
         :
-          <div className="qoute-container table-container">
+          <div className="quote-container table-container">
             {segmented ?
               <SegmentedQuote
                 data={this.props.data ? _.filter(this.props.data.toJS().lines, { isDeleted: false }) : []}

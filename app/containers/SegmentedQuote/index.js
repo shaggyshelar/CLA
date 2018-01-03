@@ -125,7 +125,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
     }
 
     return (
-      <div className="qoute-container segmented">
+      <div className="quote-container segmented">
         <Tabs activeKey={this.state.selectedMainTab} onSelect={this.selectMainTab} animation={false} defaultActiveKey={2} id="noanim-tab-example">
           <Tab unmountOnExit eventKey={'1'} title={this.context.intl.formatMessage({ ...messages.segment })}>
 
