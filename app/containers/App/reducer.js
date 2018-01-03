@@ -197,7 +197,11 @@ function appReducer(state = initialState, action) {
       {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
-        line[0][action.field].value = action.data;
+        if (action.field === 'partnerDiscount') {
+          line[0][action.field] = action.data;
+        } else {
+          line[0][action.field].value = action.data;
+        }
         return state.setIn(['data', 'lines'], fromJS(lines))
                     .set('dataChanged', true);
       }

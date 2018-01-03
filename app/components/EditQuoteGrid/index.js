@@ -8,6 +8,7 @@ import { RIENumber, RIESelect } from 'riek';
 import _ from 'lodash';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
 import TermDiscountScheduleEditor from '../TermDiscountScheduleEditor';
+import ProductDetails from '../ProductDetails';
 import messages from './messages';
 
 class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -19,6 +20,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.renderPartnerDiscount = this.renderPartnerDiscount.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.handleTermToggle = this.handleTermToggle.bind(this);
+    this.handleProductDetailsToggle = this.handleProductDetailsToggle.bind(this);
     this.renderData = this.renderData.bind(this);
     this.renderOverlay = this.renderOverlay.bind(this);
     this.validate = this.validate.bind(this);
@@ -39,10 +41,12 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         freezeWhenExpanded: true,
         selectedLine: {},
         termDiscount: {},
+        detailedInfo: {},
       },
       data: this.props.data,
       isModalOpen: false,
-      isModalOpen1: false,
+      isDiscountModalOpen: false,
+      isProductDetailsModalOpen: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
     this.cloneLine = this.cloneLine.bind(this);
@@ -104,12 +108,26 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     const selectedData = this.props.data[index];
     if (selectedData !== undefined) {
       this.setState({
-        isModalOpen1: !this.state.isModalOpen1,
+        isDiscountModalOpen: !this.state.isDiscountModalOpen,
         selectedLine: selectedData.discountSchedule,
       });
     } else {
       this.setState({
-        isModalOpen1: !this.state.isModalOpen1,
+        isDiscountModalOpen: !this.state.isDiscountModalOpen,
+      });
+    }
+  }
+
+  handleProductDetailsToggle(index) {
+    const selectedData = this.props.data[index];
+    if (selectedData !== undefined) {
+      this.setState({
+        isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
+        detailedInfo: selectedData.detailedInfo,
+      });
+    } else {
+      this.setState({
+        isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
       });
     }
   }
@@ -147,6 +165,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const data1 = data[key];
+
     this.props.update(field[1], parseFloat(data1).toFixed(decimal) / 1, field[2]);
   }
 
@@ -178,14 +197,6 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     let total = 0;
     _.forEach(this.props.data, (value) => {
       total += value.netTotal;
-      // if (value.type === 'Bundle' && value.bundleProducts) {
-      //   value.bundleProducts.map((i) => {
-      //     if (!i.isSegmented) {
-      //       total += value.netTotal;
-      //     }
-      //     return this;
-      //   });
-      // }
     });
     return total;
   }
@@ -206,26 +217,11 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         {suggestion}
         {notification}
         {segment}
-        {/* <a><Glyphicon glyph="star-empty" /></a> */}
       </div>
     );
   }
 
   renderPartnerDiscount(cellInfo) {
-    const selected = cellInfo.original[cellInfo.column.id].selectValues;
-    const options = [];
-    const selectedOption = {};
-    selected.map((i) => {
-      options.push({ id: i.id, text: i.value });
-      if (i.isSelected) {
-        selectedOption.id = i.id;
-        selectedOption.text = i.value;
-      }
-      return this;
-    });
-    if (cellInfo.original[cellInfo.column.id].isEditable === false) {
-      return (<span> {cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })} {selectedOption.text}</span>);
-    }
     return (
       <div>
         <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
@@ -239,17 +235,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           validate={this.validate}
           classInvalid="invalid"
         />
-        <RIESelect
-          className={'inline-select'}
-          classEditing="inline-select-edit"
-          value={selectedOption}
-          options={options}
-          propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-          change={this.selectDataChanged}
-          classInvalid="invalid"
-          editProps={{ width: '40px' }}
-        />
-
+        <span> %</span>
       </div>);
   }
 
@@ -372,24 +358,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     });
     return data;
   }
-  renderOverlay(e) {
-    const tooltip = (
-      <Tooltip id={`${e.original.id}-${e.original.name}`} bsClass="tooltip" className="hover-tip">
-        <div className="lab"><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${e.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={e.original.name}>{e.original.name}</span></div>
-      </Tooltip>
-      );
-    return (<OverlayTrigger placement="bottom" overlay={tooltip}>
-      <span >{e.original.name}</span>
-    </OverlayTrigger>);
+
+  renderOverlay(cellInfo) {
+    return (
+      <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="pro-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+    );
   }
   render() {
     const data = this.props.data;
-    // TODO: To replace with actual data from server
-    _.forEach(data, (value) => {
-      if (!value.partnerDiscount) {
-        value.partnerDiscount = { dataType: 'inputSelect', isEditable: true, isVisible: true, value: 5, selectValues: [{ id: '11111', value: '%', isSelected: true }] };
-      }
-    });
     const total = this.calculateTotal();
     const columns = [
       {
@@ -416,20 +392,20 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         headerStyle: { textAlign: 'left' },
         Cell: ({ index }) => <span>{index + 1}</span>,
 
-      }, {
+      },
+      {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productCode })}>{this.context.intl.formatMessage({ ...messages.productCode })}</span>,
         accessor: 'code',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
         Cell: this.renderCommonDiscount,
       },
-
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productName })}>{this.context.intl.formatMessage({ ...messages.productName })}</span>,
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: this.renderOverlay.bind(this),
+        Cell: this.renderOverlay,
         // (cellInfo) => (cellInfo.original.isRequired ? <div><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span></div> : <span className="pro-name" title={cellInfo.original.name}>{cellInfo.original.name}</span>),
       },
       {
@@ -452,7 +428,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.partnerDiscount })}>{this.context.intl.formatMessage({ ...messages.partnerDiscount })}</span>,
-        accessor: 'partnerDiscount.value',
+        accessor: 'partnerDiscount',
         id: 'partnerDiscount',
         style: { textAlign: 'right' },
         headerStyle: { textAlign: 'right' },
@@ -489,6 +465,13 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: (props) => <span> {this.props.currency } {props.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: props.original.decimalsSupported ? props.original.decimalsSupported : 2 })}</span>,
       },
     ];
+
+    if (!this.props.quoteData.configure.showPartnerDiscount) {
+      _.remove(columns, {
+        id: 'partnerDiscount',
+      });
+    }
+
     return (
       <div>
         <div className="table-wrap edit-grid-quote">
@@ -510,8 +493,16 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           value={this.state.value}
           termDiscount={this.state.termDiscount}
         />
+        <ProductDetails
+          show={this.state.isProductDetailsModalOpen} onHide={this.handleProductDetailsToggle}
+          style={{
+            display: 'inline-flex',
+          }}
+          value={this.state.value}
+          detailedInfo={this.state.detailedInfo}
+        />
         <DiscountScheduleEditor
-          show={this.state.isModalOpen1} onHide={this.handleToggle}
+          show={this.state.isDiscountModalOpen} onHide={this.handleToggle}
           style={{
             display: 'inline-flex',
           }}
@@ -538,7 +529,7 @@ EditQuoteGrid.propTypes = {
   updateSelectBundle: PropTypes.func,
   location: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.func,
-  toggleSuggestionStatus: PropTypes.func,
+  quoteData: PropTypes.any,
 };
 
 

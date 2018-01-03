@@ -30,7 +30,7 @@ const initialState = fromJS({
   activeTab: 0,
   quoteData: {},
 });
-
+const output = [];
 function reConfigureProductsReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
@@ -353,22 +353,55 @@ function reConfigureProductsReducer(state = initialState, action) {
                   const productArray = [];
                   featureData.products.forEach((productData) => {
                     const productObj = productData;
-                    let isDeleted = false;
-                    if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
-                      productObj.isDisable = true;
-                    } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
-                      if (productObj.isAdded) {
-                        isDeleted = true;
+                    const selectedDependentItems = [];
+                    const selectedExclusionItems = [];
+                    if (productObj.dependencyList.length > 0) {
+                      const dependentExclusionItems = _.filter(productObj.dependencyList, (item) => item.isDependent || item.isExclusion);
+                      if (dependentExclusionItems.length > 0) {
+                        productObj.dependencyList.forEach((dependentProduct) => {
+                          reConfigureProduct.categories.forEach((reconfigureCategoryData) => {
+                            reconfigureCategoryData.features.forEach((reconfigureFeatureData) => {
+                              reconfigureFeatureData.products.forEach((reconfigureProductData) => {
+                                if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
+                                  selectedDependentItems.push(reconfigureProductData.isSelected);
+                                }
+                                if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
+                                  selectedExclusionItems.push(reconfigureProductData.isSelected);
+                                }
+                              });
+                            });
+                          });
+                        });
+
+                        const filteredDependentArray = selectedDependentItems.filter((value) => value === false);
+                        if (selectedDependentItems.length === filteredDependentArray.length && selectedDependentItems.length !== 0) {
+                          productObj.isDisable = true;
+                          productObj.isSelected = false;
+                        } else {
+                          productObj.isDisable = false;
+                        }
+
+                        const filteredExclusionArray = selectedExclusionItems.filter((value) => value === true);
+                        if (filteredExclusionArray.length !== 0) {
+                          if (filteredExclusionArray.length > 0) {
+                            productObj.isDisable = true;
+                            productObj.isSelected = false;
+                          } else {
+                            productObj.isDisable = false;
+                          }
+                        }
                       }
-                      productObj.isDisable = !productObj.isDisable;
-                    } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
-                      productObj.isDisable = !productObj.isDisable;
-                      productObj.isSelected = false;
                     }
-                    if (!isDeleted) {
-                      productArray.push(productObj);
-                    }
+                    productArray.push(productObj);
                   });
+    //              isDeleted = false;
+    //              else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
+    //               if (productObj.isAdded) {
+    //                 isDeleted = true;
+    //               }
+    //              if (!isDeleted) {
+    //                productArray.push(productObj);
+    //              }
                   featureObj.products = productArray;
                   featureArray.push(featureObj);
                 });
@@ -391,21 +424,44 @@ function reConfigureProductsReducer(state = initialState, action) {
               const productArray = [];
               featureData.products.forEach((productData) => {
                 const productObj = productData;
-                let isDeleted = false;
-                if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
-                  productObj.isDisable = true;
-                } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
-                  if (productObj.isAdded) {
-                    isDeleted = true;
+                const selectedDependentItems = [];
+                const selectedExclusionItems = [];
+                if (productObj.dependencyList.length > 0) {
+                  const dependentExclusionItems = _.filter(productObj.dependencyList, (item) => item.isDependent || item.isExclusion);
+                  if (dependentExclusionItems.length > 0) {
+                    productObj.dependencyList.forEach((dependentProduct) => {
+                      reConfigureProduct.features.forEach((reconfigureFeatureData) => {
+                        reconfigureFeatureData.products.forEach((reconfigureProductData) => {
+                          if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
+                            selectedDependentItems.push(reconfigureProductData.isSelected);
+                          }
+                          if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
+                            selectedExclusionItems.push(reconfigureProductData.isSelected);
+                          }
+                        });
+                      });
+                    });
+
+                    const filteredDependentArray = selectedDependentItems.filter((value) => value === false);
+                    if (selectedDependentItems.length === filteredDependentArray.length && selectedDependentItems.length !== 0) {
+                      productObj.isDisable = true;
+                      productObj.isSelected = false;
+                    } else {
+                      productObj.isDisable = false;
+                    }
+
+                    const filteredExclusionArray = selectedExclusionItems.filter((value) => value === true);
+                    if (filteredExclusionArray.length !== 0) {
+                      if (filteredExclusionArray.length > 0) {
+                        productObj.isDisable = true;
+                        productObj.isSelected = false;
+                      } else {
+                        productObj.isDisable = false;
+                      }
+                    }
                   }
-                  productObj.isDisable = !productObj.isDisable;
-                } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
-                  productObj.isDisable = !productObj.isDisable;
-                  productObj.isSelected = false;
                 }
-                if (!isDeleted) {
-                  productArray.push(productObj);
-                }
+                productArray.push(productObj);
               });
               featureObj.products = productArray;
               featureArray.push(featureObj);
@@ -415,7 +471,8 @@ function reConfigureProductsReducer(state = initialState, action) {
         }
       }
       return state
-        .set('reConfigureProductData', fromJS(reConfigureProduct));
+        .set('reConfigureProductData', fromJS(reConfigureProduct))
+        .set('loading', true);
     }
 
     case TOGGLE_ADDOPTIONS_STATE: {
