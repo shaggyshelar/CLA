@@ -42,6 +42,7 @@ function productSelectionPageReducer(state = initialState, action) {
     case LOAD_PRODUCTS_DATA_SUCCESS: {
       return state
         .set('products', fromJS(action.products.products))
+        .set('guidedSellingQuestions', fromJS([{ id: 'fc295482-3ad0-e711-8130-c4346bdc0e01', code: 'BOOK', name: 'Book', description: '' }]))
         .set('initialProducts', fromJS(action.products.products))
         .set('loading', false);
     }

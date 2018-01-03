@@ -12,7 +12,7 @@ import _ from 'lodash';
 import { SERVER_URL, EntityURLs } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
+import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData, makeGuidedSellingData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
@@ -257,6 +257,7 @@ ProductSelectionPage.propTypes = {
   addProductsToQuote: PropTypes.func,
   onSearch: PropTypes.func,
   onSearchItemSelected: PropTypes.func,
+  guidedSellingQuestions: PropTypes.any,
   loading: PropTypes.any,
   globalLoading: PropTypes.any,
   language: PropTypes.any,
@@ -268,6 +269,7 @@ const mapStateToProps = createStructuredSelector({
   showFilter: showFilter(),
   data: getQuoteLines(),
   products: makeProductsData(),
+  guidedSellingQuestions: makeGuidedSellingData(),
   loading: makeSelectLoading(),
   globalLoading: globalLoading(),
   language: getLanguage(),
