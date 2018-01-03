@@ -66,7 +66,7 @@ class SuggestionProductGrid extends React.Component { // eslint-disable-line rea
     const field = key.split('*(&)*');
     const value = data[key];
     const productObj = {
-      id: field[0],
+      tempId: field[0],
       field: field[1],
       value: parseFloat(value).toFixed(decimal) / 1,
     };
@@ -84,7 +84,7 @@ class SuggestionProductGrid extends React.Component { // eslint-disable-line rea
 
   toggleCheckboxChange(product) {
     const productObj = {
-      id: product.id,
+      tempId: product.tempId,
     };
     this.props.toggleCheckboxChange(productObj);
   }
@@ -96,11 +96,11 @@ class SuggestionProductGrid extends React.Component { // eslint-disable-line rea
             className={cellInfo.column.id === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
             classEditing="table-edit-input"
             value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
-            propName={`${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
+            propName={`${cellInfo.original.tempId}*(&)*${cellInfo.column.id}`}
             change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
             validate={this.validate}
             format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
-            id={cellInfo.original.id}
+            id={cellInfo.original.tempId}
             classInvalid="invalid"
           />
           <div className="reconfigure-edit-icon" style={{ cursor: 'pointer', float: 'left' }} onClick={this.clickEdit} ><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
