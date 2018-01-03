@@ -29,6 +29,18 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
       isGuidedSellingModalOpen: !this.state.isGuidedSellingModalOpen,
     });
   }
+  renderGuidedSelling() {
+    if (this.props.guidedSellingQuestions.length > 0) {
+      return (
+        <ButtonGroup className="margin">
+          <Button title={this.context.intl.formatMessage({ ...messages.guidedSelling })} onClick={this.toggleShowGuidedSellingModal}><Glyphicon glyph="check" /></Button>
+        </ButtonGroup>
+      );
+    }
+    return (
+      <div></div>
+    );
+  }
   render() {
     return (
       <div>
@@ -54,11 +66,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
             />
           </Col>
           <Col xs={12} md={5} style={{ textAlign: 'right' }}>
-            <ButtonGroup className="margin">
-              {/* <Button title={this.context.intl.formatMessage({ ...messages.filter })}><Glyphicon glyph="filter" /></Button> */}
-              <Button title={this.context.intl.formatMessage({ ...messages.guidedSelling })} onClick={this.toggleShowGuidedSellingModal}><Glyphicon glyph="check" /></Button>
-              {/* <Button title={this.context.intl.formatMessage({ ...messages.favourites })} onClick={() => { browserHistory.push('/favourites'); }} ><Glyphicon glyph="star" /></Button> */}
-            </ButtonGroup>
+            { this.renderGuidedSelling() }
             {/* <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
             <ButtonGroup className="margin">
               <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.select })} onClick={this.props.addProducts}>{this.context.intl.formatMessage({ ...messages.select })}</Button>
@@ -87,6 +95,7 @@ ProductSelectionHeader.contextTypes = {
 };
 ProductSelectionHeader.propTypes = {
   data: PropTypes.array,
+  guidedSellingQuestions: PropTypes.array,
   addProducts: PropTypes.func,
   addProductsWait: PropTypes.func,
   searchInputChange: React.PropTypes.func,
