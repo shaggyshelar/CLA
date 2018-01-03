@@ -57,6 +57,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     this.calculateTotal = this.calculateTotal.bind(this);
     this.clickEdit = this.clickEdit.bind(this);
     this.onReconfigureLineClick = this.onReconfigureLineClick.bind(this);
+    this.onSuggestionLinkClick = this.onSuggestionLinkClick.bind(this);
   }
   onReconfigureLineClick(item) {
     const reconfigureObj = {
@@ -70,6 +71,21 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       browserHistory.push(`/reconfigureproducts?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
     } else {
       browserHistory.push('/reconfigureproducts');
+    }
+  }
+
+  onSuggestionLinkClick(item) {
+    const suggestionObj = {
+      id: item.id,
+      suggested: true,
+    };
+    this.props.toggleSuggestionStatus(suggestionObj);
+    if (this.props.location.query.groupId !== null && this.props.location.query.groupId !== undefined && this.props.location.query.mainTab !== undefined && this.props.location.query.tab !== undefined) {
+      browserHistory.push(`/suggestionpage?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else if ((this.props.location.query.groupId === null || this.props.location.query.groupId === undefined) && this.props.location.query.mainTab !== undefined) {
+      browserHistory.push(`/suggestionpage?mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
+    } else {
+      browserHistory.push('/suggestionpage');
     }
   }
   setTableOption(event) {
@@ -184,9 +200,11 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : '';
     const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map((item) => `${item }\n`)} className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a> : '';
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
+    const suggestion = cellInfo.original.canSuggest ? <a title={this.context.intl.formatMessage({ ...messages.suggestions })} onClick={() => { this.onSuggestionLinkClick(cellInfo.original); }}><Glyphicon glyph="link" /></a> : <span className="blank"></span>;
     return (
       <div className="actionItems" >
         {reconfigure}
+        {suggestion}
         {notification}
         {segment}
         {/* <a><Glyphicon glyph="star-empty" /></a> */}

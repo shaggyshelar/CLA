@@ -50,6 +50,8 @@ import {
   CONTINUE,
   SAVECONFIGURATION_SUCCESS,
   TOGGLE_RECONFIGURELINE_STATUS,
+  TOGGLE_SUGGESTION_STATUS,
+  SAVESUGGESTION_SUCCESS,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -310,6 +312,21 @@ function appReducer(state = initialState, action) {
       }
       return state
          .set('data', fromJS(quote));
+    }
+    case TOGGLE_SUGGESTION_STATUS : {
+      const quote = state.get('data').toJS();
+      const line = _.find(quote.lines, { id: action.suggestionObj.id });
+      if (line) {
+        line.suggested = action.suggestionObj.suggested;
+      }
+      return state
+         .set('data', fromJS(quote));
+    }
+
+    case SAVESUGGESTION_SUCCESS: {
+      return state
+        .set('data', fromJS(action.data.quote))
+        .set('loading', false);
     }
     default:
       return state;

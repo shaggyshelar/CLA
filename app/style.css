@@ -672,7 +672,7 @@ mark {
     height: calc(100vh - 106px); 
 }
 @media (max-width:767px){       
-.qoute-container {           height: auto!important;        }}
+.quote-container {           height: auto!important;        }}
 .Sidebar.right.fade.in.modal {    display: block;}
 .small-modal .modal {width:40% !important}
 .sub-footer-seg {
@@ -713,7 +713,7 @@ mark {
     padding-right: 13px;
     text-transform: none;
 }
-.qoute-container{    
+.quote-container{    
     padding: 0px;    
     height: 100%;    
     overflow-y: auto;
@@ -1004,7 +1004,7 @@ strong {
     flex: initial!important;
 }
 /* height management */
-.qoute-container.segmented .table-wrap.edit-grid-segment .ReactTable {
+.quote-container.segmented .table-wrap.edit-grid-segment .ReactTable {
 	min-height: 15vh!important;
 	max-height: 75vh!important;
 	overflow-y: auto;
@@ -1014,28 +1014,28 @@ strong {
     overflow: auto;
 }
 
-.qoute-container.segmented .table-wrap.edit-grid-quote .ReactTable {
+.quote-container.segmented .table-wrap.edit-grid-quote .ReactTable {
     min-height: 15vh !important;
 	max-height: 84vh !important;
 	overflow-y:auto;
 }
-.qoute-container.segmented .group  .edit-grid-quote .ReactTable {
+.quote-container.segmented .group  .edit-grid-quote .ReactTable {
     min-height: 15vh !important;
 	max-height: 75vh !important;
 	overflow-y:auto;
 }
-.group .qoute-container.segmented .table-wrap.edit-grid-quote .ReactTable { 
+.group .quote-container.segmented .table-wrap.edit-grid-quote .ReactTable { 
     min-height: 15vh !important;
 	max-height: 62vh !important;
 	overflow-y:auto;
 }
-.group .qoute-container.segmented  .table-wrap.edit-grid-segment .ReactTable { 
+.group .quote-container.segmented  .table-wrap.edit-grid-segment .ReactTable { 
     min-height: 15vh !important;
     max-height: 54vh !important;
     padding-bottom: 0px !important;
 	overflow-y:auto;
 }
-.group .qoute-container.segmented  .table-wrap.edit-grid-segment{ 
+.group .quote-container.segmented  .table-wrap.edit-grid-segment{ 
     padding-bottom: 0px !important;
 }
 .table-container .group .table-wrap.edit-grid-quote .ReactTable { 
@@ -1173,7 +1173,7 @@ strong {
     top: 18px;
     background: white;
 }
-.qoute-container .sub-footer{
+.quote-container .sub-footer{
 	position: fixed;
     width: 100%;
     margin-top: -5%;
@@ -1181,7 +1181,7 @@ strong {
     background: #ececec;
 	padding:10px 2em!important;
 }
-.qoute-container .sub-footer-seg{
+.quote-container .sub-footer-seg{
 	position: fixed;
     width: 100%;
     margin-top: -5%;
@@ -1189,41 +1189,41 @@ strong {
     background: #ececec;
 	padding:7px 2em!important;
 }
-.qoute-container  .sub-footer-seg .ReactTable {
+.quote-container  .sub-footer-seg .ReactTable {
 	border:none!important;
 	padding:0!important;
 	background: #ececec!important;
 	border-color:#ececec!important;
 }
-.qoute-container  .sub-footer-seg .ReactTable  .rt-td{
+.quote-container  .sub-footer-seg .ReactTable  .rt-td{
 	border:none!important;
 	padding:0!important;
 	background: #ececec!important;
 	border-color:#ececec!important;
 }
-.qoute-container  .sub-footer-seg .ReactTable .rt-tr-group{
+.quote-container  .sub-footer-seg .ReactTable .rt-tr-group{
 	border:none!important;
 	background: #ececec!important;
 	border-color:#ececec!important;
 }
-.qoute-container  .sub-footer-seg .ReactTable .rt-tr{
+.quote-container  .sub-footer-seg .ReactTable .rt-tr{
 	border:none!important;
 	background: #ececec!important;
 	border-color:#ececec!important;
 }
-.qoute-container  .sub-footer-seg .ReactTable .rt-tbody{
+.quote-container  .sub-footer-seg .ReactTable .rt-tbody{
 	border:none!important;
 	background: #ececec!important;
 	border-color:#ececec!important;
 }
-.qoute-container .sub-footer-seg .ReactTable .rt-table{
+.quote-container .sub-footer-seg .ReactTable .rt-table{
 	border:none!important;
 	background: #ececec!important;
 	border-color:#ececec!important;
 }
 
 /**** Group ****/
-.qoute-container .group .sub-footer-seg {
+.quote-container .group .sub-footer-seg {
     position: fixed;
     width: auto;
     margin-left: auto;
@@ -1232,7 +1232,7 @@ strong {
     background: #ececec;
     padding: 7px 2em!important;
 }
-.qoute-container .group .sub-footer {
+.quote-container .group .sub-footer {
     position: fixed;
     width: 100%;
     margin-left: auto;
@@ -1252,7 +1252,7 @@ strong {
 	
 }
 @media (max-width:767px){
-	.qoute-container .group .sub-footer-seg {		
+	.quote-container .group .sub-footer-seg {		
 		padding: 7px 15px!important;
 	}
 }
@@ -1265,14 +1265,14 @@ strong {
 	}
 }
 @media (min-width:1200px) and (max-width:1400px){
-	.qoute-container .sub-footer-seg {
+	.quote-container .sub-footer-seg {
 		width: 100%;
 	}
-	.qoute-container .group .sub-footer-seg{
+	.quote-container .group .sub-footer-seg{
          width: 100%;
 		margin-left:0%!important;
 	}
-	.qoute-container .sub-footer {
+	.quote-container .sub-footer {
         width: 100%;
 	}
 }
@@ -1305,7 +1305,7 @@ strong {
 
 /* @media (max-width: 1400px) and (min-width: 1300px)
 {
-	.qoute-container .group #inner-tab-example-pane-custom .table-wrap {
+	.quote-container .group #inner-tab-example-pane-custom .table-wrap {
 		min-height: 48vh;
 		height: 48vh !important;
 		overflow-y: auto !important;
@@ -1414,24 +1414,24 @@ body.modal-open {
     z-index: 999999999!important;
 }
 /* @media (max-width: 1400px) and (min-width: 1300px){
-	.qoute-container .group #inner-tab-example-pane-custom .table-wrap {    
+	.quote-container .group #inner-tab-example-pane-custom .table-wrap {    
 		overflow-y: auto;
 		max-height: calc(60vh - 100px)!important;
 		height: calc(60vh - 100px)!important;
 	}
-	.qoute-container .group #noanim-tab-example-pane-2 .table-wrap {			
+	.quote-container .group #noanim-tab-example-pane-2 .table-wrap {			
 		overflow-y: auto;
 		min-height: calc(66vh - 100px)!important;
 		height: calc(66vh - 100px)!important;
 	}
 } */
 /* @media (max-width: 1500px) and (min-width: 1401px){
-	.qoute-container #inner-tab-example-pane-custom .table-wrap {   
+	.quote-container #inner-tab-example-pane-custom .table-wrap {   
 		overflow-y: auto;
 		min-height: calc(66vh - 100px)!important;
 		height: calc(66vh - 100px)!important;
 	}
-	.qoute-container #noanim-tab-example-pane-2 .table-wrap {		
+	.quote-container #noanim-tab-example-pane-2 .table-wrap {		
 		overflow-y: auto;
 		min-height: calc(70vh - 100px)!important;
 		height: calc(70vh - 100px)!important;
@@ -1571,7 +1571,7 @@ body.modal-open {
 .cellColor {
     color: grey;
 }
-.qoute-container {    
+.quote-container {    
     height: auto!important;
 }
 .group {    
@@ -1581,7 +1581,7 @@ body.modal-open {
     margin-right:0!important;
     margin-left:0!important;
 }
-.qoute-container .sub-footer-seg {    
+.quote-container .sub-footer-seg {    
     padding: 7px 15px!important;
 }
 
@@ -1665,4 +1665,18 @@ body.modal-open {
 .reconfigureDivScroll {
     overflow-y: auto;
     height: 80vh; 
+}
+
+.suggestionProductLabel{
+    font-size: 17px;
+    color: #54698d !important;
+    font-weight: 600;
+}
+
+.suggestionPanel {
+    border: solid 1px #d0d0d0
+}
+
+.suggestionPanelbody {
+    padding: 0px 0px 25px 0px;
 }

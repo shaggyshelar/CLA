@@ -86,7 +86,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
             language={this.props.language}
             languageChange={this.props.changeLocale}
           />
-          <div className="qoute-container">
+          <div className="quote-container">
             <span className="categoryLabel addConfigurationLabel">{this.props.location.query.featureName}</span>
             <AddConfigureProductGrid
               products={this.props.productsData.toJS().products ? this.props.productsData.toJS().products : []}
