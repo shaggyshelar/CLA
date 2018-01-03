@@ -57,12 +57,8 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
   renderActionItems(cellInfo) {
     let input;
     let title;
-    if (cellInfo.original.isDependent && cellInfo.original.isExclusion) {
-      title = `Required: ${cellInfo.original.dependentBy} / Exclusion: ${cellInfo.original.dependentBy}`;
-    } else if (cellInfo.original.isExclusion) {
-      title = `Exclusion: ${cellInfo.original.dependentBy}`;
-    } else if (cellInfo.original.isDependent) {
-      title = `Required: ${cellInfo.original.dependentBy}`;
+    if (cellInfo.original.constraintMessage) {
+      title = cellInfo.original.constraintMessage;
     }
 
     if (cellInfo.original.isDisable) {

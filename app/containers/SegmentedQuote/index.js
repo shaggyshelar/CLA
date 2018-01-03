@@ -162,6 +162,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     isCheckAll={this.props.isCheckAll}
                     location={this.props.location}
                     toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+                    toggleSuggestionStatus={this.props.toggleSuggestionStatus}
                   />
                 </Tab>
               :
@@ -187,6 +188,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     quoteData={this.props.quoteData}
                     location={this.props.location}
                     toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+                    toggleSuggestionStatus={this.props.toggleSuggestionStatus}
                   />
                 </Tab> : '' }
               {data.QuaterlyLines.length > 0 ?
@@ -209,6 +211,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     quoteData={this.props.quoteData}
                     location={this.props.location}
                     toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+                    toggleSuggestionStatus={this.props.toggleSuggestionStatus}
                   />
                 </Tab> : '' }
               { data.YearlyLines.length > 0 ?
@@ -231,6 +234,7 @@ export class SegmentedQuote extends React.Component { // eslint-disable-line rea
                     quoteData={this.props.quoteData}
                     location={this.props.location}
                     toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+                    toggleSuggestionStatus={this.props.toggleSuggestionStatus}
                   />
                 </Tab> : '' }
             </Tabs>
