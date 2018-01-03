@@ -100,7 +100,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   }
   handleToggle(index) {
     const selectedData = this.props.data[index];
-    if (selectedData !== undefined) { 
+    if (selectedData !== undefined) {
       this.setState({
         isModalOpen1: !this.state.isModalOpen1,
         selectedLine: selectedData.discountSchedule,
@@ -229,16 +229,14 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     if (cellInfo.original.canShowDiscountScheduler && (cellInfo.original.termDiscountSchedule !== null)) {
       return (
         <div>
-        <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
-        <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.termDiscountSchedule })}><Glyphicon glyph="tags" /></a>
-        <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+          <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
+          <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.termDiscountSchedule })}><Glyphicon glyph="tags" /></a>
+          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
         </div>
       );
-    }
-    else{
-        if(cellInfo.original.canShowDiscountScheduler){
-          return(
-          <div>
+    } else if (cellInfo.original.canShowDiscountScheduler) {
+      return (
+        <div>
           <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
           <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={'Term Discount'}><Glyphicon glyph="tags" /></a>
           <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
@@ -246,21 +244,20 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       );
     } else if (cellInfo.original.canShowDiscountScheduler) {
       return (
-            <div>
-            <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
-            <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
-          </div>
-          );
-    }        else  if(cellInfo.original.termDiscountSchedule !== null){
-            return(
-            <div>
-              <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a>
-              <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
-           </div>
-          );
-          }
+        <div>
+          <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
+          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+        </div>
+      );
+    } else if (cellInfo.original.termDiscountSchedule !== null) {
+      return (
+        <div>
+          <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={'Term Discount'}><Glyphicon glyph="tags" /></a>
+          <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+        </div>
+      );
+    }
   }
-
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (<span> {this.props.currency} {cellInfo.value}</span>);
@@ -366,8 +363,8 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   renderOverlay(e) {
     const tooltip = (
       <Tooltip id={`${e.original.id}-${e.original.name}`} bsClass="tooltip" className="hover-tip">
-          <div className="lab"><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${e.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={e.original.name}>{e.original.name}</span></div>
-        </Tooltip>
+        <div className="lab"><a className="pro-icon" title={`${this.context.intl.formatMessage({ ...messages.required })} ${e.original.parentName}`}><Glyphicon glyph="info-sign" /></a> <span className="pro-name" title={e.original.name}>{e.original.name}</span></div>
+      </Tooltip>
       );
     return (<OverlayTrigger placement="bottom" overlay={tooltip}>
       <span >{e.original.name}</span>
