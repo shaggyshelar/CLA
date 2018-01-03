@@ -29,57 +29,93 @@ class SuggestionProductPanel extends React.Component { // eslint-disable-line re
       }, this);
     }
     return (
-      <div className="qoute-container reconfigureContainer">
-        <div className="margin-tabs">
-          <div className="configureRow row">
-            <div className="col-md-12 col-sm-12 col-xs-12">
-              <span className="categoryLabel">{name}</span>
-            </div>
+      <div>
+        <div className="quote-container reconfigureContainer">
+          <div>
+            <span className="categoryLabel">{name}</span>
           </div>
-        </div>
-        <div className="reconfigureDivScroll">
-          <div className="group panelMargin reconfigurePanel">
-            <div className="group-card">
-              <span className="group-header configureGroupHeader">CrossSell</span>
+          <div className="panel-group" id="suggestionAccordion">
+            <div className="panel suggestionPanel">
+              <div className="panel-heading">
+                <h4 className="panel-title suggestionProductLabel">
+                  <a data-toggle="collapse" data-parent="#suggestionAccordion" href="#croosShellAccordion">
+                    CrossSell
+                  </a>
+                </h4>
+              </div>
+              <div id="croosShellAccordion" className="panel-collapse collapse in">
+                <div className="panel-body suggestionPanelbody">
+                  <SuggestionProductGrid
+                    suggestionsData={crossSellList}
+                    toggleCheckboxChange={this.props.toggleCheckboxChange}
+                    updateField={this.props.updateField}
+                  />
+                </div>
+              </div>
             </div>
-            <SuggestionProductGrid
-              suggestionsData={crossSellList}
-              toggleCheckboxChange={this.props.toggleCheckboxChange}
-              updateField={this.props.updateField}
-            />
-          </div>
-          <div className="group panelMargin reconfigurePanel">
-            <div className="group-card">
-              <span className="group-header configureGroupHeader">Accessory</span>
+
+            <div className="panel suggestionPanel">
+              <div className="panel-heading">
+                <h4 className="panel-title suggestionProductLabel">
+                  <a data-toggle="collapse" data-parent="#suggestionAccordion" href="#accessoryAccordion">
+                    Accessory
+                  </a>
+                </h4>
+              </div>
+              <div id="accessoryAccordion" className="panel-collapse collapse">
+                <div className="panel-body suggestionPanelbody">
+                  <SuggestionProductGrid
+                    suggestionsData={accessoryList}
+                    toggleCheckboxChange={this.props.toggleCheckboxChange}
+                    updateField={this.props.updateField}
+                  />
+                </div>
+              </div>
             </div>
-            <SuggestionProductGrid
-              suggestionsData={accessoryList}
-              toggleCheckboxChange={this.props.toggleCheckboxChange}
-              updateField={this.props.updateField}
-            />
-          </div>
-          <div className="group panelMargin reconfigurePanel">
-            <div className="group-card">
-              <span className="group-header configureGroupHeader">UpSell</span>
+
+            <div className="panel suggestionPanel">
+              <div className="panel-heading">
+                <h4 className="panel-title suggestionProductLabel">
+                  <a data-toggle="collapse" data-parent="#suggestionAccordion" href="#upshellAccordion">
+                    UpSell
+                  </a>
+                </h4>
+              </div>
+              <div id="upshellAccordion" className="panel-collapse collapse">
+                <div className="panel-body suggestionPanelbody">
+                  <SuggestionProductGrid
+                    suggestionsData={upSellList}
+                    toggleCheckboxChange={this.props.toggleCheckboxChange}
+                    updateField={this.props.updateField}
+                  />
+                </div>
+
+              </div>
+
             </div>
-            <SuggestionProductGrid
-              suggestionsData={upSellList}
-              toggleCheckboxChange={this.props.toggleCheckboxChange}
-              updateField={this.props.updateField}
-            />
-          </div>
-          <div className="group panelMargin reconfigurePanel">
-            <div className="group-card">
-              <span className="group-header configureGroupHeader">Substitute</span>
+
+            <div className="panel suggestionPanel">
+              <div className="panel-heading">
+                <h4 className="panel-title suggestionProductLabel">
+                  <a data-toggle="collapse" data-parent="#suggestionAccordion" href="#substituteAccordion">
+                    Substitute
+                  </a>
+                </h4>
+              </div>
+              <div id="substituteAccordion" className="panel-collapse collapse">
+                <div className="panel-body suggestionPanelbody">
+                  <SuggestionProductGrid
+                    suggestionsData={substituteList}
+                    toggleCheckboxChange={this.props.toggleCheckboxChange}
+                    updateField={this.props.updateField}
+                  />
+                </div>
+              </div>
             </div>
-            <SuggestionProductGrid
-              suggestionsData={substituteList}
-              toggleCheckboxChange={this.props.toggleCheckboxChange}
-              updateField={this.props.updateField}
-            />
           </div>
         </div>
       </div>
+
     );
   }
 }

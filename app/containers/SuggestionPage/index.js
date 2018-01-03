@@ -32,11 +32,11 @@ export class SuggestionPage extends React.Component { // eslint-disable-line rea
     const quote = this.props.quote.toJS();
     const line = _.find(quote.lines, { suggested: true });
     if (line) {
-      const reconfigureObj = {
+      const suggestionObj = {
         id: line.id,
         suggested: false,
       };
-      this.props.toggleSuggestionStatus(reconfigureObj);
+      this.props.toggleSuggestionStatus(suggestionObj);
     }
     if (this.props.location.query.groupId !== null && this.props.location.query.groupId !== undefined && this.props.location.query.mainTab !== undefined && this.props.location.query.tab !== undefined) {
       browserHistory.push(`/EditQuote?groupId=${this.props.location.query.groupId}&mainTab=${this.props.location.query.mainTab}&tab=${this.props.location.query.tab}`);
