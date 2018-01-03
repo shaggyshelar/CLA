@@ -7,9 +7,7 @@ import { SERVER_URL, EntityURLs } from '../App/constants';
 import { saveSuggestions } from '../App/actions';
 
 export function* getSuggestions(data) {
-  // const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/ReconfigureProduct?ProductId=${data.productId}&PriceListId=${data.priceBookId}&QuoteId=${data.quoteId}&LineId=${data.quoteLineId}&GroupId=${data.groupId}`}`;
   try {
-   // const repos = yield call(request, requestURL);
     const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/SuggestProduct`}`;
     const options = {
       method: 'POST',
@@ -35,7 +33,7 @@ export function* loadSuggestions() {
 
 export function* saveSuggestionsData(data, locationQuery) {
   try {
-    const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/SaveSuggestions`}`;
+    const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/SaveRelatedProducts`}`;
     const options = {
       method: 'POST',
       headers: {

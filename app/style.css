@@ -1666,3 +1666,17 @@ body.modal-open {
     overflow-y: auto;
     height: 80vh; 
 }
+
+.suggestionProductLabel{
+    font-size: 17px;
+    color: #54698d !important;
+    font-weight: 600;
+}
+
+.suggestionPanel {
+    border: solid 1px #d0d0d0
+}
+
+.suggestionPanelbody {
+    padding: 0px 0px 25px 0px;
+}
