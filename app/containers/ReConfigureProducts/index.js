@@ -22,6 +22,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     super(props);
     this.state = {
       selectedProducts: [],
+      loading: false,
       dataProd: [
         {
           _id: '596db79f58d3f94623033cd0',
