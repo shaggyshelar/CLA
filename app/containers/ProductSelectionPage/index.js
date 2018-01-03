@@ -220,7 +220,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
             location={this.props.location}
-            data={this.props.products.toJS().map((item) => !item.productComponent?item.name:'')}
+            data={this.props.products.toJS().map((item) => !item.productComponent ? item.name : '')}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
             onSearchItemSelected={this.onSearchItemSelected}
@@ -231,7 +231,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         </div>
         <div>
           <ProductSelectionGrid
-            products={ products }
+            products={products}
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             toggleCheckboxChange={this.toggleCheckboxChange}
