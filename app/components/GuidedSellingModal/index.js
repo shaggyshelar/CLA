@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import _ from 'lodash';
 import { Modal, Button, Glyphicon, Tab, Row, Col, Nav, NavItem } from 'react-bootstrap/lib';
 
 class GuidedSellingModal extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props, context) {
     super(props, context);
-    this.handleFullScreen = this.handleFullScreen.bind(this);
+    this.renderQuoteProcessColumns = this.renderQuoteProcessColumns.bind(this);
+    this.renderQuoteProcessContents = this.renderQuoteProcessContents.bind(this);
     this.state = {
       isDirty: false,
     };
@@ -13,18 +15,11 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
   renderQuoteProcessColumns() {
     return (
       <Nav bsStyle="pills" stacked>
-        <NavItem eventKey="first">
-          Category 1
-        </NavItem>
-        <NavItem eventKey="second">
-          Category 2
-        </NavItem>
-        <NavItem eventKey="third">
-          Category 3
-        </NavItem>
-        <NavItem eventKey="forth">
-          Category 4
-        </NavItem>
+        {this.props.data.map((quoteProcess) => (
+          <NavItem key={quoteProcess.id} eventKey={quoteProcess.QuoteProcessName}>
+            { quoteProcess.QuoteProcessName }
+          </NavItem>
+        ))}
       </Nav>
     );
   }
@@ -32,18 +27,11 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
   renderQuoteProcessContents() {
     return (
       <Tab.Content animation>
-        <Tab.Pane eventKey="first">
-        11 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-        </Tab.Pane>
-        <Tab.Pane eventKey="second">
-        22 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-        </Tab.Pane>
-        <Tab.Pane eventKey="third">
-        33 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-        </Tab.Pane>
-        <Tab.Pane eventKey="forth">
-        4 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-        </Tab.Pane>
+        {this.props.data.map((quoteProcess) => (
+          <Tab.Pane key={quoteProcess.id} eventKey={quoteProcess.QuoteProcessName}>
+            { quoteProcess.QuoteProcessName }
+          </Tab.Pane>
+        ))}
       </Tab.Content>
     );
   }
@@ -83,6 +71,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
 GuidedSellingModal.propTypes = {
   onHide: React.PropTypes.func,
   show: React.PropTypes.bool,
+  data: PropTypes.any,
 };
 
 export default GuidedSellingModal;

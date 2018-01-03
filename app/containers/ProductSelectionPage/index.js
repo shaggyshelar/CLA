@@ -197,6 +197,12 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
           }
     });
 
+    let guidedSellingQuestions = [];
+    guidedSellingQuestions =  _.filter(this.props.guidedSellingQuestions.toJS(), function(item){
+      return item;
+    });
+    console.log('SSSXXXX', guidedSellingQuestions);
+
     const style = this.props.loading ? { display: 'inline' } : this.props.globalLoading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
@@ -220,7 +226,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
             location={this.props.location}
-            guidedSellingQuestions={this.props.guidedSellingQuestions.toJS()}
+            guidedSellingQuestions={guidedSellingQuestions}
             data={this.props.products.toJS().map((item) => !item.productComponent?item.name:'')}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}

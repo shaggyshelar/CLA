@@ -43,11 +43,10 @@ function productSelectionPageReducer(state = initialState, action) {
       return state
         .set('products', fromJS(action.products.products))
         .set('guidedSellingQuestions', fromJS([
-          { id: 'fc295482-3ad0-e711-8130-c4346bdc0e01', QuoteProcessName: 'QuoteProcess1' },
-          { id: 'fc295482-3ad0-e711-8130-c4346bdc0e02', QuoteProcessName: 'QuoteProcess2' },
-          { id: 'fc295482-3ad0-e711-8130-c4346bdc0e03', QuoteProcessName: 'QuoteProcess3' },
-          { id: 'fc295482-3ad0-e711-8130-c4346bdc0e04', QuoteProcessName: 'QuoteProcess4' },
-          { id: 'fc295482-3ad0-e711-8130-c4346bdc0e05', QuoteProcessName: 'QuoteProcess5' },
+          { id: '1fc295482-3ad0-e711-8130-c4346bdc0e01', QuoteProcessName: 'QuoteProcess1' },
+          { id: '2fc295482-3ad0-e711-8130-c4346bdc0e02', QuoteProcessName: 'QuoteProcess2' },
+          { id: '3fc295482-3ad0-e711-8130-c4346bdc0e03', QuoteProcessName: 'QuoteProcess3' },
+          { id: '4fc295482-3ad0-e711-8130-c4346bdc0e04', QuoteProcessName: 'QuoteProcess4' },
         ]))
         .set('initialProducts', fromJS(action.products.products))
         .set('loading', false);

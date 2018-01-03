@@ -82,6 +82,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
         </Row>
         <GuidedSellingModal
           show={this.state.isGuidedSellingModalOpen} onHide={this.toggleShowGuidedSellingModal}
+          data={this.props.guidedSellingQuestions}
           style={{
             display: 'inline-flex',
           }}
@@ -95,7 +96,7 @@ ProductSelectionHeader.contextTypes = {
 };
 ProductSelectionHeader.propTypes = {
   data: PropTypes.array,
-  guidedSellingQuestions: PropTypes.array,
+  guidedSellingQuestions: PropTypes.any,
   addProducts: PropTypes.func,
   addProductsWait: PropTypes.func,
   searchInputChange: React.PropTypes.func,
