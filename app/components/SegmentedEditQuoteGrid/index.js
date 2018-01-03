@@ -1,4 +1,3 @@
-import ReactTable from '../ReactTable';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';
@@ -7,6 +6,7 @@ import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
 import { RIEInput } from 'riek';
 import _ from 'lodash';
 import SegmentSubComponent from 'components/SegmentSubComponent';
+import ReactTable from '../ReactTable';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
 import TermDiscountScheduleEditor from '../TermDiscountScheduleEditor';
 import ProductDetails from '../ProductDetails';
