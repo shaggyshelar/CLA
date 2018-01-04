@@ -23,8 +23,8 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     return (
       <Nav bsStyle="pills" stacked>
         {this.props.data.map((quoteProcess) => (
-          <NavItem key={quoteProcess.Id} eventKey={quoteProcess.Name}>
-            { quoteProcess.Name }
+          <NavItem key={quoteProcess.id} eventKey={quoteProcess.id}>
+            { quoteProcess.name }
           </NavItem>
         ))}
       </Nav>
@@ -37,7 +37,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
         {
           options.map((option) => (
             <Checkbox inline>
-              { option.Value }
+              { option.value }
             </Checkbox>
           ))
         }
@@ -54,7 +54,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
         {
           options.map((option) => (
             <Radio name="radioGroup" inline>
-              { option.Value }
+              { option.value }
             </Radio>
           ))
         }
@@ -66,26 +66,26 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
   }
 
   renderConfigAttribute(configAttribute) {
-    if (configAttribute.DataType === 'Checkbox') {
-      return this.renderCheckBoxAnswer(configAttribute.Value);
+    if (configAttribute.dataType === 'Checkbox') {
+      return this.renderCheckBoxAnswer(configAttribute.values);
     }
-    return this.renderRadioButtonAnswer(configAttribute.Value);
+    return this.renderRadioButtonAnswer(configAttribute.values);
   }
 
   renderProcessInput(processInput) {
     return (
       <FormGroup>
         <ControlLabel>{ processInput.Label} </ControlLabel>
-        { this.renderConfigAttribute(processInput.ConfigAttribute) }
+        { this.renderConfigAttribute(processInput.configAttribute) }
       </FormGroup>
     );
   }
 
   renderQuoteProcess(quoteProcess) {
     return (
-      <Tab.Pane key={quoteProcess.Id} eventKey={quoteProcess.Name}>
+      <Tab.Pane key={quoteProcess.id} eventKey={quoteProcess.id}>
         {
-          quoteProcess.ProcessInputs.map((processInput) => (
+          quoteProcess.processInputs.map((processInput) => (
             this.renderProcessInput(processInput)
           ))
         }
