@@ -88,9 +88,10 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     );
   }
 
-  renderDateTimeAnswer() {
+  renderDateTimeAnswer(configAttribute) {
     return (
       <FormControl
+        key={configAttribute.id}
         type="date"
         name="startDate"
         className="customSegmentsInput"
@@ -98,14 +99,13 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     );
   }
 
-  renderNumericAnswer() {
+  renderNumericAnswer(configAttribute) {
     return (
-      <FormGroup>
-        <FieldGroup
-          id="formControlsText"
-          type="text"
-          label="Text"
-          placeholder="Enter text"
+      <FormGroup key={configAttribute.id}>
+        <FormControl
+          type="number"
+          value={configAttribute.value}
+          placeholder="Enter number"
         />
       </FormGroup>
     );
@@ -127,12 +127,11 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     // if (configAttribute.dataType === 'Range') {
     //   return this.renderCheckBoxAnswer(configAttribute);
     // }
-    // if (configAttribute.dataType === 'DateTime') {
-    //   return this.renderDateTimeAnswer(configAttribute.values);
-    // }
+    if (configAttribute.dataType === 'DateTime') {
+      return this.renderDateTimeAnswer(configAttribute);
+    }
     // It is 'Numeric'
-    // return this.renderNumericAnswer(configAttribute.values);
-    return this.renderCheckBoxAnswer(configAttribute);
+    return this.renderNumericAnswer(configAttribute.values);
   }
 
   renderProcessInput(processInput) {
