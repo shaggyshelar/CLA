@@ -1,12 +1,19 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import { Modal, Button, Glyphicon, Tab, Row, Col, Nav, NavItem } from 'react-bootstrap/lib';
+import { Modal, Button, Glyphicon, Tab, Row, Col, Nav, NavItem, FormGroup, Radio, Checkbox, ControlLabel, FormControl } from 'react-bootstrap/lib';
 
 class GuidedSellingModal extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props, context) {
     super(props, context);
     this.renderQuoteProcessColumns = this.renderQuoteProcessColumns.bind(this);
     this.renderQuoteProcessContents = this.renderQuoteProcessContents.bind(this);
+    this.renderCheckBoxAnswer = this.renderCheckBoxAnswer.bind(this);
+    this.renderRangeAnswer = this.renderRangeAnswer.bind(this);
+    this.renderRadioButtonAnswer = this.renderRadioButtonAnswer.bind(this);
+    this.renderOptionSetAnswer = this.renderOptionSetAnswer.bind(this);
+    this.renderConfigAttribute = this.renderConfigAttribute.bind(this);
+    this.renderProcessInput = this.renderProcessInput.bind(this);
+    this.renderQuoteProcess = this.renderQuoteProcess.bind(this);
     this.state = {
       isDirty: false,
     };
@@ -16,11 +23,73 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     return (
       <Nav bsStyle="pills" stacked>
         {this.props.data.map((quoteProcess) => (
-          <NavItem key={quoteProcess.id} eventKey={quoteProcess.QuoteProcessName}>
-            { quoteProcess.QuoteProcessName }
+          <NavItem key={quoteProcess.Id} eventKey={quoteProcess.Name}>
+            { quoteProcess.Name }
           </NavItem>
         ))}
       </Nav>
+    );
+  }
+
+  renderCheckBoxAnswer(options) {
+    return (
+      <FormGroup>
+        {
+          options.map((option) => (
+            <Checkbox inline>
+              { option.Value }
+            </Checkbox>
+          ))
+        }
+      </FormGroup>
+    );
+  }
+
+  renderRangeAnswer() {
+  }
+
+  renderRadioButtonAnswer(options) {
+    return (
+      <FormGroup>
+        {
+          options.map((option) => (
+            <Radio name="radioGroup" inline>
+              { option.Value }
+            </Radio>
+          ))
+        }
+      </FormGroup>
+    );
+  }
+
+  renderOptionSetAnswer() {
+  }
+
+  renderConfigAttribute(configAttribute) {
+    if (configAttribute.DataType === 'Checkbox') {
+      return this.renderCheckBoxAnswer(configAttribute.Value);
+    }
+    return this.renderRadioButtonAnswer(configAttribute.Value);
+  }
+
+  renderProcessInput(processInput) {
+    return (
+      <FormGroup>
+        <ControlLabel>{ processInput.Label} </ControlLabel>
+        { this.renderConfigAttribute(processInput.ConfigAttribute) }
+      </FormGroup>
+    );
+  }
+
+  renderQuoteProcess(quoteProcess) {
+    return (
+      <Tab.Pane key={quoteProcess.Id} eventKey={quoteProcess.Name}>
+        {
+          quoteProcess.ProcessInputs.map((processInput) => (
+            this.renderProcessInput(processInput)
+          ))
+        }
+      </Tab.Pane>
     );
   }
 
@@ -28,9 +97,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     return (
       <Tab.Content animation>
         {this.props.data.map((quoteProcess) => (
-          <Tab.Pane key={quoteProcess.id} eventKey={quoteProcess.QuoteProcessName}>
-            { quoteProcess.QuoteProcessName }
-          </Tab.Pane>
+          this.renderQuoteProcess(quoteProcess)
         ))}
       </Tab.Content>
     );
