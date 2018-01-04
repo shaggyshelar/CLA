@@ -534,7 +534,7 @@ mark {
     position: relative;
     margin-left: 10px;
     z-index: 1;
-    float: right;
+    float: left;
     cursor:pointer;
 }
 .group-des-edit{
