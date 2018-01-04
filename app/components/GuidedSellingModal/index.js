@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import { Modal, Button, Glyphicon, Tab, Row, Col, Nav, NavItem, FormGroup, Radio, Checkbox, ControlLabel, FormControl } from 'react-bootstrap/lib';
+import { Modal, Button, Glyphicon, Tab, Row, Col, Nav, NavItem, FormGroup, Radio, Checkbox, ControlLabel, FormControl, FieldGroup } from 'react-bootstrap/lib';
 
 class GuidedSellingModal extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props, context) {
@@ -10,7 +10,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     this.renderCheckBoxAnswer = this.renderCheckBoxAnswer.bind(this);
     this.renderRangeAnswer = this.renderRangeAnswer.bind(this);
     this.renderRadioButtonAnswer = this.renderRadioButtonAnswer.bind(this);
-    this.renderOptionSetAnswer = this.renderOptionSetAnswer.bind(this);
+    this.renderDateTimeAnswer = this.renderDateTimeAnswer.bind(this);
     this.renderConfigAttribute = this.renderConfigAttribute.bind(this);
     this.renderProcessInput = this.renderProcessInput.bind(this);
     this.renderQuoteProcess = this.renderQuoteProcess.bind(this);
@@ -31,6 +31,19 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     );
   }
 
+  renderTextBoxAnswer() {
+    return (
+      <FormGroup>
+        <FieldGroup
+          id="formControlsText"
+          type="text"
+          label="Text"
+          placeholder="Enter text"
+        />
+      </FormGroup>
+    );
+  }
+
   renderCheckBoxAnswer(options) {
     return (
       <FormGroup>
@@ -41,6 +54,21 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
             </Checkbox>
           ))
         }
+      </FormGroup>
+    );
+  }
+
+  renderSelectAnswer(options) {
+    return (
+      <FormGroup>
+        <ControlLabel>Select</ControlLabel>
+        <FormControl componentClass="select" placeholder="select">
+          {
+            options.map((option) => (
+              <option value={option.value}>{ option.value }</option>
+            ))
+          }
+        </FormControl>
       </FormGroup>
     );
   }
@@ -62,14 +90,50 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     );
   }
 
-  renderOptionSetAnswer() {
+  renderDateTimeAnswer() {
+    return (
+      <FormControl
+        type="date"
+        name="startDate"
+        className="customSegmentsInput"
+      />
+    );
+  }
+
+  renderNumericAnswer() {
+    return (
+      <FormGroup>
+        <FieldGroup
+          id="formControlsText"
+          type="text"
+          label="Text"
+          placeholder="Enter text"
+        />
+      </FormGroup>
+    );
   }
 
   renderConfigAttribute(configAttribute) {
+    if (configAttribute.dataType === 'TextBox') {
+      return this.renderTextBoxAnswer(configAttribute.values);
+    }
     if (configAttribute.dataType === 'Checkbox') {
       return this.renderCheckBoxAnswer(configAttribute.values);
     }
-    return this.renderRadioButtonAnswer(configAttribute.values);
+    if (configAttribute.dataType === 'Select') {
+      return this.renderSelectAnswer(configAttribute.values);
+    }
+    if (configAttribute.dataType === 'RadioButton') {
+      return this.renderRadioButtonAnswer(configAttribute.values);
+    }
+    if (configAttribute.dataType === 'Range') {
+      return this.renderCheckBoxAnswer(configAttribute.values);
+    }
+    if (configAttribute.dataType === 'DateTime') {
+      return this.renderDateTimeAnswer(configAttribute.values);
+    }
+    // It is 'Numeric'
+    return this.renderNumericAnswer(configAttribute.values);
   }
 
   renderProcessInput(processInput) {
