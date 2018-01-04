@@ -40,6 +40,12 @@ const makeProductsData = () =>
   (homeState) => homeState.get('products')
 );
 
+const makeGuidedSellingData = () =>
+ createSelector(
+  selectProductSelectionPageDomain,
+  (homeState) => homeState.get('guidedSellingQuestions')
+);
+
 export {
   selectProductSelectionPageDomain,
   makeSelectProductSelectionPage,
@@ -47,6 +53,7 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeProductsData,
+  makeGuidedSellingData,
   getQuoteLines,
   getLanguage,
   globalLoading,

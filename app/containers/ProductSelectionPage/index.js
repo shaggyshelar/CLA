@@ -12,7 +12,7 @@ import _ from 'lodash';
 import { SERVER_URL, EntityURLs } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
+import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData, makeGuidedSellingData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
@@ -197,6 +197,10 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
           }
     });
 
+    let guidedSellingQuestions = [];
+    guidedSellingQuestions =  _.filter(this.props.guidedSellingQuestions.toJS(), function(item){
+      return item;
+    });
     const style = this.props.loading ? { display: 'inline' } : this.props.globalLoading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
@@ -220,6 +224,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
             location={this.props.location}
+            guidedSellingQuestions={guidedSellingQuestions}
             data={this.props.products.toJS().map((item) => !item.productComponent ? item.name : '')}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
@@ -257,6 +262,7 @@ ProductSelectionPage.propTypes = {
   addProductsToQuote: PropTypes.func,
   onSearch: PropTypes.func,
   onSearchItemSelected: PropTypes.func,
+  guidedSellingQuestions: PropTypes.any,
   loading: PropTypes.any,
   globalLoading: PropTypes.any,
   language: PropTypes.any,
@@ -268,6 +274,7 @@ const mapStateToProps = createStructuredSelector({
   showFilter: showFilter(),
   data: getQuoteLines(),
   products: makeProductsData(),
+  guidedSellingQuestions: makeGuidedSellingData(),
   loading: makeSelectLoading(),
   globalLoading: globalLoading(),
   language: getLanguage(),
