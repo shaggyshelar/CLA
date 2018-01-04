@@ -1785,3 +1785,6 @@ body.modal-open {
     margin-left: 10px!important;
     margin-left: 0!important;
 }
+.guidedSellingModal input[type=date].form-control, .guidedSellingModal input[type=time].form-control, .guidedSellingModal input[type=datetime-local].form-control, .guidedSellingModal input[type=month].form-control {
+    line-height: 20px!important;
+}
