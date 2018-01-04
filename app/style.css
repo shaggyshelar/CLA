@@ -1680,3 +1680,91 @@ body.modal-open {
 .suggestionPanelbody {
     padding: 0px 0px 25px 0px;
 }
+
+
+/***** D. 4 Jan 2018  ****/
+
+.modal .nav>li>a {
+    padding: 20px 15px !important;
+    border-radius: 4px!important;
+    border: none!important;
+    font-family: Georgia, Times, 'Times New Roman', serif!important;
+    font-size: 14px;
+    color: #3c3b3b;
+    font-weight: 600;
+}
+.modal .nav>li.active a {
+    color: #fff;
+}
+.modal .nav>li.active a:after {
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    margin-top: -9px;
+    border-left: 0;
+    border-bottom: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-left: 8px solid #337ab7;
+    margin-left: -1px;
+}
+.guidedSellingModalContent .tab-content input {
+    display: inline!important;
+    width: auto!important;
+    margin-left: 0px!important;
+    height: auto!important;
+    position: relative;
+    margin-top: -3px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.guidedSellingModal .modal-title strong {
+    font-size: 20px!important;
+}
+.guidedSellingModal .modal-title span {
+    vertical-align: middle;
+    margin-top: -9px;
+    font-size: 25px;
+    margin-right: 5px;
+}
+.guidedSellingModalContent .tab-content .radio-inline {   
+    padding-left: 0px!important;   
+    margin-right: 20px!important;    
+}
+.guidedSellingModalContent .tab-content .checkbox-inline {   
+    padding-left: 0px!important;   
+    margin-right: 20px!important;    
+}
+.guidedSellingModalContent .tab-content .control-label{
+    font-family: Georgia, Times, 'Times New Roman', serif!important;
+}
+.guidedSellingModalContent .tab-content .radio-inline, .guidedSellingModalContent .tab-content .checkbox-inline{
+    font-family: 'Segoe UI'!important;
+    color: #000;
+}
+.guidedSellingModal .modal-header .close {
+    margin-top: -3px;
+    font-size: 30px;
+    color: #2d2d2d;
+}
+.guidedSellingModalContent .tab-content {
+    /* padding: 20px; */
+    background: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+}
+.guidedSellingModal .fiterBtn{
+    color: #fff!important;
+    background-color: #337ab7!important;
+    border-color: #2e6da4!important;
+}
+.guidedSellingModal .fiterBtn:hover{
+    color: #fff!important;
+    background-color: #286090!important;
+    border-color: #204d74!important;
+}
+.guidedSellingModal .fiterBtn span.glyphicon {
+    vertical-align: middle;
+    margin-top: -6px;
+    margin-right: 3px;
+}

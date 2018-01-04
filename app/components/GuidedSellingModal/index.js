@@ -108,10 +108,10 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
       <Modal
         show={this.props.show} onHide={this.props.onHide}
         style={{ display: 'inline-flex' }}
-      >
+      className="guidedSellingModal">
         <Modal.Dialog >
           <Modal.Header closeButton>
-            <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="calendar" /> <strong> Guided Selling </strong></Modal.Title>
+            <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="shopping-cart" /> <strong> Guided Selling </strong></Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
@@ -119,7 +119,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
                 <Col sm={2}>
                   { this.renderQuoteProcessColumns() }
                 </Col>
-                <Col sm={10}>
+                <Col sm={10} className="guidedSellingModalContent">
                   { this.renderQuoteProcessContents() }
                 </Col>
               </Row>
@@ -127,7 +127,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.props.onHide} >Filter</Button>
+            <Button onClick={this.props.onHide} className="fiterBtn"><Glyphicon glyph="filter" /> Filter</Button>
           </Modal.Footer>
         </Modal.Dialog>
       </Modal>
