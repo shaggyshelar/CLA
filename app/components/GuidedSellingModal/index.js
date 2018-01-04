@@ -31,25 +31,24 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     );
   }
 
-  renderTextBoxAnswer() {
+  renderTextBoxAnswer(configAttribute) {
     return (
-      <FormGroup>
-        <FieldGroup
-          id="formControlsText"
+      <FormGroup key={configAttribute.id}>
+        <FormControl
           type="text"
-          label="Text"
+          value={configAttribute.value}
           placeholder="Enter text"
         />
       </FormGroup>
     );
   }
 
-  renderCheckBoxAnswer(options) {
+  renderCheckBoxAnswer(configAttribute) {
     return (
-      <FormGroup>
+      <FormGroup key={configAttribute.id}>
         {
-          options.map((option) => (
-            <Checkbox inline>
+          configAttribute.values.map((option) => (
+            <Checkbox key={option.value} inline>
               { option.value }
             </Checkbox>
           ))
@@ -58,14 +57,13 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     );
   }
 
-  renderSelectAnswer(options) {
+  renderSelectAnswer(configAttribute) {
     return (
-      <FormGroup>
-        <ControlLabel>Select</ControlLabel>
+      <FormGroup key={configAttribute.id}>
         <FormControl componentClass="select" placeholder="select">
           {
-            options.map((option) => (
-              <option value={option.value}>{ option.value }</option>
+            configAttribute.values.map((option) => (
+              <option key={option.value} value={option.value}>{ option.value }</option>
             ))
           }
         </FormControl>
@@ -76,12 +74,12 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
   renderRangeAnswer() {
   }
 
-  renderRadioButtonAnswer(options) {
+  renderRadioButtonAnswer(configAttribute) {
     return (
-      <FormGroup>
+      <FormGroup key={configAttribute.id}>
         {
-          options.map((option) => (
-            <Radio name="radioGroup" inline>
+          configAttribute.values.map((option) => (
+            <Radio key={option.value} name="radioGroup" inline>
               { option.value }
             </Radio>
           ))
@@ -115,30 +113,31 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
 
   renderConfigAttribute(configAttribute) {
     if (configAttribute.dataType === 'TextBox') {
-      return this.renderTextBoxAnswer(configAttribute.values);
+      return this.renderTextBoxAnswer(configAttribute);
     }
     if (configAttribute.dataType === 'Checkbox') {
-      return this.renderCheckBoxAnswer(configAttribute.values);
+      return this.renderCheckBoxAnswer(configAttribute);
     }
     if (configAttribute.dataType === 'Select') {
-      return this.renderSelectAnswer(configAttribute.values);
+      return this.renderSelectAnswer(configAttribute);
     }
     if (configAttribute.dataType === 'RadioButton') {
-      return this.renderRadioButtonAnswer(configAttribute.values);
+      return this.renderRadioButtonAnswer(configAttribute);
     }
-    if (configAttribute.dataType === 'Range') {
-      return this.renderCheckBoxAnswer(configAttribute.values);
-    }
-    if (configAttribute.dataType === 'DateTime') {
-      return this.renderDateTimeAnswer(configAttribute.values);
-    }
+    // if (configAttribute.dataType === 'Range') {
+    //   return this.renderCheckBoxAnswer(configAttribute);
+    // }
+    // if (configAttribute.dataType === 'DateTime') {
+    //   return this.renderDateTimeAnswer(configAttribute.values);
+    // }
     // It is 'Numeric'
-    return this.renderNumericAnswer(configAttribute.values);
+    // return this.renderNumericAnswer(configAttribute.values);
+    return this.renderCheckBoxAnswer(configAttribute);
   }
 
   renderProcessInput(processInput) {
     return (
-      <FormGroup>
+      <FormGroup key={processInput.id}>
         <ControlLabel>{ processInput.Label} </ControlLabel>
         { this.renderConfigAttribute(processInput.configAttribute) }
       </FormGroup>
