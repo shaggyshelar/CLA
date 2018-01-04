@@ -810,7 +810,7 @@ mark {
 .minMaxMessage {
     color: brown;
     font-size: 14px;
-    line-height: 2;   
+    /* line-height: 2;    */
     margin: 0px 15px 0 10px;
     font-weight: 500;
 }
@@ -1678,7 +1678,7 @@ body.modal-open {
 }
 
 .suggestionPanelbody {
-    padding: 0px 0px 25px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 
@@ -1784,4 +1784,10 @@ body.modal-open {
     display: block!important;
     margin-left: 10px!important;
     margin-left: 0!important;
+}
+#accordion > div {
+    margin-top : 5px;
+}
+.suggestionNoRecordPanel{
+    padding: 0px 0px 25px 0px;
 }
