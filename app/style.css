@@ -1768,3 +1768,20 @@ body.modal-open {
     margin-top: -6px;
     margin-right: 3px;
 }
+.guidedSellingModal .form-control {
+    border: 1px solid #c5c5c5!important;
+    box-shadow: none!important;
+    color: #000!important;
+    margin-top: 0!important;
+    border-radius: 0!important;
+}
+.guidedSellingModal select {
+    width:auto!important;
+    margin-left: 0;
+}
+.guidedSellingModal .form-group .customSegmentsInput {
+    clear: both!important;
+    display: block!important;
+    margin-left: 10px!important;
+    margin-left: 0!important;
+}
