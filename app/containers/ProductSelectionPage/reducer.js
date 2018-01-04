@@ -43,10 +43,126 @@ function productSelectionPageReducer(state = initialState, action) {
       return state
         .set('products', fromJS(action.products.products))
         .set('guidedSellingQuestions', fromJS([
-          { id: '1fc295482-3ad0-e711-8130-c4346bdc0e01', QuoteProcessName: 'QuoteProcess1' },
-          { id: '2fc295482-3ad0-e711-8130-c4346bdc0e02', QuoteProcessName: 'QuoteProcess2' },
-          { id: '3fc295482-3ad0-e711-8130-c4346bdc0e03', QuoteProcessName: 'QuoteProcess3' },
-          { id: '4fc295482-3ad0-e711-8130-c4346bdc0e04', QuoteProcessName: 'QuoteProcess4' },
+          {
+            Id: '00000000-0000-0000-0000-000000000001',
+            Name: 'Model and Range',
+            ProcessInputs: [
+              {
+                ProcessInputId: '00000000-0000-0000-0000-000000000000',
+                ProcessInput_Name: 'Model Input',
+                Label: 'Which Car model you want to choose?',
+                ConfigAttribute: {
+                  ID: '00000000-0000-0000-0000-000000000000',
+                  Name: 'Model',
+                  DataType: 'Checkbox',
+                  Value: [
+                    {
+                      Id: '1',
+                      Value: 'Polo',
+                      IsSelected: true,
+                    },
+                    {
+                      Id: '1',
+                      Value: 'Vento',
+                      IsSelected: false,
+                    },
+                  ],
+                },
+              },
+              {
+                ProcessInputId: '00000000-0000-0000-0000-000000000000',
+                ProcessInput_Name: 'Price Input',
+                Label: 'Select a Price Range?',
+                ConfigAttribute: {
+                  ID: '00000000-0000-0000-0000-000000000000',
+                  Name: 'Price',
+                  DataType: 'Range',
+                  Value: [
+                    {
+                      Id: '1',
+                      Value: '800000',
+                      IsSelected: true,
+                    },
+                    {
+                      Id: '2',
+                      Value: '1500000',
+                      IsSelected: false,
+                    },
+                    {
+                      Id: '3',
+                      Value: '2500000',
+                      IsSelected: true,
+                    },
+                    {
+                      Id: '4',
+                      Value: '4950000',
+                      IsSelected: false,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+          {
+            Id: '00000000-0000-0000-0000-000000000002',
+            Name: 'Fuel Type and Seating Capacity Input',
+            ProcessInputs: [
+              {
+                ProcessInputId: '00000000-0000-0000-0000-000000000000',
+                ProcessInput_Name: 'Fuel Type Input',
+                Label: 'Select Fuel Type?',
+                ConfigAttribute: {
+                  ID: '00000000-0000-0000-0000-000000000000',
+                  Name: 'FuelType',
+                  DataType: 'RadioButton',
+                  Value: [
+                    {
+                      Id: '1',
+                      Value: 'Petrol',
+                      IsSelected: true,
+                    },
+                    {
+                      Id: '1',
+                      Value: 'Deisel',
+                      IsSelected: false,
+                    },
+                  ],
+                },
+              },
+              {
+                ProcessInputId: '00000000-0000-0000-0000-000000000000',
+                ProcessInput_Name: 'Seating Capacity Input',
+                Label: 'Select a Seating Capacity?',
+                ConfigAttribute: {
+                  ID: '00000000-0000-0000-0000-000000000000',
+                  Name: 'SeatingCapacity',
+                  DataType: 'OptionSet',
+                  Value: [
+                    {
+                      Id: '1',
+                      Value: '4',
+                      IsSelected: true,
+                    },
+                    {
+                      Id: '2',
+                      Value: '6',
+                      IsSelected: false,
+                    },
+                    {
+                      Id: '3',
+                      Value: '8',
+                      IsSelected: true,
+                    },
+                    {
+                      Id: '4',
+                      Value: '2',
+                      IsSelected: false,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
         ]))
         .set('initialProducts', fromJS(action.products.products))
         .set('loading', false);
