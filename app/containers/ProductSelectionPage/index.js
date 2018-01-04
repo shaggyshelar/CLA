@@ -201,8 +201,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     guidedSellingQuestions =  _.filter(this.props.guidedSellingQuestions.toJS(), function(item){
       return item;
     });
-    console.log('SSSXXXX', guidedSellingQuestions);
-
     const style = this.props.loading ? { display: 'inline' } : this.props.globalLoading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
@@ -227,7 +225,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             addProductsWait={this.addProductsWait}
             location={this.props.location}
             guidedSellingQuestions={guidedSellingQuestions}
-            data={this.props.products.toJS().map((item) => !item.productComponent?item.name:'')}
+            data={this.props.products.toJS().map((item) => !item.productComponent ? item.name : '')}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
             onSearchItemSelected={this.onSearchItemSelected}
@@ -238,7 +236,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         </div>
         <div>
           <ProductSelectionGrid
-            products={ products }
+            products={products}
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             toggleCheckboxChange={this.toggleCheckboxChange}

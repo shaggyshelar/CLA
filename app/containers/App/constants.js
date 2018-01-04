@@ -33,7 +33,7 @@ export function addQuery(query) {
 
 export function removeQuery(...queryNames) {
   const location = Object.assign({}, browserHistory.getCurrentLocation());
-  queryNames.forEach((q) => delete location.query[q]);
+  queryNames.forEach(q => delete location.query[q]);
   browserHistory.push(location);
 }
 export function generateGuid() {

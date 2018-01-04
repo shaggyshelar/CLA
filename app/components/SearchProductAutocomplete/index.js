@@ -40,6 +40,8 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
         isLoding: true,
       });
     }
+    //let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+   // let priceBookId = 'e171145c-86b9-e711-8131-c4346bdcdf81';
     let priceBookId = '';
     if (process.env.NODE_ENV === 'production') {
       priceBookId = this.props.location.query.PriceBookId;

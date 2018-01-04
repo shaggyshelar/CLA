@@ -27,6 +27,10 @@ export default defineMessages({
     id: 'app.components.SegmentedEditQuoteGrid.listPrice',
     defaultMessage: 'List Unit Price',
   },
+  partnerDiscount: {
+    id: 'app.components.EditQuoteGrid.partnerDiscount',
+    defaultMessage: 'Partner Discount',
+  },
   additionalDiscount: {
     id: 'app.components.SegmentedEditQuoteGrid.additionalDiscount',
     defaultMessage: 'Additional Discount',
@@ -62,6 +66,10 @@ export default defineMessages({
   discountSchedule: {
     id: 'app.components.SegmentedEditQuoteGrid.discountSchedule',
     defaultMessage: 'View Discount Schedule',
+  },
+  termDiscountSchedule: {
+    id: 'app.components.SegmentedEditQuoteGrid.termDiscountSchedule',
+    defaultMessage: 'View Term Discount Schedule',
   },
   required: {
     id: 'app.components.SegmentedEditQuoteGrid.required',
