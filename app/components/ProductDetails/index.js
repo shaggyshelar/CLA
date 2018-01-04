@@ -7,7 +7,6 @@
 import React from 'react';
 // import styled from 'styled-components';
 import { Modal, Button, Glyphicon } from 'react-bootstrap/lib';
-import ReactHtmlParser from 'react-html-parser';
 import Slider from 'react-image-slider';
 import '../../../node_modules/react-image-slider/lib/image-slider.css';
 
@@ -39,10 +38,8 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
 
           <Modal.Body>
             <Slider images={url} isInfinite delay={5000}>
-              {url.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} /></div>)}
+              {url.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} />{ReactHtmlParser(desc)}</div>)}
             </Slider>
-
-            {ReactHtmlParser(desc)}
           </Modal.Body>
 
           <Modal.Footer>

@@ -229,7 +229,6 @@
     "react-dom": "^0.14.0 || ^15.5.4",
     "react-edit-inline": "^1.0.8",
     "react-helmet": "3.2.2",
-    "react-html-parser": "^2.0.2",
     "react-image-slider": "^0.1.0",
     "react-intl": "2.1.5",
     "react-redux": "4.4.6",
