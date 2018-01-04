@@ -356,23 +356,22 @@ function reConfigureProductsReducer(state = initialState, action) {
                     const selectedDependentItems = [];
                     const selectedExclusionItems = [];
                     if (productObj.dependencyList.length > 0) {
-                      const dependentExclusionItems = _.filter(productObj.dependencyList, (item) => item.isDependent || item.isExclusion);
-                      if (dependentExclusionItems.length > 0) {
-                        productObj.dependencyList.forEach((dependentProduct) => {
-                          reConfigureProduct.categories.forEach((reconfigureCategoryData) => {
-                            reconfigureCategoryData.features.forEach((reconfigureFeatureData) => {
-                              reconfigureFeatureData.products.forEach((reconfigureProductData) => {
-                                if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
-                                  selectedDependentItems.push(reconfigureProductData.isSelected);
-                                }
-                                if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
-                                  selectedExclusionItems.push(reconfigureProductData.isSelected);
-                                }
-                              });
+                      productObj.dependencyList.forEach((dependentProduct) => {
+                        reConfigureProduct.categories.forEach((reconfigureCategoryData) => {
+                          reconfigureCategoryData.features.forEach((reconfigureFeatureData) => {
+                            reconfigureFeatureData.products.forEach((reconfigureProductData) => {
+                              if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
+                                selectedDependentItems.push(reconfigureProductData.isSelected);
+                              }
+                              if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
+                                selectedExclusionItems.push(reconfigureProductData.isSelected);
+                              }
                             });
                           });
                         });
+                      });
 
+                      if (!productObj.isRequired) {
                         const filteredDependentArray = selectedDependentItems.filter((value) => value === false);
                         if (selectedDependentItems.length === filteredDependentArray.length && selectedDependentItems.length !== 0) {
                           productObj.isDisable = true;
@@ -426,31 +425,43 @@ function reConfigureProductsReducer(state = initialState, action) {
                 const productObj = productData;
                 const selectedDependentItems = [];
                 const selectedExclusionItems = [];
+                // Get status (isSelected) of dependent and exclusion product by comparing it with each product.
                 if (productObj.dependencyList.length > 0) {
-                  const dependentExclusionItems = _.filter(productObj.dependencyList, (item) => item.isDependent || item.isExclusion);
-                  if (dependentExclusionItems.length > 0) {
-                    productObj.dependencyList.forEach((dependentProduct) => {
-                      reConfigureProduct.features.forEach((reconfigureFeatureData) => {
-                        reconfigureFeatureData.products.forEach((reconfigureProductData) => {
-                          if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
-                            selectedDependentItems.push(reconfigureProductData.isSelected);
-                          }
-                          if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
-                            selectedExclusionItems.push(reconfigureProductData.isSelected);
-                          }
-                        });
+                  productObj.dependencyList.forEach((dependentProduct) => {
+                    reConfigureProduct.features.forEach((reconfigureFeatureData) => {
+                      reconfigureFeatureData.products.forEach((reconfigureProductData) => {
+                        if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
+                          selectedDependentItems.push(reconfigureProductData.isSelected);
+                          // Push true and false value of dependent product
+                          // ex. selectedDependentItems = [true, false]
+                        }
+                        if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
+                          selectedExclusionItems.push(reconfigureProductData.isSelected);
+                           // Push true and false value of exclusion product
+                           // ex. selectedExclusionItems = [true, false]
+                        }
                       });
                     });
-
+                  });
+                  // Avoid applying dependent and exclusion rule on required product.
+                  if (!productObj.isRequired) {
+                    // For Dependent Product
+                    // Get product with status false
+                    // ex. filteredDependentArray = [false]
                     const filteredDependentArray = selectedDependentItems.filter((value) => value === false);
+                    // Compare length of selectedDependentItems and filteredDependentArray to update value of disable and isSelected property
                     if (selectedDependentItems.length === filteredDependentArray.length && selectedDependentItems.length !== 0) {
                       productObj.isDisable = true;
                       productObj.isSelected = false;
                     } else {
                       productObj.isDisable = false;
                     }
+                    // For Exclusion Product
+                    // Get product with status true
+                    // ex. filteredDependentArray = [true]
 
                     const filteredExclusionArray = selectedExclusionItems.filter((value) => value === true);
+                    // FilteredExclusionArray is having length greater than zero then update  value of disable and isSelected property
                     if (filteredExclusionArray.length !== 0) {
                       if (filteredExclusionArray.length > 0) {
                         productObj.isDisable = true;
@@ -470,9 +481,16 @@ function reConfigureProductsReducer(state = initialState, action) {
           }
         }
       }
-      return state
+      let updatedState;
+      if (action.product.applyImmediately) {
+        updatedState = state
         .set('reConfigureProductData', fromJS(reConfigureProduct))
         .set('loading', true);
+      } else {
+        updatedState = state
+        .set('reConfigureProductData', fromJS(reConfigureProduct));
+      }
+      return updatedState;
     }
 
     case TOGGLE_ADDOPTIONS_STATE: {
