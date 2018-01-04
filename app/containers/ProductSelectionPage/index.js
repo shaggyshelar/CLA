@@ -174,7 +174,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.setState({ disabledButton: true });
   }
   addProducts() {
-    const data =  [];
+    const data = [];
 
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i += 1) {
@@ -183,7 +183,6 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       } else if (d[i].checked && !this.props.location.query.groupId) {
         data.push({ productId: d[i].value });
       }
-
     }
     this.props.addProductsToQuote(data);
     browserHistory.push(`/EditQuote${this.props.location.search}`);
@@ -191,16 +190,19 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
 
   render() {
     let products = [];
-    products =  _.filter(this.props.products.toJS(),function(item){
-          if(!item.productComponent){
-            return item;
-          }
-    });
+    if (!_.isUndefined(this.props.guidedSellingQuestions)) {
+      products = _.filter(this.props.products.toJS(), (item) => {
+        if (!item.productComponent) {
+          return item;
+        }
+      });
+    }
 
     let guidedSellingQuestions = [];
-    guidedSellingQuestions =  _.filter(this.props.guidedSellingQuestions.toJS(), function(item){
-      return item;
-    });
+    if (!_.isUndefined(this.props.guidedSellingQuestions)) {
+      guidedSellingQuestions = _.filter(this.props.guidedSellingQuestions.toJS(), (item) => item);
+    }
+
     const style = this.props.loading ? { display: 'inline' } : this.props.globalLoading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
