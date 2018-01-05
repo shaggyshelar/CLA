@@ -42,7 +42,7 @@ function productSelectionPageReducer(state = initialState, action) {
     case LOAD_PRODUCTS_DATA_SUCCESS: {
       return state
         .set('products', fromJS(action.products.products))
-        .set('guidedSellingQuestions', fromJS(action.products.guidedSelling.quoteProcesses))
+        .set('guidedSellingQuestions', fromJS(action.products.guidedSelling ? action.products.guidedSelling.quoteProcesses : []))
         .set('initialProducts', fromJS(action.products.products))
         .set('loading', false);
     }
