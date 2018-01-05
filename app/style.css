@@ -810,7 +810,7 @@ mark {
 .minMaxMessage {
     color: brown;
     font-size: 14px;
-    line-height: 2;   
+    /* line-height: 2;    */
     margin: 0px 15px 0 10px;
     font-weight: 500;
 }
@@ -1678,7 +1678,7 @@ body.modal-open {
 }
 
 .suggestionPanelbody {
-    padding: 0px 0px 25px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 
@@ -1787,4 +1787,11 @@ body.modal-open {
 }
 .guidedSellingModal input[type=date].form-control, .guidedSellingModal input[type=time].form-control, .guidedSellingModal input[type=datetime-local].form-control, .guidedSellingModal input[type=month].form-control {
     line-height: 20px!important;
+}
+
+#accordion > div {
+    margin-top : 5px;
+}
+.suggestionNoRecordPanel{
+    padding: 0px 0px 25px 0px;
 }
