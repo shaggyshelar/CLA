@@ -166,17 +166,20 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
   }
 
   render() {
+    let defaultTabId = _.head(this.props.data);
+    defaultTabId = defaultTabId ? defaultTabId.id : '';
     return (
       <Modal
         show={this.props.show} onHide={this.props.onHide}
         style={{ display: 'inline-flex' }}
-      className="guidedSellingModal">
+        className="guidedSellingModal"
+      >
         <Modal.Dialog >
           <Modal.Header closeButton>
             <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="shopping-cart" /> <strong> Guided Selling </strong></Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <Tab.Container id="left-tabs-example" defaultActiveKey={defaultTabId}>
               <Row className="clearfix">
                 <Col sm={2}>
                   { this.renderQuoteProcessColumns() }
