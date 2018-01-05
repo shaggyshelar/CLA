@@ -14,9 +14,15 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     this.renderConfigAttribute = this.renderConfigAttribute.bind(this);
     this.renderProcessInput = this.renderProcessInput.bind(this);
     this.renderQuoteProcess = this.renderQuoteProcess.bind(this);
+    this.toggleCheckBox = this.toggleCheckBox.bind(this);
     this.state = {
       isDirty: false,
     };
+  }
+
+  toggleCheckBox(event, configAttribute) {
+    const foundCheckbox = _.find(configAttribute.values, { value: event.target.value });
+    foundCheckbox.isSelected = event.target.checked;
   }
 
   renderQuoteProcessColumns() {
@@ -48,7 +54,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
       <FormGroup key={configAttribute.id}>
         {
           configAttribute.values.map((option) => (
-            <Checkbox key={option.value} inline>
+            <Checkbox key={option.value} value={option.value} inline onChange={(event) => this.toggleCheckBox(event, configAttribute)}>
               { option.value }
             </Checkbox>
           ))
