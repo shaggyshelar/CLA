@@ -1,35 +1,35 @@
-import React, { Component } from 'react'
-import classnames from 'classnames'
+import React, { Component } from 'react';
+import classnames from 'classnames';
 //
-import _ from './utils'
-import Lifecycle from './lifecycle'
-import Methods from './methods'
-import defaultProps from './defaultProps'
+import _ from './utils';
+import Lifecycle from './lifecycle';
+import Methods from './methods';
+import defaultProps from './defaultProps';
 
-export const ReactTableDefaults = defaultProps
+export const ReactTableDefaults = defaultProps;
 
 export default class ReactTable extends Methods(Lifecycle(Component)) {
   static defaultProps = defaultProps
 
-  constructor (props) {
-    super()
+  constructor(props) {
+    super();
 
-    this.getResolvedState = this.getResolvedState.bind(this)
-    this.getDataModel = this.getDataModel.bind(this)
-    this.getSortedData = this.getSortedData.bind(this)
-    this.fireFetchData = this.fireFetchData.bind(this)
-    this.getPropOrState = this.getPropOrState.bind(this)
-    this.getStateOrProp = this.getStateOrProp.bind(this)
-    this.filterData = this.filterData.bind(this)
-    this.sortData = this.sortData.bind(this)
-    this.getMinRows = this.getMinRows.bind(this)
-    this.onPageChange = this.onPageChange.bind(this)
-    this.onPageSizeChange = this.onPageSizeChange.bind(this)
-    this.sortColumn = this.sortColumn.bind(this)
-    this.filterColumn = this.filterColumn.bind(this)
-    this.resizeColumnStart = this.resizeColumnStart.bind(this)
-    this.resizeColumnEnd = this.resizeColumnEnd.bind(this)
-    this.resizeColumnMoving = this.resizeColumnMoving.bind(this)
+    this.getResolvedState = this.getResolvedState.bind(this);
+    this.getDataModel = this.getDataModel.bind(this);
+    this.getSortedData = this.getSortedData.bind(this);
+    this.fireFetchData = this.fireFetchData.bind(this);
+    this.getPropOrState = this.getPropOrState.bind(this);
+    this.getStateOrProp = this.getStateOrProp.bind(this);
+    this.filterData = this.filterData.bind(this);
+    this.sortData = this.sortData.bind(this);
+    this.getMinRows = this.getMinRows.bind(this);
+    this.onPageChange = this.onPageChange.bind(this);
+    this.onPageSizeChange = this.onPageSizeChange.bind(this);
+    this.sortColumn = this.sortColumn.bind(this);
+    this.filterColumn = this.filterColumn.bind(this);
+    this.resizeColumnStart = this.resizeColumnStart.bind(this);
+    this.resizeColumnEnd = this.resizeColumnEnd.bind(this);
+    this.resizeColumnMoving = this.resizeColumnMoving.bind(this);
 
     this.state = {
       page: 0,
@@ -40,11 +40,11 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
       resized: props.defaultResized,
       currentlyResizing: false,
       skipNextSort: false,
-    }
+    };
   }
 
-  render () {
-    const resolvedState = this.getResolvedState()
+  render() {
+    const resolvedState = this.getResolvedState();
     const {
       children,
       className,
@@ -127,52 +127,50 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
       // Sorted Data
       sortedData,
       currentlyResizing,
-    } = resolvedState
+    } = resolvedState;
 
     // Pagination
-    const startRow = pageSize * page
-    const endRow = startRow + pageSize
-    let pageRows = manual ? resolvedData : sortedData.slice(startRow, endRow)
-    const minRows = this.getMinRows()
-    const padRows = _.range(Math.max(minRows - pageRows.length, 0))
+    const startRow = pageSize * page;
+    const endRow = startRow + pageSize;
+    let pageRows = manual ? resolvedData : sortedData.slice(startRow, endRow);
+    const minRows = this.getMinRows();
+    const padRows = _.range(Math.max(minRows - pageRows.length, 0));
 
-    const hasColumnFooter = allVisibleColumns.some(d => d.Footer)
-    const hasFilters = filterable || allVisibleColumns.some(d => d.filterable)
+    const hasColumnFooter = allVisibleColumns.some((d) => d.Footer);
+    const hasFilters = filterable || allVisibleColumns.some((d) => d.filterable);
 
-    const recurseRowsViewIndex = (rows, path = [], index = -1) => {
-      return [
-        rows.map((row, i) => {
-          index++
-          const rowWithViewIndex = {
-            ...row,
-            _viewIndex: index,
-          }
-          const newPath = path.concat([i])
-          if (rowWithViewIndex[subRowsKey] && _.get(expanded, newPath)) {
-            ;[rowWithViewIndex[subRowsKey], index] = recurseRowsViewIndex(
+    const recurseRowsViewIndex = (rows, path = [], index = -1) => [
+      rows.map((row, i) => {
+        index++;
+        const rowWithViewIndex = {
+          ...row,
+          _viewIndex: index,
+        };
+        const newPath = path.concat([i]);
+        if (rowWithViewIndex[subRowsKey] && _.get(expanded, newPath)) {
+          [rowWithViewIndex[subRowsKey], index] = recurseRowsViewIndex(
               rowWithViewIndex[subRowsKey],
               newPath,
               index
-            )
-          }
-          return rowWithViewIndex
-        }),
-        index,
-      ]
-    }
-    ;[pageRows] = recurseRowsViewIndex(pageRows)
+            );
+        }
+        return rowWithViewIndex;
+      }),
+      index,
+    ]
+    ;[pageRows] = recurseRowsViewIndex(pageRows);
 
-    const canPrevious = page > 0
-    const canNext = page + 1 < pages
+    const canPrevious = page > 0;
+    const canNext = page + 1 < pages;
 
     const rowMinWidth = _.sum(
-      allVisibleColumns.map(d => {
-        const resizedColumn = resized.find(x => x.id === d.id) || {}
-        return _.getFirstDefined(resizedColumn.value, d.width, d.minWidth)
+      allVisibleColumns.map((d) => {
+        const resizedColumn = resized.find((x) => x.id === d.id) || {};
+        return _.getFirstDefined(resizedColumn.value, d.width, d.minWidth);
       })
-    )
+    );
 
-    let rowIndex = -1
+    let rowIndex = -1;
 
     const finalState = {
       ...resolvedState,
@@ -185,17 +183,17 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
       canPrevious,
       canNext,
       rowMinWidth,
-    }
+    };
 
     // Visual Components
 
     const makeHeaderGroups = () => {
       const theadGroupProps = _.splitProps(
         getTheadGroupProps(finalState, undefined, undefined, this)
-      )
+      );
       const theadGroupTrProps = _.splitProps(
         getTheadGroupTrProps(finalState, undefined, undefined, this)
-      )
+      );
       return (
         <TheadComponent
           className={classnames('-headerGroups', theadGroupProps.className)}
@@ -213,61 +211,61 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
             {headerGroups.map(makeHeaderGroup)}
           </TrComponent>
         </TheadComponent>
-      )
-    }
+      );
+    };
 
     const makeHeaderGroup = (column, i) => {
-      const resizedValue = col =>
-        (resized.find(x => x.id === col.id) || {}).value
+      const resizedValue = (col) =>
+        (resized.find((x) => x.id === col.id) || {}).value;
       const flex = _.sum(
         column.columns.map(
-          col => (col.width || resizedValue(col) ? 0 : col.minWidth)
+          (col) => (col.width || resizedValue(col) ? 0 : col.minWidth)
         )
-      )
+      );
       const width = _.sum(
-        column.columns.map(col =>
+        column.columns.map((col) =>
           _.getFirstDefined(resizedValue(col), col.width, col.minWidth)
         )
-      )
+      );
       const maxWidth = _.sum(
-        column.columns.map(col =>
+        column.columns.map((col) =>
           _.getFirstDefined(resizedValue(col), col.width, col.maxWidth)
         )
-      )
+      );
 
       const theadGroupThProps = _.splitProps(
         getTheadGroupThProps(finalState, undefined, column, this)
-      )
+      );
       const columnHeaderProps = _.splitProps(
         column.getHeaderProps(finalState, undefined, column, this)
-      )
+      );
 
       const classes = [
         column.headerClassName,
         theadGroupThProps.className,
         columnHeaderProps.className,
-      ]
+      ];
 
       const styles = {
         ...column.headerStyle,
         ...theadGroupThProps.style,
         ...columnHeaderProps.style,
-      }
+      };
 
       const rest = {
         ...theadGroupThProps.rest,
         ...columnHeaderProps.rest,
-      }
+      };
 
       const flexStyles = {
         flex: `${flex} 0 auto`,
         width: _.asPx(width),
         maxWidth: _.asPx(maxWidth),
-      }
+      };
 
       return (
         <ThComponent
-          key={i + '-' + column.id}
+          key={`${i}-${column.id}`}
           className={classnames(classes)}
           style={{
             ...styles,
@@ -277,19 +275,19 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
         >
           {_.normalizeComponent(column.Header, {
             data: sortedData,
-            column: column,
+            column,
           })}
         </ThComponent>
-      )
-    }
+      );
+    };
 
     const makeHeaders = () => {
       const theadProps = _.splitProps(
         getTheadProps(finalState, undefined, undefined, this)
-      )
+      );
       const theadTrProps = _.splitProps(
         getTheadTrProps(finalState, undefined, undefined, this)
-      )
+      );
       return (
         <TheadComponent
           className={classnames('-header', theadProps.className)}
@@ -307,62 +305,62 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
             {allVisibleColumns.map(makeHeader)}
           </TrComponent>
         </TheadComponent>
-      )
-    }
+      );
+    };
 
     const makeHeader = (column, i) => {
-      const resizedCol = resized.find(x => x.id === column.id) || {}
-      const sort = sorted.find(d => d.id === column.id)
+      const resizedCol = resized.find((x) => x.id === column.id) || {};
+      const sort = sorted.find((d) => d.id === column.id);
       const show =
-        typeof column.show === 'function' ? column.show() : column.show
+        typeof column.show === 'function' ? column.show() : column.show;
       const width = _.getFirstDefined(
         resizedCol.value,
         column.width,
         column.minWidth
-      )
+      );
       const maxWidth = _.getFirstDefined(
         resizedCol.value,
         column.width,
         column.maxWidth
-      )
+      );
       const theadThProps = _.splitProps(
         getTheadThProps(finalState, undefined, column, this)
-      )
+      );
       const columnHeaderProps = _.splitProps(
         column.getHeaderProps(finalState, undefined, column, this)
-      )
+      );
 
       const classes = [
         column.headerClassName,
         theadThProps.className,
         columnHeaderProps.className,
-      ]
+      ];
 
       const styles = {
         ...column.headerStyle,
         ...theadThProps.style,
         ...columnHeaderProps.style,
-      }
+      };
 
       const rest = {
         ...theadThProps.rest,
         ...columnHeaderProps.rest,
-      }
+      };
 
-      const isResizable = _.getFirstDefined(column.resizable, resizable, false)
+      const isResizable = _.getFirstDefined(column.resizable, resizable, false);
       const resizer = isResizable
         ? (<ResizerComponent
-          onMouseDown={e => this.resizeColumnStart(e, column, false)}
-          onTouchStart={e => this.resizeColumnStart(e, column, true)}
+          onMouseDown={(e) => this.resizeColumnStart(e, column, false)}
+          onTouchStart={(e) => this.resizeColumnStart(e, column, true)}
           {...resizerProps}
         />)
-        : null
+        : null;
 
-      const isSortable = _.getFirstDefined(column.sortable, sortable, false)
+      const isSortable = _.getFirstDefined(column.sortable, sortable, false);
 
       return (
         <ThComponent
-          key={i + '-' + column.id}
+          key={`${i}-${column.id}`}
           className={classnames(
             classes,
             'rt-resizable-header',
@@ -379,29 +377,29 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
             width: _.asPx(width),
             maxWidth: _.asPx(maxWidth),
           }}
-          toggleSort={e => {
-            isSortable && this.sortColumn(column, e.shiftKey)
+          toggleSort={(e) => {
+            isSortable && this.sortColumn(column, e.shiftKey);
           }}
           {...rest}
         >
-          <div className='rt-resizable-header-content'>
+          <div className="rt-resizable-header-content">
             {_.normalizeComponent(column.Header, {
               data: sortedData,
-              column: column,
+              column,
             })}
           </div>
           {resizer}
         </ThComponent>
-      )
-    }
+      );
+    };
 
     const makeFilters = () => {
       const theadFilterProps = _.splitProps(
         getTheadFilterProps(finalState, undefined, undefined, this)
-      )
+      );
       const theadFilterTrProps = _.splitProps(
         getTheadFilterTrProps(finalState, undefined, undefined, this)
-      )
+      );
       return (
         <TheadComponent
           className={classnames('-filters', theadFilterProps.className)}
@@ -419,58 +417,58 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
             {allVisibleColumns.map(makeFilter)}
           </TrComponent>
         </TheadComponent>
-      )
-    }
+      );
+    };
 
     const makeFilter = (column, i) => {
-      const resizedCol = resized.find(x => x.id === column.id) || {}
+      const resizedCol = resized.find((x) => x.id === column.id) || {};
       const width = _.getFirstDefined(
         resizedCol.value,
         column.width,
         column.minWidth
-      )
+      );
       const maxWidth = _.getFirstDefined(
         resizedCol.value,
         column.width,
         column.maxWidth
-      )
+      );
       const theadFilterThProps = _.splitProps(
         getTheadFilterThProps(finalState, undefined, column, this)
-      )
+      );
       const columnHeaderProps = _.splitProps(
         column.getHeaderProps(finalState, undefined, column, this)
-      )
+      );
 
       const classes = [
         column.headerClassName,
         theadFilterThProps.className,
         columnHeaderProps.className,
-      ]
+      ];
 
       const styles = {
         ...column.headerStyle,
         ...theadFilterThProps.style,
         ...columnHeaderProps.style,
-      }
+      };
 
       const rest = {
         ...theadFilterThProps.rest,
         ...columnHeaderProps.rest,
-      }
+      };
 
-      const filter = filtered.find(filter => filter.id === column.id)
+      const filter = filtered.find((filter) => filter.id === column.id);
 
-      const ResolvedFilterComponent = column.Filter || FilterComponent
+      const ResolvedFilterComponent = column.Filter || FilterComponent;
 
       const isFilterable = _.getFirstDefined(
         column.filterable,
         filterable,
         false
-      )
+      );
 
       return (
         <ThComponent
-          key={i + '-' + column.id}
+          key={`${i}-${column.id}`}
           className={classnames(classes)}
           style={{
             ...styles,
@@ -486,19 +484,19 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
               {
                 column,
                 filter,
-                onChange: value => this.filterColumn(column, value),
+                onChange: (value) => this.filterColumn(column, value),
               },
               defaultProps.column.Filter
             )
             : null}
         </ThComponent>
-      )
-    }
+      );
+    };
 
     const makePageRow = (row, i, path = []) => {
       const rowInfo = {
         original: row[originalKey],
-        row: row,
+        row,
         index: row[indexKey],
         viewIndex: ++rowIndex,
         level: path.length,
@@ -506,12 +504,12 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
         aggregated: row[aggregatedKey],
         groupedByPivot: row[groupedByPivotKey],
         subRows: row[subRowsKey],
-      }
-      const isExpanded = _.get(expanded, rowInfo.nestingPath)
-      const trGroupProps = getTrGroupProps(finalState, rowInfo, undefined, this)
+      };
+      const isExpanded = _.get(expanded, rowInfo.nestingPath);
+      const trGroupProps = getTrGroupProps(finalState, rowInfo, undefined, this);
       const trProps = _.splitProps(
         getTrProps(finalState, rowInfo, undefined, this)
-      )
+      );
       return (
         <TrGroupComponent key={rowInfo.nestingPath.join('_')} {...trGroupProps}>
           <TrComponent
@@ -523,37 +521,37 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
             {...trProps.rest}
           >
             {allVisibleColumns.map((column, i2) => {
-              const resizedCol = resized.find(x => x.id === column.id) || {}
+              const resizedCol = resized.find((x) => x.id === column.id) || {};
               const show =
-                typeof column.show === 'function' ? column.show() : column.show
+                typeof column.show === 'function' ? column.show() : column.show;
               const width = _.getFirstDefined(
                 resizedCol.value,
                 column.width,
                 column.minWidth
-              )
+              );
               const maxWidth = _.getFirstDefined(
                 resizedCol.value,
                 column.width,
                 column.maxWidth
-              )
+              );
               const tdProps = _.splitProps(
                 getTdProps(finalState, rowInfo, column, this)
-              )
+              );
               const columnProps = _.splitProps(
                 column.getProps(finalState, rowInfo, column, this)
-              )
+              );
 
               const classes = [
                 tdProps.className,
                 column.className,
                 columnProps.className,
-              ]
+              ];
 
               const styles = {
                 ...tdProps.style,
                 ...column.style,
                 ...columnProps.style,
-              }
+              };
 
               const cellInfo = {
                 ...rowInfo,
@@ -570,20 +568,20 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
                 columnProps,
                 classes,
                 styles,
-              }
+              };
 
-              const value = cellInfo.value
+              const value = cellInfo.value;
 
-              let useOnExpanderClick
-              let isBranch
-              let isPreview
+              let useOnExpanderClick;
+              let isBranch;
+              let isPreview;
 
-              const onExpanderClick = e => {
-                let newExpanded = _.clone(expanded)
+              const onExpanderClick = (e) => {
+                let newExpanded = _.clone(expanded);
                 if (isExpanded) {
-                  newExpanded = _.set(newExpanded, cellInfo.nestingPath, false)
+                  newExpanded = _.set(newExpanded, cellInfo.nestingPath, false);
                 } else {
-                  newExpanded = _.set(newExpanded, cellInfo.nestingPath, {})
+                  newExpanded = _.set(newExpanded, cellInfo.nestingPath, {});
                 }
 
                 return this.setStateWithData(
@@ -592,55 +590,55 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
                   },
                   () => {
                     onExpandedChange &&
-                      onExpandedChange(newExpanded, cellInfo.nestingPath, e)
+                      onExpandedChange(newExpanded, cellInfo.nestingPath, e);
                   }
-                )
-              }
+                );
+              };
 
               // Default to a standard cell
               let resolvedCell = _.normalizeComponent(
                 column.Cell,
                 cellInfo,
                 value
-              )
+              );
 
               // Resolve Renderers
               const ResolvedAggregatedComponent =
                 column.Aggregated ||
-                (!column.aggregate ? AggregatedComponent : column.Cell)
+                (!column.aggregate ? AggregatedComponent : column.Cell);
               const ResolvedExpanderComponent =
-                column.Expander || ExpanderComponent
+                column.Expander || ExpanderComponent;
               const ResolvedPivotValueComponent =
-                column.PivotValue || PivotValueComponent
+                column.PivotValue || PivotValueComponent;
               const DefaultResolvedPivotComponent =
                 PivotComponent ||
-                (props =>
+                ((props) =>
                   <div>
                     <ResolvedExpanderComponent {...props} />
                     <ResolvedPivotValueComponent {...props} />
-                  </div>)
+                  </div>);
               const ResolvedPivotComponent =
-                column.Pivot || DefaultResolvedPivotComponent
+                column.Pivot || DefaultResolvedPivotComponent;
 
               // Is this cell expandable?
               if (cellInfo.pivoted || cellInfo.expander) {
                 // Make it expandable by defualt
-                cellInfo.expandable = true
-                useOnExpanderClick = true
+                cellInfo.expandable = true;
+                useOnExpanderClick = true;
                 // If pivoted, has no subRows, and does not have a subComponent, do not make expandable
                 if (cellInfo.pivoted && !cellInfo.subRows && !SubComponent) {
-                  cellInfo.expandable = false
+                  cellInfo.expandable = false;
                 }
               }
 
               if (cellInfo.pivoted) {
                 // Is this column a branch?
                 isBranch =
-                  rowInfo.row[pivotIDKey] === column.id && cellInfo.subRows
+                  rowInfo.row[pivotIDKey] === column.id && cellInfo.subRows;
                 // Should this column be blank?
                 isPreview =
                   pivotBy.indexOf(column.id) >
-                    pivotBy.indexOf(rowInfo.row[pivotIDKey]) && cellInfo.subRows
+                    pivotBy.indexOf(rowInfo.row[pivotIDKey]) && cellInfo.subRows;
                 // Pivot Cell Render Override
                 if (isBranch) {
                   // isPivot
@@ -651,23 +649,23 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
                       value: row[pivotValKey],
                     },
                     row[pivotValKey]
-                  )
+                  );
                 } else if (isPreview) {
                   // Show the pivot preview
                   resolvedCell = _.normalizeComponent(
                     ResolvedAggregatedComponent,
                     cellInfo,
                     value
-                  )
+                  );
                 } else {
-                  resolvedCell = null
+                  resolvedCell = null;
                 }
               } else if (cellInfo.aggregated) {
                 resolvedCell = _.normalizeComponent(
                   ResolvedAggregatedComponent,
                   cellInfo,
                   value
-                )
+                );
               }
 
               if (cellInfo.expander) {
@@ -675,42 +673,42 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
                   ResolvedExpanderComponent,
                   cellInfo,
                   row[pivotValKey]
-                )
+                );
                 if (pivotBy) {
                   if (cellInfo.groupedByPivot) {
-                    resolvedCell = null
+                    resolvedCell = null;
                   }
                   if (!cellInfo.subRows && !SubComponent) {
-                    resolvedCell = null
+                    resolvedCell = null;
                   }
                 }
               }
 
               const resolvedOnExpanderClick = useOnExpanderClick
                 ? onExpanderClick
-                : () => {}
+                : () => {};
 
               // If there are multiple onClick events, make sure they don't override eachother. This should maybe be expanded to handle all function attributes
               const interactionProps = {
                 onClick: resolvedOnExpanderClick,
-              }
+              };
 
               if (tdProps.rest.onClick) {
-                interactionProps.onClick = e => {
-                  tdProps.rest.onClick(e, () => resolvedOnExpanderClick(e))
-                }
+                interactionProps.onClick = (e) => {
+                  tdProps.rest.onClick(e, () => resolvedOnExpanderClick(e));
+                };
               }
 
               if (columnProps.rest.onClick) {
-                interactionProps.onClick = e => {
-                  columnProps.rest.onClick(e, () => resolvedOnExpanderClick(e))
-                }
+                interactionProps.onClick = (e) => {
+                  columnProps.rest.onClick(e, () => resolvedOnExpanderClick(e));
+                };
               }
 
               // Return the cell
               return (
                 <TdComponent
-                  key={i2 + '-' + column.id}
+                  key={`${i2}-${column.id}`}
                   className={classnames(
                     classes,
                     !show && 'hidden',
@@ -729,7 +727,7 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
                 >
                   {resolvedCell}
                 </TdComponent>
-              )
+              );
             })}
           </TrComponent>
           {rowInfo.subRows &&
@@ -742,8 +740,8 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
             isExpanded &&
             SubComponent(rowInfo)}
         </TrGroupComponent>
-      )
-    }
+      );
+    };
 
     const makePadRow = (row, i) => {
       const trGroupProps = getTrGroupProps(
@@ -751,10 +749,10 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
         undefined,
         undefined,
         this
-      )
+      );
       const trProps = _.splitProps(
         getTrProps(finalState, undefined, undefined, this)
-      )
+      );
       return (
         <TrGroupComponent key={i} {...trGroupProps}>
           <TrComponent
@@ -768,46 +766,46 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
             {allVisibleColumns.map(makePadColumn)}
           </TrComponent>
         </TrGroupComponent>
-      )
-    }
+      );
+    };
 
     const makePadColumn = (column, i) => {
-      const resizedCol = resized.find(x => x.id === column.id) || {}
+      const resizedCol = resized.find((x) => x.id === column.id) || {};
       const show =
-        typeof column.show === 'function' ? column.show() : column.show
-      let width = _.getFirstDefined(
+        typeof column.show === 'function' ? column.show() : column.show;
+      const width = _.getFirstDefined(
         resizedCol.value,
         column.width,
         column.minWidth
-      )
-      let flex = width
-      let maxWidth = _.getFirstDefined(
+      );
+      const flex = width;
+      const maxWidth = _.getFirstDefined(
         resizedCol.value,
         column.width,
         column.maxWidth
-      )
+      );
       const tdProps = _.splitProps(
         getTdProps(finalState, undefined, column, this)
-      )
+      );
       const columnProps = _.splitProps(
         column.getProps(finalState, undefined, column, this)
-      )
+      );
 
       const classes = [
         tdProps.className,
         column.className,
         columnProps.className,
-      ]
+      ];
 
       const styles = {
         ...tdProps.style,
         ...column.style,
         ...columnProps.style,
-      }
+      };
 
       return (
         <TdComponent
-          key={i + '-' + column.id}
+          key={`${i}-${column.id}`}
           className={classnames(classes, !show && 'hidden')}
           style={{
             ...styles,
@@ -819,14 +817,14 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
         >
           {_.normalizeComponent(PadRowComponent)}
         </TdComponent>
-      )
-    }
+      );
+    };
 
     const makeColumnFooters = () => {
-      const tFootProps = getTfootProps(finalState, undefined, undefined, this)
+      const tFootProps = getTfootProps(finalState, undefined, undefined, this);
       const tFootTrProps = _.splitProps(
         getTfootTrProps(finalState, undefined, undefined, this)
-      )
+      );
       return (
         <TfootComponent
           className={tFootProps.className}
@@ -844,50 +842,50 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
             {allVisibleColumns.map(makeColumnFooter)}
           </TrComponent>
         </TfootComponent>
-      )
-    }
+      );
+    };
 
     const makeColumnFooter = (column, i) => {
-      const resizedCol = resized.find(x => x.id === column.id) || {}
+      const resizedCol = resized.find((x) => x.id === column.id) || {};
       const show =
-        typeof column.show === 'function' ? column.show() : column.show
+        typeof column.show === 'function' ? column.show() : column.show;
       const width = _.getFirstDefined(
         resizedCol.value,
         column.width,
         column.minWidth
-      )
+      );
       const maxWidth = _.getFirstDefined(
         resizedCol.value,
         column.width,
         column.maxWidth
-      )
+      );
       const tFootTdProps = _.splitProps(
         getTfootTdProps(finalState, undefined, undefined, this)
-      )
+      );
       const columnProps = _.splitProps(
         column.getProps(finalState, undefined, column, this)
-      )
+      );
       const columnFooterProps = _.splitProps(
         column.getFooterProps(finalState, undefined, column, this)
-      )
+      );
 
       const classes = [
         tFootTdProps.className,
         column.className,
         columnProps.className,
         columnFooterProps.className,
-      ]
+      ];
 
       const styles = {
         ...tFootTdProps.style,
         ...column.style,
         ...columnProps.style,
         ...columnFooterProps.style,
-      }
+      };
 
       return (
         <TdComponent
-          key={i + '-' + column.id}
+          key={`${i}-${column.id}`}
           className={classnames(classes, !show && 'hidden')}
           style={{
             ...styles,
@@ -901,16 +899,16 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
         >
           {_.normalizeComponent(column.Footer, {
             data: sortedData,
-            column: column,
+            column,
           })}
         </TdComponent>
-      )
-    }
+      );
+    };
 
     const makePagination = () => {
       const paginationProps = _.splitProps(
         getPaginationProps(finalState, undefined, undefined, this)
-      )
+      );
       return (
         <PaginationComponent
           {...resolvedState}
@@ -923,24 +921,24 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
           style={paginationProps.style}
           {...paginationProps.rest}
         />
-      )
-    }
+      );
+    };
 
     const rootProps = _.splitProps(
       getProps(finalState, undefined, undefined, this)
-    )
+    );
     const tableProps = _.splitProps(
       getTableProps(finalState, undefined, undefined, this)
-    )
+    );
     const tBodyProps = _.splitProps(
       getTbodyProps(finalState, undefined, undefined, this)
-    )
-    const loadingProps = getLoadingProps(finalState, undefined, undefined, this)
-    const noDataProps = getNoDataProps(finalState, undefined, undefined, this)
-    const resizerProps = getResizerProps(finalState, undefined, undefined, this)
+    );
+    const loadingProps = getLoadingProps(finalState, undefined, undefined, this);
+    const noDataProps = getNoDataProps(finalState, undefined, undefined, this);
+    const resizerProps = getResizerProps(finalState, undefined, undefined, this);
 
     const makeTable = () => {
-      const pagination = makePagination()
+      const pagination = makePagination();
       return (
         <div
           className={classnames('ReactTable', className, rootProps.className)}
@@ -951,7 +949,7 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
           {...rootProps.rest}
         >
           {showPagination && showPaginationTop
-            ? <div className='pagination-top'>
+            ? <div className="pagination-top">
               {pagination}
             </div>
             : null}
@@ -978,10 +976,10 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
               {pageRows.map((d, i) => makePageRow(d, i))}
               {padRows.map(makePadRow)}
             </TbodyComponent>
-            
+
           </TableComponent>
           {showPagination && showPaginationBottom
-            ? <div className='pagination-bottom'>
+            ? <div className="pagination-bottom">
               {pagination}
             </div>
             : null}
@@ -995,10 +993,10 @@ export default class ReactTable extends Methods(Lifecycle(Component)) {
             {...loadingProps}
           />
         </div>
-      )
-    }
+      );
+    };
 
     // childProps are optionally passed to a function-as-a-child
-    return children ? children(finalState, makeTable, this) : makeTable()
+    return children ? children(finalState, makeTable, this) : makeTable();
   }
 }

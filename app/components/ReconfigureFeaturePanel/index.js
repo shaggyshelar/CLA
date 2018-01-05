@@ -47,7 +47,7 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
     if (feature !== undefined) {
       addButton = this.renderAddButton(feature, index);
       const filteredProducts = feature.products.length > 0 ? _.filter(feature.products, { isDeleted: false }) : [];
-      const panelBodyClassName = filteredProducts.length === 0 ? 'panel-body suggestionNoRecordPanel' : 'panel-body suggestionPanelbody';
+      const panelBodyClassName = filteredProducts.length === 0 && addButton.type === 'span' ? 'panel-body suggestionNoRecordPanel' : 'panel-body suggestionPanelbody';
       const href = `#${feature.id}`;
       const panelClassName = index === 0 ? 'panel-collapse collapse in' : 'panel-collapse collapse';
       return (

@@ -472,6 +472,8 @@ EditQuotePage.propTypes = {
   changeLocale: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.func,
   toggleSuggestionStatus: PropTypes.func,
+  getAllData: PropTypes.func,
+  dataChanged: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({

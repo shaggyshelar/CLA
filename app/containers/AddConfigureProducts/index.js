@@ -27,8 +27,8 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   //  console.log('reConfigureProductData', this.props.reConfigureProductData.toJS());
    // const productData = this.props.reConfigureProductData.toJS().categories.feat;
    // console.log('productData', productData);
-    const quoteData = this.props.reConfigureQuoteData.toJS();
-    //console.log('productData', quoteData);
+    const quote = this.props.reConfigureQuoteData.toJS();
+    // console.log('productData', quoteData);
     const params = {
       featureId: this.props.location.query.featureId,
       bundleId: this.props.location.query.bundleId,
@@ -37,7 +37,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
       bundleLineId: this.props.location.query.bundleLineId,
       groupId: this.props.location.query.groupId,
       isDynamic: this.props.location.query.isDynamic,
-      quoteData: quoteData,
+      quoteData: quote,
     };
     this.props.getProductsData(params);
   }
@@ -117,7 +117,6 @@ AddConfigureProducts.propTypes = {
   toggleCheckboxChange: PropTypes.func,
   toggleCheckAllChange: PropTypes.func,
   reConfigureQuoteData: PropTypes.any,
-  reConfigureProductData: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
