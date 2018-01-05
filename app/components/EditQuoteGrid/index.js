@@ -308,14 +308,18 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
 // (cellInfo) => (cellInfo.original.canShowDiscountScheduler  ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a><span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>),
   renderEditable(cellInfo) {
+    const blockPricing = cellInfo.original.pricingMethod.value[0].value === 'BlockPricing' ? <a className="pro-icon" title={this.context.intl.formatMessage({ ...messages.pricingMethod })}><Glyphicon glyph="bold" /></a> : '';
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (
-        <span>
-          {cellInfo.column.id === 'quantity' || (cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice')) ? '' : this.props.currency}
-          {cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice') ?
-            <span>Included</span>
+        <div>
+          <div>{blockPricing}</div>
+          <span>
+            {cellInfo.column.id === 'quantity' || (cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice')) ? '' : this.props.currency}
+            {cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice') ?
+              <span>Included</span>
           : cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}
-        </span>
+          </span>
+        </div>
       );
     }
     return (
@@ -361,7 +365,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
 
   renderOverlay(cellInfo) {
     return (
-      <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="pro-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+      <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="proname-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
     );
   }
   render() {
