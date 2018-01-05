@@ -131,8 +131,9 @@ export function* saveConfiguredProducts() {
 }
 
 export function* applyImmediateConfigProd() {
+  // Create a channel outside while loop for request actions on the same page
+  const chan = yield actionChannel(TOGGLE_CHECKBOX_CHANGE);
   while (true) {
-    const chan = yield actionChannel(TOGGLE_CHECKBOX_CHANGE);
     const { product } = yield take(chan);
     yield call(applyImmediateConfig, product);
   }
