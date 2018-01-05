@@ -6,9 +6,9 @@
 
 import React from 'react';
 import _ from 'lodash';
-import ReactTable from '../ReactTable';
 import { RIENumber, RIESelect } from 'riek';
 import { Glyphicon } from 'react-bootstrap/lib';
+import ReactTable from '../ReactTable';
 import messages from './messages';
 class SegmentSubComponent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -116,17 +116,26 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
 
       </div>);
   }
-  renderEditable(row, cellInfo) {
+  renderEditable(row, cellInfo, res) {
+    const blockPricing = res.value[0].value === 'BlockPricing' ? <a className="pro-icon" title={this.context.intl.formatMessage({ ...messages.pricingMethod })}><Glyphicon glyph="bold" /></a> : '';
     if (!row.isOneTime && row.type === 'OneTime') {
       return (<span></span>);
     }
     if (cellInfo.original.editable === false) {
-      return (<span> {cellInfo.original.prop === 'quantity' || (cellInfo.original.isBundled && cellInfo.column.id === 'listPrice') ? '' : this.props.currency}
-        { cellInfo.original.isBundled && (cellInfo.original.prop === 'listPrice') ?
-          <span>Included</span>
+      return (
+        <div>
+          <div>{(cellInfo.original.prop === 'listPrice') ? blockPricing : ''}</div>
+          <span> {cellInfo.original.prop === 'quantity' || (cellInfo.original.isBundled && cellInfo.column.id === 'listPrice') ? '' : this.props.currency}
+            { cellInfo.original.isBundled && (cellInfo.original.prop === 'listPrice') ?
+              <span>Included</span>
         :
-        cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>);
+        cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>
+        </div>
+      );
     }
+    // if (cellInfo.original.prop === 'partnerDiscount' && cellInfo.original.editable === true) {
+    //   return (<span> {cellInfo.original.prop === 'partnerDiscount' && cellInfo.original.editable === true ? <span> %</span>:'' }</span>);
+    // }
     if (cellInfo.original.prop === 'additionalDiscount') {
       return this.renderDiscount(cellInfo);
     }
@@ -185,11 +194,12 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     ];
     data.segmentData.columns.map((i) => {
       if (!i.isDeleted) {
+        const res = data.pricingMethod;
         columns.push({
           accessor: `${i.name}.value`,
           sortable: false,
           style: { textAlign: 'right' },
-          Cell: (row) => (this.renderEditable(i, row)),
+          Cell: (row) => (this.renderEditable(i, row, res)),
         });
       }
       return this;

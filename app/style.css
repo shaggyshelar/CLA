@@ -529,12 +529,21 @@ mark {
     max-width: 300px !important;
     min-width: 120px !important; 
 } 
+
+.proname-icon {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    cursor:pointer;
+    float: left;
+}
+
 .pro-icon {
     display: inline-block;
     position: relative;
     margin-left: 10px;
     z-index: 1;
-    float: left;
+    float: right;
     cursor:pointer;
 }
 .group-des-edit{
@@ -1794,4 +1803,31 @@ body.modal-open {
 }
 .suggestionNoRecordPanel{
     padding: 0px 0px 25px 0px;
+}
+.productModal modal-title strong {
+    font-size: 20px!important;
+}
+.productModal .modal-title span {
+    vertical-align: middle;
+    margin-top: -5px;
+    font-size: 25px;
+    margin-right: 5px;
+}
+.productModal .modal-header .close {
+    margin-top: -3px;
+    font-size: 30px;
+    color: #2d2d2d;
+}
+.modal-title {
+    color: #16325C;
+}
+.productModal .cancelBtn {
+    color: #fff!important;
+    background-color: #337ab7!important;
+    border-color: #2e6da4!important;
+}
+.productModal .cancelBtn:hover{
+    color: #fff!important;
+    background-color: #286090!important;
+    border-color: #204d74!important;
 }

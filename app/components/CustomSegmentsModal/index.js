@@ -51,7 +51,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     let isDateNull = false;
     let segNameNull = false;
     for (let index = 0; index <= customSegments.length - 1; index++) {
-      if(customSegments[index].name === null || customSegments[index].startDate === '' ){
+      if (customSegments[index].name === null || customSegments[index].startDate === '') {
         segNameNull = true;
       }
       if (customSegments[index].startDate === null || customSegments[index].startDate === '' || customSegments[index].endDate === null || customSegments[index].endDate === '') {
@@ -81,7 +81,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
         position: toast.POSITION.TOP_LEFT,
         autoClose: true,
       });
-    } else if(segNameNull){
+    } else if (segNameNull) {
       toast.error(this.context.intl.formatMessage({ ...messages.segNameError }), {
         position: toast.POSITION.TOP_LEFT,
         autoClose: true,
@@ -204,7 +204,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
             <ButtonGroup className="margin">
               <Button onClick={this.props.addCustomSegmentData} >{this.context.intl.formatMessage({ ...messages.add })}</Button>
               <Button bsStyle="danger" onClick={this.props.deleteCustomSegmentData} >{this.context.intl.formatMessage({ ...messages.delete })}</Button>
-            </ButtonGroup>  
+            </ButtonGroup>
             <ButtonGroup className="margin">
               <Button onClick={this.props.onHide} >{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
               <Button bsStyle="primary" onClick={this.saveCustomSegments} >{this.context.intl.formatMessage({ ...messages.save })}</Button>

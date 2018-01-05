@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
-import { SERVER_URL, EntityURLs } from 'containers/App/constants';
+import { SERVER_URL, EntityURLs, tempPriceBookId } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
 import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData, makeGuidedSellingData } from './selectors';
@@ -17,7 +17,6 @@ import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
 import { changeLocale } from '../LanguageProvider/actions';
-import { tempPriceBookId } from '../App/constants';
 
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {

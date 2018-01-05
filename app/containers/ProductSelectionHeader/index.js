@@ -104,7 +104,7 @@ ProductSelectionHeader.propTypes = {
   onSearchItemSelected: React.PropTypes.func,
   location: React.PropTypes.any,
   languageChange: React.PropTypes.func,
-  language: React.PropTypes.any,
+  // language: React.PropTypes.any,
   disabledButton: React.PropTypes.bool,
 };
 export default ProductSelectionHeader;
