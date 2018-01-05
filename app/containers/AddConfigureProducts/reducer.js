@@ -69,19 +69,18 @@ function addConfigureProductsReducer(state = initialState, action) {
             const selectedDependentItems = [];
             const selectedExclusionItems = [];
             if (productObj.dependencyList.length > 0) {
-              const dependentExclusionItems = _.filter(productObj.dependencyList, (item) => item.isDependent || item.isExclusion);
-              if (dependentExclusionItems.length > 0) {
-                productObj.dependencyList.forEach((dependentProduct) => {
-                  productsDataObj.products.forEach((reconfigureProductData) => {
-                    if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
-                      selectedDependentItems.push(reconfigureProductData.isSelected);
-                    }
-                    if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
-                      selectedExclusionItems.push(reconfigureProductData.isSelected);
-                    }
-                  });
+              productObj.dependencyList.forEach((dependentProduct) => {
+                productsDataObj.products.forEach((reconfigureProductData) => {
+                  if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
+                    selectedDependentItems.push(reconfigureProductData.isSelected);
+                  }
+                  if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
+                    selectedExclusionItems.push(reconfigureProductData.isSelected);
+                  }
                 });
+              });
 
+              if (!productObj.isRequired) {
                 const filteredDependentArray = selectedDependentItems.filter((value) => value === false);
                 if (selectedDependentItems.length === filteredDependentArray.length && selectedDependentItems.length !== 0) {
                   productObj.isDisable = true;
