@@ -8,6 +8,7 @@ import React from 'react';
 // import styled from 'styled-components';
 import { Modal, Button, Glyphicon } from 'react-bootstrap/lib';
 import Slider from 'react-image-slider';
+import Parser from 'html-react-parser';
 import '../../../node_modules/react-image-slider/lib/image-slider.css';
 
 class ProductDetails extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -24,7 +25,11 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
         url.push(item)
         ));
       title = this.props.detailedInfo.title;
-      desc = this.props.detailedInfo.description;
+      if (this.props.detailedInfo.description === null) {
+        desc = '';
+      } else {
+        desc = this.props.detailedInfo.description;
+      }
     }
     return (
       <Modal
@@ -39,7 +44,7 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
 
           <Modal.Body>
             <Slider images={url} isInfinite delay={5000}>
-              {url.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} />{ReactHtmlParser(desc)}</div>)}
+              {url.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} />{Parser(desc)}</div>)}
             </Slider>
           </Modal.Body>
 
