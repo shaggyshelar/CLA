@@ -50,6 +50,10 @@ export default defineMessages({
     id: 'app.components.SegmentSubComponent.segment',
     defaultMessage: 'Segment',
   },
+  pricingMethod: {
+    id: 'app.components.SegmentSubComponent.pricingMethod',
+    defaultMessage: 'Block Pricing',
+  },
   reconfigure: {
     id: 'app.components.SegmentSubComponent.reconfigure',
     defaultMessage: 'Reconfigure Lines',

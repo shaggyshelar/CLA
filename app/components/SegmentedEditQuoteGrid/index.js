@@ -231,7 +231,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     // const bundle = cellInfo.original.isBundled ? <a  title={`Required by ${cellInfo.original.parentName}`}><Glyphicon glyph="info-sign" /></a> : '';
     // const clone = cellInfo.original.canClone ? <a onClick={this.cloneLine.bind(this, cellInfo.original.id)} ><Glyphicon glyph="duplicate" /></a> : '';
     const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map((item) => `${item}\n`)} className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a> : '';
-    const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title="Resegment"><Glyphicon glyph="transfer" /></a> : '';
+    const segment = cellInfo.original.canSegment ? <a onClick={this.seg.bind(this, cellInfo)} title={this.context.intl.formatMessage({ ...messages.resegment })}><Glyphicon glyph="transfer" /></a> : '';
     return (
       <div className="actionItems" >
         {reconfigure}
@@ -255,7 +255,6 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       return (
         <div>
           <a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a>
-          <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.termDiscountSchedule })}><Glyphicon glyph="tags" /></a>
           <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
         </div>
       );
@@ -267,6 +266,11 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
         </div>
       );
     }
+    return (
+      <div>
+        <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+      </div>
+    );
   }
   renderEditable(cellInfo) {
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
@@ -372,7 +376,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
   }
   renderOverlay(cellInfo) {
     return (
-      <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="pro-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+      <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="proname-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
     );
   }
   renderCell(index, e) {
