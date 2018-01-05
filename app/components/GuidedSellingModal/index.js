@@ -8,21 +8,44 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     this.renderQuoteProcessColumns = this.renderQuoteProcessColumns.bind(this);
     this.renderQuoteProcessContents = this.renderQuoteProcessContents.bind(this);
     this.renderCheckBoxAnswer = this.renderCheckBoxAnswer.bind(this);
-    this.renderRangeAnswer = this.renderRangeAnswer.bind(this);
     this.renderRadioButtonAnswer = this.renderRadioButtonAnswer.bind(this);
     this.renderDateTimeAnswer = this.renderDateTimeAnswer.bind(this);
     this.renderConfigAttribute = this.renderConfigAttribute.bind(this);
     this.renderProcessInput = this.renderProcessInput.bind(this);
     this.renderQuoteProcess = this.renderQuoteProcess.bind(this);
-    this.toggleCheckBox = this.toggleCheckBox.bind(this);
+    this.onToggleCheckBox = this.onToggleCheckBox.bind(this);
+    this.onTextOrNumberBoxChange = this.onTextOrNumberBoxChange.bind(this);
     this.state = {
-      isDirty: false,
+      selectedRadioControlName: '',
     };
   }
 
-  toggleCheckBox(event, configAttribute) {
+  onTextOrNumberBoxChange(event, configAttribute) {
+    configAttribute.values = [event.target.value];
+  }
+
+  onToggleCheckBox(event, configAttribute) {
     const foundCheckbox = _.find(configAttribute.values, { value: event.target.value });
     foundCheckbox.isSelected = event.target.checked;
+  }
+
+  onToggleSelect(event, configAttribute) {
+    _.forEach(configAttribute.values, (value) => {
+      value.isSelected = false;
+    });
+    const foundItem = _.find(configAttribute.values, { value: event.target.value });
+    foundItem.isSelected = true;
+  }
+
+  onRadioChange(event, configAttribute) {
+    _.forEach(configAttribute.values, (value) => {
+      value.isSelected = false;
+    });
+    const foundItem = _.find(configAttribute.values, { value: event.target.value });
+    foundItem.isSelected = true;
+    this.setState({
+      selectedRadioControlName: event.target.value,
+    });
   }
 
   renderQuoteProcessColumns() {
@@ -42,8 +65,8 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
       <FormGroup key={configAttribute.id}>
         <FormControl
           type="text"
-          value={configAttribute.value}
           placeholder="Enter text"
+          onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
         />
       </FormGroup>
     );
@@ -54,7 +77,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
       <FormGroup key={configAttribute.id}>
         {
           configAttribute.values.map((option) => (
-            <Checkbox key={option.value} value={option.value} inline onChange={(event) => this.toggleCheckBox(event, configAttribute)}>
+            <Checkbox key={option.value} value={option.value} inline onChange={(event) => this.onToggleCheckBox(event, configAttribute)}>
               { option.value }
             </Checkbox>
           ))
@@ -66,7 +89,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
   renderSelectAnswer(configAttribute) {
     return (
       <FormGroup key={configAttribute.id}>
-        <FormControl componentClass="select" placeholder="select">
+        <FormControl componentClass="select" placeholder="select" onChange={(event) => this.onToggleSelect(event, configAttribute)}>
           {
             configAttribute.values.map((option) => (
               <option key={option.value} value={option.value}>{ option.value }</option>
@@ -77,15 +100,12 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     );
   }
 
-  renderRangeAnswer() {
-  }
-
   renderRadioButtonAnswer(configAttribute) {
     return (
-      <FormGroup key={configAttribute.id}>
+      <FormGroup key={configAttribute.id} onChange={(event) => this.onRadioChange(event, configAttribute)}>
         {
           configAttribute.values.map((option) => (
-            <Radio key={option.value} name="radioGroup" inline>
+            <Radio key={option.value} name="radioGroup" value={option.value} checked={this.state.selectedRadioControlName === option.value} inline>
               { option.value }
             </Radio>
           ))
@@ -101,6 +121,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
         type="date"
         name="startDate"
         className="customSegmentsInput"
+        onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
       />
     );
   }
@@ -110,8 +131,8 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
       <FormGroup key={configAttribute.id}>
         <FormControl
           type="number"
-          value={configAttribute.value}
           placeholder="Enter number"
+          onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
         />
       </FormGroup>
     );
