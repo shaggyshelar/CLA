@@ -344,7 +344,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       );
     data.segmentData.columns.map((i, index) => {
       let total = 0;
-      const c = this.props.data.map((j) => _.filter(j.segmentData.columns, { name: i.name }).map((d) => total += d.netTotal));
+      this.props.data.map((j) => _.filter(j.segmentData.columns, { name: i.name }).map((d) => total += d.netTotal));
 
       if (!i.isDeleted) {
         columns.push({

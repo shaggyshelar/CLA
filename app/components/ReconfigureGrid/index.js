@@ -3,13 +3,11 @@
 * ReconfigureGrid
 *
 */
-import ReactTable from '../ReactTable';
 import React from 'react';
-import _ from 'lodash';
-
 import { RIENumber } from 'riek';
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
+import ReactTable from '../ReactTable';
 import messages from './messages';
 
 class ReconfigureGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -253,7 +251,6 @@ ReconfigureGrid.propTypes = {
   categoryId: React.PropTypes.any,
   deleteProduct: React.PropTypes.func,
   updateField: React.PropTypes.func,
-  currency: React.PropTypes.any,
 };
 
 export default ReconfigureGrid;

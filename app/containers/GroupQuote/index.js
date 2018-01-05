@@ -11,7 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { RIEInput } from 'riek';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
-import { Button, Glyphicon, Modal, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
+import { Button, Glyphicon, Modal, ButtonGroup, Col, Row, DropdownButton, MenuItem, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import { SegmentedQuote } from '../SegmentedQuote';
 import messages from './messages';
@@ -392,6 +392,7 @@ GroupQuote.propTypes = {
   disableButton: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.func,
   toggleSuggestionStatus: PropTypes.func,
+  changeGroup: PropTypes.any,
 };
 const mapStateToProps = createStructuredSelector({
 });

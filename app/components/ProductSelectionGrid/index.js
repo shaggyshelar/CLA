@@ -1,7 +1,7 @@
-import ReactTable from '../ReactTable';
 import React from 'react';
 import { Glyphicon } from 'react-bootstrap/lib';
 import ProductDetails from '../ProductDetails';
+import ReactTable from '../ReactTable';
 
 import messages from './messages';
 class ProductSelectionGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -60,7 +60,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
   }
 
   renderActionItems(cellInfo) {
-    const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map((item) => `${item }\n`)} className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a> : '';
+    const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map((item) => `${item}\n`)} className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a> : '';
     return (
       <div className="actionItems" >
         {notification}

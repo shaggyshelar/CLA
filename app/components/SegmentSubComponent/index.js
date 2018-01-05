@@ -6,9 +6,9 @@
 
 import React from 'react';
 import _ from 'lodash';
-import ReactTable from '../ReactTable';
 import { RIENumber, RIESelect } from 'riek';
 import { Glyphicon } from 'react-bootstrap/lib';
+import ReactTable from '../ReactTable';
 import messages from './messages';
 class SegmentSubComponent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {

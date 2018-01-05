@@ -115,11 +115,13 @@ EditQuoteHeader.propTypes = {
   quickSave: React.PropTypes.func,
   group: React.PropTypes.func,
   ungroup: React.PropTypes.func,
-  cloneLine: React.PropTypes.func,
+  // cloneLine: React.PropTypes.func,
   languageChange: React.PropTypes.func,
-  language: React.PropTypes.any,
+  // language: React.PropTypes.any,
   disabledButton: React.PropTypes.bool,
   dataChanged: React.PropTypes.any,
+  getAllData: React.PropTypes.func,
+  location: React.PropTypes.any,
 };
 EditQuoteHeader.contextTypes = {
   intl: React.PropTypes.object.isRequired,
