@@ -71,7 +71,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
 
   renderOverlay(cellInfo) {
     return (
-      <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+      <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="proname-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
     );
   }
   render() {
