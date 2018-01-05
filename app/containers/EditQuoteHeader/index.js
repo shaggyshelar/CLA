@@ -12,6 +12,7 @@ import { browserHistory } from 'react-router';
 import { Button, Row, Col, ButtonGroup } from 'react-bootstrap/lib';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import messages from './messages';
+import { tempQuoteId } from '../App/constants';
 
 import EditQuoteHeaderCard from '../../components/EditQuoteHeaderCard';
 
@@ -38,7 +39,7 @@ export class EditQuoteHeader extends React.Component { // eslint-disable-line re
       }
     }
     if (process.env.NODE_ENV === 'development') {
-      quoteId = '41861B38-8094-E711-812B-C4346BDCDF81';
+      quoteId = tempQuoteId;
     }
     this.props.getAllData(quoteId);
   }
@@ -118,7 +119,7 @@ EditQuoteHeader.propTypes = {
   languageChange: React.PropTypes.func,
   language: React.PropTypes.any,
   disabledButton: React.PropTypes.bool,
-  location: React.PropTypes.any,
+  dataChanged: React.PropTypes.any,
 };
 EditQuoteHeader.contextTypes = {
   intl: React.PropTypes.object.isRequired,

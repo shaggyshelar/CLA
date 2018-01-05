@@ -66,14 +66,49 @@ function addConfigureProductsReducer(state = initialState, action) {
           const productArray = [];
           productsDataObj.products.forEach((productData) => {
             const productObj = productData;
-            if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
-              productObj.isDisable = true;
-            } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
-              productObj.isDisable = !productObj.isDisable;
-            } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
-              productObj.isDisable = !productObj.isDisable;
-              productObj.isSelected = false;
+            const selectedDependentItems = [];
+            const selectedExclusionItems = [];
+            if (productObj.dependencyList.length > 0) {
+              const dependentExclusionItems = _.filter(productObj.dependencyList, (item) => item.isDependent || item.isExclusion);
+              if (dependentExclusionItems.length > 0) {
+                productObj.dependencyList.forEach((dependentProduct) => {
+                  productsDataObj.products.forEach((reconfigureProductData) => {
+                    if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
+                      selectedDependentItems.push(reconfigureProductData.isSelected);
+                    }
+                    if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
+                      selectedExclusionItems.push(reconfigureProductData.isSelected);
+                    }
+                  });
+                });
+
+                const filteredDependentArray = selectedDependentItems.filter((value) => value === false);
+                if (selectedDependentItems.length === filteredDependentArray.length && selectedDependentItems.length !== 0) {
+                  productObj.isDisable = true;
+                  productObj.isSelected = false;
+                } else {
+                  productObj.isDisable = false;
+                }
+
+                const filteredExclusionArray = selectedExclusionItems.filter((value) => value === true);
+                if (filteredExclusionArray.length !== 0) {
+                  if (filteredExclusionArray.length > 0) {
+                    productObj.isDisable = true;
+                    productObj.isSelected = false;
+                  } else {
+                    productObj.isDisable = false;
+                  }
+                }
+              }
             }
+            // if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
+            //   productObj.isDisable = true;
+            // } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
+            //   productObj.isDisable = !productObj.isDisable;
+            // } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
+            //   productObj.isDisable = !productObj.isDisable;
+            //   productObj.isSelected = false;
+            // }
             productArray.push(productObj);
           });
           productsDataObj.products = productArray;

@@ -22,9 +22,9 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
   renderAddButton(feature, index) {
     if (feature.dynamicAddEnabled) {
       if (feature.categoryId) {
-        return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&featureName=${feature.name}&categoryId=${feature.categoryId}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
+        return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&featureName=${feature.name}&categoryId=${feature.categoryId}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}&isDynamic=${feature.isDynamic}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
       }
-      return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&featureName=${feature.name}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
+      return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&featureName=${feature.name}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}&isDynamic=${feature.isDynamic}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
     }
     return (<span></span>);
   }
@@ -46,28 +46,42 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
     let addButton = {};
     if (feature !== undefined) {
       addButton = this.renderAddButton(feature, index);
-      return (<div key={index} className="group panelMargin reconfigurePanel">
-        <div className="group-card">
-          <span className="group-header configureGroupHeader">{feature.name}</span>
-          {this.renderMinMaxMessage(feature)}
+      const filteredProducts = feature.products.length > 0 ? _.filter(feature.products, { isDeleted: false }) : [];
+      const panelBodyClassName = filteredProducts.length === 0 ? 'panel-body suggestionNoRecordPanel' : 'panel-body suggestionPanelbody';
+      const href = `#${feature.id}`;
+      const panelClassName = index === 0 ? 'panel-collapse collapse in' : 'panel-collapse collapse';
+      return (
+        <div key={index} className="panel suggestionPanel">
+          <div className="panel-heading">
+            <h4 className="panel-title suggestionProductLabel">
+              <a data-toggle="collapse" data-parent="#accordion" href={href}>
+                {feature.name}
+              </a>
+              {this.renderMinMaxMessage(feature)}
+            </h4>
+          </div>
+          <div id={feature.id} className={panelClassName}>
+            <div className={panelBodyClassName}>
+              <ReconfigureGrid
+                products={filteredProducts}
+                showFilter={this.props.showFilter}
+                toggleFilter={this.props.toggleSidebar}
+                toggleCheckboxChange={this.props.toggleCheckboxChange}
+                data={feature.products.length > 0 ? feature.products : []}
+                addProductsWait={this.props.addProductsWait}
+                checkAll={this.props.checkAll}
+                toggleCheckAll={this.props.checkAll}
+                feature={feature}
+                categoryId={this.props.categoryId}
+                deleteProduct={this.props.deleteProduct}
+                updateField={this.props.updateField}
+                currency={this.props.currency}
+              />
+              {addButton}
+            </div>
+          </div>
         </div>
-        <ReconfigureGrid
-          products={feature.products.length > 0 ? _.filter(feature.products, { isDeleted: false }) : []}
-          showFilter={this.props.showFilter}
-          toggleFilter={this.props.toggleSidebar}
-          toggleCheckboxChange={this.props.toggleCheckboxChange}
-          data={feature.products.length > 0 ? feature.products : []}
-          addProductsWait={this.props.addProductsWait}
-          checkAll={this.props.checkAll}
-          toggleCheckAll={this.props.checkAll}
-          feature={feature}
-          categoryId={this.props.categoryId}
-          deleteProduct={this.props.deleteProduct}
-          updateField={this.props.updateField}
-          currency={this.props.currency}
-        />
-        {addButton}
-      </div>);
+      );
     }
     return (<span></span>);
   }
@@ -78,7 +92,7 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
       panel.push(this.props.features.map((item, index) => this.renderFeatureGrid(item, index)));
     }
     return (
-      <div>
+      <div className="panel-group" id="accordion">
         { panel }
       </div>
     );

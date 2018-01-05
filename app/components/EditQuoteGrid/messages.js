@@ -30,6 +30,10 @@ export default defineMessages({
     id: 'app.components.EditQuoteGrid.additionalDiscount',
     defaultMessage: 'Additional Discount',
   },
+  partnerDiscount: {
+    id: 'app.components.EditQuoteGrid.partnerDiscount',
+    defaultMessage: 'Partner Discount',
+  },
   markup: {
     id: 'app.components.EditQuoteGrid.markup',
     defaultMessage: 'Markup',
@@ -61,5 +65,9 @@ export default defineMessages({
   required: {
     id: 'app.components.EditQuoteGrid.required',
     defaultMessage: 'Required By',
+  },
+  suggestions: {
+    id: 'app.components.EditQuoteGrid.suggestions',
+    defaultMessage: 'suggestions',
   },
 });

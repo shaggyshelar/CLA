@@ -98,6 +98,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       id: product.id,
       featureId: this.props.feature.id,
       categoryId: this.props.categoryId,
+      applyImmediately: product.applyImmediately,
+      isSelected: product.isSelected,
     };
     this.props.toggleCheckboxChange(productObj);
   }
@@ -123,16 +125,11 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     return (<span className="cellColor" >{cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>);
   }
 
-
   renderActionItems(cellInfo) {
     let input;
     let title;
-    if (cellInfo.original.isDependent && cellInfo.original.isExclusion) {
-      title = `Required: ${cellInfo.original.dependentBy} / Exclusion: ${cellInfo.original.dependentBy}`;
-    } else if (cellInfo.original.isExclusion) {
-      title = `Exclusion: ${cellInfo.original.dependentBy}`;
-    } else if (cellInfo.original.isDependent) {
-      title = `Required: ${cellInfo.original.dependentBy}`;
+    if (cellInfo.original.constraintMessage) {
+      title = cellInfo.original.constraintMessage;
     }
     if (this.props.feature.dynamicAddEnabled) {
       if (cellInfo.original.isRequired) {

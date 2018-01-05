@@ -12,11 +12,12 @@ import _ from 'lodash';
 import { SERVER_URL, EntityURLs } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
+import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData, makeGuidedSellingData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
 import { changeLocale } from '../LanguageProvider/actions';
+import { tempPriceBookId } from '../App/constants';
 
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -37,8 +38,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
 
   componentWillMount() {
-    const priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
-    
+    const priceBookId = tempPriceBookId;
+
     if (process.env.NODE_ENV === 'production') {
       this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId, this.props.location.query.QuoteId);
     }
@@ -56,8 +57,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.setState({
       searchedProducts: [],
     });
-    let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
-    
+    let priceBookId = tempPriceBookId;
+
     if (process.env.NODE_ENV === 'production') {
       priceBookId = this.props.location.query.PriceBookId;
     }
@@ -89,8 +90,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         selectedProducts: [],
       });
     }
-   let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
-   
+    let priceBookId = tempPriceBookId;
+
     if (process.env.NODE_ENV === 'production') {
       priceBookId = this.props.location.query.PriceBookId;
     }
@@ -173,8 +174,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.setState({ disabledButton: true });
   }
   addProducts() {
-    const data =  [];
-    
+    const data = [];
+
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i += 1) {
       if (d[i].checked && this.props.location.query.groupId) {
@@ -182,19 +183,25 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       } else if (d[i].checked && !this.props.location.query.groupId) {
         data.push({ productId: d[i].value });
       }
-     
     }
     this.props.addProductsToQuote(data);
     browserHistory.push(`/EditQuote${this.props.location.search}`);
   }
 
   render() {
-    let products = []; 
-    products =  _.filter(this.props.products.toJS(),function(item){
-          if(!item.productComponent){
-            return item;
-          }
-    });
+    let products = [];
+    if (!_.isUndefined(this.props.guidedSellingQuestions)) {
+      products = _.filter(this.props.products.toJS(), (item) => {
+        if (!item.productComponent) {
+          return item;
+        }
+      });
+    }
+
+    let guidedSellingQuestions = [];
+    if (!_.isUndefined(this.props.guidedSellingQuestions)) {
+      guidedSellingQuestions = _.filter(this.props.guidedSellingQuestions.toJS(), (item) => item);
+    }
 
     const style = this.props.loading ? { display: 'inline' } : this.props.globalLoading ? { display: 'inline' } : { display: 'none' };
     return (
@@ -219,7 +226,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
             location={this.props.location}
-            data={this.props.products.toJS().map((item) => !item.productComponent?item.name:'')}
+            guidedSellingQuestions={guidedSellingQuestions}
+            data={this.props.products.toJS().map((item) => !item.productComponent ? item.name : '')}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
             onSearchItemSelected={this.onSearchItemSelected}
@@ -230,7 +238,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
         </div>
         <div>
           <ProductSelectionGrid
-            products={ products }
+            products={products}
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             toggleCheckboxChange={this.toggleCheckboxChange}
@@ -256,6 +264,7 @@ ProductSelectionPage.propTypes = {
   addProductsToQuote: PropTypes.func,
   onSearch: PropTypes.func,
   onSearchItemSelected: PropTypes.func,
+  guidedSellingQuestions: PropTypes.any,
   loading: PropTypes.any,
   globalLoading: PropTypes.any,
   language: PropTypes.any,
@@ -267,6 +276,7 @@ const mapStateToProps = createStructuredSelector({
   showFilter: showFilter(),
   data: getQuoteLines(),
   products: makeProductsData(),
+  guidedSellingQuestions: makeGuidedSellingData(),
   loading: makeSelectLoading(),
   globalLoading: globalLoading(),
   language: getLanguage(),

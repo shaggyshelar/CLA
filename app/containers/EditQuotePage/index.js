@@ -37,6 +37,7 @@ import { cloneLine,
   segment,
   loadData,
   toggleReconfigureLineStatus,
+  toggleSuggestionStatus,
  } from '../App/actions';
 
 import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData, clearCustomSegmentsData, toggleCheckAll } from './actions';
@@ -96,7 +97,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
   ungroup() {
     const data = this.props.data.toJS();
-    // data.lines.forEach((i, index) => { data.lines[index].groupId = null; });
+    data.lines.forEach((i, index) => { data.lines[index].groupId = null; });
     data.groups.map((j, index) => { data.groups[index].isDeleted = true; return this; });
     data.linesGrouped = false;
     removeQuery('groupId');
@@ -320,7 +321,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
         </div>
         {grouped ?
 
-          <div className="qoute-container table-container">
+          <div className="quote-container table-container">
             <GroupQuote
               data={this.props.data ? this.props.data.toJS() : []}
               groups={this.props.data ? _.filter(this.props.data.toJS().groups, { isDeleted: false }) : []}
@@ -361,10 +362,11 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
               toggleCheckAll={this.props.toggleCheckAll}
               isCheckAll={this.props.isCheckAll}
               toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+              toggleSuggestionStatus={this.props.toggleSuggestionStatus}
             />
           </div>
         :
-          <div className="qoute-container table-container">
+          <div className="quote-container table-container">
             {segmented ?
               <SegmentedQuote
                 data={this.props.data ? _.filter(this.props.data.toJS().lines, { isDeleted: false }) : []}
@@ -398,6 +400,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                 toggleCheckAll={this.props.toggleCheckAll}
                 isCheckAll={this.props.isCheckAll}
                 toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+                toggleSuggestionStatus={this.props.toggleSuggestionStatus}
               />
             :
                 <EditQuoteGrid
@@ -416,6 +419,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
                   quoteData={quoteData}
                   location={this.props.location}
                   toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+                  toggleSuggestionStatus={this.props.toggleSuggestionStatus}
                 />
             }
           </div>
@@ -467,6 +471,7 @@ EditQuotePage.propTypes = {
   language: PropTypes.any,
   changeLocale: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.func,
+  toggleSuggestionStatus: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -586,6 +591,9 @@ function mapDispatchToProps(dispatch) {
     },
     toggleReconfigureLineStatus: (reconfigureObj) => {
       dispatch(toggleReconfigureLineStatus(reconfigureObj));
+    },
+    toggleSuggestionStatus: (suggestionObj) => {
+      dispatch(toggleSuggestionStatus(suggestionObj));
     },
   };
 }

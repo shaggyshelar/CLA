@@ -7,6 +7,7 @@ import { Modal, Glyphicon, Button } from 'react-bootstrap/lib';
 import { loadData, cancel, continueSave } from './actions';
 import { changeLocale } from '../LanguageProvider/actions';
 import { makeSelectData, getLanguage, getError, getErrorMessage } from './selectors';
+import { tempQuoteId } from './constants';
 export class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
@@ -26,7 +27,7 @@ export class App extends React.Component { // eslint-disable-line react/prefer-s
       }
     }
     if (process.env.NODE_ENV === 'development') {
-      quoteId = '41861B38-8094-E711-812B-C4346BDCDF81';
+      quoteId = tempQuoteId;
     }
     this.props.getAllData(quoteId);
   }

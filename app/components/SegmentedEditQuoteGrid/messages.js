@@ -27,6 +27,10 @@ export default defineMessages({
     id: 'app.components.SegmentedEditQuoteGrid.listPrice',
     defaultMessage: 'List Unit Price',
   },
+  partnerDiscount: {
+    id: 'app.components.EditQuoteGrid.partnerDiscount',
+    defaultMessage: 'Partner Discount',
+  },
   additionalDiscount: {
     id: 'app.components.SegmentedEditQuoteGrid.additionalDiscount',
     defaultMessage: 'Additional Discount',
@@ -51,6 +55,10 @@ export default defineMessages({
     id: 'app.components.SegmentedEditQuoteGrid.segment',
     defaultMessage: 'Segment',
   },
+  notification: {
+    id: 'app.components.SegmentedEditQuoteGrid.notification',
+    defaultMessage: 'Product added successfully',
+  },
   reconfigure: {
     id: 'app.components.SegmentedEditQuoteGrid.reconfigure',
     defaultMessage: 'Reconfigure Lines',
@@ -59,6 +67,10 @@ export default defineMessages({
     id: 'app.components.SegmentedEditQuoteGrid.discountSchedule',
     defaultMessage: 'View Discount Schedule',
   },
+  termDiscountSchedule: {
+    id: 'app.components.SegmentedEditQuoteGrid.termDiscountSchedule',
+    defaultMessage: 'View Term Discount Schedule',
+  },
   required: {
     id: 'app.components.SegmentedEditQuoteGrid.required',
     defaultMessage: 'Required By',
@@ -66,5 +78,9 @@ export default defineMessages({
   uplift: {
     id: 'app.components.SegmentedEditQuoteGrid.uplift',
     defaultMessage: 'Uplift',
+  },
+  suggestions: {
+    id: 'app.components.SegmentedEditQuoteGrid.suggestions',
+    defaultMessage: 'suggestions',
   },
 });
