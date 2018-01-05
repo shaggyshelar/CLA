@@ -10,12 +10,12 @@
  */
 import { browserHistory } from 'react-router';
 export const DEFAULT_LOCALE = 'en';
-let serverUrl = '';
+let serverUrl = 'http://localhost:3000/api';
 let entityUrls = {};
 if (process.env.NODE_ENV === 'production') {
   // serverUrl = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/';
   // serverUrl = window.parent.Xrm.Page.context.getClientUrl();
-  serverUrl = 'http://localhost:3000/api';
+  serverUrl = 'https://114.143.177.211:1825/api';
   entityUrls = {
     PRODUCTS: '/Product',
     QUOTE: '/Quote',
