@@ -7,7 +7,7 @@ const selectAddConfigureProductsDomain = () => (state) => state.get('addConfigur
 
 const language = (state) => state.get('language');
 
-const quote = (state) => state.get('global');
+// const quote = (state) => state.get('global');
 
 const reconfigure = (state) => state.get('reConfigureProducts');
 /**

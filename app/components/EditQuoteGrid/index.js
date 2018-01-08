@@ -1,11 +1,11 @@
-import ReactTable from '../ReactTable';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
+import { Glyphicon } from 'react-bootstrap/lib';
 import { browserHistory } from 'react-router';
 
 import { RIENumber, RIESelect } from 'riek';
 import _ from 'lodash';
+import ReactTable from '../ReactTable';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
 import TermDiscountScheduleEditor from '../TermDiscountScheduleEditor';
 import ProductDetails from '../ProductDetails';
@@ -533,6 +533,7 @@ EditQuoteGrid.propTypes = {
   updateSelectBundle: PropTypes.func,
   location: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.func,
+  toggleSuggestionStatus: PropTypes.func,
   quoteData: PropTypes.any,
 };
 

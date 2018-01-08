@@ -1,8 +1,7 @@
-import ReactTable from '../ReactTable';
 import React from 'react';
-
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
+import ReactTable from '../ReactTable';
 import messages from './messages';
 
 class AddConfigureProductGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function

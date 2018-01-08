@@ -1,6 +1,5 @@
 import request from 'utils/request';
-import { take, call, put, cancel, takeLatest, actionChannel, select } from 'redux-saga/effects';
-import { LOCATION_CHANGE } from 'react-router-redux';
+import { take, call, put, actionChannel, select } from 'redux-saga/effects';
 import { dataLoaded, dataLoadingError } from '../App/actions';
 import { selectGlobal } from '../App/selectors';
 import {

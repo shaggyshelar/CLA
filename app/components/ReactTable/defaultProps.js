@@ -1,10 +1,10 @@
-import React from 'react'
-import classnames from 'classnames'
+import React from 'react';
+import classnames from 'classnames';
 //
-import _ from './utils'
-import Pagination from './pagination'
+import _ from './utils';
+import Pagination from './pagination';
 
-const emptyObj = () => ({})
+const emptyObj = () => ({});
 
 export default {
   // General
@@ -29,28 +29,28 @@ export default {
   defaultFiltered: [],
   defaultResized: [],
   defaultExpanded: {},
-  defaultFilterMethod: (filter, row, column) => {
-    const id = filter.pivotId || filter.id
+  defaultFilterMethod: (filter, row) => {
+    const id = filter.pivotId || filter.id;
     return row[id] !== undefined
       ? String(row[id]).startsWith(filter.value)
-      : true
+      : true;
   },
   defaultSortMethod: (a, b) => {
     // force null and undefined to the bottom
-    a = a === null || a === undefined ? '' : a
-    b = b === null || b === undefined ? '' : b
+    a = a === null || a === undefined ? '' : a;
+    b = b === null || b === undefined ? '' : b;
     // force any string values to lowercase
-    a = typeof a === 'string' ? a.toLowerCase() : a
-    b = typeof b === 'string' ? b.toLowerCase() : b
+    a = typeof a === 'string' ? a.toLowerCase() : a;
+    b = typeof b === 'string' ? b.toLowerCase() : b;
     // Return either 1 or -1 to indicate a sort priority
     if (a > b) {
-      return 1
+      return 1;
     }
     if (a < b) {
-      return -1
+      return -1;
     }
     // returning 0, undefined or any falsey value will use subsequent sorts or the index as a tiebreaker
-    return 0
+    return 0;
   },
 
   // Controlled State Props
@@ -176,8 +176,7 @@ export default {
   TbodyComponent: _.makeTemplateComponent('rt-tbody', 'Tbody'),
   TrGroupComponent: _.makeTemplateComponent('rt-tr-group', 'TrGroup'),
   TrComponent: _.makeTemplateComponent('rt-tr', 'Tr'),
-  ThComponent: ({ toggleSort, className, children, ...rest }) => {
-    return (
+  ThComponent: ({ toggleSort, className, children, ...rest }) => (
       <div
         className={classnames(className, 'rt-th')}
         onClick={e => {
@@ -187,18 +186,17 @@ export default {
       >
         {children}
       </div>
-    )
-  },
+    ),
   TdComponent: _.makeTemplateComponent('rt-td', 'Td'),
   TfootComponent: _.makeTemplateComponent('rt-tfoot', 'Tfoot'),
   FilterComponent: ({ filter, onChange }) =>
     <input
-      type='text'
+      type="text"
       style={{
         width: '100%',
       }}
       value={filter ? filter.value : ''}
-      onChange={event => onChange(event.target.value)}
+      onChange={(event) => onChange(event.target.value)}
     />,
   ExpanderComponent: ({ isExpanded }) =>
     <div className={classnames('rt-expander', isExpanded && '-open')}>
@@ -210,18 +208,18 @@ export default {
     </span>,
   AggregatedComponent: ({ subRows, column }) => {
     const previewValues = subRows
-      .filter(d => typeof d[column.id] !== 'undefined')
+      .filter((d) => typeof d[column.id] !== 'undefined')
       .map((row, i) =>
         <span key={i}>
           {row[column.id]}
           {i < subRows.length - 1 ? ', ' : ''}
         </span>
-      )
+      );
     return (
       <span>
         {previewValues}
       </span>
-    )
+    );
   },
   PivotComponent: undefined, // this is a computed default generated using
   // the ExpanderComponent and PivotValueComponent at run-time in methods.js
@@ -233,11 +231,11 @@ export default {
       className={classnames('-loading', { '-active': loading }, className)}
       {...rest}
     >
-      <div className='-loading-inner'>
+      <div className="-loading-inner">
         {loadingText}
       </div>
     </div>,
   NoDataComponent: _.makeTemplateComponent('rt-noData', 'NoData'),
   ResizerComponent: _.makeTemplateComponent('rt-resizer', 'Resizer'),
   PadRowComponent: () => <span>&nbsp;</span>,
-}
+};
