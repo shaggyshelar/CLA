@@ -117,14 +117,14 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       </div>);
   }
   renderEditable(row, cellInfo, res) {
-    const blockPricing = res.value[0].value === 'BlockPricing' ? <a className="pro-icon" title={this.context.intl.formatMessage({ ...messages.pricingMethod })}><Glyphicon glyph="bold" /></a> : '';
+    const blockPricing = res.value[0].value === 'BlockPricing' ? <a title={this.context.intl.formatMessage({ ...messages.pricingMethod })}><Glyphicon glyph="bold" /></a> : '';
     if (!row.isOneTime && row.type === 'OneTime') {
       return (<span></span>);
     }
     if (cellInfo.original.editable === false) {
       return (
         <div>
-          <div>{(cellInfo.original.prop === 'listPrice') ? blockPricing : ''}</div>
+          <span>{(cellInfo.original.prop === 'listPrice') ? blockPricing : ''}</span>
           <span> {cellInfo.original.prop === 'quantity' || (cellInfo.original.isBundled && cellInfo.column.id === 'listPrice') ? '' : this.props.currency}
             { cellInfo.original.isBundled && (cellInfo.original.prop === 'listPrice') ?
               <span>Included</span>

@@ -538,6 +538,10 @@ mark {
     float: left;
 }
 
+.glyphicon.glyphicon-bold {
+    font-size: 10px;
+}
+
 .pro-icon {
     display: inline-block;
     position: relative;
@@ -1843,4 +1847,3 @@ body.modal-open {
     margin-top: 15px;
     text-align: left;
 }
-
