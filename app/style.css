@@ -538,6 +538,10 @@ mark {
     float: left;
 }
 
+.glyphicon.glyphicon-bold {
+    font-size: 10px;
+}
+
 .pro-icon {
     display: inline-block;
     position: relative;
