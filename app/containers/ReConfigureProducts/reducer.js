@@ -30,7 +30,6 @@ const initialState = fromJS({
   activeTab: 0,
   quoteData: {},
 });
-const output = [];
 function reConfigureProductsReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:

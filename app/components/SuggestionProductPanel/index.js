@@ -28,6 +28,10 @@ class SuggestionProductPanel extends React.Component { // eslint-disable-line re
         }
       }, this);
     }
+    const crossSellPanel = crossSellList.length === 0 ? 'panel-body suggestionNoRecordPanel' : 'panel-body suggestionPanelbody';
+    const accessoryPanel = accessoryList.length === 0 ? 'panel-body suggestionNoRecordPanel' : 'panel-body suggestionPanelbody';
+    const upSellPanel = upSellList.length === 0 ? 'panel-body suggestionNoRecordPanel' : 'panel-body suggestionPanelbody';
+    const substitutePanel = substituteList.length === 0 ? 'panel-body suggestionNoRecordPanel' : 'panel-body suggestionPanelbody';
     return (
       <div>
         <div className="quote-container reconfigureContainer">
@@ -44,7 +48,7 @@ class SuggestionProductPanel extends React.Component { // eslint-disable-line re
                 </h4>
               </div>
               <div id="croosShellAccordion" className="panel-collapse collapse in">
-                <div className="panel-body suggestionPanelbody">
+                <div className={crossSellPanel}>
                   <SuggestionProductGrid
                     suggestionsData={crossSellList}
                     toggleCheckboxChange={this.props.toggleCheckboxChange}
@@ -63,7 +67,7 @@ class SuggestionProductPanel extends React.Component { // eslint-disable-line re
                 </h4>
               </div>
               <div id="accessoryAccordion" className="panel-collapse collapse">
-                <div className="panel-body suggestionPanelbody">
+                <div className={accessoryPanel}>
                   <SuggestionProductGrid
                     suggestionsData={accessoryList}
                     toggleCheckboxChange={this.props.toggleCheckboxChange}
@@ -82,7 +86,7 @@ class SuggestionProductPanel extends React.Component { // eslint-disable-line re
                 </h4>
               </div>
               <div id="upshellAccordion" className="panel-collapse collapse">
-                <div className="panel-body suggestionPanelbody">
+                <div className={upSellPanel}>
                   <SuggestionProductGrid
                     suggestionsData={upSellList}
                     toggleCheckboxChange={this.props.toggleCheckboxChange}
@@ -103,7 +107,7 @@ class SuggestionProductPanel extends React.Component { // eslint-disable-line re
                 </h4>
               </div>
               <div id="substituteAccordion" className="panel-collapse collapse">
-                <div className="panel-body suggestionPanelbody">
+                <div className={substitutePanel}>
                   <SuggestionProductGrid
                     suggestionsData={substituteList}
                     toggleCheckboxChange={this.props.toggleCheckboxChange}
