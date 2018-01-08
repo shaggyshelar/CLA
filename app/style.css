@@ -819,7 +819,7 @@ mark {
 .minMaxMessage {
     color: brown;
     font-size: 14px;
-    line-height: 2;   
+    /* line-height: 2;    */
     margin: 0px 15px 0 10px;
     font-weight: 500;
 }
@@ -1687,7 +1687,7 @@ body.modal-open {
 }
 
 .suggestionPanelbody {
-    padding: 0px 0px 25px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 
@@ -1776,4 +1776,58 @@ body.modal-open {
     vertical-align: middle;
     margin-top: -6px;
     margin-right: 3px;
+}
+.guidedSellingModal .form-control {
+    border: 1px solid #c5c5c5!important;
+    box-shadow: none!important;
+    color: #000!important;
+    margin-top: 0!important;
+    border-radius: 0!important;
+}
+.guidedSellingModal select {
+    width:auto!important;
+    margin-left: 0;
+}
+.guidedSellingModal .form-group .customSegmentsInput {
+    clear: both!important;
+    display: block!important;
+    margin-left: 10px!important;
+    margin-left: 0!important;
+}
+.guidedSellingModal input[type=date].form-control, .guidedSellingModal input[type=time].form-control, .guidedSellingModal input[type=datetime-local].form-control, .guidedSellingModal input[type=month].form-control {
+    line-height: 20px!important;
+}
+
+#accordion > div {
+    margin-top : 5px;
+}
+.suggestionNoRecordPanel{
+    padding: 0px 0px 25px 0px;
+}
+.productModal modal-title strong {
+    font-size: 20px!important;
+}
+.productModal .modal-title span {
+    vertical-align: middle;
+    margin-top: -5px;
+    font-size: 25px;
+    margin-right: 5px;
+}
+.productModal .modal-header .close {
+    margin-top: -3px;
+    font-size: 30px;
+    color: #2d2d2d;
+}
+.modal-title {
+    color: #16325C;
+}
+.productModal .cancelBtn {
+    color: #fff!important;
+    background-color: #337ab7!important;
+    border-color: #2e6da4!important;
+}
+.productModal .cancelBtn:hover{
+    color: #fff!important;
+    background-color: #286090!important;
+    border-color: #204d74!important;
 }

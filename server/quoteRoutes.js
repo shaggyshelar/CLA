@@ -1440,7 +1440,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
               {
                 name: 'Month 4',
                 quantity: 123,
-                isDeleted: false,                
+                isDeleted: false,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -1571,7 +1571,7 @@ quoteRouter.get('/EditQuote', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
-                isDeleted: false,                
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {
@@ -7232,7 +7232,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
               {
                 name: 'Month 4',
                 quantity: 123,
-                isDeleted: false,                
+                isDeleted: false,
                 listPrice: 123,
                 uplift: 123,
                 startDate: 'Date',
@@ -7363,7 +7363,7 @@ quoteRouter.post('/SaveCustomSegments', (req, res) => {
                 quantity: 123,
                 listPrice: 123,
                 uplift: 123,
-                isDeleted: false,                
+                isDeleted: false,
                 startDate: 'Date',
                 endDate: 'Date',
                 additionalDiscount: {

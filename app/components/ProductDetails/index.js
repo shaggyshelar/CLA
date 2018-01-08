@@ -34,7 +34,8 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
     return (
       <Modal
         show={this.props.show} onHide={this.props.onHide}
-        style={{ display: 'inline-flex', width: 500 }}
+        style={{ display: 'inline-flex' }}
+        className="productModal"
       >
         <Modal.Dialog >
           <Modal.Header closeButton>
@@ -48,7 +49,7 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.props.onHide} >Cancel</Button>
+            <Button onClick={this.props.onHide} className="cancelBtn">Cancel</Button>
           </Modal.Footer>
         </Modal.Dialog>
       </Modal>
