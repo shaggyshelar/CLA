@@ -312,7 +312,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (
         <div>
-          <span>{blockPricing}</span>
+          <span>{blockPricing}{' '}</span>
           <span>
             {cellInfo.column.id === 'quantity' || (cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice')) ? '' : this.props.currency}
             {cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice') ?
