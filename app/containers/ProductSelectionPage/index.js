@@ -77,7 +77,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     const postObject = {
       PriceListId: getIds.priceBookId,
       QuoteId: getIds.quoteId,
-      guidedSellingViewModelparam: {
+      guidedSelling: {
         id: '00000000-0000-0000-0000-000000000000',
         quoteProcesses,
       },
