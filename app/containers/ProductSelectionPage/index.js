@@ -72,8 +72,17 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.props.onSearch(searchObj);
   }
 
-  onFilterSearchClicked(value) {
-    this.props.onFilterSearch(value);
+  onFilterSearchClicked(quoteProcesses) {
+    const getIds = this.getPriceBookAndQuoteId();
+    const postObject = {
+      PriceListId: getIds.priceBookId,
+      QuoteId: getIds.quoteId,
+      guidedSellingViewModelparam: {
+        id: '00000000-0000-0000-0000-000000000000',
+        quoteProcesses,
+      },
+    };
+    this.props.onFilterSearch(postObject);
   }
 
   onSearchItemSelected(value) {
@@ -86,6 +95,19 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       searchedProducts: [],
     });
     this.props.onSearchItemSelected(value);
+  }
+
+  getPriceBookAndQuoteId() {
+    if (process.env.NODE_ENV === 'production') {
+      return {
+        quoteId: this.props.location.query.QuoteId,
+        priceBookId: this.props.location.query.PriceBookId,
+      };
+    }
+    return {
+      quoteId: this.props.location.query.QuoteId,
+      priceBookId: tempPriceBookId,
+    };
   }
 
   searchInputChange(value) {

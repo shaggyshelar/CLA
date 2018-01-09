@@ -50,16 +50,8 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
   }
 
   onFilterButtonClick() {
-    const postData = {
-      PriceListId: '8a4eab39-4fe5-e711-813b-c4346bdcdf81',
-      QuoteId: '136cb345-e1df-e711-8138-c4346bdcdf81',
-      guidedSellingViewModelparam: {
-        id: '00000000-0000-0000-0000-000000000000',
-        quoteProcesses: this.props.data,
-      },
-    };
     this.props.onHide();
-    this.props.onFilterSearchClicked(postData);
+    this.props.onFilterSearchClicked(this.props.data);
   }
 
   renderQuoteProcessColumns() {
