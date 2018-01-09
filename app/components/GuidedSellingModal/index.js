@@ -15,6 +15,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     this.renderQuoteProcess = this.renderQuoteProcess.bind(this);
     this.onToggleCheckBox = this.onToggleCheckBox.bind(this);
     this.onTextOrNumberBoxChange = this.onTextOrNumberBoxChange.bind(this);
+    this.onFilterButtonClick = this.onFilterButtonClick.bind(this);
     this.state = {
       selectedRadioControlName: '',
     };
@@ -48,6 +49,19 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
     });
   }
 
+  onFilterButtonClick() {
+    const postData = {
+      PriceListId: '8a4eab39-4fe5-e711-813b-c4346bdcdf81',
+      QuoteId: '136cb345-e1df-e711-8138-c4346bdcdf81',
+      guidedSellingViewModelparam: {
+        id: '00000000-0000-0000-0000-000000000000',
+        quoteProcesses: this.props.data,
+      },
+    };
+    this.props.onHide();
+    this.props.onFilterSearchClicked(postData);
+  }
+
   renderQuoteProcessColumns() {
     return (
       <Nav bsStyle="pills" stacked>
@@ -77,7 +91,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
       <FormGroup key={configAttribute.id}>
         {
           configAttribute.values.map((option) => (
-            <Checkbox key={option.value} value={option.value} inline onChange={(event) => this.onToggleCheckBox(event, configAttribute)}>
+            <Checkbox key={option.id} value={option.value} inline onChange={(event) => this.onToggleCheckBox(event, configAttribute)}>
               { option.value }
             </Checkbox>
           ))
@@ -92,7 +106,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
         <FormControl componentClass="select" placeholder="select" onChange={(event) => this.onToggleSelect(event, configAttribute)}>
           {
             configAttribute.values.map((option) => (
-              <option key={option.value} value={option.value}>{ option.value }</option>
+              <option key={option.id} value={option.value}>{ option.value }</option>
             ))
           }
         </FormControl>
@@ -105,7 +119,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
       <FormGroup key={configAttribute.id} onChange={(event) => this.onRadioChange(event, configAttribute)}>
         {
           configAttribute.values.map((option) => (
-            <Radio key={option.value} name="radioGroup" value={option.value} checked={this.state.selectedRadioControlName === option.value} inline>
+            <Radio key={option.id} name="radioGroup" value={option.value} checked={this.state.selectedRadioControlName === option.value} inline>
               { option.value }
             </Radio>
           ))
@@ -219,7 +233,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.props.onHide} className="fiterBtn"><Glyphicon glyph="filter" /> Filter</Button>
+            <Button onClick={this.onFilterButtonClick} className="fiterBtn"><Glyphicon glyph="filter" /> Filter</Button>
           </Modal.Footer>
         </Modal.Dialog>
       </Modal>
@@ -231,6 +245,7 @@ GuidedSellingModal.propTypes = {
   onHide: React.PropTypes.func,
   show: React.PropTypes.bool,
   data: PropTypes.any,
+  onFilterSearchClicked: React.PropTypes.func,
 };
 
 export default GuidedSellingModal;

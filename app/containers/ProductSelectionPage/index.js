@@ -14,7 +14,7 @@ import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
 import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData, makeGuidedSellingData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
-import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
+import { loadProductsData, showFilteredData, loadSearchData, filterSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
 import { changeLocale } from '../LanguageProvider/actions';
 
@@ -34,6 +34,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.onSearchItemSelected = this.onSearchItemSelected.bind(this);
     this.searchInputChange = this.searchInputChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.onFilterSearchClicked = this.onFilterSearchClicked.bind(this);
   }
 
   componentWillMount() {
@@ -69,6 +70,10 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       quoteId: this.props.location.query.QuoteId,
     };
     this.props.onSearch(searchObj);
+  }
+
+  onFilterSearchClicked(value) {
+    this.props.onFilterSearch(value);
   }
 
   onSearchItemSelected(value) {
@@ -229,6 +234,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             data={this.props.products.toJS().map((item) => !item.productComponent ? item.name : '')}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
+            onFilterSearchClicked={this.onFilterSearchClicked}
             onSearchItemSelected={this.onSearchItemSelected}
             language={this.props.language}
             disabledButton={this.state.disabledButton}
@@ -262,6 +268,7 @@ ProductSelectionPage.propTypes = {
   location: PropTypes.any,
   addProductsToQuote: PropTypes.func,
   onSearch: PropTypes.func,
+  onFilterSearch: PropTypes.func,
   onSearchItemSelected: PropTypes.func,
   guidedSellingQuestions: PropTypes.any,
   loading: PropTypes.any,
@@ -295,6 +302,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSearch: (searchObj) => {
       dispatch(loadSearchData(searchObj));
+    },
+    onFilterSearch: (filterObj) => {
+      dispatch(filterSearchData(filterObj));
     },
     onSearchItemSelected: (value) => {
       dispatch(onSearchItemSelected(value));

@@ -14,6 +14,7 @@ import {
   LOAD_PRODUCTS_DATA,
   LOAD_PRODUCTS_DATA_SUCCESS,
   LOAD_SEARCH_DATA,
+  FILTER_SEARCH_DATA,
   LOAD_SEARCH_DATA_SUCCESS,
   LOAD_SEARCH_BTN_DATA_SUCCESS,
   LOAD_SEARCH_ITEM_SELECTED,
@@ -52,6 +53,10 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('error', action.error)
         .set('loading', false);
     case LOAD_SEARCH_DATA:
+      return state
+        .set('loading', true)
+        .set('error', false);
+    case FILTER_SEARCH_DATA:
       return state
         .set('loading', true)
         .set('error', false);
