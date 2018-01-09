@@ -538,6 +538,10 @@ mark {
     float: left;
 }
 
+.glyphicon.glyphicon-bold {
+    font-size: 10px;
+}
+
 .pro-icon {
     display: inline-block;
     position: relative;
@@ -1830,4 +1834,16 @@ body.modal-open {
     color: #fff!important;
     background-color: #286090!important;
     border-color: #204d74!important;
+}
+.productModal .modal-body {   
+    max-height: 270px!important;
+}
+.productModal .modal-body img{   
+    padding:4px;
+    border:1px solid #ddd;
+}
+.productModal .modal-body p{  
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: left;
 }
