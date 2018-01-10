@@ -16,7 +16,6 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
     // const tooltip = (
     //   <Tooltip id="tooltip" bsClass="tooltip"><strong>Specifiy the discount unit: Amount or Percent</strong></Tooltip>
     // );
-    
     let rows = [];
     let title = '';
     let desc = '';
@@ -54,7 +53,7 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
                 Product Code: <b>{code}</b>
                 <span>Product Family: <b>{productFamily}</b></span>                
               </h4>
-            </div>  
+            </div>
 
             <Slider images={url} isInfinite delay={5000}>
               {url.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} /></div>)}
@@ -62,7 +61,7 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
 
             <div className="sliderDesc">
               {Parser(desc)}
-            </div>  
+            </div>
 
 
           </Modal.Body>
