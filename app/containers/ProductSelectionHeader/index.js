@@ -86,6 +86,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
           style={{
             display: 'inline-flex',
           }}
+          onFilterSearchClicked={this.props.onFilterSearchClicked}
         />
       </div>
     );
@@ -101,6 +102,7 @@ ProductSelectionHeader.propTypes = {
   addProductsWait: PropTypes.func,
   searchInputChange: React.PropTypes.func,
   onSearchClick: React.PropTypes.func,
+  onFilterSearchClicked: React.PropTypes.func,
   onSearchItemSelected: React.PropTypes.func,
   location: React.PropTypes.any,
   languageChange: React.PropTypes.func,
