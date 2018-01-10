@@ -115,7 +115,11 @@ export function* applyImmediateConfig(productData) {
         body: JSON.stringify(quoteProductData),
       };
       const quotes = yield call(request, requestURL, options);
-      yield put(loadReConfigureProductsDataSuccess(quotes));
+      if (quotes.quote.errorMessages && quotes.quote.errorMessages.length) {
+        yield put(reconfigureDataLoadingError(quotes.quote.errorMessages));
+      } else {
+        yield put(loadReConfigureProductsDataSuccess(quotes));
+      }
     } catch (err) {
       yield put(reconfigureDataLoadingError(err));
     }
