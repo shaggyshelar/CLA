@@ -1847,6 +1847,7 @@ body.modal-open {
     margin-top: 15px;
     text-align: justify;
     padding-right: 15px;
+    margin-top: 5px;
 }
 @media (max-width:1400px){
     .modal .nav>li>a {
