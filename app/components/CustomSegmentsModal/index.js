@@ -43,15 +43,15 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
 
   saveCustomSegments() {
     const customSegments = _.filter(this.props.customSegments.toJS(), { isDeleted: false });
-    const nameArray = customSegments.map((item) => item.name);
+    const nameArray = customSegments.map((item) => item.columnName);
     const isDuplicate = nameArray.some((item, id) => nameArray.indexOf(item) !== id);
-    const currentIndex = _.findIndex(customSegments, { name: '' });
+    const currentIndex = _.findIndex(customSegments, { columnName: '' });
     let startDateEndDateError = false;
     let dateError = false;
     let isDateNull = false;
     let segNameNull = false;
     for (let index = 0; index <= customSegments.length - 1; index++) {
-      if (customSegments[index].name === null || customSegments[index].startDate === '') {
+      if (customSegments[index].columnName === null || customSegments[index].startDate === '') {
         segNameNull = true;
       }
       if (customSegments[index].startDate === null || customSegments[index].startDate === '' || customSegments[index].endDate === null || customSegments[index].endDate === '') {
@@ -134,14 +134,18 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     let rows = [];
     if (this.props.customSegments !== undefined) {
       const customSegments = _.filter(this.props.customSegments.toJS(), { isDeleted: false });
-      rows = customSegments.map((item, index) => (<tr key={index}>
+      console.log('customSegments',customSegments);
+      customSegments.map((item) =>{console.log('item.columnName',item.columnName); });
+      
+      rows = customSegments.map((item, index) => (
+      <tr key={index}>
         <td>{!item.isDefault ? <input type="checkbox" className="check checkBox" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check hideSpan" />}</td>
         <td>
           <FormControl
             type="text"
             id={item.id}
-            name="name"
-            value={item.name}
+            name="columnName"
+            value={item.columnName}
             className="customSegmentsInput"
             onChange={this.handleChange}
           />
