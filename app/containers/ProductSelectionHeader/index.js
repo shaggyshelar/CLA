@@ -18,6 +18,13 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
       isGuidedSellingModalOpen: false,
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.guidedSellingQuestions.length > 0) {
+      this.setState({
+        isGuidedSellingModalOpen: true,
+      });
+    }
+  }
   handleFullScreen() {
     screenfull.toggle(document.getElementById('app'));
   }
@@ -33,7 +40,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
     if (this.props.guidedSellingQuestions.length > 0) {
       return (
         <ButtonGroup className="margin">
-          <Button title={this.context.intl.formatMessage({ ...messages.guidedSelling })} onClick={this.toggleShowGuidedSellingModal}><Glyphicon glyph="check" /></Button>
+          <Button title={this.context.intl.formatMessage({ ...messages.guidedSelling })} onClick={this.toggleShowGuidedSellingModal}><Glyphicon glyph="shopping-cart" /></Button>
         </ButtonGroup>
       );
     }
