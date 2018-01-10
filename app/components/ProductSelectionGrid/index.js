@@ -23,7 +23,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
         expander: true,
         freezeWhenExpanded: true,
         selectedLine: {},
-        detailedInfo: {},
+        selectedData: {},
       },
       isVisible: false,
       isProductDetailsModalOpen: false,
@@ -50,7 +50,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
     if (selectedData !== undefined) {
       this.setState({
         isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
-        detailedInfo: selectedData.detailedInfo,
+        selectedData: selectedData,
       });
     } else {
       this.setState({
@@ -70,8 +70,13 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
 
 
   renderOverlay(cellInfo) {
+    if (cellInfo.original.detailedInfo.images.length > 0 || cellInfo.original.detailedInfo.description !== null ) {
+      return (
+        <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="proname-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+      );
+    }
     return (
-      <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="proname-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+      <div className="lab"><span  title={`${cellInfo.original.name}`}>{cellInfo.original.name}</span> </div>
     );
   }
   render() {
@@ -153,7 +158,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
             display: 'inline-flex',
           }}
           value={this.state.value}
-          detailedInfo={this.state.detailedInfo}
+          selectedData={this.state.selectedData}
         />
       </div>
     );
