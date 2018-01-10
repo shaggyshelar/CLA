@@ -18,6 +18,13 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
       isGuidedSellingModalOpen: false,
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.guidedSellingQuestions.length > 0) {
+      this.setState({
+        isGuidedSellingModalOpen: true,
+      });
+    }
+  }
   handleFullScreen() {
     screenfull.toggle(document.getElementById('app'));
   }
