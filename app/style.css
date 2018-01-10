@@ -1847,3 +1847,9 @@ body.modal-open {
     margin-top: 15px;
     text-align: left;
 }
+@media (max-width:1400px){
+    .modal .nav>li>a {
+       font-size: 12px!important;
+    }
+}
+
