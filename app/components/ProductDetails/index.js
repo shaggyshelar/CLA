@@ -43,9 +43,23 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
           </Modal.Header>
 
           <Modal.Body>
+
+            <div className="productDetailBox">
+              <h4>
+                Product Code: <b>COFFEE</b>
+                <span>Product Family: <b>Product</b></span>                
+              </h4>
+            </div>  
+
             <Slider images={url} isInfinite delay={5000}>
-              {url.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} />{Parser(desc)}</div>)}
+              {url.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} /></div>)}
             </Slider>
+
+            <div className="sliderDesc">
+              {Parser(desc)}
+            </div>  
+
+
           </Modal.Body>
 
           <Modal.Footer>
