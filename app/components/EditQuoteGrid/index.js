@@ -41,7 +41,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         freezeWhenExpanded: true,
         selectedLine: {},
         termDiscount: {},
-        detailedInfo: {},
+        selectedData: {},
       },
       data: this.props.data,
       isModalOpen: false,
@@ -123,7 +123,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     if (selectedData !== undefined) {
       this.setState({
         isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
-        detailedInfo: selectedData.detailedInfo,
+        selectedData: selectedData,
       });
     } else {
       this.setState({
@@ -305,6 +305,11 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         </div>
       );
     }
+    return (
+      <div>
+        <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+      </div>
+    );
   }
 // (cellInfo) => (cellInfo.original.canShowDiscountScheduler  ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a><span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>),
   renderEditable(cellInfo) {
@@ -364,8 +369,13 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
 
   renderOverlay(cellInfo) {
+    if (cellInfo.original.detailedInfo.images.length > 0 || cellInfo.original.detailedInfo.description !== null) {
+      return (
+        <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="proname-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+      );
+    }
     return (
-      <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="proname-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+      <div className="lab"><span title={`${cellInfo.original.name}`}>{cellInfo.original.name}</span> </div>
     );
   }
   render() {
@@ -503,7 +513,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             display: 'inline-flex',
           }}
           value={this.state.value}
-          detailedInfo={this.state.detailedInfo}
+          selectedData={this.state.selectedData}
         />
         <DiscountScheduleEditor
           show={this.state.isDiscountModalOpen} onHide={this.handleToggle}
