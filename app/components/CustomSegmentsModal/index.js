@@ -134,9 +134,6 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     let rows = [];
     if (this.props.customSegments !== undefined) {
       const customSegments = _.filter(this.props.customSegments.toJS(), { isDeleted: false });
-      console.log('customSegments',customSegments);
-      customSegments.map((item) =>{console.log('item.columnName',item.columnName); });
-      
       rows = customSegments.map((item, index) => (
       <tr key={index}>
         <td>{!item.isDefault ? <input type="checkbox" className="check checkBox" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check hideSpan" />}</td>
