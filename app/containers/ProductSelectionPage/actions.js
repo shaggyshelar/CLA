@@ -11,6 +11,7 @@ import {
   LOAD_PRODUCTS_DATA,
   LOAD_PRODUCTS_DATA_SUCCESS,
   LOAD_SEARCH_DATA,
+  FILTER_SEARCH_DATA,
   LOAD_SEARCH_DATA_SUCCESS,
   LOAD_SEARCH_BTN_DATA_SUCCESS,
   LOAD_SEARCH_ITEM_SELECTED,
@@ -55,6 +56,13 @@ export function dataLoadingError(error) {
 export function loadSearchData(searchObj) {
   return {
     type: LOAD_SEARCH_DATA,
+    searchObj,
+  };
+}
+
+export function filterSearchData(searchObj) {
+  return {
+    type: FILTER_SEARCH_DATA,
     searchObj,
   };
 }

@@ -19,16 +19,20 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
     let rows = [];
     let title = '';
     let desc = '';
+    let code = '';
+    let productFamily = '';
     const url = [];
-    if (this.props.detailedInfo !== undefined) {
-      rows = this.props.detailedInfo.images.map((item) => (
+    if (this.props.selectedData !== undefined) {
+      rows = this.props.selectedData.detailedInfo.images.map((item) => (
         url.push(item)
         ));
-      title = this.props.detailedInfo.title;
-      if (this.props.detailedInfo.description === null) {
+      code = this.props.selectedData.code;
+      title = this.props.selectedData.detailedInfo.title;
+      productFamily = this.props.selectedData.productStructure;
+      if (this.props.selectedData.detailedInfo.description === null) {
         desc = '';
       } else {
-        desc = this.props.detailedInfo.description;
+        desc = this.props.selectedData.detailedInfo.description;
       }
     }
     return (
@@ -43,9 +47,23 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
           </Modal.Header>
 
           <Modal.Body>
+
+            <div className="productDetailBox">
+              <h4>
+                Product Code: <b>{code}</b>
+                <span>Product Family: <b>{productFamily}</b></span>                
+              </h4>
+            </div>
+
             <Slider images={url} isInfinite delay={5000}>
-              {url.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} />{Parser(desc)}</div>)}
+              {url.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} /></div>)}
             </Slider>
+
+            <div className="sliderDesc">
+              {Parser(desc)}
+            </div>
+
+
           </Modal.Body>
 
           <Modal.Footer>
@@ -58,7 +76,7 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
 }
 
 ProductDetails.propTypes = {
-  detailedInfo: React.PropTypes.any,
+  selectedData: React.PropTypes.any,
   onHide: React.PropTypes.func,
   show: React.PropTypes.bool,
 };
