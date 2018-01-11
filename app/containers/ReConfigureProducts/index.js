@@ -162,6 +162,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
   render() {
     const reconfigurationData = this.props.reConfigureProductData.toJS();
     const quote = this.props.quote.toJS();
+    const reconfigureQuote = this.props.reconfigureQuote.toJS();
     const params = {
       bundleId: reconfigurationData.productBundleId,
       quoteName: quote.name,
@@ -173,6 +174,14 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
     if (this.props.loading) {
       return (<div className="loader" style={style}></div>);
+    }
+    let quoteLine = {};
+    if (reconfigureQuote && reconfigureQuote.lines && reconfigureQuote.lines.length > 0) {
+      reconfigureQuote.lines.forEach((quoteLineItem) => {
+        if (quoteLineItem.canReconfigure) {
+          quoteLine = quoteLineItem;
+        }
+      }, this);
     }
     return (
       <div>
@@ -204,6 +213,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             deleteProduct={this.props.deleteProduct}
             updateField={this.props.updateField}
             params={params}
+            quoteLine={quoteLine}
             toggleAddOptionsState={this.props.toggleAddOptionsState}
             activeTab={this.props.activeTab}
             currency={quote.currency}
