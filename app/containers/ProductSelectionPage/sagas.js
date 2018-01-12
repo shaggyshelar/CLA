@@ -10,7 +10,7 @@ import {
   EntityURLs,
   ADD_PRODUCTS,
 } from '../App/constants';
-import { productsDataLoaded, searchedDataLoaded, searchBtnDataLoaded } from './actions';
+import { productsDataLoaded, filteredProductsDataLoaded, searchedDataLoaded, searchBtnDataLoaded } from './actions';
 // import { LOAD_REPOS } from 'containers/App/constants';
 // import { SERVER_URL, EntityURLs } from '../App/constants';
 // Individual exports for testing
@@ -94,7 +94,7 @@ export function* filterSearchData() {
     try {
       const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetGuidedProducts`}`;
       const repos = yield call(request, requestURL, options);
-      yield put(productsDataLoaded(repos));
+      yield put(filteredProductsDataLoaded(repos));
     } catch (error) {
       yield put(dataLoadingError(error));
     } finally {

@@ -16,12 +16,14 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
     this.toggleShowGuidedSellingModal = this.toggleShowGuidedSellingModal.bind(this);
     this.state = {
       isGuidedSellingModalOpen: false,
+      isGuidedSellingModalShown: false,
     };
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.guidedSellingQuestions.length > 0) {
+    if (nextProps.guidedSellingQuestions.length > 0 && !this.state.isGuidedSellingModalShown) {
       this.setState({
         isGuidedSellingModalOpen: true,
+        isGuidedSellingModalShown: true,
       });
     }
   }

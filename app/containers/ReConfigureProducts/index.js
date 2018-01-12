@@ -65,6 +65,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
           unitPrice: '$ 230.653',
         },
       ],
+      quoteLine: {},
       reConfigureData: {},
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
@@ -83,7 +84,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
   }
 
   saveProducts() {
-    const updatedQuote = this.props.reconfigureQuote.toJS();
+    const updatedQuote = this.props.reconfigureQuote;
     const updatedProducts = [];
     const intialProductBundleData = this.props.productBundleData.toJS();
     const updatedProductBundleData = this.props.reConfigureProductData.toJS();
@@ -128,6 +129,19 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       productBundle: intialProductBundleData,
     };
     this.props.saveConfiguredProducts(quoteProductData, this.props.location.query);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const reconfigureQuote = nextProps.reconfigureQuote;
+    if (reconfigureQuote && reconfigureQuote.lines && reconfigureQuote.lines.length > 0) {
+      reconfigureQuote.lines.forEach((quoteLineItem, index) => {
+        if (quoteLineItem.canReconfigure) {
+          this.setState({
+            quoteLine: reconfigureQuote.lines[index],
+          });
+        }
+      }, this);
+    }
   }
 
   toggleSidebar() {
@@ -204,6 +218,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             deleteProduct={this.props.deleteProduct}
             updateField={this.props.updateField}
             params={params}
+            quoteLine={this.state.quoteLine}
             toggleAddOptionsState={this.props.toggleAddOptionsState}
             activeTab={this.props.activeTab}
             currency={quote.currency}
