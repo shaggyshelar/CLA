@@ -61,6 +61,7 @@ export function* continueSave() {
     yield take(chan);
     const lines = yield select(selectGlobal);
     const postLines = Object.assign({}, lines.toJS().data);
+    postLines.isContinue = true;
     postLines.isForceSave = true;
     try {
       const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/SaveQuote`}`;

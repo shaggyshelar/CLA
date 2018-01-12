@@ -24,11 +24,7 @@ export class AddConfigureProducts extends React.Component { // eslint-disable-li
   }
 
   componentDidMount() {
-  //  console.log('reConfigureProductData', this.props.reConfigureProductData.toJS());
-   // const productData = this.props.reConfigureProductData.toJS().categories.feat;
-   // console.log('productData', productData);
     const quote = this.props.reConfigureQuoteData.toJS();
-    // console.log('productData', quoteData);
     const params = {
       featureId: this.props.location.query.featureId,
       bundleId: this.props.location.query.bundleId,
