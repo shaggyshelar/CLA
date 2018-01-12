@@ -65,6 +65,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
           unitPrice: '$ 230.653',
         },
       ],
+      quoteLine: {},
       reConfigureData: {},
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
@@ -83,7 +84,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
   }
 
   saveProducts() {
-    const updatedQuote = this.props.reconfigureQuote.toJS();
+    const updatedQuote = this.props.reconfigureQuote;
     const updatedProducts = [];
     const intialProductBundleData = this.props.productBundleData.toJS();
     const updatedProductBundleData = this.props.reConfigureProductData.toJS();
@@ -130,6 +131,19 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     this.props.saveConfiguredProducts(quoteProductData, this.props.location.query);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const reconfigureQuote = nextProps.reconfigureQuote;
+    if (reconfigureQuote && reconfigureQuote.lines && reconfigureQuote.lines.length > 0) {
+      reconfigureQuote.lines.forEach((quoteLineItem, index) => {
+        if (quoteLineItem.canReconfigure) {
+          this.setState({
+            quoteLine: reconfigureQuote.lines[index],
+          });
+        }
+      }, this);
+    }
+  }
+
   toggleSidebar() {
     this
       .props
@@ -162,7 +176,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
   render() {
     const reconfigurationData = this.props.reConfigureProductData.toJS();
     const quote = this.props.quote.toJS();
-    const reconfigureQuote = this.props.reconfigureQuote.toJS();
     const params = {
       bundleId: reconfigurationData.productBundleId,
       quoteName: quote.name,
@@ -174,14 +187,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     const style = this.props.loading ? { display: 'inline' } : { display: 'none' };
     if (this.props.loading) {
       return (<div className="loader" style={style}></div>);
-    }
-    let quoteLine = {};
-    if (reconfigureQuote && reconfigureQuote.lines && reconfigureQuote.lines.length > 0) {
-      reconfigureQuote.lines.forEach((quoteLineItem) => {
-        if (quoteLineItem.canReconfigure) {
-          quoteLine = quoteLineItem;
-        }
-      }, this);
     }
     return (
       <div>
@@ -213,7 +218,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             deleteProduct={this.props.deleteProduct}
             updateField={this.props.updateField}
             params={params}
-            quoteLine={quoteLine}
+            quoteLine={this.state.quoteLine}
             toggleAddOptionsState={this.props.toggleAddOptionsState}
             activeTab={this.props.activeTab}
             currency={quote.currency}
