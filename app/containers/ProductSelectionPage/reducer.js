@@ -13,6 +13,7 @@ import {
   LOAD_DATA_ERROR,
   LOAD_PRODUCTS_DATA,
   LOAD_PRODUCTS_DATA_SUCCESS,
+  LOAD_FILTERED_PRODUCTS_DATA_SUCCESS,
   LOAD_SEARCH_DATA,
   FILTER_SEARCH_DATA,
   LOAD_SEARCH_DATA_SUCCESS,
@@ -45,6 +46,12 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('products', fromJS(action.products.products))
         .set('guidedSellingQuestions', fromJS(action.products.guidedSelling ? action.products.guidedSelling.quoteProcesses : []))
         .set('initialProducts', fromJS(action.products.products))
+        .set('loading', false);
+    }
+    case LOAD_FILTERED_PRODUCTS_DATA_SUCCESS: {
+      return state
+        .set('products', fromJS(action.products.products))
+        .set('guidedSellingQuestions', fromJS(action.products.guidedSelling ? action.products.guidedSelling.quoteProcesses : []))
         .set('loading', false);
     }
     case LOAD_DATA_ERROR:
