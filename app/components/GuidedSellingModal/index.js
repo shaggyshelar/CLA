@@ -209,7 +209,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
       >
         <Modal.Dialog >
           <Modal.Header closeButton>
-            <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="shopping-cart" /> <strong> Guided Selling </strong></Modal.Title>
+            <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="filter" /> <strong> Guided Selling </strong></Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Tab.Container id="left-tabs-example" defaultActiveKey={defaultTabId}>
