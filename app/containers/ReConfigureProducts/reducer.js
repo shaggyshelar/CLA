@@ -193,7 +193,9 @@ function reConfigureProductsReducer(state = initialState, action) {
           products.forEach((product) => {
             const productObj = product;
             productObj.isDeleted = false;
-            otherOptions.products.push(productObj);
+            if (productObj.isVisible) {
+              otherOptions.products.push(productObj);
+            }
           }, this);
           reConfigureProducts.features.push(otherOptions);
         }

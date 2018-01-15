@@ -10,6 +10,7 @@ import {
   LOAD_DATA_ERROR,
   LOAD_PRODUCTS_DATA,
   LOAD_PRODUCTS_DATA_SUCCESS,
+  LOAD_FILTERED_PRODUCTS_DATA_SUCCESS,
   LOAD_SEARCH_DATA,
   FILTER_SEARCH_DATA,
   LOAD_SEARCH_DATA_SUCCESS,
@@ -42,6 +43,13 @@ export function loadProductsData(groupId, priceBookId, quoteId) {
 export function productsDataLoaded(products) {
   return {
     type: LOAD_PRODUCTS_DATA_SUCCESS,
+    products,
+  };
+}
+
+export function filteredProductsDataLoaded(products) {
+  return {
+    type: LOAD_FILTERED_PRODUCTS_DATA_SUCCESS,
     products,
   };
 }

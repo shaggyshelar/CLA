@@ -1927,3 +1927,31 @@ body.modal-open {
         text-align: center;
     }
 }
+
+/*************** D. 11 January 2018  **************/
+
+.productModal  .blade-inside .subhead h2{
+    font-size: 15px!important;
+    margin-top: 0px!important;
+    font-family: Georgia,Times,Times New Roman,serif!important;
+    font-weight: 600!important;
+    color: #292828!important;
+}
+.productModal  .blade-inside .subhead .specs-list{
+    padding-left: 30px!important;
+    text-align: left!important;
+    margin-bottom: 15px!important;		
+}
+.productModal  .blade-inside .subhead .specs-list li{
+    line-height: 1.5em!important;
+    text-align: left!important;
+    clear: both!important;
+    margin-bottom: 8px!important;
+}
+.productModal  .blade-inside .subhead .specs-list li .label {
+    font-size: 13px!important;
+    font-weight: 600!important;
+    color: #000!important;
+}
+
+
