@@ -84,52 +84,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       reconfigureQuote.lines.forEach((quoteLineItem, index) => {
         if (quoteLineItem.canReconfigure) {
           const tempQuoteLine = reconfigureQuote.lines[index];
-          tempQuoteLine.configAttribute = [
-            {
-              id: '9692e859-94f6-e711-813c-c4346bdcdf81',
-              name: 'Device',
-              dataType: 'Checkbox',
-              isRequired: true,
-              isGlobal: false,
-              values: [
-                {
-                  id: '8a006f85-98f6-e711-813c-c4346bdcdf81',
-                  value: 'Webcam',
-                  isSelected: false,
-                },
-                {
-                  id: '8c324f9e-98f6-e711-813c-c4346bdcdf81',
-                  value: 'Headset',
-                  isSelected: false,
-                },
-              ],
-            },
-            {
-              id: 'df4bf979-37f1-e711-8136-c4346bdc3c21',
-              name: 'Color',
-              isRequired: true,
-              isGlobal: false,
-              dataType: 'RadioButton',
-              values: [
-                {
-                  id: 'ff9ae9fc-4cf1-e711-8136-c4346bdc3c21',
-                  value: 'Red',
-                  isSelected: false,
-                },
-                {
-                  id: 'de83153a-9cf6-e711-813c-c4346bdcdf81',
-                  value: 'Black',
-                  isSelected: false,
-                },
-                {
-                  id: '458e1240-9cf6-e711-813c-c4346bdcdf81',
-                  value: 'Gold',
-                  isSelected: false,
-                },
-              ],
-            },
-          ];
-          console.log('tsss', tempQuoteLine);
           this.setState({
             quoteLine: tempQuoteLine,
           });
