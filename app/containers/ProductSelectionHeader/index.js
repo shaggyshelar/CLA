@@ -42,7 +42,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
     if (this.props.guidedSellingQuestions.length > 0) {
       return (
         <ButtonGroup className="margin">
-          <Button title={this.context.intl.formatMessage({ ...messages.guidedSelling })} onClick={this.toggleShowGuidedSellingModal}><Glyphicon glyph="shopping-cart" /></Button>
+          <Button title={this.context.intl.formatMessage({ ...messages.guidedSelling })} onClick={this.toggleShowGuidedSellingModal}><Glyphicon glyph="filter" /></Button>
         </ButtonGroup>
       );
     }
