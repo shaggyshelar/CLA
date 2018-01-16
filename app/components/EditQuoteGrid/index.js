@@ -1,11 +1,11 @@
-import ReactTable from '../ReactTable';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
+import { Glyphicon } from 'react-bootstrap/lib';
 import { browserHistory } from 'react-router';
 
 import { RIENumber, RIESelect } from 'riek';
 import _ from 'lodash';
+import ReactTable from '../ReactTable';
 import DiscountScheduleEditor from '../DiscountScheduleEditor';
 import TermDiscountScheduleEditor from '../TermDiscountScheduleEditor';
 import ProductDetails from '../ProductDetails';
@@ -41,7 +41,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         freezeWhenExpanded: true,
         selectedLine: {},
         termDiscount: {},
-        detailedInfo: {},
+        selectedData: {},
       },
       data: this.props.data,
       isModalOpen: false,
@@ -123,7 +123,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     if (selectedData !== undefined) {
       this.setState({
         isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
-        detailedInfo: selectedData.detailedInfo,
+        selectedData: selectedData,
       });
     } else {
       this.setState({
@@ -207,7 +207,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     e.currentTarget.nextSibling.focus();
   }
   renderActionItems(cellInfo) {
-    const reconfigure = cellInfo.original.canReconfigure ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : '';
+    const reconfigure = cellInfo.original.canReconfigure || cellInfo.original.configAttribute.length > 0 ? <a title={this.context.intl.formatMessage({ ...messages.reconfigure })} className={cellInfo.original.isDisableReconfiguration ? 'disabled-link' : 'link'} onClick={() => { this.onReconfigureLineClick(cellInfo.original); }}><Glyphicon glyph="wrench" /></a> : '';
+
     const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map((item) => `${item}\n`)} className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a> : '';
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
     const suggestion = cellInfo.original.canSuggest ? <a title={this.context.intl.formatMessage({ ...messages.suggestions })} onClick={() => { this.onSuggestionLinkClick(cellInfo.original); }}><Glyphicon glyph="link" /></a> : <span className="blank"></span>;
@@ -305,17 +306,26 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         </div>
       );
     }
+    return (
+      <div>
+        <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>
+      </div>
+    );
   }
 // (cellInfo) => (cellInfo.original.canShowDiscountScheduler  ? <div><a className="pro-icon" onClick={this.handleToggle.bind(this, cellInfo.index)} title={this.context.intl.formatMessage({ ...messages.discountSchedule })}><Glyphicon glyph="calendar" /></a> <a className="pro-icon" onClick={this.handleTermToggle.bind(this, cellInfo.index)} title={"Term Discount"}><Glyphicon glyph="tags" /></a><span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span></div> : <span className="pro-name" title={cellInfo.original.code}>{cellInfo.original.code}</span>),
   renderEditable(cellInfo) {
+    const blockPricing = cellInfo.original.pricingMethod.value[0].value === 'BlockPricing' ? <a title={this.context.intl.formatMessage({ ...messages.pricingMethod })}><Glyphicon glyph="bold" /></a> : '';
     if (cellInfo.original[cellInfo.column.id].isEditable === false) {
       return (
-        <span>
-          {cellInfo.column.id === 'quantity' || (cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice')) ? '' : this.props.currency}
-          {cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice') ?
-            <span>Included</span>
+        <div>
+          <span>{blockPricing}{' '}</span>
+          <span>
+            {cellInfo.column.id === 'quantity' || (cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice')) ? '' : this.props.currency}
+            {cellInfo.original.isBundled && (cellInfo.column.id === 'listPrice') ?
+              <span>Included</span>
           : cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}
-        </span>
+          </span>
+        </div>
       );
     }
     return (
@@ -360,8 +370,13 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   }
 
   renderOverlay(cellInfo) {
+    if (cellInfo.original.detailedInfo.images.length > 0 || cellInfo.original.detailedInfo.description !== null) {
+      return (
+        <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="proname-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+      );
+    }
     return (
-      <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo.index)} className="pro-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+      <div className="lab"><span title={`${cellInfo.original.name}`}>{cellInfo.original.name}</span> </div>
     );
   }
   render() {
@@ -499,7 +514,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
             display: 'inline-flex',
           }}
           value={this.state.value}
-          detailedInfo={this.state.detailedInfo}
+          selectedData={this.state.selectedData}
         />
         <DiscountScheduleEditor
           show={this.state.isDiscountModalOpen} onHide={this.handleToggle}
@@ -529,6 +544,7 @@ EditQuoteGrid.propTypes = {
   updateSelectBundle: PropTypes.func,
   location: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.func,
+  toggleSuggestionStatus: PropTypes.func,
   quoteData: PropTypes.any,
 };
 

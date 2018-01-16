@@ -16,7 +16,16 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
     this.toggleShowGuidedSellingModal = this.toggleShowGuidedSellingModal.bind(this);
     this.state = {
       isGuidedSellingModalOpen: false,
+      isGuidedSellingModalShown: false,
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.guidedSellingQuestions.length > 0 && !this.state.isGuidedSellingModalShown) {
+      this.setState({
+        isGuidedSellingModalOpen: true,
+        isGuidedSellingModalShown: true,
+      });
+    }
   }
   handleFullScreen() {
     screenfull.toggle(document.getElementById('app'));
@@ -33,7 +42,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
     if (this.props.guidedSellingQuestions.length > 0) {
       return (
         <ButtonGroup className="margin">
-          <Button title={this.context.intl.formatMessage({ ...messages.guidedSelling })} onClick={this.toggleShowGuidedSellingModal}><Glyphicon glyph="check" /></Button>
+          <Button title={this.context.intl.formatMessage({ ...messages.guidedSelling })} onClick={this.toggleShowGuidedSellingModal}><Glyphicon glyph="filter" /></Button>
         </ButtonGroup>
       );
     }
@@ -86,6 +95,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
           style={{
             display: 'inline-flex',
           }}
+          onFilterSearchClicked={this.props.onFilterSearchClicked}
         />
       </div>
     );
@@ -101,10 +111,11 @@ ProductSelectionHeader.propTypes = {
   addProductsWait: PropTypes.func,
   searchInputChange: React.PropTypes.func,
   onSearchClick: React.PropTypes.func,
+  onFilterSearchClicked: React.PropTypes.func,
   onSearchItemSelected: React.PropTypes.func,
   location: React.PropTypes.any,
   languageChange: React.PropTypes.func,
-  language: React.PropTypes.any,
+  // language: React.PropTypes.any,
   disabledButton: React.PropTypes.bool,
 };
 export default ProductSelectionHeader;

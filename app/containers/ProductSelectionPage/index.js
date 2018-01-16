@@ -9,15 +9,14 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
-import { SERVER_URL, EntityURLs } from 'containers/App/constants';
+import { SERVER_URL, EntityURLs, tempPriceBookId } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
 import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData, makeGuidedSellingData } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
-import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
+import { loadProductsData, showFilteredData, loadSearchData, filterSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
 import { changeLocale } from '../LanguageProvider/actions';
-import { tempPriceBookId } from '../App/constants';
 
 export class ProductSelectionPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -35,6 +34,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.onSearchItemSelected = this.onSearchItemSelected.bind(this);
     this.searchInputChange = this.searchInputChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.onFilterSearchClicked = this.onFilterSearchClicked.bind(this);
   }
 
   componentWillMount() {
@@ -72,6 +72,19 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.props.onSearch(searchObj);
   }
 
+  onFilterSearchClicked(quoteProcesses) {
+    const getIds = this.getPriceBookAndQuoteId();
+    const postObject = {
+      PriceListId: getIds.priceBookId,
+      QuoteId: getIds.quoteId,
+      guidedSelling: {
+        id: '00000000-0000-0000-0000-000000000000',
+        quoteProcesses,
+      },
+    };
+    this.props.onFilterSearch(postObject);
+  }
+
   onSearchItemSelected(value) {
     if (this.state.selectedProducts.length > 0) {
       this.setState({
@@ -82,6 +95,19 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       searchedProducts: [],
     });
     this.props.onSearchItemSelected(value);
+  }
+
+  getPriceBookAndQuoteId() {
+    if (process.env.NODE_ENV === 'production') {
+      return {
+        quoteId: this.props.location.query.QuoteId,
+        priceBookId: this.props.location.query.PriceBookId,
+      };
+    }
+    return {
+      quoteId: this.props.location.query.QuoteId,
+      priceBookId: tempPriceBookId,
+    };
   }
 
   searchInputChange(value) {
@@ -230,6 +256,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             data={this.props.products.toJS().map((item) => !item.productComponent ? item.name : '')}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
+            onFilterSearchClicked={this.onFilterSearchClicked}
             onSearchItemSelected={this.onSearchItemSelected}
             language={this.props.language}
             disabledButton={this.state.disabledButton}
@@ -263,6 +290,7 @@ ProductSelectionPage.propTypes = {
   location: PropTypes.any,
   addProductsToQuote: PropTypes.func,
   onSearch: PropTypes.func,
+  onFilterSearch: PropTypes.func,
   onSearchItemSelected: PropTypes.func,
   guidedSellingQuestions: PropTypes.any,
   loading: PropTypes.any,
@@ -296,6 +324,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSearch: (searchObj) => {
       dispatch(loadSearchData(searchObj));
+    },
+    onFilterSearch: (filterObj) => {
+      dispatch(filterSearchData(filterObj));
     },
     onSearchItemSelected: (value) => {
       dispatch(onSearchItemSelected(value));

@@ -1,6 +1,5 @@
 import request from 'utils/request';
-import { take, call, put, cancel, takeLatest, actionChannel, select } from 'redux-saga/effects';
-import { LOCATION_CHANGE } from 'react-router-redux';
+import { take, call, put, actionChannel, select } from 'redux-saga/effects';
 import { dataLoaded, dataLoadingError } from '../App/actions';
 import { selectGlobal } from '../App/selectors';
 import {
@@ -62,6 +61,7 @@ export function* continueSave() {
     yield take(chan);
     const lines = yield select(selectGlobal);
     const postLines = Object.assign({}, lines.toJS().data);
+    postLines.isContinue = true;
     postLines.isForceSave = true;
     try {
       const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/SaveQuote`}`;

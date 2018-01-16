@@ -7,8 +7,6 @@
 import React from 'react';
 // import styled from 'styled-components';
 import { Modal, Button, Glyphicon, Col, Row, FormControl, Tooltip, OverlayTrigger, Table } from 'react-bootstrap/lib';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 
 class TermDiscountScheduleEditor extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -23,7 +21,7 @@ class TermDiscountScheduleEditor extends React.Component { // eslint-disable-lin
         <td>{item.lowerBound}</td>
         <td>{item.upperBound}</td>
         <td>{item.discountpercent}</td>
-    </tr>)); 
+      </tr>));
     }
     return (
       <Modal

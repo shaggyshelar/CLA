@@ -43,15 +43,15 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
 
   saveCustomSegments() {
     const customSegments = _.filter(this.props.customSegments.toJS(), { isDeleted: false });
-    const nameArray = customSegments.map((item) => item.name);
+    const nameArray = customSegments.map((item) => item.columnName);
     const isDuplicate = nameArray.some((item, id) => nameArray.indexOf(item) !== id);
-    const currentIndex = _.findIndex(customSegments, { name: '' });
+    const currentIndex = _.findIndex(customSegments, { columnName: '' });
     let startDateEndDateError = false;
     let dateError = false;
     let isDateNull = false;
     let segNameNull = false;
     for (let index = 0; index <= customSegments.length - 1; index++) {
-      if(customSegments[index].name === null || customSegments[index].startDate === '' ){
+      if (customSegments[index].columnName === null || customSegments[index].startDate === '') {
         segNameNull = true;
       }
       if (customSegments[index].startDate === null || customSegments[index].startDate === '' || customSegments[index].endDate === null || customSegments[index].endDate === '') {
@@ -81,7 +81,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
         position: toast.POSITION.TOP_LEFT,
         autoClose: true,
       });
-    } else if(segNameNull){
+    } else if (segNameNull) {
       toast.error(this.context.intl.formatMessage({ ...messages.segNameError }), {
         position: toast.POSITION.TOP_LEFT,
         autoClose: true,
@@ -134,14 +134,15 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     let rows = [];
     if (this.props.customSegments !== undefined) {
       const customSegments = _.filter(this.props.customSegments.toJS(), { isDeleted: false });
-      rows = customSegments.map((item, index) => (<tr key={index}>
+      rows = customSegments.map((item, index) => (
+      <tr key={index}>
         <td>{!item.isDefault ? <input type="checkbox" className="check checkBox" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check hideSpan" />}</td>
         <td>
           <FormControl
             type="text"
             id={item.id}
-            name="name"
-            value={item.name}
+            name="columnName"
+            value={item.columnName}
             className="customSegmentsInput"
             onChange={this.handleChange}
           />
@@ -204,7 +205,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
             <ButtonGroup className="margin">
               <Button onClick={this.props.addCustomSegmentData} >{this.context.intl.formatMessage({ ...messages.add })}</Button>
               <Button bsStyle="danger" onClick={this.props.deleteCustomSegmentData} >{this.context.intl.formatMessage({ ...messages.delete })}</Button>
-            </ButtonGroup>  
+            </ButtonGroup>
             <ButtonGroup className="margin">
               <Button onClick={this.props.onHide} >{this.context.intl.formatMessage({ ...messages.cancel })}</Button>
               <Button bsStyle="primary" onClick={this.saveCustomSegments} >{this.context.intl.formatMessage({ ...messages.save })}</Button>

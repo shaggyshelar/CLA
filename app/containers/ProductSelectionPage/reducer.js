@@ -13,7 +13,9 @@ import {
   LOAD_DATA_ERROR,
   LOAD_PRODUCTS_DATA,
   LOAD_PRODUCTS_DATA_SUCCESS,
+  LOAD_FILTERED_PRODUCTS_DATA_SUCCESS,
   LOAD_SEARCH_DATA,
+  FILTER_SEARCH_DATA,
   LOAD_SEARCH_DATA_SUCCESS,
   LOAD_SEARCH_BTN_DATA_SUCCESS,
   LOAD_SEARCH_ITEM_SELECTED,
@@ -46,12 +48,22 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('initialProducts', fromJS(action.products.products))
         .set('loading', false);
     }
+    case LOAD_FILTERED_PRODUCTS_DATA_SUCCESS: {
+      return state
+        .set('products', fromJS(action.products.products))
+        .set('guidedSellingQuestions', fromJS(action.products.guidedSelling ? action.products.guidedSelling.quoteProcesses : []))
+        .set('loading', false);
+    }
     case LOAD_DATA_ERROR:
       toast.dismiss();
       return state
         .set('error', action.error)
         .set('loading', false);
     case LOAD_SEARCH_DATA:
+      return state
+        .set('loading', true)
+        .set('error', false);
+    case FILTER_SEARCH_DATA:
       return state
         .set('loading', true)
         .set('error', false);

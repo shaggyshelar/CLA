@@ -6,7 +6,7 @@
 
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import { Col, Row, Tab, Tabs } from 'react-bootstrap/lib';
+import { Col, Row, Tab, Tabs, FormGroup, FormControl, Checkbox, Radio } from 'react-bootstrap/lib';
 import { generateGuid } from 'containers/App/constants';
 import ReconfigureFeaturePanel from 'components/ReconfigureFeaturePanel';
 
@@ -25,6 +25,35 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
   onTabSelect(e) {
     this.setState({ activeTab: e });
   }
+
+  onTextOrNumberBoxChange(event, configAttribute) {
+    configAttribute.values = [{ id: '', value: event.target.value, isSelected: true }];
+  }
+
+  onToggleCheckBox(event, configAttribute) {
+    const foundCheckbox = _.find(configAttribute.values, { value: event.target.value });
+    foundCheckbox.isSelected = event.target.checked;
+  }
+
+  onToggleSelect(event, configAttribute) {
+    _.forEach(configAttribute.values, (value) => {
+      value.isSelected = false;
+    });
+    const foundItem = _.find(configAttribute.values, { value: event.target.value });
+    foundItem.isSelected = true;
+  }
+
+  onRadioChange(event, configAttribute) {
+    _.forEach(configAttribute.values, (value) => {
+      value.isSelected = false;
+    });
+    const foundItem = _.find(configAttribute.values, { value: event.target.value });
+    foundItem.isSelected = true;
+    this.setState({
+      selectedRadioControlName: event.target.value,
+    });
+  }
+
   returnReactTab(item, index) {
     return (<Tab key={index} eventKey={index} title={item.name}>
       <ReconfigureFeaturePanel
@@ -66,6 +95,103 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
       />);
   }
 
+  renderTextBoxAnswer(configAttribute) {
+    return (
+      <FormGroup key={configAttribute.id}>
+        <FormControl
+          type="text"
+          placeholder="Enter text"
+          onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
+        />
+      </FormGroup>
+    );
+  }
+
+  renderCheckBoxAnswer(configAttribute) {
+    return (
+      <FormGroup key={configAttribute.id}>
+        {
+          configAttribute.values.map((option) => (
+            <Checkbox key={option.id} value={option.value} inline onChange={(event) => this.onToggleCheckBox(event, configAttribute)}>
+              { option.value }
+            </Checkbox>
+          ))
+        }
+      </FormGroup>
+    );
+  }
+
+  renderSelectAnswer(configAttribute) {
+    return (
+      <FormGroup key={configAttribute.id}>
+        <FormControl componentClass="select" placeholder="select" onChange={(event) => this.onToggleSelect(event, configAttribute)}>
+          {
+            configAttribute.values.map((option) => (
+              <option key={option.id} value={option.value}>{ option.value }</option>
+            ))
+          }
+        </FormControl>
+      </FormGroup>
+    );
+  }
+
+  renderRadioButtonAnswer(configAttribute) {
+    return (
+      <FormGroup key={configAttribute.id} onChange={(event) => this.onRadioChange(event, configAttribute)}>
+        {
+          configAttribute.values.map((option) => (
+            <Radio key={option.id} name="radioGroup" value={option.value} checked={this.state.selectedRadioControlName === option.value} inline>
+              { option.value }
+            </Radio>
+          ))
+        }
+      </FormGroup>
+    );
+  }
+
+  renderDateTimeAnswer(configAttribute) {
+    return (
+      <FormControl
+        key={configAttribute.id}
+        type="date"
+        name="startDate"
+        className="customSegmentsInput"
+        onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
+      />
+    );
+  }
+
+  renderNumericAnswer(configAttribute) {
+    return (
+      <FormGroup key={configAttribute.id}>
+        <FormControl
+          type="number"
+          placeholder="Enter number"
+          onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
+        />
+      </FormGroup>
+    );
+  }
+
+  renderConfigAttribute(configAttribute) {
+    if (configAttribute.dataType === 'TextBox') {
+      return this.renderTextBoxAnswer(configAttribute);
+    }
+    if (configAttribute.dataType === 'Checkbox') {
+      return this.renderCheckBoxAnswer(configAttribute);
+    }
+    if (configAttribute.dataType === 'Select') {
+      return this.renderSelectAnswer(configAttribute);
+    }
+    if (configAttribute.dataType === 'RadioButton') {
+      return this.renderRadioButtonAnswer(configAttribute);
+    }
+    if (configAttribute.dataType === 'DateTime') {
+      return this.renderDateTimeAnswer(configAttribute);
+    }
+    return this.renderNumericAnswer(configAttribute.values);
+  }
+
   render() {
     const tabtitleList = [];
     let showTabView = true;
@@ -88,6 +214,24 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
           <Row className="configureRow">
             <Col md={12} sm={12} xs={12}>
               <span className="categoryLabel">{this.props.reConfigureData.productBundleName}</span>
+            </Col>
+          </Row>
+        </div>
+        <div className="margin-tabs">
+          <Row className="configureRow">
+            <Col md={12} sm={12} xs={12}>
+              {
+                this.props.quoteLine && this.props.quoteLine.configAttribute
+                ?
+                  this.props.quoteLine.configAttribute.map((configAttribute) => (
+                    <div>
+                      <span className="categoryLabel">{configAttribute.name}</span>
+                      { this.renderConfigAttribute(configAttribute) }
+                    </div>
+                  ))
+                :
+                    <div></div>
+              }
             </Col>
           </Row>
         </div>
@@ -115,6 +259,7 @@ ReconfigureProductTab.propTypes = {
   toggleAddOptionsState: PropTypes.any,
   params: PropTypes.any,
   activeTab: PropTypes.any,
+  quoteLine: PropTypes.any,
   currency: PropTypes.any,
 };
 

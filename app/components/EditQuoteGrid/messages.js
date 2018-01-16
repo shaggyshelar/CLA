@@ -70,4 +70,8 @@ export default defineMessages({
     id: 'app.components.EditQuoteGrid.suggestions',
     defaultMessage: 'suggestions',
   },
+  pricingMethod: {
+    id: 'app.components.EditQuoteGrid.pricingMethod',
+    defaultMessage: 'Block Pricing',
+  },
 });

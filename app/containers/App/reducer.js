@@ -246,7 +246,7 @@ function appReducer(state = initialState, action) {
       {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
-        const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
+        const segLine = _.filter(line[0].segmentData.columns, { columnName: action.name });
         if (action.field === 'additionalDiscount') {
           segLine[0][action.field].value = action.data;
         } else {
@@ -259,7 +259,7 @@ function appReducer(state = initialState, action) {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.parentLineId });
         const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
-        const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
+        const segLine = _.filter(lineBundle[0].segmentData.columns, { columnName: action.name });
         segLine[0][action.field] = action.data;
         return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
@@ -267,7 +267,7 @@ function appReducer(state = initialState, action) {
       {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
-        const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
+        const segLine = _.filter(line[0].segmentData.columns, { columnName: action.name });
         _.map(segLine[0][action.field].selectValues, (i, index) => {
           if (i.id === action.data && !i.isSelected) {
             segLine[0][action.field].selectValues[index].isSelected = true;
@@ -283,7 +283,7 @@ function appReducer(state = initialState, action) {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.parentLineId });
         const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
-        const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
+        const segLine = _.filter(lineBundle[0].segmentData.columns, { columnName: action.name });
         segLine[0][action.field] = action.data;
         return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }

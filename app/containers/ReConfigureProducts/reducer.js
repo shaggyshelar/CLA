@@ -30,7 +30,6 @@ const initialState = fromJS({
   activeTab: 0,
   quoteData: {},
 });
-const output = [];
 function reConfigureProductsReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
@@ -194,7 +193,9 @@ function reConfigureProductsReducer(state = initialState, action) {
           products.forEach((product) => {
             const productObj = product;
             productObj.isDeleted = false;
-            otherOptions.products.push(productObj);
+            if (productObj.isVisible) {
+              otherOptions.products.push(productObj);
+            }
           }, this);
           reConfigureProducts.features.push(otherOptions);
         }

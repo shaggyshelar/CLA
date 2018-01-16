@@ -1,10 +1,3 @@
-
-/*
- *
- * ReConfigureProducts
- *
- */
-
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
@@ -16,6 +9,8 @@ import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductD
 import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
 import { changeLocale } from '../LanguageProvider/actions';
 import { toggleReconfigureLineStatus } from '../App/actions';
+import { tempQuoteId } from '../App/constants';
+import { toast } from 'react-toastify';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -65,6 +60,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
           unitPrice: '$ 230.653',
         },
       ],
+      quoteLine: {},
       reConfigureData: {},
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
@@ -82,8 +78,89 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const reconfigureQuote = nextProps.reconfigureQuote;
+    if (reconfigureQuote && reconfigureQuote.lines && reconfigureQuote.lines.length > 0) {
+      reconfigureQuote.lines.forEach((quoteLineItem, index) => {
+        if (quoteLineItem.canReconfigure) {
+          const tempQuoteLine = reconfigureQuote.lines[index];
+          tempQuoteLine.configAttribute = [
+            {
+              id: '9692e859-94f6-e711-813c-c4346bdcdf81',
+              name: 'Device',
+              dataType: 'Checkbox',
+              isRequired: true,
+              isGlobal: false,
+              values: [
+                {
+                  id: '8a006f85-98f6-e711-813c-c4346bdcdf81',
+                  value: 'Webcam',
+                  isSelected: false,
+                },
+                {
+                  id: '8c324f9e-98f6-e711-813c-c4346bdcdf81',
+                  value: 'Headset',
+                  isSelected: false,
+                },
+              ],
+            },
+            {
+              id: 'df4bf979-37f1-e711-8136-c4346bdc3c21',
+              name: 'Color',
+              isRequired: true,
+              isGlobal: false,
+              dataType: 'RadioButton',
+              values: [
+                {
+                  id: 'ff9ae9fc-4cf1-e711-8136-c4346bdc3c21',
+                  value: 'Red',
+                  isSelected: false,
+                },
+                {
+                  id: 'de83153a-9cf6-e711-813c-c4346bdcdf81',
+                  value: 'Black',
+                  isSelected: false,
+                },
+                {
+                  id: '458e1240-9cf6-e711-813c-c4346bdcdf81',
+                  value: 'Gold',
+                  isSelected: false,
+                },
+              ],
+            },
+          ];
+          console.log('tsss', tempQuoteLine);
+          this.setState({
+            quoteLine: tempQuoteLine,
+          });
+        }
+      }, this);
+    }
+  }
+
+  validateConfigAttribute() {
+    let result = true;
+    _.forEach(this.state.quoteLine.configAttribute, (configAttr) => {
+      if (configAttr.isRequired) {
+        const isSelected = _.find(configAttr.values, { isSelected: true });
+        if (!isSelected) {
+          toast.error(<p>No value selected for '{configAttr.name}'</p>, {
+            position: toast.POSITION.TOP_LEFT,
+            autoClose: false,
+          });
+          result = false;
+          return false;
+        }
+      }
+    });
+    return result;
+  }
+
   saveProducts() {
-    const updatedQuote = this.props.reconfigureQuote.toJS();
+    if (!this.validateConfigAttribute()) {
+      return;
+    }
+    const updatedQuote = this.props.reconfigureQuote;
     const updatedProducts = [];
     const intialProductBundleData = this.props.productBundleData.toJS();
     const updatedProductBundleData = this.props.reConfigureProductData.toJS();
@@ -204,6 +281,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             deleteProduct={this.props.deleteProduct}
             updateField={this.props.updateField}
             params={params}
+            quoteLine={this.state.quoteLine}
             toggleAddOptionsState={this.props.toggleAddOptionsState}
             activeTab={this.props.activeTab}
             currency={quote.currency}

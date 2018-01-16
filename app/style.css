@@ -529,12 +529,25 @@ mark {
     max-width: 300px !important;
     min-width: 120px !important; 
 } 
+
+.proname-icon {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    cursor:pointer;
+    float: left;
+}
+
+.glyphicon.glyphicon-bold {
+    font-size: 10px;
+}
+
 .pro-icon {
     display: inline-block;
     position: relative;
     margin-left: 10px;
     z-index: 1;
-    float: left;
+    float: right;
     cursor:pointer;
 }
 .group-des-edit{
@@ -1794,3 +1807,150 @@ body.modal-open {
 .suggestionNoRecordPanel{
     padding: 0px 0px 25px 0px;
 }
+.productModal modal-title strong {
+    font-size: 20px!important;
+}
+.productModal .modal-title span {
+    vertical-align: middle;
+    margin-top: -5px;
+    font-size: 25px;
+    margin-right: 5px;
+}
+.productModal .modal-header .close {
+    margin-top: -3px;
+    font-size: 30px;
+    color: #2d2d2d;
+}
+.modal-title {
+    color: #16325C;
+}
+.productModal .cancelBtn {
+    color: #fff!important;
+    background-color: #337ab7!important;
+    border-color: #2e6da4!important;
+}
+.productModal .cancelBtn:hover{
+    color: #fff!important;
+    background-color: #286090!important;
+    border-color: #204d74!important;
+}
+.productModal .modal-body {   
+    max-height: 270px!important;
+}
+.productModal .modal-body img{   
+    padding:4px;
+    border:1px solid #ddd;
+}
+.productModal .modal-body p{  
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: justify;
+    padding-right: 15px;
+    margin-top: 5px;
+}
+@media (max-width:1400px){
+    .modal .nav>li>a {
+       font-size: 12px!important;
+    }
+}
+
+/********* D. 10 Jan 2017  **********/
+.productModal .rsc-container {    
+    width: 25%!important;
+    margin: 0 auto;
+    float: left!important;
+}
+.productModal .rsc-slider-item{
+    flex: 0 0 100%;
+    text-align: center;
+}
+.productModal .sliderDesc{
+    padding-left: 0%;
+    height: 240px;
+    overflow-y: auto;
+}
+.productDetailBox h4 span{
+    float:right;
+}
+.productModal .modal-body {
+    min-height: 330px!important;
+}
+.productDetailBox{
+    padding: 8px 20px;
+    border: none;
+    border-radius: 30px;
+    margin: 0 0px;
+    margin-bottom: 15px;
+    background: #f1f1f1;
+}
+.productDetailBox h4 {
+    font-size: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: Georgia, Times, 'Times New Roman', serif;
+}
+@media(min-width:768px){
+    .productModal .modal-content {
+        border: none;
+        width: 70%;
+        margin: 0 auto;
+    }
+}
+@media(max-width:768px){
+    .productModal .rsc-container {
+        width: 100%!important;
+        margin: 0 auto;
+        float: none!important;
+    }
+    .productModal .sliderDesc {
+        padding-left: 0%;
+        height: 250px;
+        overflow-y: auto;
+        padding: 15px;
+        margin-top: 15px;
+    }
+    .productModal {
+        z-index: 9999999999999!important;
+        margin-top: 70%!important;
+    }
+    .productDetailBox {
+        padding: 8px 10px;
+    }
+    .productDetailBox h4 span {
+        float: none;
+        clear: both;
+        display: block;
+        padding-top: 5px;
+    }
+    .productDetailBox h4{
+        text-align: center;
+    }
+}
+
+/*************** D. 11 January 2018  **************/
+
+.productModal  .blade-inside .subhead h2{
+    font-size: 15px!important;
+    margin-top: 0px!important;
+    font-family: Georgia,Times,Times New Roman,serif!important;
+    font-weight: 600!important;
+    color: #292828!important;
+}
+.productModal  .blade-inside .subhead .specs-list{
+    padding-left: 30px!important;
+    text-align: left!important;
+    margin-bottom: 15px!important;		
+}
+.productModal  .blade-inside .subhead .specs-list li{
+    line-height: 1.5em!important;
+    text-align: left!important;
+    clear: both!important;
+    margin-bottom: 8px!important;
+}
+.productModal  .blade-inside .subhead .specs-list li .label {
+    font-size: 13px!important;
+    font-weight: 600!important;
+    color: #000!important;
+}
+
+

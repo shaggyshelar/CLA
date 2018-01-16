@@ -63,7 +63,7 @@ const getGlobalQuoteData = () =>
 const getReconfigureQuoteData = () =>
  createSelector(
  selectReConfigureProductsDomain(),
-  (homeState) => homeState.get('quoteData')
+  (homeState) => homeState.get('quoteData').toJS()
 );
 
 const getLanguage = () =>

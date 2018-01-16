@@ -5,18 +5,17 @@ import { loadProductsDataSuccess, dataLoadingError } from './actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
 
 export function* getProductsSaga(params) {
-  
-  var addOptionViewModel = {
-    FeatureId : params.featureId,
-    BundleId : params.bundleId,
-    PriceListId : params.priceBookId,
-    BundleLineId : params.bundleLineId,
-    QuoteId : params.quoteId,
-    GroupId : params.groupId,
-    IsDynamic : params.isDynamic,
-    Quote : params.quoteData
-    }
-  
+  const addOptionViewModel = {
+    FeatureId: params.featureId,
+    BundleId: params.bundleId,
+    PriceListId: params.priceBookId,
+    BundleLineId: params.bundleLineId,
+    QuoteId: params.quoteId,
+    GroupId: params.groupId,
+    IsDynamic: params.isDynamic,
+    Quote: params.quoteData,
+  };
+
   try {
     const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/AddOptions`}`;
     const options = {
@@ -26,8 +25,8 @@ export function* getProductsSaga(params) {
       },
       body: JSON.stringify(addOptionViewModel),
     };
-   const repos = yield call(request, requestURL, options);
-   
+    const repos = yield call(request, requestURL, options);
+
     yield put(loadProductsDataSuccess(repos));
   } catch (err) {
     yield put(dataLoadingError(err));

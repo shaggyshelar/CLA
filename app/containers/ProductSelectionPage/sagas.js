@@ -1,7 +1,7 @@
 import { take, call, select, put, actionChannel } from 'redux-saga/effects';
 import request from 'utils/request';
 import { toast } from 'react-toastify';
-import { LOAD_PRODUCTS_DATA, LOAD_SEARCH_DATA } from './constants';
+import { LOAD_PRODUCTS_DATA, FILTER_SEARCH_DATA, LOAD_SEARCH_DATA } from './constants';
 import { dataLoaded, dataLoadingError } from '../App/actions';
 import { selectGlobal } from '../App/selectors';
 
@@ -10,7 +10,7 @@ import {
   EntityURLs,
   ADD_PRODUCTS,
 } from '../App/constants';
-import { productsDataLoaded, searchedDataLoaded, searchBtnDataLoaded } from './actions';
+import { productsDataLoaded, filteredProductsDataLoaded, searchedDataLoaded, searchBtnDataLoaded } from './actions';
 // import { LOAD_REPOS } from 'containers/App/constants';
 // import { SERVER_URL, EntityURLs } from '../App/constants';
 // Individual exports for testing
@@ -79,6 +79,30 @@ export function* searchedData() {
     }
   }
 }
+
+export function* filterSearchData() {
+  while (true) {
+    const chan = yield actionChannel(FILTER_SEARCH_DATA);
+    const { searchObj } = yield take(chan);
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(searchObj),
+    };
+    try {
+      const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetGuidedProducts`}`;
+      const repos = yield call(request, requestURL, options);
+      yield put(filteredProductsDataLoaded(repos));
+    } catch (error) {
+      yield put(dataLoadingError(error));
+    } finally {
+      chan.close();
+    }
+  }
+}
+
 export function* addProducts() {
   while (true) {
     const chan = yield actionChannel(ADD_PRODUCTS);
@@ -139,5 +163,6 @@ export function* addProductsPost(data, action) {
 export default[
   productsData,
   searchedData,
+  filterSearchData,
   addProducts,
 ];
