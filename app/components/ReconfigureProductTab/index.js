@@ -208,55 +208,6 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         tabtitleList.push(this.returnFeaturePanel(this.props.reConfigureData.features));
       }
     }
-
-    if (this.props.quoteLine) {
-      this.props.quoteLine.configureAttribute = [
-        {
-          id: '9692e859-94f6-e711-813c-c4346bdcdf81',
-          name: 'Device',
-          dataType: 'Checkbox',
-          isRequired: true,
-          isGlobal: false,
-          values: [
-            {
-              id: '8a006f85-98f6-e711-813c-c4346bdcdf81',
-              value: 'Webcam',
-              isSelected: false,
-            },
-            {
-              id: '8c324f9e-98f6-e711-813c-c4346bdcdf81',
-              value: 'Headset',
-              isSelected: false,
-            },
-          ],
-        },
-        {
-          id: 'df4bf979-37f1-e711-8136-c4346bdc3c21',
-          name: 'Color',
-          isRequired: true,
-          isGlobal: false,
-          dataType: 'RadioButton',
-          values: [
-            {
-              id: 'ff9ae9fc-4cf1-e711-8136-c4346bdc3c21',
-              value: 'Red',
-              isSelected: false,
-            },
-            {
-              id: 'de83153a-9cf6-e711-813c-c4346bdcdf81',
-              value: 'Black',
-              isSelected: false,
-            },
-            {
-              id: '458e1240-9cf6-e711-813c-c4346bdcdf81',
-              value: 'Gold',
-              isSelected: false,
-            },
-          ],
-        },
-      ];
-    }
-
     return (
       <div className="quote-container reconfigureContainer">
         <div className="margin-tabs">
@@ -270,12 +221,16 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
           <Row className="configureRow">
             <Col md={12} sm={12} xs={12}>
               {
-                this.props.quoteLine.configureAttribute.map((configAttribute) => (
-                  <div>
-                    <span className="categoryLabel">{configAttribute.name}</span>
-                    { this.renderConfigAttribute(configAttribute) }
-                  </div>
-                ))
+                this.props.quoteLine && this.props.quoteLine.configAttribute
+                ?
+                  this.props.quoteLine.configAttribute.map((configAttribute) => (
+                    <div>
+                      <span className="categoryLabel">{configAttribute.name}</span>
+                      { this.renderConfigAttribute(configAttribute) }
+                    </div>
+                  ))
+                :
+                    <div></div>
               }
             </Col>
           </Row>
