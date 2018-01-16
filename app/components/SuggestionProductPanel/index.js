@@ -1,6 +1,7 @@
 import React from 'react';
 import SuggestionProductGrid from 'components/SuggestionProductGrid';
 // import styled from 'styled-components';
+import { Panel } from 'react-bootstrap/lib';
 
 
 class SuggestionProductPanel extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -39,87 +40,76 @@ class SuggestionProductPanel extends React.Component { // eslint-disable-line re
             <span className="categoryLabel">{name}</span>
           </div>
           <div className="panel-group" id="suggestionAccordion">
-            <div className="panel suggestionPanel">
-              <div className="panel-heading">
-                <h4 className="panel-title suggestionProductLabel">
-                  <a data-toggle="collapse" data-parent="#suggestionAccordion" href="#croosShellAccordion">
-                    CrossSell
-                  </a>
-                </h4>
-              </div>
-              <div id="croosShellAccordion" className="panel-collapse collapse in">
-                <div className={crossSellPanel}>
+            <Panel id="panelCrossSell" defaultExpanded>
+              <Panel.Heading className="panel-heading">
+                <Panel.Title toggle>
+                  CrossSell
+                </Panel.Title>
+              </Panel.Heading>
+              <Panel.Collapse>
+                <Panel.Body>
                   <SuggestionProductGrid
                     suggestionsData={crossSellList}
                     toggleCheckboxChange={this.props.toggleCheckboxChange}
                     updateField={this.props.updateField}
                   />
-                </div>
-              </div>
-            </div>
+                </Panel.Body>
+              </Panel.Collapse>
+            </Panel>
 
-            <div className="panel suggestionPanel">
-              <div className="panel-heading">
-                <h4 className="panel-title suggestionProductLabel">
-                  <a data-toggle="collapse" data-parent="#suggestionAccordion" href="#accessoryAccordion">
-                    Accessory
-                  </a>
-                </h4>
-              </div>
-              <div id="accessoryAccordion" className="panel-collapse collapse">
-                <div className={accessoryPanel}>
+            <Panel id="panelAccessory">
+              <Panel.Heading className="panel-heading">
+                <Panel.Title toggle>
+                Accessory
+                </Panel.Title>
+              </Panel.Heading>
+              <Panel.Collapse>
+                <Panel.Body>
                   <SuggestionProductGrid
                     suggestionsData={accessoryList}
                     toggleCheckboxChange={this.props.toggleCheckboxChange}
                     updateField={this.props.updateField}
                   />
-                </div>
-              </div>
-            </div>
+                </Panel.Body>
+              </Panel.Collapse>
+            </Panel>
 
-            <div className="panel suggestionPanel">
-              <div className="panel-heading">
-                <h4 className="panel-title suggestionProductLabel">
-                  <a data-toggle="collapse" data-parent="#suggestionAccordion" href="#upshellAccordion">
-                    UpSell
-                  </a>
-                </h4>
-              </div>
-              <div id="upshellAccordion" className="panel-collapse collapse">
-                <div className={upSellPanel}>
+            <Panel id="panelUpSell">
+              <Panel.Heading className="panel-heading">
+                <Panel.Title toggle>
+                UpSell
+                </Panel.Title>
+              </Panel.Heading>
+              <Panel.Collapse>
+                <Panel.Body>
                   <SuggestionProductGrid
                     suggestionsData={upSellList}
                     toggleCheckboxChange={this.props.toggleCheckboxChange}
                     updateField={this.props.updateField}
                   />
-                </div>
+                </Panel.Body>
+              </Panel.Collapse>
+            </Panel>
 
-              </div>
-
-            </div>
-
-            <div className="panel suggestionPanel">
-              <div className="panel-heading">
-                <h4 className="panel-title suggestionProductLabel">
-                  <a data-toggle="collapse" data-parent="#suggestionAccordion" href="#substituteAccordion">
-                    Substitute
-                  </a>
-                </h4>
-              </div>
-              <div id="substituteAccordion" className="panel-collapse collapse">
-                <div className={substitutePanel}>
+            <Panel id="panelSubstitute">
+              <Panel.Heading className="panel-heading">
+                <Panel.Title toggle>
+                Substitute
+                </Panel.Title>
+              </Panel.Heading>
+              <Panel.Collapse>
+                <Panel.Body>
                   <SuggestionProductGrid
                     suggestionsData={substituteList}
                     toggleCheckboxChange={this.props.toggleCheckboxChange}
                     updateField={this.props.updateField}
                   />
-                </div>
-              </div>
-            </div>
+                </Panel.Body>
+              </Panel.Collapse>
+            </Panel>
           </div>
         </div>
       </div>
-
     );
   }
 }
