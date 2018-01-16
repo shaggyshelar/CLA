@@ -1,10 +1,3 @@
-
-/*
- *
- * ReConfigureProducts
- *
- */
-
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
@@ -16,6 +9,8 @@ import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductD
 import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
 import { changeLocale } from '../LanguageProvider/actions';
 import { toggleReconfigureLineStatus } from '../App/actions';
+import { tempQuoteId } from '../App/constants';
+import { toast } from 'react-toastify';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -83,7 +78,42 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const reconfigureQuote = nextProps.reconfigureQuote;
+    if (reconfigureQuote && reconfigureQuote.lines && reconfigureQuote.lines.length > 0) {
+      reconfigureQuote.lines.forEach((quoteLineItem, index) => {
+        if (quoteLineItem.canReconfigure) {
+          const tempQuoteLine = reconfigureQuote.lines[index];
+          this.setState({
+            quoteLine: tempQuoteLine,
+          });
+        }
+      }, this);
+    }
+  }
+
+  validateConfigAttribute() {
+    let result = true;
+    _.forEach(this.state.quoteLine.configAttribute, (configAttr) => {
+      if (configAttr.isRequired) {
+        const isSelected = _.find(configAttr.values, { isSelected: true });
+        if (!isSelected) {
+          toast.error(<p>No value selected for '{configAttr.name}'</p>, {
+            position: toast.POSITION.TOP_LEFT,
+            autoClose: false,
+          });
+          result = false;
+          return false;
+        }
+      }
+    });
+    return result;
+  }
+
   saveProducts() {
+    if (!this.validateConfigAttribute()) {
+      return;
+    }
     const updatedQuote = this.props.reconfigureQuote;
     const updatedProducts = [];
     const intialProductBundleData = this.props.productBundleData.toJS();
@@ -129,19 +159,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       productBundle: intialProductBundleData,
     };
     this.props.saveConfiguredProducts(quoteProductData, this.props.location.query);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const reconfigureQuote = nextProps.reconfigureQuote;
-    if (reconfigureQuote && reconfigureQuote.lines && reconfigureQuote.lines.length > 0) {
-      reconfigureQuote.lines.forEach((quoteLineItem, index) => {
-        if (quoteLineItem.canReconfigure) {
-          this.setState({
-            quoteLine: reconfigureQuote.lines[index],
-          });
-        }
-      }, this);
-    }
   }
 
   toggleSidebar() {
