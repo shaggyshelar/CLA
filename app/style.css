@@ -1953,4 +1953,28 @@ body.modal-open {
     color: #000!important;
 }
 
+/*********** D. 16 Jan 2018 *************/
+.productAccordian{
+    margin-bottom: 10px!important;
+}
+.productAccordian .panel-heading {   
+    padding: 18px!important;
+}
+#suggestionAccordion {   
+    padding: 0 14px!important;
+}
+.productAccordian .panel-title {    
+    font-size: 15px!important;
+    font-weight: 600!important;   
+}
+.productAccordian .panel-body {
+    padding: 0px!important;
+}
+.productAccordian .panel-title span.glyphicon{   
+    float: right;
+    margin-top: -4px;
+    color: #757474;
+}
+
+
 

@@ -40,6 +40,7 @@ function productSelectionPageReducer(state = initialState, action) {
       toast.dismiss();
       return state
         .set('loading', true)
+        .set('guidedSellingQuestions', fromJS([]))
         .set('error', false);
     case LOAD_PRODUCTS_DATA_SUCCESS: {
       return state
