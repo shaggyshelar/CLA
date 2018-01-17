@@ -8,6 +8,8 @@ import {
   DEFAULT_ACTION,
   LOAD_CONFIGURE_PRODUCTS_DATA,
   LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS,
+  CANCEL,
+  CONTINUE,
   LOAD_CONFIGURE_PRODUCTS_DATA_ERROR,
   ADD_OPTIONS,
   SAVE_CONFIGURE_PRODUCTS_DATA,
@@ -34,6 +36,18 @@ export function loadReConfigureProductsDataSuccess(productBundelData) {
   return {
     type: LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS,
     productBundelData,
+  };
+}
+
+export function cancel() {
+  return {
+    type: CANCEL,
+  };
+}
+
+export function continueSave() {
+  return {
+    type: CONTINUE,
   };
 }
 
