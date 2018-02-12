@@ -23,6 +23,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
 
   onTextOrNumberBoxChange(event, configAttribute) {
     configAttribute.values = [{ id: '', value: event.target.value, isSelected: true }];
+    configAttribute.value = event.target.value;
   }
 
   onToggleCheckBox(event, configAttribute) {

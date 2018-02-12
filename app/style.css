@@ -1975,6 +1975,11 @@ body.modal-open {
     margin-top: -4px;
     color: #757474;
 }
+.productAccordian .rt-noData {
+    margin-top: -12px!important;
+    margin-bottom: 50px!important;
+    text-align: center!important;
+}
 
 
 

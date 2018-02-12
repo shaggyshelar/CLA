@@ -54,6 +54,11 @@ const makeSelectError = () => createSelector(
   (homeState) => homeState.get('error')
 );
 
+const getSelectErrorMessage = () => createSelector(
+  selectReConfigureProductsDomain(),
+  (homeState) => homeState.get('errorMessage')
+);
+
 const getGlobalQuoteData = () =>
  createSelector(
   global,
@@ -81,6 +86,7 @@ export {
   getActiveTabState,
   makeSelectLoading,
   makeSelectError,
+  getSelectErrorMessage,
   getLanguage,
   getGlobalQuoteData,
   getReconfigureQuoteData,
