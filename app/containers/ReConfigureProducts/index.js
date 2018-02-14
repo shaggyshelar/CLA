@@ -5,12 +5,13 @@ import { browserHistory } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
-import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError, getLanguage, getGlobalQuoteData, getReconfigureQuoteData } from './selectors';
-import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
+import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError, getSelectErrorMessage, getLanguage, getGlobalQuoteData, getReconfigureQuoteData } from './selectors';
+import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState, cancel, continueSave } from './actions';
 import { changeLocale } from '../LanguageProvider/actions';
 import { toggleReconfigureLineStatus } from '../App/actions';
 import { tempQuoteId } from '../App/constants';
 import { toast } from 'react-toastify';
+import { Modal, Button, Glyphicon } from 'react-bootstrap/lib';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -207,6 +208,21 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     }
     return (
       <div>
+        <Modal
+          show={this.props.error} onHide={this.props.cancel} style={{ width: '50%' }}
+          autoFocus keyboard
+        >
+          <Modal.Header closeButton>
+            <Modal.Title style={{ textAlign: 'center' }}><Glyphicon glyph="warning-sign" /> Alert</Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ textAlign: 'center', fontSize: '18px' }}>
+            {this.props.errorMsg}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.props.cancel} >Cancel</Button>
+            <Button bsStyle="primary" onClick={this.props.cancel} >Continue</Button>
+          </Modal.Footer>
+        </Modal>
         <div
           style={{
             zIndex: '9999999',
@@ -267,6 +283,10 @@ ReConfigureProducts.propTypes = {
   quote: PropTypes.any,
   reconfigureQuote: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.any,
+  error: React.PropTypes.any,
+  cancel: React.PropTypes.any,
+  continue: React.PropTypes.any,
+  errorMsg: React.PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -280,6 +300,7 @@ const mapStateToProps = createStructuredSelector({
   language: getLanguage(),
   quote: getGlobalQuoteData(),
   reconfigureQuote: getReconfigureQuoteData(),
+  errorMsg: getSelectErrorMessage(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -308,6 +329,12 @@ function mapDispatchToProps(dispatch) {
     },
     toggleReconfigureLineStatus: (reconfigureObj) => {
       dispatch(toggleReconfigureLineStatus(reconfigureObj));
+    },
+    cancel: () => {
+      dispatch(cancel());
+    },
+    continue: () => {
+      dispatch(continueSave());
     },
   };
 }

@@ -355,6 +355,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
   }
   render() {
     const data = this.renderColumns(this.props.data);
+    if (!this.props.quoteData.configure.showPartnerDiscount) {
+      _.remove(data.dataSet, {
+        prop: 'partnerDiscount',
+      });
+    }
     return (
       <div className="header sub-seg">
         <ReactTable

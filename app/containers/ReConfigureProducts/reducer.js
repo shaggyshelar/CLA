@@ -14,6 +14,8 @@ import {
   LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   LOAD_CONFIGURE_PRODUCTS_DATA_ERROR,
   ADD_OPTIONS,
+  CANCEL,
+  CONTINUE,
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
   TOGGLE_CHECKBOX_CHANGE,
@@ -24,6 +26,7 @@ import {
 const initialState = fromJS({
   loading: false,
   error: false,
+  errorMessage: '',
   productBundleData: {},
   reConfigureProductData: {},
   fromAddOptions: false,
@@ -34,11 +37,21 @@ function reConfigureProductsReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
+    case CANCEL:
+      return state
+        .set('error', false)
+        .set('errorMessage', '');
+    case CONTINUE:
+      return state
+        .set('loading', true)
+        .set('error', false)
+        .set('errorMessage', '');
     case LOAD_CONFIGURE_PRODUCTS_DATA:
       toast.dismiss();
       return state
         .set('loading', true)
-        .set('error', false);
+        .set('error', false)
+        .set('errorMessage', '');
     case LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS: {
       const reConfigureProducts = {};
       const productBundelData = action.productBundelData.quoteProductData;
@@ -209,12 +222,19 @@ function reConfigureProductsReducer(state = initialState, action) {
     }
     case LOAD_CONFIGURE_PRODUCTS_DATA_ERROR: {
       toast.dismiss();
+      let error = false;
+      let errorMsg = false;
       if (action.error && action.error instanceof Array) {
-        action.error.map((i) => {
-          toast.error(<p>{i.message}</p>, {
-            position: toast.POSITION.TOP_LEFT,
-            autoClose: false,
-          });
+        action.error.map((errorObject) => {
+          if (errorObject.type === 'alert') {
+            error = true;
+            errorMsg = errorObject.message;
+          } else {
+            toast.error(<p>{errorObject.message}</p>, {
+              position: toast.POSITION.TOP_LEFT,
+              autoClose: false,
+            });
+          }
           return this;
         });
       } else {
@@ -224,7 +244,8 @@ function reConfigureProductsReducer(state = initialState, action) {
         });
       }
       return state
-        .set('error', action.error)
+        .set('error', error)
+        .set('errorMessage', errorMsg)
         .set('loading', false);
     }
     case ADD_OPTIONS : {
