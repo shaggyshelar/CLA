@@ -8,9 +8,9 @@
 	width: 100%;
 	height: 100%;
     background: #EEE;
-    background-image:url(loadingDots.gif); 
+    background-image:url(loadingDots.gif);
     background-repeat: no-repeat;
-    background-position: 50%; 
+    background-position: 50%;
     opacity: 1;
     z-index: 9999999;
 }
@@ -33,12 +33,12 @@ body {
 .toastify__body p{
     font-family: sans-serif;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin: 0; 
+    margin: 0;
 }
 .input-text {
     width: 96%;
@@ -69,7 +69,7 @@ input[type=number]::-webkit-outer-spin-button {
   /*.rt-tr:hover .edit-icon{
      display : block;
  }*/
- 
+
 .table-edit-quantity, .table-edit {
     cursor:pointer;
     width:70%;
@@ -91,7 +91,7 @@ input[type=number]::-webkit-outer-spin-button {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-	
+
 }
 .table-edit-input .inline-edit {
     display:none !important;
@@ -105,7 +105,7 @@ input[type=number]::-webkit-outer-spin-button {
     width: 72%;
     display:inline-block;
 }
-  
+
 #inner-tab-example > ul{
     background: #EDEDED;
     border-radius: 6px;
@@ -140,7 +140,7 @@ input[type=number]::-webkit-outer-spin-button {
 .link {
   cursor: pointer;
 }
-.inline-edit{ 
+.inline-edit{
    /*display: none;*/
    color: #54698d;
  }
@@ -172,10 +172,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
  .group-edit:hover +.inline-edit{
      display : inline !important;
-     
+
  }
 .group-input:hover +.inline-edit{
-     display : inline !important;    
+     display : inline !important;
  }
 .group-description:hover +.inline-edit{
      display : inline !important;
@@ -193,14 +193,14 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 14px;
  }
 .group {
-    margin: 0!important;     
-    border-color: #d0d0d0;    
-    border-radius: 4px;    
-    height: 100%;    
-    width: 100%!important;    
-    background-color: white;    
-    display: block;    
-    position: relative!important;    
+    margin: 0!important;
+    border-color: #d0d0d0;
+    border-radius: 4px;
+    height: 100%;
+    width: 100%!important;
+    background-color: white;
+    display: block;
+    position: relative!important;
     overflow-x: hidden!important;
 }
 .group .dropdown {
@@ -245,7 +245,7 @@ input[type=number]::-webkit-outer-spin-button {
     padding-right: 10px;
     font-weight: 600;
 }
-.group-header-div {    
+.group-header-div {
     padding-left: 55px;
     padding-top: 5px;
 }
@@ -352,8 +352,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .autoCompleteWidth .rbt-input input {
-    background-image:url(p2qes_searchIcon.png); 
-    background-repeat: no-repeat; 
+    background-image:url(p2qes_searchIcon.png);
+    background-repeat: no-repeat;
     background-position: 2px 3px;
     width:100%;
     height:100%;
@@ -417,11 +417,11 @@ mark {
     width:95%;
     margin:auto;
 }
-.modal-body {    
-    position: relative;    
-    padding: 15px;    
+.modal-body {
+    position: relative;
+    padding: 15px;
     max-height: 60vh;
-    min-height: 10vh;  
+    min-height: 10vh;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -527,8 +527,8 @@ mark {
      word-break: break-all;
     width : auto !important;
     max-width: 300px !important;
-    min-width: 120px !important; 
-} 
+    min-width: 120px !important;
+}
 
 .proname-icon {
     display: inline-block;
@@ -627,7 +627,7 @@ mark {
 }
 .hover-tip .val {
     float: right;
-    display: inline-block;  
+    display: inline-block;
     margin: 5px;
     width: auto;
 }
@@ -652,10 +652,10 @@ mark {
 .modal-open {    position: relative;}
 .modal-backdrop.in{ position: absolute ;}
 .modal-backdrop{ z-index:5}
-.table-wrap {    
+.table-wrap {
     /* height: calc(100vh - 106px); */
     display: grid;
-    /*max-height: 61vh;    
+    /*max-height: 61vh;
     overflow-y: auto;
     min-height: 70px;*/
 }
@@ -681,10 +681,10 @@ mark {
     padding: 0px !important;
     color: rgba(0,0,0,0.5);
 }
-.filter {    
-    height: calc(100vh - 106px); 
+.filter {
+    height: calc(100vh - 106px);
 }
-@media (max-width:767px){       
+@media (max-width:767px){
 .quote-container {           height: auto!important;        }}
 .Sidebar.right.fade.in.modal {    display: block;}
 .small-modal .modal {width:40% !important}
@@ -726,67 +726,67 @@ mark {
     padding-right: 13px;
     text-transform: none;
 }
-.quote-container{    
-    padding: 0px;    
-    height: 100%;    
+.quote-container{
+    padding: 0px;
+    height: 100%;
     overflow-y: auto;
-    
+
 }
-@media (max-width:767px){    
-    .containers{ 
-        border-bottom:1px solid #ddd;     
+@media (max-width:767px){
+    .containers{
+        border-bottom:1px solid #ddd;
     }
 }
 
 /*styles for bootstrap tab on reconfigure lines page*/
 .margin-tabs{
-    width: 98%;    
+    width: 98%;
 }
 
-.nav-tabs { 
-    border-bottom: 2px solid #DDD; 
+.nav-tabs {
+    border-bottom: 2px solid #DDD;
 }
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, 
-.nav-tabs > li.active > a:hover { 
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
     border-width: 0;
 }
-.nav-tabs > li > a { 
+.nav-tabs > li > a {
     border: none; color: #666;
 }
 .nav-tabs > li.active > a{
-    border: none; 
-    color: #fff !important; 
-    background: transparent; 
+    border: none;
+    color: #fff !important;
+    background: transparent;
 }
 .nav-tabs > li.active > a:hover{
-    border: none; 
-    color: #fff !important; 
-    background: transparent; 
+    border: none;
+    color: #fff !important;
+    background: transparent;
 }
 .nav-tabs > li > a:hover {
-    border: none; 
-    color: #aaa !important; 
-    background: transparent; 
+    border: none;
+    color: #aaa !important;
+    background: transparent;
 }
-/* .nav-tabs > li > a::after { 
-    content: ""; 
-    background: #4285F4; 
-    height: 2px; 
-    position: absolute; 
-    width: 100%; 
-    left: 0px; 
-    bottom: -1px; 
-    transition: all 250ms ease 0s; 
-    transform: scale(0); 
+/* .nav-tabs > li > a::after {
+    content: "";
+    background: #4285F4;
+    height: 2px;
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    bottom: -1px;
+    transition: all 250ms ease 0s;
+    transform: scale(0);
 } */
-.nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after { 
-    transform: scale(1); 
+.nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after {
+    transform: scale(1);
 }
-.tab-nav > li > a::after { 
-    background: #21527d none repeat scroll 0% 0%; 
-    color: #fff; 
+.tab-nav > li > a::after {
+    background: #21527d none repeat scroll 0% 0%;
+    color: #fff;
 }
-.tab-pane { 
+.tab-pane {
     /* padding: 15px 0;  */
 }
 .tab-content{
@@ -801,9 +801,9 @@ mark {
     height: auto;
 }
 
-.disabledIcon { 
+.disabledIcon {
   cursor: default;
-  color: grey; 
+  color: grey;
 }
 
 .panelMargin {
@@ -898,9 +898,9 @@ mark {
 }
 .ReactTable .rt-td {
     height:25px!important;
-	padding-bottom:0!important;	
+	padding-bottom:0!important;
 }
-.sub-footer-seg {    
+.sub-footer-seg {
     height: auto!important;
     font-size: 14px!important;
     font-weight: 600!important;
@@ -917,13 +917,13 @@ mark {
 	display: inline!important;
 	padding:1px!important;
 	margin-left: -25px;
-	
+
 }
 .table-edit-seg{
     display: inline!important;
 	padding:1px!important;
 	margin-left: 0 !important;
-	
+
 }
 .inline-edit{
     opacity:0!important;
@@ -936,9 +936,9 @@ mark {
     width: 100%;
     height: 34px;
     border-top-right-radius: 0;
-    border-bottom-right-radius: 0;	
+    border-bottom-right-radius: 0;
 }
-.autoCompleteWidth .rbt-input input {   
+.autoCompleteWidth .rbt-input input {
     background-position: 3px 4px;
     width: 100%;
     height: 100%;
@@ -1037,26 +1037,26 @@ strong {
 	max-height: 75vh !important;
 	overflow-y:auto;
 }
-.group .quote-container.segmented .table-wrap.edit-grid-quote .ReactTable { 
+.group .quote-container.segmented .table-wrap.edit-grid-quote .ReactTable {
     min-height: 15vh !important;
 	max-height: 62vh !important;
 	overflow-y:auto;
 }
-.group .quote-container.segmented  .table-wrap.edit-grid-segment .ReactTable { 
+.group .quote-container.segmented  .table-wrap.edit-grid-segment .ReactTable {
     min-height: 15vh !important;
     max-height: 54vh !important;
     padding-bottom: 0px !important;
 	overflow-y:auto;
 }
-.group .quote-container.segmented  .table-wrap.edit-grid-segment{ 
+.group .quote-container.segmented  .table-wrap.edit-grid-segment{
     padding-bottom: 0px !important;
 }
-.table-container .group .table-wrap.edit-grid-quote .ReactTable { 
+.table-container .group .table-wrap.edit-grid-quote .ReactTable {
     min-height: 15vh !important;
 	max-height: 69vh !important;
 	overflow-y:auto;
 }
-.table-container .table-wrap.edit-grid-quote .ReactTable { 
+.table-container .table-wrap.edit-grid-quote .ReactTable {
     min-height: 15vh!important;
     overflow: auto;
     max-height: 91vh !important;
@@ -1071,7 +1071,7 @@ strong {
 /* height management */
 .Sidebar.modal .modal-title {
     padding: 2px;
-    text-align: left;	
+    text-align: left;
 	color: #337ab7;
 }
 .Sidebar.modal .modal-body h4 {
@@ -1101,7 +1101,7 @@ strong {
 	transform: translate(-50%, -50%);
 }
 .Sidebar.modal {
-	
+
     position: absolute!important;
     top: 49%!important;
     transform: translate(-50%, -49%);
@@ -1137,12 +1137,12 @@ strong {
 		margin-left: 15px;
         margin-right: 15px;
     }
-    
+
 	.group-input {
 		font-size: 15px;
 	}
 
-	.Sidebar.modal {		
+	.Sidebar.modal {
 		right: 0!important;
 		left: 50%!important;
 		width: 100%;
@@ -1162,8 +1162,8 @@ strong {
 	border-top-right-radius:0!important;
 	border-bottom-right-radius:0!important;
 }
-.filter {    
-    height: calc(100vh - 200px); 
+.filter {
+    height: calc(100vh - 200px);
 }
 .ReactTable .rt-noData {
     top: 50%!important;
@@ -1262,10 +1262,10 @@ strong {
 		z-index: 999999;
 		background-color: #EDEDED!important;
 	}
-	
+
 }
 @media (max-width:767px){
-	.quote-container .group .sub-footer-seg {		
+	.quote-container .group .sub-footer-seg {
 		padding: 7px 15px!important;
 	}
 }
@@ -1291,11 +1291,11 @@ strong {
 }
 .hideSpan{
     visibility: hidden !important;
-} 
+}
 
 .checkboxWidth{
     width : 45% !important;
-} 
+}
 
 #datePicker .input-group {
     border: none;
@@ -1312,7 +1312,7 @@ strong {
     position: absolute!important;
     z-index: 999999999!important;
 }
-.modal-open .modal {  
+.modal-open .modal {
     z-index: 9999999999999!important;
 }
 
@@ -1375,20 +1375,20 @@ strong {
 }
 .customPencilIcon {
    margin-left: 8px;
-   color :grey; 
+   color :grey;
 }
 .customPencilIcon:hover {
     color: #166bbf;
 }
 #inner-tab-example-tab-custom {
-    cursor: pointer; 
+    cursor: pointer;
 }
 #configureGridId {
     height: auto !important;
     min-height: auto !important;
 }
 .ReactTable {
-    
+
     line-height: 1.42857143;
 }
 .rbt-aux button.close {
@@ -1427,24 +1427,24 @@ body.modal-open {
     z-index: 999999999!important;
 }
 /* @media (max-width: 1400px) and (min-width: 1300px){
-	.quote-container .group #inner-tab-example-pane-custom .table-wrap {    
+	.quote-container .group #inner-tab-example-pane-custom .table-wrap {
 		overflow-y: auto;
 		max-height: calc(60vh - 100px)!important;
 		height: calc(60vh - 100px)!important;
 	}
-	.quote-container .group #noanim-tab-example-pane-2 .table-wrap {			
+	.quote-container .group #noanim-tab-example-pane-2 .table-wrap {
 		overflow-y: auto;
 		min-height: calc(66vh - 100px)!important;
 		height: calc(66vh - 100px)!important;
 	}
 } */
 /* @media (max-width: 1500px) and (min-width: 1401px){
-	.quote-container #inner-tab-example-pane-custom .table-wrap {   
+	.quote-container #inner-tab-example-pane-custom .table-wrap {
 		overflow-y: auto;
 		min-height: calc(66vh - 100px)!important;
 		height: calc(66vh - 100px)!important;
 	}
-	.quote-container #noanim-tab-example-pane-2 .table-wrap {		
+	.quote-container #noanim-tab-example-pane-2 .table-wrap {
 		overflow-y: auto;
 		min-height: calc(70vh - 100px)!important;
 		height: calc(70vh - 100px)!important;
@@ -1479,7 +1479,7 @@ body.modal-open {
 .modal-body input[type=checkbox]{
 	width:auto!important;
 }
-.modal-body .input-group {   
+.modal-body .input-group {
     margin-top: 0px!important;
 }
 .input-group-addon:last-child {
@@ -1584,17 +1584,17 @@ body.modal-open {
 .cellColor {
     color: grey;
 }
-.quote-container {    
+.quote-container {
     height: auto!important;
 }
-.group {    
+.group {
     height: auto!important;
 }
-.show-grid.row{   
+.show-grid.row{
     margin-right:0!important;
     margin-left:0!important;
 }
-.quote-container .sub-footer-seg {    
+.quote-container .sub-footer-seg {
     padding: 7px 15px!important;
 }
 
@@ -1649,7 +1649,7 @@ body.modal-open {
     border-bottom: 2px solid #DDD !important;
 }
 .reconfigurePanel {
-    border: solid 1px #d0d0d0; 
+    border: solid 1px #d0d0d0;
     border-radius: 5px !important;
 }
 .validationMessage {
@@ -1677,7 +1677,7 @@ body.modal-open {
 }
 .reconfigureDivScroll {
     overflow-y: auto;
-    height: 80vh; 
+    height: 80vh;
 }
 
 .suggestionProductLabel{
@@ -1740,13 +1740,13 @@ body.modal-open {
     font-size: 25px;
     margin-right: 5px;
 }
-.guidedSellingModalContent .tab-content .radio-inline {   
-    padding-left: 0px!important;   
-    margin-right: 20px!important;    
+.guidedSellingModalContent .tab-content .radio-inline {
+    padding-left: 0px!important;
+    margin-right: 20px!important;
 }
-.guidedSellingModalContent .tab-content .checkbox-inline {   
-    padding-left: 0px!important;   
-    margin-right: 20px!important;    
+.guidedSellingModalContent .tab-content .checkbox-inline {
+    padding-left: 0px!important;
+    margin-right: 20px!important;
 }
 .guidedSellingModalContent .tab-content .control-label{
     font-family: Georgia, Times, 'Times New Roman', serif!important;
@@ -1835,14 +1835,14 @@ body.modal-open {
     background-color: #286090!important;
     border-color: #204d74!important;
 }
-.productModal .modal-body {   
+.productModal .modal-body {
     max-height: 270px!important;
 }
-.productModal .modal-body img{   
+.productModal .modal-body img{
     padding:4px;
     border:1px solid #ddd;
 }
-.productModal .modal-body p{  
+.productModal .modal-body p{
     font-size: 14px;
     margin-top: 15px;
     text-align: justify;
@@ -1856,7 +1856,7 @@ body.modal-open {
 }
 
 /********* D. 10 Jan 2017  **********/
-.productModal .rsc-container {    
+.productModal .rsc-container {
     width: 25%!important;
     margin: 0 auto;
     float: left!important;
@@ -1940,7 +1940,7 @@ body.modal-open {
 .productModal  .blade-inside .subhead .specs-list{
     padding-left: 30px!important;
     text-align: left!important;
-    margin-bottom: 15px!important;		
+    margin-bottom: 15px!important;
 }
 .productModal  .blade-inside .subhead .specs-list li{
     line-height: 1.5em!important;
@@ -1958,20 +1958,20 @@ body.modal-open {
 .productAccordian{
     margin-bottom: 10px!important;
 }
-.productAccordian .panel-heading {   
+.productAccordian .panel-heading {
     padding: 18px!important;
 }
-#suggestionAccordion {   
+#suggestionAccordion {
     padding: 0 14px!important;
 }
-.productAccordian .panel-title {    
+.productAccordian .panel-title {
     font-size: 15px!important;
-    font-weight: 600!important;   
+    font-weight: 600!important;
 }
 .productAccordian .panel-body {
     padding: 0px!important;
 }
-.productAccordian .panel-title span.glyphicon{   
+.productAccordian .panel-title span.glyphicon{
     float: right;
     margin-top: -4px;
     color: #757474;
@@ -1983,4 +1983,29 @@ body.modal-open {
 }
 
 
+.rbt-menu li{
+	line-height: 1em!important;
+}
+.rbt-menu li a {
+    color: #0070d2!important;
+    font-size: 13px!important;
+}
 
+/** For Tabs ***/
+#noanim-tab-example>.nav>li {
+    padding-top: 15px!important;
+    text-align: center;
+}
+.nav-tabs {
+    height: 38px;
+}
+#inner-tab-example>ul>li {
+   /* padding: 18px 20px!important;*/
+}
+#inner-tab-example>ul li a {
+    padding: 10px 20px!important;
+}
+#inner-tab-example>ul{
+    padding: 0 0!important;
+    padding-top: 18px!important;
+}
