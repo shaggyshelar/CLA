@@ -12,8 +12,8 @@ class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line r
 
   render() {
     return (
-      <div className="card" >
-        <div className="card-detail">
+      <div>
+        <div>
           <div>
             <div className="cartFont">
               <span style={{ marginTop: '0px', fontSize: '20px' }}>
