@@ -2008,3 +2008,18 @@ body.modal-open {
     padding: 0 0!important;
     padding-top: 18px!important;
 }
+
+.topPadding {
+	padding-top:25px!important;
+}
+
+.sub-component .rt-tbody .rt-td {
+  border-right: 0!important;
+  background: #f2f2f2!important;
+  line-height: 0.8em;
+  padding-bottom: 6px!important;
+  font-size: 13px;
+}
+.sub-component .rt-tbody .rt-tr-group {
+  margin-bottom: 0px!important;
+}

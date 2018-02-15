@@ -13,7 +13,7 @@ class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line r
   render() {
     return (
       <div>
-        <div>
+        <div className="topPadding">
           <div>
             <div className="cartFont">
               <span style={{ marginTop: '0px', fontSize: '20px' }}>
