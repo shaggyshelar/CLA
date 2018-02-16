@@ -11,9 +11,9 @@ import React from 'react';
 class ProductSelectionHeaderCard extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div>
+      <div className="card">
         {/* <div className="card-icon"><Glyphicon className="cartIcon" glyph="barcode" /></div> */}
-        <div className="topPadding">
+        <div className="card-detail">
           <div>
             <div className="cartFont" >Add Products</div>
           </div>
