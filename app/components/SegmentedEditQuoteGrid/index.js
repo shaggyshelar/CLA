@@ -237,8 +237,8 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
       <div className="actionItems" >
         {reconfigure}
         {suggestion}
-        {notification}
         {segment}
+        {notification}
         {/* <a><Glyphicon glyph="star-empty" /></a> */}
       </div>
     );

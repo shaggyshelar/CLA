@@ -216,8 +216,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       <div className="actionItems" >
         {reconfigure}
         {suggestion}
-        {notification}
         {segment}
+        {notification}
       </div>
     );
   }
@@ -387,7 +387,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Header: '',
         style: { textAlign: 'left' },
         sortable: false,
-        width: 60,
+        width: 80,
         Cell: this.renderActionItems,
       },
       {
@@ -395,14 +395,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'id',
         id: 'id',
         sortable: false,
-        width: 50,
+        width: 40,
         style: { textAlign: 'center' },
         Cell: this.renderChecbox,
       },
       {
         Header: '#',
         sortable: false,
-        width: 50,
+        width: 40,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
         Cell: ({ index }) => <span>{index + 1}</span>,
