@@ -216,8 +216,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
       <div className="actionItems" >
         {reconfigure}
         {suggestion}
-        {segment}
         {notification}
+        {segment}
       </div>
     );
   }
