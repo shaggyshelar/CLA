@@ -6,7 +6,7 @@
 
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import { Button } from 'react-bootstrap/lib';
+import { Button, Panel } from 'react-bootstrap/lib';
 import ReconfigureGrid from 'components/ReconfigureGrid';
 import { browserHistory } from 'react-router';
 import messages from './messages';
@@ -47,39 +47,38 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
     if (feature !== undefined) {
       addButton = this.renderAddButton(feature, index);
       const filteredProducts = feature.products.length > 0 ? _.filter(feature.products, { isDeleted: false }) : [];
-      const panelBodyClassName = filteredProducts.length === 0 && addButton.type === 'span' ? 'panel-body suggestionNoRecordPanel' : 'panel-body suggestionPanelbody';
-      const href = `#${feature.id}`;
-      const panelClassName = index === 0 ? 'panel-collapse collapse in' : 'panel-collapse collapse';
+      const panelId = `panel-${index}`;
       return (
-        <div key={index} className="panel suggestionPanel">
-          <div className="panel-heading">
-            <h4 className="panel-title suggestionProductLabel">
-              <a data-toggle="collapse" data-parent="#accordion" href={href}>
-                {feature.name}
-              </a>
-              {this.renderMinMaxMessage(feature)}
-            </h4>
-          </div>
-          <div id={feature.id} className={panelClassName}>
-            <div className={panelBodyClassName}>
-              <ReconfigureGrid
-                products={filteredProducts}
-                showFilter={this.props.showFilter}
-                toggleFilter={this.props.toggleSidebar}
-                toggleCheckboxChange={this.props.toggleCheckboxChange}
-                data={feature.products.length > 0 ? feature.products : []}
-                addProductsWait={this.props.addProductsWait}
-                checkAll={this.props.checkAll}
-                toggleCheckAll={this.props.checkAll}
-                feature={feature}
-                categoryId={this.props.categoryId}
-                deleteProduct={this.props.deleteProduct}
-                updateField={this.props.updateField}
-                currency={this.props.currency}
-              />
-              {addButton}
-            </div>
-          </div>
+        <div>
+          <Panel id={panelId} key={panelId} className="reconfigurePanel">
+            <Panel.Heading>
+              <Panel.Title toggle>
+                <h4 className="panel-title suggestionProductLabel">
+                  {feature.name} {this.renderMinMaxMessage(feature)}
+                </h4>
+              </Panel.Title>
+            </Panel.Heading>
+            <Panel.Collapse>
+              <Panel.Body>
+                <ReconfigureGrid
+                  products={filteredProducts}
+                  showFilter={this.props.showFilter}
+                  toggleFilter={this.props.toggleSidebar}
+                  toggleCheckboxChange={this.props.toggleCheckboxChange}
+                  data={feature.products.length > 0 ? feature.products : []}
+                  addProductsWait={this.props.addProductsWait}
+                  checkAll={this.props.checkAll}
+                  toggleCheckAll={this.props.checkAll}
+                  feature={feature}
+                  categoryId={this.props.categoryId}
+                  deleteProduct={this.props.deleteProduct}
+                  updateField={this.props.updateField}
+                  currency={this.props.currency}
+                />
+                {addButton}
+              </Panel.Body>
+            </Panel.Collapse>
+          </Panel>
         </div>
       );
     }

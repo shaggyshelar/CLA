@@ -1981,3 +1981,15 @@ body.modal-open {
     margin-bottom: 50px!important;
     text-align: center!important;
 }
+
+.reconfigurePanel {
+  margin-bottom: 10px!important;
+}
+
+.reconfigurePanel .panel-heading {
+  padding: 10px!important;
+}
+
+.reconfigurePanel .panel-body {
+  padding: 0px!important;
+}
