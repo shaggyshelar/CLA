@@ -43,7 +43,7 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
       >
         <Modal.Dialog >
           <Modal.Header closeButton>
-            <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="info-sign" /> <strong> {title} </strong></Modal.Title>
+            <Modal.Title style={{ textAlign: 'center' }}> <div className="cartFont"><span style={{ marginTop: '0px', fontSize: '20px' }}> <Glyphicon glyph="info-sign" /> {title} </span></div> </Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -51,7 +51,7 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
             <div className="productDetailBox">
               <h4>
                 Product Code: <b>{code}</b>
-                <span>Product Family: <b>{productFamily}</b></span>                
+                <span>Product Family: <b>{productFamily}</b></span>
               </h4>
             </div>
 

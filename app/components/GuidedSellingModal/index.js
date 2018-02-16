@@ -60,7 +60,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
       <Nav bsStyle="pills" stacked>
         {this.props.data.map((quoteProcess) => (
           <NavItem key={quoteProcess.id} eventKey={quoteProcess.id}>
-            { quoteProcess.name }
+           { quoteProcess.name }
           </NavItem>
         ))}
       </Nav>
@@ -210,7 +210,7 @@ class GuidedSellingModal extends React.Component { // eslint-disable-line react/
       >
         <Modal.Dialog >
           <Modal.Header closeButton>
-            <Modal.Title style={{ textAlign: 'center' }}> <Glyphicon glyph="filter" /> <strong> Guided Selling </strong></Modal.Title>
+            <Modal.Title style={{ textAlign: 'center' }}> <div className="cartFont"><span style={{ marginTop: '0px', fontSize: '20px' }}> <Glyphicon glyph="filter" /> Guided Selling </span></div> </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Tab.Container id="left-tabs-example" defaultActiveKey={defaultTabId}>

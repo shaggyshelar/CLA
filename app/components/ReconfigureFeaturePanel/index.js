@@ -50,7 +50,7 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
       const panelId = `panel-${index}`;
       return (
         <div>
-          <Panel id={panelId} key={panelId} className="reconfigurePanel">
+          <Panel id={panelId} key={panelId} className="reconfigurePanel" defaultExpanded>
             <Panel.Heading>
               <Panel.Title toggle>
                 <h4 className="panel-title suggestionProductLabel">
