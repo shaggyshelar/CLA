@@ -1008,9 +1008,7 @@ strong {
     font-size: 14px!important;
     background: #f5f5f5!important;
 }
-.modal-title strong{
-	font-size:18px!important;
-}
+
 .ReactTable .rt-tr-group {
     -webkit-box-flex:initial!important;
     -ms-flex: initial!important;
@@ -1700,10 +1698,6 @@ body.modal-open {
     padding: 20px 15px !important;
     border-radius: 4px!important;
     border: none!important;
-    font-family: Georgia, Times, 'Times New Roman', serif!important;
-    font-size: 14px;
-    color: #3c3b3b;
-    font-weight: 600;
 }
 .modal .nav>li.active a {
     color: #fff;
@@ -1747,13 +1741,13 @@ body.modal-open {
     padding-left: 0px!important;
     margin-right: 20px!important;
 }
-.guidedSellingModalContent .tab-content .control-label{
+/* .guidedSellingModalContent .tab-content .control-label{
     font-family: Georgia, Times, 'Times New Roman', serif!important;
-}
-.guidedSellingModalContent .tab-content .radio-inline, .guidedSellingModalContent .tab-content .checkbox-inline{
+} */
+/* .guidedSellingModalContent .tab-content .radio-inline, .guidedSellingModalContent .tab-content .checkbox-inline{
     font-family: 'Segoe UI'!important;
     color: #000;
-}
+} */
 .guidedSellingModal .modal-header .close {
     margin-top: -3px;
     font-size: 30px;
@@ -1887,7 +1881,7 @@ body.modal-open {
     font-size: 15px;
     margin-top: 0;
     margin-bottom: 0;
-    font-family: Georgia, Times, 'Times New Roman', serif;
+    /* font-family: Georgia, Times, 'Times New Roman', serif; */
 }
 @media(min-width:768px){
     .productModal .modal-content {
@@ -1932,9 +1926,9 @@ body.modal-open {
 .productModal  .blade-inside .subhead h2{
     font-size: 15px!important;
     margin-top: 0px!important;
-    font-family: Georgia,Times,Times New Roman,serif!important;
+    /* font-family: Georgia,Times,Times New Roman,serif!important;
     font-weight: 600!important;
-    color: #292828!important;
+    color: #292828!important; */
 }
 .productModal  .blade-inside .subhead .specs-list{
     padding-left: 30px!important;
