@@ -228,7 +228,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         {/*
           Disabling Edit Partner Discount for demo scheduled on 20/02/2018
         <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div> */}
-        <RIENumber
+        {/* <RIENumber
           className={'table-edit-quantity'}
           classEditing="table-edit-input"
           value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
@@ -237,8 +237,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
           validate={this.validate}
           classInvalid="invalid"
-        />
-        <span> %</span>
+        /> */}
+        {parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))} <span> %</span>
       </div>);
   }
 
