@@ -309,9 +309,14 @@ function appReducer(state = initialState, action) {
       const line = _.find(quote.lines, { id: action.reconfigureObj.id });
       if (line) {
         line.reconfigured = action.reconfigureObj.reconfigured;
+        _.forEach(quote.lines, (line) => {
+          line.canReconfigure = false;
+        });
+        line.canReconfigure = true;
       }
+      const updateQuote = fromJS(quote);
       return state
-         .set('data', fromJS(quote));
+         .set('data', updateQuote);
     }
     case TOGGLE_SUGGESTION_STATUS : {
       const quote = state.get('data').toJS();

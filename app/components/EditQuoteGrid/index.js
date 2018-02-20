@@ -225,8 +225,10 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
   renderPartnerDiscount(cellInfo) {
     return (
       <div>
-        <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
-        <RIENumber
+        {/*
+          Disabling Edit Partner Discount for demo scheduled on 20/02/2018
+        <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div> */}
+        {/* <RIENumber
           className={'table-edit-quantity'}
           classEditing="table-edit-input"
           value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
@@ -235,8 +237,8 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
           validate={this.validate}
           classInvalid="invalid"
-        />
-        <span> %</span>
+        /> */}
+        {parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))} <span> %</span>
       </div>);
   }
 
@@ -387,7 +389,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Header: '',
         style: { textAlign: 'left' },
         sortable: false,
-        width: 60,
+        width: 80,
         Cell: this.renderActionItems,
       },
       {
@@ -395,14 +397,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         accessor: 'id',
         id: 'id',
         sortable: false,
-        width: 50,
+        width: 40,
         style: { textAlign: 'center' },
         Cell: this.renderChecbox,
       },
       {
         Header: '#',
         sortable: false,
-        width: 50,
+        width: 40,
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
         Cell: ({ index }) => <span>{index + 1}</span>,
