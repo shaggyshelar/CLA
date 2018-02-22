@@ -6,7 +6,7 @@
 
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
-import { Button, Panel } from 'react-bootstrap/lib';
+import { Button, Panel, FormGroup, Radio, Checkbox, FormControl } from 'react-bootstrap/lib';
 import ReconfigureGrid from 'components/ReconfigureGrid';
 import { browserHistory } from 'react-router';
 import messages from './messages';
@@ -14,20 +14,19 @@ import messages from './messages';
 class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props, context) {
     super(props, context);
+
+    this.renderCheckBoxAnswer = this.renderCheckBoxAnswer.bind(this);
+    this.renderRadioButtonAnswer = this.renderRadioButtonAnswer.bind(this);
+    this.renderDateTimeAnswer = this.renderDateTimeAnswer.bind(this);
+    this.renderConfigAttribute = this.renderConfigAttribute.bind(this);
+    this.onToggleCheckBox = this.onToggleCheckBox.bind(this);
+    this.onTextOrNumberBoxChange = this.onTextOrNumberBoxChange.bind(this);
+
     this.state = {
       products: [],
     };
   }
 
-  renderAddButton(feature, index) {
-    if (feature.dynamicAddEnabled) {
-      if (feature.categoryId) {
-        return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&featureName=${feature.name}&categoryId=${feature.categoryId}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}&isDynamic=${feature.isDynamic}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
-      }
-      return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&featureName=${feature.name}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}&isDynamic=${feature.isDynamic}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
-    }
-    return (<span></span>);
-  }
   renderMinMaxMessage(feature) {
     let text = '';
     if (feature.minOption !== undefined && feature.maxOption !== undefined) {
@@ -40,6 +39,146 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
       }
     }
     return (<span className="minMaxMessage">{text}</span>);
+  }
+
+  renderTextBoxAnswer(configAttribute) {
+    return (
+      <FormGroup key={configAttribute.id}>
+        <FormControl
+          type="text"
+          placeholder="Enter text"
+          onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
+        />
+      </FormGroup>
+    );
+  }
+
+  renderCheckBoxAnswer(configAttribute) {
+    return (
+      <FormGroup key={configAttribute.id}>
+        {
+          configAttribute.values.map((option) => (
+            <Checkbox key={option.id} value={option.value} inline onChange={(event) => this.onToggleCheckBox(event, configAttribute)}>
+              { option.value }
+            </Checkbox>
+          ))
+        }
+      </FormGroup>
+    );
+  }
+
+  renderSelectAnswer(configAttribute) {
+    return (
+      <FormGroup key={configAttribute.id}>
+        <FormControl componentClass="select" placeholder="select" onChange={(event) => this.onToggleSelect(event, configAttribute)}>
+          {
+            configAttribute.values.map((option) => (
+              <option key={option.id} value={option.value}>{ option.value }</option>
+            ))
+          }
+        </FormControl>
+      </FormGroup>
+    );
+  }
+
+  renderRadioButtonAnswer(configAttribute) {
+    return (
+      <FormGroup key={configAttribute.id} onChange={(event) => this.onRadioChange(event, configAttribute)}>
+        {
+          configAttribute.values.map((option) => (
+            <Radio key={option.id} name="radioGroup" value={option.value} checked={this.state.selectedRadioControlName === option.value} inline>
+              { option.value }
+            </Radio>
+          ))
+        }
+      </FormGroup>
+    );
+  }
+
+  renderDateTimeAnswer(configAttribute) {
+    return (
+      <FormControl
+        key={configAttribute.id}
+        type="date"
+        name="startDate"
+        className="customSegmentsInput"
+        onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
+      />
+    );
+  }
+
+  renderNumericAnswer(configAttribute) {
+    return (
+      <FormGroup key={configAttribute.id}>
+        <FormControl
+          type="number"
+          placeholder="Enter number"
+          onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
+        />
+      </FormGroup>
+    );
+  }
+
+  renderConfigAttribute(configAttribute) {
+    if (configAttribute.dataType === 'TextBox') {
+      return this.renderTextBoxAnswer(configAttribute);
+    }
+    if (configAttribute.dataType === 'Checkbox') {
+      return this.renderCheckBoxAnswer(configAttribute);
+    }
+    if (configAttribute.dataType === 'Select') {
+      return this.renderSelectAnswer(configAttribute);
+    }
+    if (configAttribute.dataType === 'RadioButton') {
+      return this.renderRadioButtonAnswer(configAttribute);
+    }
+    if (configAttribute.dataType === 'DateTime') {
+      return this.renderDateTimeAnswer(configAttribute);
+    }
+    if (configAttribute.dataType === 'Numeric') {
+      return this.renderNumericAnswer(configAttribute.values);
+    }
+    // It is 'Numeric'
+    return '';
+  }
+
+  onTextOrNumberBoxChange(event, configAttribute) {
+    configAttribute.values = [{ id: '', value: event.target.value, isSelected: true }];
+    configAttribute.value = event.target.value;
+  }
+
+  onToggleCheckBox(event, configAttribute) {
+    const foundCheckbox = _.find(configAttribute.values, { value: event.target.value });
+    foundCheckbox.isSelected = event.target.checked;
+  }
+
+  onToggleSelect(event, configAttribute) {
+    _.forEach(configAttribute.values, (value) => {
+      value.isSelected = false;
+    });
+    const foundItem = _.find(configAttribute.values, { value: event.target.value });
+    foundItem.isSelected = true;
+  }
+
+  onRadioChange(event, configAttribute) {
+    _.forEach(configAttribute.values, (value) => {
+      value.isSelected = false;
+    });
+    const foundItem = _.find(configAttribute.values, { value: event.target.value });
+    foundItem.isSelected = true;
+    this.setState({
+      selectedRadioControlName: event.target.value,
+    });
+  }
+
+  renderAddButton(feature, index) {
+    if (feature.dynamicAddEnabled) {
+      if (feature.categoryId) {
+        return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&featureName=${feature.name}&categoryId=${feature.categoryId}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}&isDynamic=${feature.isDynamic}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
+      }
+      return (<Button key={index} bsStyle="link" onClick={() => { this.props.toggleAddOptionsState(true, this.props.activeTab); browserHistory.push(`/addConfigureproducts?featureId=${feature.id}&featureName=${feature.name}&quoteName=${this.props.params.quoteName}&bundleId=${this.props.params.bundleId}&priceBookId=${this.props.params.priceBookId}&quoteId=${this.props.params.quoteId}&bundleLineId=${this.props.params.bundleLineId}&groupId=${this.props.params.groupId}&isDynamic=${feature.isDynamic}`); }} >{this.context.intl.formatMessage({ ...messages.addOptions })}</Button>);
+    }
+    return (<span></span>);
   }
 
   renderFeatureGrid(feature, index) {
@@ -60,6 +199,16 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
             </Panel.Heading>
             <Panel.Collapse>
               <Panel.Body>
+                { feature.configAttribute.map((configAttribute, configIndex) => (
+                  <div key={configIndex}>
+                    <span className="categoryLabel">{configAttribute.name}</span>
+                    { this.renderConfigAttribute(configAttribute, configIndex) }
+                  </div>
+                ))}
+                {/* {
+                  feature.configAttribute.map((item, configIndex) => this.renderConfigAttribute(item, configIndex))
+                } */}
+                <br /><br />
                 <ReconfigureGrid
                   products={filteredProducts}
                   showFilter={this.props.showFilter}
