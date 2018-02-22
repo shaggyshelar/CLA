@@ -20,15 +20,24 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
     };
   }
   componentWillReceiveProps(nextProps, nextState) {
+    this.setState({ URLs: [] });
     if (nextProps.isDetailsShown) {
-      const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProductDetails?productId=${nextProps.selectedData.productId}`}`;
-      fetch(requestURL).then((response) => response.json()).then((jsonData) => {
-        const url = [];
-        jsonData.productDetailsData.detailedInfo.images.map((item) => (
-          url.push(item)
-        ));
-        this.setState({ URLs: url });
-      });
+      if (nextProps.selectedData && nextProps.selectedData.productId) {
+        const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProductDetails?productId=${nextProps.selectedData.productId}`}`;
+
+        const header = new Headers({
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        });
+
+        fetch(requestURL, { header }).then((response) => response.json()).then((jsonData) => {
+          const url = [];
+          jsonData.productDetailsData.detailedInfo.images.map((item) => (
+            url.push(item)
+          ));
+          this.setState({ URLs: url });
+        });
+      }
     }
   }
 
