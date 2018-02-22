@@ -310,9 +310,9 @@ function appReducer(state = initialState, action) {
       if (line) {
         line.reconfigured = action.reconfigureObj.reconfigured;
         _.forEach(quote.lines, (line) => {
-          line.canReconfigure = false;
+          line.toReconfigure = false;
         });
-        line.canReconfigure = true;
+        line.toReconfigure = true;
       }
       const updateQuote = fromJS(quote);
       return state

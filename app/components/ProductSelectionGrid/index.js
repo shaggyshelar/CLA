@@ -157,6 +157,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
           style={{
             display: 'inline-flex',
           }}
+          isDetailsShown={this.state.isProductDetailsModalOpen}
           value={this.state.value}
           selectedData={this.state.selectedData}
         />
