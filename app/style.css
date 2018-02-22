@@ -1987,3 +1987,7 @@ body.modal-open {
 .reconfigurePanel .panel-body {
   padding: 0px!important;
 }
+
+#configureGridId .ReactTable .rt-noData {
+  margin-top:13px!important;
+}
