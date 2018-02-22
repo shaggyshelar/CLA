@@ -5,13 +5,13 @@
  */
 import { generateGuid, addQuery } from 'containers/App/constants';
 import React, { PropTypes } from 'react';
-import CKEditor from 'react-ckeditor-component';
+// import CKEditor from 'react-ckeditor-component';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { RIEInput } from 'riek';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
-import { Button, Glyphicon, Modal, ButtonGroup, Col, Row, DropdownButton, MenuItem, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
+import { Button, FormControl, Glyphicon, Modal, ButtonGroup, Col, Row, DropdownButton, MenuItem, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import { SegmentedQuote } from '../SegmentedQuote';
 import messages from './messages';
@@ -131,7 +131,8 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     return !isNaN(number);
   }
   editorTextChange(e) {
-    this.setState({ desc: e.editor.getData() });
+    this.setState({ desc: e.target.value });
+    // this.setState({ desc: e.editor.getData() });
   }
   render() {
     let group = {};
@@ -159,11 +160,18 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             <Modal.Title id="contained-modal-title" style={{ textAlign: 'center' }}>Edit Description for {group.name} </Modal.Title>
           </Modal.Header>
           <Modal.Body className="group-des-edit">
-            <CKEditor
+            {/* <CKEditor
               content={group.description} events={{
                 change: this.editorTextChange,
               }}
-            ></CKEditor>
+            ></CKEditor> */}
+            <FormControl
+              componentClass="textarea"
+              type="text"
+              value={this.state.desc}
+              placeholder="Enter description"
+              onChange={this.editorTextChange}
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.toggleEditor}>Close</Button>
