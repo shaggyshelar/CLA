@@ -450,6 +450,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
           style={{
             display: 'inline-flex',
           }}
+          isDetailsShown={this.state.isProductDetailsModalOpen}
           value={this.state.value}
           selectedData={this.state.selectedData}
         />

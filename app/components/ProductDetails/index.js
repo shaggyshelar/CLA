@@ -9,9 +9,29 @@ import React from 'react';
 import { Modal, Button, Glyphicon } from 'react-bootstrap/lib';
 import Slider from 'react-image-slider';
 import Parser from 'html-react-parser';
+import { SERVER_URL, EntityURLs } from '../../containers/App/constants';
 import '../../../node_modules/react-image-slider/lib/image-slider.css';
 
 class ProductDetails extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  constructor(props) {
+    super(props);
+    this.state = {
+      URLs: [],
+    };
+  }
+  componentWillReceiveProps(nextProps, nextState) {
+    if (nextProps.isDetailsShown) {
+      const requestURL = `${`${SERVER_URL + EntityURLs.PRODUCTS}/GetProductDetails?productId=${nextProps.selectedData.productId}`}`;
+      fetch(requestURL).then((response) => response.json()).then((jsonData) => {
+        const url = [];
+        jsonData.productDetailsData.detailedInfo.images.map((item) => (
+          url.push(item)
+        ));
+        this.setState({ URLs: url });
+      });
+    }
+  }
+
   render() {
     // const tooltip = (
     //   <Tooltip id="tooltip" bsClass="tooltip"><strong>Specifiy the discount unit: Amount or Percent</strong></Tooltip>
@@ -55,8 +75,8 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
               </h4>
             </div>
 
-            <Slider images={url} isInfinite delay={5000}>
-              {url.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} /></div>)}
+            <Slider images={this.state.URLs} isInfinite delay={5000}>
+              {this.state.URLs.map((image, key) => <div key={key}><img src={`data:image;base64,${image}`} alt={title} style={{ height: 200, width: 200 }} /></div>)}
             </Slider>
 
             <div className="sliderDesc">
@@ -77,6 +97,7 @@ class ProductDetails extends React.Component { // eslint-disable-line react/pref
 
 ProductDetails.propTypes = {
   selectedData: React.PropTypes.any,
+  isDetailsShown: React.PropTypes.any,
   onHide: React.PropTypes.func,
   show: React.PropTypes.bool,
 };

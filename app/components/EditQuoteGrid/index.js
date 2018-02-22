@@ -512,6 +512,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           style={{
             display: 'inline-flex',
           }}
+          isDetailsShown={this.state.isProductDetailsModalOpen}
           value={this.state.value}
           selectedData={this.state.selectedData}
         />
