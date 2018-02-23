@@ -181,6 +181,20 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
     return (<span></span>);
   }
 
+  renderFeatureConfigs(feature) {
+    if (feature.configAttribute && feature.configAttribute.length > 0) {
+      const featureConfigs = [];
+      feature.configAttribute.map((configAttribute, configIndex) => (
+        featureConfigs.push(<div key={configIndex}>
+          <span className="categoryLabel">{configAttribute.name}</span>
+          { this.renderConfigAttribute(configAttribute, configIndex) }
+        </div>)
+      ));
+      return featureConfigs;
+    }
+    return '';
+  }
+
   renderFeatureGrid(feature, index) {
     let addButton = {};
     if (feature !== undefined) {
@@ -189,7 +203,7 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
       const panelId = `panel-${index}`;
       return (
         <div>
-          <Panel id={panelId} key={panelId} className="reconfigurePanel" defaultExpanded>
+          <Panel id={panelId} key={panelId} className="reconfigurePanel" expanded={this.props.expanderStates[index]} onToggle={(event) => this.props.onTogglePanelExpander(event, index)} >
             <Panel.Heading>
               <Panel.Title toggle>
                 <h4 className="panel-title suggestionProductLabel">
@@ -199,15 +213,7 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
             </Panel.Heading>
             <Panel.Collapse>
               <Panel.Body>
-                { feature.configAttribute.map((configAttribute, configIndex) => (
-                  <div key={configIndex}>
-                    <span className="categoryLabel">{configAttribute.name}</span>
-                    { this.renderConfigAttribute(configAttribute, configIndex) }
-                  </div>
-                ))}
-                {/* {
-                  feature.configAttribute.map((item, configIndex) => this.renderConfigAttribute(item, configIndex))
-                } */}
+                { this.renderFeatureConfigs(feature) }
                 <br /><br />
                 <ReconfigureGrid
                   products={filteredProducts}
@@ -264,6 +270,8 @@ ReconfigureFeaturePanel.propTypes = {
   params: PropTypes.any,
   toggleAddOptionsState: PropTypes.any,
   activeTab: PropTypes.any,
+  expanderStates: PropTypes.any,
+  onTogglePanelExpander: PropTypes.func,
   currency: PropTypes.any,
 };
 
