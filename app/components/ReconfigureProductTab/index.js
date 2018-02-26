@@ -16,12 +16,22 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
     super(props);
     this.state = {
       activeTab: 0,
+      panelExpanderStates: [],
     };
     this.onTabSelect = this.onTabSelect.bind(this);
+    this.onTogglePanelExpander = this.onTogglePanelExpander.bind(this);
   }
   componentWillMount() {
+    if (this.props.reConfigureData && this.props.reConfigureData.features && this.props.reConfigureData.features.length > 0) {
+      const panelExpanderStates = [];
+      _.forEach(this.props.reConfigureData.features, (feature, index) => {
+        panelExpanderStates[index] = true;
+      });
+      this.setState({ panelExpanderStates });
+    }
     this.setState({ activeTab: this.props.activeTab });
   }
+
   onTabSelect(e) {
     this.setState({ activeTab: e });
   }
@@ -66,6 +76,8 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         features={item.features}
         categoryId={item.id}
         deleteProduct={this.props.deleteProduct}
+        expanderStates={this.state.panelExpanderStates}
+        onTogglePanelExpander={this.onTogglePanelExpander}
         updateField={this.props.updateField}
         params={this.props.params}
         toggleAddOptionsState={this.props.toggleAddOptionsState}
@@ -75,7 +87,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
     </Tab>);
   }
 
-  returnFeaturePanel(item) {
+  returnFeaturePanel(features) {
     return (
       <ReconfigureFeaturePanel
         key={generateGuid()}
@@ -85,14 +97,22 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         toggleCheckboxChange={this.props.toggleCheckboxChange}
         addProductsWait={this.addProductsWait}
         checkAll={this.props.checkAll}
-        features={item}
+        features={features}
         deleteProduct={this.props.deleteProduct}
         updateField={this.props.updateField}
         params={this.props.params}
+        expanderStates={this.state.panelExpanderStates}
+        onTogglePanelExpander={this.onTogglePanelExpander}
         toggleAddOptionsState={this.props.toggleAddOptionsState}
         activeTab={this.state.activeTab}
         currency={this.props.currency}
       />);
+  }
+
+  onTogglePanelExpander(event, index) {
+    const exapnderStates = this.state.panelExpanderStates;
+    exapnderStates[index] = event;
+    this.setState({ panelExpanderStates: exapnderStates });
   }
 
   renderTextBoxAnswer(configAttribute) {
