@@ -41,24 +41,24 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
     return (<span className="minMaxMessage">{text}</span>);
   }
 
-  renderTextBoxAnswer(configAttribute) {
+  renderTextBoxAnswer(configAttribute, featureId) {
     return (
       <FormGroup key={configAttribute.id}>
         <FormControl
           type="text"
           placeholder="Enter text"
-          onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
+          onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute, featureId)}
         />
       </FormGroup>
     );
   }
 
-  renderCheckBoxAnswer(configAttribute) {
+  renderCheckBoxAnswer(configAttribute, featureId) {
     return (
       <FormGroup key={configAttribute.id}>
         {
           configAttribute.values.map((option) => (
-            <Checkbox key={option.id} value={option.value} inline onChange={(event) => this.onToggleCheckBox(event, configAttribute)}>
+            <Checkbox key={option.id} value={option.value} inline onChange={(event) => this.onToggleCheckBox(event, configAttribute, featureId)}>
               { option.value }
             </Checkbox>
           ))
@@ -67,10 +67,10 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
     );
   }
 
-  renderSelectAnswer(configAttribute) {
+  renderSelectAnswer(configAttribute, featureId) {
     return (
       <FormGroup key={configAttribute.id}>
-        <FormControl componentClass="select" placeholder="select" onChange={(event) => this.onToggleSelect(event, configAttribute)}>
+        <FormControl componentClass="select" placeholder="select" onChange={(event) => this.onToggleSelect(event, configAttribute, featureId)}>
           {
             configAttribute.values.map((option) => (
               <option key={option.id} value={option.value}>{ option.value }</option>
@@ -81,12 +81,12 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
     );
   }
 
-  renderRadioButtonAnswer(configAttribute) {
+  renderRadioButtonAnswer(configAttribute, featureId) {
     return (
-      <FormGroup key={configAttribute.id} onChange={(event) => this.onRadioChange(event, configAttribute)}>
+      <FormGroup key={configAttribute.id} onChange={(event) => this.onRadioChange(event, configAttribute, featureId)}>
         {
           configAttribute.values.map((option) => (
-            <Radio key={option.id} name="radioGroup" value={option.value} checked={this.state.selectedRadioControlName === option.value} inline>
+            <Radio key={option.id} name="radioGroup" value={option.value} checked={option.isSelected} inline>
               { option.value }
             </Radio>
           ))
@@ -95,80 +95,84 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
     );
   }
 
-  renderDateTimeAnswer(configAttribute) {
+  renderDateTimeAnswer(configAttribute, featureId) {
     return (
       <FormControl
         key={configAttribute.id}
         type="date"
         name="startDate"
         className="customSegmentsInput"
-        onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
+        onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute, featureId)}
       />
     );
   }
 
-  renderNumericAnswer(configAttribute) {
+  renderNumericAnswer(configAttribute, featureId) {
     return (
       <FormGroup key={configAttribute.id}>
         <FormControl
           type="number"
           placeholder="Enter number"
-          onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute)}
+          onChange={(event) => this.onTextOrNumberBoxChange(event, configAttribute, featureId)}
         />
       </FormGroup>
     );
   }
 
-  renderConfigAttribute(configAttribute) {
+  renderConfigAttribute(configAttribute, featureId) {
     if (configAttribute.dataType === 'TextBox') {
-      return this.renderTextBoxAnswer(configAttribute);
+      return this.renderTextBoxAnswer(configAttribute, featureId);
     }
     if (configAttribute.dataType === 'Checkbox') {
-      return this.renderCheckBoxAnswer(configAttribute);
+      return this.renderCheckBoxAnswer(configAttribute, featureId);
     }
     if (configAttribute.dataType === 'Select') {
-      return this.renderSelectAnswer(configAttribute);
+      return this.renderSelectAnswer(configAttribute, featureId);
     }
     if (configAttribute.dataType === 'RadioButton') {
-      return this.renderRadioButtonAnswer(configAttribute);
+      return this.renderRadioButtonAnswer(configAttribute, featureId);
     }
     if (configAttribute.dataType === 'DateTime') {
-      return this.renderDateTimeAnswer(configAttribute);
+      return this.renderDateTimeAnswer(configAttribute, featureId);
     }
     if (configAttribute.dataType === 'Numeric') {
-      return this.renderNumericAnswer(configAttribute.values);
+      return this.renderNumericAnswer(configAttribute.values, featureId);
     }
     // It is 'Numeric'
     return '';
   }
 
-  onTextOrNumberBoxChange(event, configAttribute) {
+  onTextOrNumberBoxChange(event, configAttribute, featureId) {
     configAttribute.values = [{ id: '', value: event.target.value, isSelected: true }];
     configAttribute.value = event.target.value;
+    this.props.onFeatureConfigTextValueChange(configAttribute, this.props.isCategory, this.props.categoryId, featureId);
   }
 
-  onToggleCheckBox(event, configAttribute) {
-    const foundCheckbox = _.find(configAttribute.values, { value: event.target.value });
-    foundCheckbox.isSelected = event.target.checked;
+  onToggleCheckBox(event, configAttribute, featureId) {
+    // const foundCheckbox = _.find(configAttribute.values, { value: event.target.value });
+    // foundCheckbox.isSelected = event.target.checked;
+    this.props.onFeatureConfigCheckBoxValueChange(configAttribute, this.props.isCategory, this.props.categoryId, featureId, event.target.value, event.target.checked);
   }
 
-  onToggleSelect(event, configAttribute) {
+  onToggleSelect(event, configAttribute, featureId) {
     _.forEach(configAttribute.values, (value) => {
       value.isSelected = false;
     });
     const foundItem = _.find(configAttribute.values, { value: event.target.value });
     foundItem.isSelected = true;
+    this.props.onFeatureConfigRadioValueChange(configAttribute, this.props.isCategory, this.props.categoryId, featureId);
   }
 
-  onRadioChange(event, configAttribute) {
+  onRadioChange(event, configAttribute, featureId) {
     _.forEach(configAttribute.values, (value) => {
       value.isSelected = false;
     });
     const foundItem = _.find(configAttribute.values, { value: event.target.value });
     foundItem.isSelected = true;
-    this.setState({
-      selectedRadioControlName: event.target.value,
-    });
+    // this.setState({
+    //   selectedRadioControlName: event.target.value,
+    // });
+    this.props.onFeatureConfigRadioValueChange(configAttribute, this.props.isCategory, this.props.categoryId, featureId);
   }
 
   renderAddButton(feature, index) {
@@ -187,7 +191,7 @@ class ReconfigureFeaturePanel extends React.Component { // eslint-disable-line r
       feature.configAttribute.map((configAttribute, configIndex) => (
         featureConfigs.push(<div key={configIndex}>
           <span className="categoryLabel">{configAttribute.name}</span>
-          { this.renderConfigAttribute(configAttribute, configIndex) }
+          { this.renderConfigAttribute(configAttribute, feature.id) }
         </div>)
       ));
       return featureConfigs;
@@ -273,6 +277,10 @@ ReconfigureFeaturePanel.propTypes = {
   expanderStates: PropTypes.any,
   onTogglePanelExpander: PropTypes.func,
   currency: PropTypes.any,
+  isCategory: PropTypes.any,
+  onFeatureConfigRadioValueChange: PropTypes.func,
+  onFeatureConfigTextValueChange: PropTypes.func,
+  onFeatureConfigCheckBoxValueChange: PropTypes.func,
 };
 
 export default ReconfigureFeaturePanel;

@@ -21,6 +21,7 @@ import {
   TOGGLE_CHECKBOX_CHANGE,
   TOGGLE_ADDOPTIONS_STATE,
   SAVE_CONFIGURE_PRODUCTS_DATA,
+  FEATURE_CONFIG_ATTR_CHANGE,
 } from './constants';
 
 const initialState = fromJS({
@@ -530,6 +531,13 @@ function reConfigureProductsReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false);
+    case FEATURE_CONFIG_ATTR_CHANGE:
+      const productBundleData = state.get('productBundleData').toJS();
+      productBundleData.categories = action.data.categories;
+      productBundleData.features = action.data.features;
+      return state
+        .set('productBundleData', fromJS(productBundleData))
+        .set('reConfigureProductData', fromJS(action.data));
     default:
       return state;
   }

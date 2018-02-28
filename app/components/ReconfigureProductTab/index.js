@@ -37,37 +37,42 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
   }
 
   onTextOrNumberBoxChange(event, configAttribute) {
-    configAttribute.values = [{ id: '', value: event.target.value, isSelected: true }];
+    //configAttribute.values = [{ id: '', value: event.target.value, isSelected: true }];
+    this.props.onQuoteLineTextValueChange(configAttribute, event.target.value);
   }
 
   onToggleCheckBox(event, configAttribute) {
-    const foundCheckbox = _.find(configAttribute.values, { value: event.target.value });
-    foundCheckbox.isSelected = event.target.checked;
+    // const foundCheckbox = _.find(configAttribute.values, { value: event.target.value });
+    // foundCheckbox.isSelected = event.target.checked;
+    this.props.onQuoteLineCheckboxValueChange(configAttribute, event.target.value, event.target.checked);
   }
 
   onToggleSelect(event, configAttribute) {
-    _.forEach(configAttribute.values, (value) => {
-      value.isSelected = false;
-    });
-    const foundItem = _.find(configAttribute.values, { value: event.target.value });
-    foundItem.isSelected = true;
+    // _.forEach(configAttribute.values, (value) => {
+    //   value.isSelected = false;
+    // });
+    // const foundItem = _.find(configAttribute.values, { value: event.target.value });
+    // foundItem.isSelected = true;
+    this.props.onQuoteLineRadioValueChange(configAttribute, event.target.value);
   }
 
   onRadioChange(event, configAttribute) {
-    _.forEach(configAttribute.values, (value) => {
-      value.isSelected = false;
-    });
-    const foundItem = _.find(configAttribute.values, { value: event.target.value });
-    foundItem.isSelected = true;
-    this.setState({
-      selectedRadioControlName: event.target.value,
-    });
+    // _.forEach(configAttribute.values, (value) => {
+    //   value.isSelected = false;
+    // });
+    // const foundItem = _.find(configAttribute.values, { value: event.target.value });
+    // foundItem.isSelected = true;
+    this.props.onQuoteLineRadioValueChange(configAttribute, event.target.value);
+    // this.setState({
+    //   selectedRadioControlName: event.target.value,
+    // });
   }
 
   returnReactTab(item, index) {
     return (<Tab key={index} eventKey={index} title={item.name}>
       <ReconfigureFeaturePanel
         dataProd={this.props.dataProd}
+        isCategory
         showFilter={this.props.showFilter}
         toggleSidebar={this.toggleSidebar}
         toggleCheckboxChange={this.props.toggleCheckboxChange}
@@ -83,6 +88,9 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         toggleAddOptionsState={this.props.toggleAddOptionsState}
         activeTab={this.state.activeTab}
         currency={this.props.currency}
+        onFeatureConfigRadioValueChange={this.props.onFeatureConfigRadioValueChange}
+        onFeatureConfigTextValueChange={this.props.onFeatureConfigTextValueChange}
+        onFeatureConfigCheckBoxValueChange={this.props.onFeatureConfigCheckBoxValueChange}
       />
     </Tab>);
   }
@@ -91,6 +99,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
     return (
       <ReconfigureFeaturePanel
         key={generateGuid()}
+        isCategory={false}
         dataProd={this.props.dataProd}
         showFilter={this.props.showFilter}
         toggleSidebar={this.toggleSidebar}
@@ -106,6 +115,9 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         toggleAddOptionsState={this.props.toggleAddOptionsState}
         activeTab={this.state.activeTab}
         currency={this.props.currency}
+        onFeatureConfigRadioValueChange={this.props.onFeatureConfigRadioValueChange}
+        onFeatureConfigTextValueChange={this.props.onFeatureConfigTextValueChange}
+        onFeatureConfigCheckBoxValueChange={this.props.onFeatureConfigCheckBoxValueChange}
       />);
   }
 
@@ -160,7 +172,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
       <FormGroup key={configAttribute.id} onChange={(event) => this.onRadioChange(event, configAttribute)}>
         {
           configAttribute.values.map((option) => (
-            <Radio key={option.id} name="radioGroup" value={option.value} checked={this.state.selectedRadioControlName === option.value} inline>
+            <Radio key={option.id} name="radioGroup" value={option.value} checked={option.isSelected} inline>
               { option.value }
             </Radio>
           ))
@@ -209,7 +221,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
     if (configAttribute.dataType === 'DateTime') {
       return this.renderDateTimeAnswer(configAttribute);
     }
-    return this.renderNumericAnswer(configAttribute.values);
+    return this.renderNumericAnswer(configAttribute);
   }
 
   render() {
@@ -281,6 +293,12 @@ ReconfigureProductTab.propTypes = {
   activeTab: PropTypes.any,
   quoteLine: PropTypes.any,
   currency: PropTypes.any,
+  onQuoteLineRadioValueChange: PropTypes.func,
+  onQuoteLineCheckboxValueChange: PropTypes.func,
+  onQuoteLineTextValueChange: PropTypes.func,
+  onFeatureConfigRadioValueChange: PropTypes.func,
+  onFeatureConfigTextValueChange: PropTypes.func,
+  onFeatureConfigCheckBoxValueChange: PropTypes.func,
 };
 
 export default ReconfigureProductTab;
