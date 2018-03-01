@@ -231,7 +231,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
       if (!_.isUndefined(this.props.reConfigureData.categories) && this.props.reConfigureData.categories.length > 0) {
         showTabView = true;
         this.props.reConfigureData.categories.map((categoryItem, categoryIndex) => {
-          tabtitleList.push(this.returnReactTab(categoryItem, categoryIndex, true));
+          tabtitleList.push(this.returnReactTab(categoryItem, categoryIndex));
           return categoryIndex;
         });
       } else if (!_.isUndefined(this.props.reConfigureData.features) && this.props.reConfigureData.features.length > 0) {

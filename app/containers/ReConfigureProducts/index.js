@@ -126,11 +126,13 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
       const foundCheckbox = _.find(foundConfigAttr.values, { value: selectedValue });
       foundCheckbox.isSelected = isSelected;
-      console.log('Data', data);
       this.props.onFeatureConfigAttrChange(data);
     } else {
-      console.log('configData', data);
-      console.log('features', data.features);
+      const foundFeature = _.find(data.features, { id: featureId });
+      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
+      const foundCheckbox = _.find(foundConfigAttr.values, { value: selectedValue });
+      foundCheckbox.isSelected = isSelected;
+      this.props.onFeatureConfigAttrChange(data);
     }
   }
 
@@ -145,8 +147,28 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       foundConfigAttr.value = configAttribute.value;
       this.props.onFeatureConfigAttrChange(data);
     } else {
-      console.log('configData', data);
-      console.log('features', data.features);
+      const foundFeature = _.find(data.features, { id: featureId });
+      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
+      foundConfigAttr.values = configAttribute.values;
+      foundConfigAttr.value = configAttribute.value;
+      this.props.onFeatureConfigAttrChange(data);
+    }
+  }
+
+  onFeatureConfigRadioValueChange(configAttribute, isCategory, categoryId, featureId) {
+    const data = this.props.reConfigureProductData.toJS();
+    if (isCategory) {
+      const categories = data.categories;
+      const foundCategory = _.find(categories, { id: categoryId });
+      const foundFeature = _.find(foundCategory.features, { id: featureId });
+      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
+      foundConfigAttr.values = configAttribute.values;
+      this.props.onFeatureConfigAttrChange(data);
+    } else {
+      const foundFeature = _.find(data.features, { id: featureId });
+      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
+      foundConfigAttr.values = configAttribute.values;
+      this.props.onFeatureConfigAttrChange(data);
     }
   }
 
@@ -174,22 +196,6 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     const foundItem = _.find(foundConfig.values, { value: selectedValue });
     foundItem.isSelected = true;
     this.setState({ quoteLine });
-  }
-
-  onFeatureConfigRadioValueChange(configAttribute, isCategory, categoryId, featureId) {
-    const data = this.props.reConfigureProductData.toJS();
-    if (isCategory) {
-      const categories = data.categories;
-      const foundCategory = _.find(categories, { id: categoryId });
-      const foundFeature = _.find(foundCategory.features, { id: featureId });
-      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
-      foundConfigAttr.values = configAttribute.values;
-      console.log('foundConfigAttr.values', foundConfigAttr.values);
-      this.props.onFeatureConfigAttrChange(data);
-    } else {
-      console.log('configData', data);
-      console.log('features', data.features);
-    }
   }
 
   saveProducts() {
@@ -240,8 +246,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       quote: updatedQuote,
       productBundle: intialProductBundleData,
     };
-    console.log('quoteProductData', quoteProductData);
-    // this.props.saveConfiguredProducts(quoteProductData, this.props.location.query);
+    this.props.saveConfiguredProducts(quoteProductData, this.props.location.query);
   }
 
   toggleSidebar() {
