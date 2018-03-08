@@ -174,8 +174,11 @@ function appReducer(state = initialState, action) {
         .setIn(['data', 'lines'], fromJS(action.lines))
         .setIn(['data', 'groups'], fromJS(action.groups)).set('dataChanged', true);
     case UNGROUP:
+      toast.dismiss();
       return state
-        .setIn(['data'], fromJS(action.data));
+       // .set('data', fromJS(action.data))
+        .set('error', false)
+        .set('loading', true);
     case GROUP:
       return state
         .setIn(['data'], fromJS(action.data));
