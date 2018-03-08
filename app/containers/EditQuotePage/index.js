@@ -289,10 +289,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
       quoteData.partnerDiscount = val;
     }
     if (field === 'Distributor Discount') {
-      quoteData.netAmount = val;
+      quoteData.distributorDiscount = val;
     }
     if (field === 'Additional Disc') {
-      quoteData.paymentTerms = val;
+      quoteData.additionalDiscount = val;
     }
 
     this.props.changeDiscount(quoteData);
