@@ -1991,3 +1991,16 @@ body.modal-open {
 #configureGridId .ReactTable .rt-noData {
   margin-top:13px!important;
 }
+
+.editQuoteDiscountMargin {
+    margin: 20px;   
+}
+
+.editQuoteDiscountLabel {
+    margin: 20px;   
+}
+ .discountform-control {
+    display: inline-block !important;
+     width: 50% !important;
+    height: 25px !important;
+} 

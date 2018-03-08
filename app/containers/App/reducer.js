@@ -52,6 +52,7 @@ import {
   TOGGLE_RECONFIGURELINE_STATUS,
   TOGGLE_SUGGESTION_STATUS,
   SAVESUGGESTION_SUCCESS,
+  CHANGE_DISCOUNT,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -335,6 +336,11 @@ function appReducer(state = initialState, action) {
       return state
         .set('data', fromJS(action.data.quote))
         .set('loading', false);
+    }
+
+    case CHANGE_DISCOUNT: {
+      return state
+        .set('data', fromJS(action.quoteData));
     }
     default:
       return state;
