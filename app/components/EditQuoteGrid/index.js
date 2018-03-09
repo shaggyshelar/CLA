@@ -449,6 +449,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: this.renderPartnerDiscount,
       },
       {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.distributorDiscount })}>{this.context.intl.formatMessage({ ...messages.distributorDiscount })}</span>,
+        accessor: 'distributorDiscount',
+        id: 'distributorDiscount',
+        style: { textAlign: 'right' },
+        headerStyle: { textAlign: 'right' },
+        Cell: this.renderPartnerDiscount,
+      },
+      {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.additionalDiscount })}>{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</span>,
         accessor: 'additionalDiscount.value',
         id: 'additionalDiscount',
@@ -483,6 +491,12 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     if (!this.props.quoteData.configure.showPartnerDiscount) {
       _.remove(columns, {
         id: 'partnerDiscount',
+      });
+    }
+
+    if (!this.props.quoteData.configure.showDistributorDiscount) {
+      _.remove(columns, {
+        id: 'distributorDiscount',
       });
     }
 

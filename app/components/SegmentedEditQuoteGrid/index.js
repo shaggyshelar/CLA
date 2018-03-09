@@ -121,7 +121,7 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     if (selectedData !== undefined) {
       this.setState({
         isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
-        selectedData: selectedData,
+        selectedData,
       });
     } else {
       this.setState({
@@ -391,12 +391,32 @@ class SegmentedEditQuoteGrid extends React.Component { // eslint-disable-line re
     if (data.isOneTime === false && data.type === 'OneTime') {
       return (<span className="blank-before"></span>);
     }
+    let partnerDiscount;
+    let distributorDiscount;
+    if (this.props.quoteData.configure.showPartnerDiscount) {
+      partnerDiscount = (
+        <div>
+          <div className="lab">{this.context.intl.formatMessage({ ...messages.partnerDiscount })}</div><div className="val">{data.partnerDiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />
+        </div>
+      );
+    }
+
+    if (this.props.quoteData.configure.showDistributorDiscount) {
+      distributorDiscount = (
+        <div>
+          <div className="lab">{this.context.intl.formatMessage({ ...messages.distributorDiscount })}</div><div className="val">{data.distributorDiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />
+        </div>
+    );
+    }
+
     const tooltip = (
       <Tooltip id={`${e.original.id}-${e.original.segmentData.columns[index].columnName}`} bsClass="tooltip" className="hover-tip">
         <div className="lab">{this.context.intl.formatMessage({ ...messages.quantity })}</div><div className="val">{data.quantity.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />
         <div className="lab">{this.context.intl.formatMessage({ ...messages.listPrice })}</div><div className="val">{this.props.currency} {data.listPrice.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />
         <div className="lab">{this.context.intl.formatMessage({ ...messages.uplift })}</div><div className="val">{this.props.currency} {data.uplift.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />
-        <div className="lab">{this.context.intl.formatMessage({ ...messages.partnerDiscount })}</div><div className="val">{data.partnerDiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />
+        {partnerDiscount}
+        {distributorDiscount}
+        {/* <div className="lab">{this.context.intl.formatMessage({ ...messages.partnerDiscount })}</div><div className="val">{data.partnerDiscount.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br /> */}
         <div className="lab">{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</div><div className="val">{data.additionalDiscount.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />
         <div className="lab">{this.context.intl.formatMessage({ ...messages.netunitPrice })}</div><div className="val">{this.props.currency} {data.netunitPrice.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />
         <div className="lab">{this.context.intl.formatMessage({ ...messages.netTotal })}</div><div className="val">{this.props.currency} {data.netTotal.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e.original.decimalsSupported ? e.original.decimalsSupported : 2 })}</div><br />

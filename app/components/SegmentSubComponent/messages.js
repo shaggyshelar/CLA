@@ -70,4 +70,8 @@ export default defineMessages({
     id: 'app.components.SegmentSubComponent.uplift',
     defaultMessage: 'Uplift',
   },
+  distributorDiscount: {
+    id: 'app.components.SegmentSubComponent.distributorDiscount',
+    defaultMessage: 'Distributor Discount',
+  },
 });

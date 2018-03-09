@@ -85,7 +85,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         <div>
           <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
           <RIENumber
-            className={cellInfo.original.prop === 'partnerDiscount' ? 'table-edit-quantity' : 'table-edit'}
+            className={cellInfo.original.prop === 'partnerDiscount' || cellInfo.original.prop === 'distributorDiscount' ? 'table-edit-quantity' : 'table-edit'}
             classEditing="table-edit-input"
             value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
             propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
@@ -93,7 +93,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
             classInvalid="invalid"
           />
-          {cellInfo.original.prop === 'partnerDiscount' ? ' %' : '' }
+          {cellInfo.original.prop === 'partnerDiscount' || cellInfo.original.prop === 'distributorDiscount' ? ' %' : '' }
         </div>);
   }
   renderDiscount(cellInfo) {
@@ -155,7 +155,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       );
     }
 
-    if (cellInfo.original.prop === 'partnerDiscount') {
+    if (cellInfo.original.prop === 'partnerDiscount' || cellInfo.original.prop === 'distributorDiscount') {
       return this.renderPartnerDiscount(cellInfo);
     }
 
@@ -246,6 +246,9 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         prop: 'partnerDiscount',
       },
       {
+        prop: 'distributorDiscount',
+      },
+      {
         prop: 'additionalDiscount',
       },
       {
@@ -305,6 +308,18 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
             return this;
           });
           break;
+        case 'distributorDiscount':
+          data.segmentData.columns.map((j) => {
+            dataSet[i][j.columnName] = { id: data.id, value: j.distributorDiscount === null ? 0 : j.distributorDiscount, type: j.type, isOneTime: j.isOneTime };
+            dataSet[i].editable = true;
+            dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
+            dataSet[i].parent = data.parent;
+            dataSet[i].decimalsSupported = data.decimalsSupported;
+            return this;
+          });
+          break;
         case 'additionalDiscount':
 
           data.segmentData.columns.map((j, index) => {
@@ -351,6 +366,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         id: 'partnerDiscount',
       });
     }
+    if (!this.props.quoteData.configure.showDistributorDiscount) {
+      _.remove(columns, {
+        id: 'distributorDiscount',
+      });
+    }
     return { columns, dataSet };
   }
   render() {
@@ -358,6 +378,12 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     if (!this.props.quoteData.configure.showPartnerDiscount) {
       _.remove(data.dataSet, {
         prop: 'partnerDiscount',
+      });
+    }
+
+    if (!this.props.quoteData.configure.showDistributorDiscount) {
+      _.remove(data.dataSet, {
+        prop: 'distributorDiscount',
       });
     }
     return (

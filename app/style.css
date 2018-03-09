@@ -101,7 +101,7 @@ input[type=number]::-webkit-outer-spin-button {
     border: 1px solid orangered !important;
 }
 .table-edit-input{
-    height:22px;
+    height:24px;
     width: 72%;
     display:inline-block;
 }
@@ -632,7 +632,7 @@ mark {
     width: auto;
 }
 .hover-tip .tooltip-inner  {
-    height: 150px;
+    height: 175px;
 }
 .rt-td input[type=checkbox] {
     cursor: pointer;

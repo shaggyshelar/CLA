@@ -201,7 +201,7 @@ function appReducer(state = initialState, action) {
       {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
-        if (action.field === 'partnerDiscount') {
+        if (action.field === 'partnerDiscount' || action.field === 'distributorDiscount') {
           line[0][action.field] = action.data;
         } else {
           line[0][action.field].value = action.data;

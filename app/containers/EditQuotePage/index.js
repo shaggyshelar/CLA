@@ -13,6 +13,7 @@ import { EditQuoteHeader } from '../EditQuoteHeader';
 import { GroupQuote } from '../GroupQuote';
 import { SegmentedQuote } from '../SegmentedQuote';
 import { changeLocale } from '../LanguageProvider/actions';
+import messages from './messages';
 import { cloneLine,
   deleteLine,
   deleteMultipleLines,
@@ -299,26 +300,27 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
   showDiscountSection() {
     const data = this.props.data.toJS();
+    console.log('data', data);
     let partnerDiscount;
     let distributorDiscount;
     let additionalDiscount;
     if (data.configure.showPartnerDiscount) {
       partnerDiscount = (<Col md={4}>
-        <span className="editQuoteDiscountLabel">Partner Discount</span>
-        <FormControl type="number" className="discountform-control" value={data.partnerDiscount ? data.partnerDiscount : ''} onChange={(event) => this.changeDiscount(event, 'Partner Discount', data)} />
+        <span className="editQuoteDiscountLabel">{this.context.intl.formatMessage({ ...messages.partnerDiscount })}</span>
+        <FormControl type="number" className="discountform-control" value={data.partnerDiscount != null ? data.partnerDiscount : ''} onChange={(event) => this.changeDiscount(event, 'Partner Discount', data)} />
       </Col>);
     }
 
     if (data.configure.showDistributorDiscount) {
       distributorDiscount = (<Col md={4}>
-        <span className="editQuoteDiscountLabel">Distributor Discount</span>
-        <FormControl type="number" className="discountform-control" value={data.distributorDiscount ? data.distributorDiscount : ''} onChange={(event) => this.changeDiscount(event, 'Distributor Discount', data)} />
+        <span className="editQuoteDiscountLabel">{this.context.intl.formatMessage({ ...messages.distributorDiscount })}</span>
+        <FormControl type="number" className="discountform-control" value={data.distributorDiscount != null ? data.distributorDiscount : ''} onChange={(event) => this.changeDiscount(event, 'Distributor Discount', data)} />
       </Col>);
     }
     if (data.configure.showAdditionalDiscount) {
       additionalDiscount = (<Col md={4}>
-        <span className="editQuoteDiscountLabel">Additional Disc.(%)</span>
-        <FormControl type="number" className="discountform-control" value={data.additionalDiscount ? data.additionalDiscount : ''} onChange={(event) => this.changeDiscount(event, 'Additional Disc', data)} />
+        <span className="editQuoteDiscountLabel">{this.context.intl.formatMessage({ ...messages.additionalDiscount })}.(%)</span>
+        <FormControl type="number" className="discountform-control" value={data.additionalDiscount != null ? data.additionalDiscount : ''} onChange={(event) => this.changeDiscount(event, 'Additional Disc', data)} />
       </Col>);
     }
     if (data.configure.showAdditionalDiscount || data.configure.showDistributorDiscount
@@ -487,6 +489,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     );
   }
 }
+
+EditQuotePage.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
 
 EditQuotePage.propTypes = {
   // dispatch: PropTypes.func.isRequired,
