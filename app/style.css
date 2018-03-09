@@ -1950,7 +1950,7 @@ body.modal-open {
 
 /*********** D. 16 Jan 2018 *************/
 .productAccordian{
-    margin-bottom: 10px!important;
+    margin-bottom: 18px!important;
 }
 .productAccordian .panel-heading {
     padding: 18px!important;
@@ -2003,4 +2003,12 @@ body.modal-open {
     display: inline-block !important;
      width: 50% !important;
     height: 25px !important;
-} 
+}
+#suggestionGridId .ReactTable .rt-noData {
+    margin-top: 20px !important;
+}
+
+#suggestionGridId {
+    height: auto !important;
+    min-height: auto !important;
+}

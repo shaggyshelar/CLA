@@ -178,7 +178,7 @@ class SuggestionProductGrid extends React.Component { // eslint-disable-line rea
 
     return (
       <div>
-        <div className="table-wrap" id="configureGridId">
+        <div className="table-wrap" id="suggestionGridId">
           <ReactTable
             className="-striped -highlight"
             data={this.props.suggestionsData}
