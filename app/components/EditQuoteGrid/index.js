@@ -211,7 +211,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
 
     const notification = cellInfo.original.notificationMessages.length > 0 ? <a title={cellInfo.original.notificationMessages.map((item) => `${item}\n`)} className={cellInfo.original.notificationMessages.length > 0 ? 'link' : 'disabled-link'}><Glyphicon glyph="bell" /></a> : '';
     const segment = cellInfo.original.canSegment ? <a onClick={this.props.segment.bind(this, cellInfo.original.id, true, cellInfo.original.isBundled, cellInfo.original.parent)} title={this.context.intl.formatMessage({ ...messages.segment })}><Glyphicon glyph="transfer" /></a> : <span className="blank"></span>;
-    const suggestion = cellInfo.original.canSuggest ? <a title={this.context.intl.formatMessage({ ...messages.suggestions })} onClick={() => { this.onSuggestionLinkClick(cellInfo.original); }}><Glyphicon glyph="link" /></a> : <span className="blank"></span>;
+    const suggestion = cellInfo.original.canSuggest ? <a title={this.context.intl.formatMessage({ ...messages.suggestions })} onClick={() => { this.onSuggestionLinkClick(cellInfo.original); }}><Glyphicon glyph="resize-small" /></a> : <span className="blank"></span>;
     return (
       <div className="actionItems" >
         {reconfigure}
@@ -449,6 +449,14 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
         Cell: this.renderPartnerDiscount,
       },
       {
+        Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.distributorDiscount })}>{this.context.intl.formatMessage({ ...messages.distributorDiscount })}</span>,
+        accessor: 'distributorDiscount',
+        id: 'distributorDiscount',
+        style: { textAlign: 'right' },
+        headerStyle: { textAlign: 'right' },
+        Cell: this.renderPartnerDiscount,
+      },
+      {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.additionalDiscount })}>{this.context.intl.formatMessage({ ...messages.additionalDiscount })}</span>,
         accessor: 'additionalDiscount.value',
         id: 'additionalDiscount',
@@ -483,6 +491,12 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
     if (!this.props.quoteData.configure.showPartnerDiscount) {
       _.remove(columns, {
         id: 'partnerDiscount',
+      });
+    }
+
+    if (!this.props.quoteData.configure.showDistributorDiscount) {
+      _.remove(columns, {
+        id: 'distributorDiscount',
       });
     }
 

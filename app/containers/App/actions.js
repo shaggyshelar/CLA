@@ -42,6 +42,7 @@ import {
   TOGGLE_RECONFIGURELINE_STATUS,
   TOGGLE_SUGGESTION_STATUS,
   SAVESUGGESTION_SUCCESS,
+  CHANGE_DISCOUNT,
 } from './constants';
 
 export function defaultAction() {
@@ -314,5 +315,12 @@ export function saveSuggestions(data) {
   return {
     type: SAVESUGGESTION_SUCCESS,
     data,
+  };
+}
+
+export function changeDiscount(quoteData) {
+  return {
+    type: CHANGE_DISCOUNT,
+    quoteData,
   };
 }

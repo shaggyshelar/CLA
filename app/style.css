@@ -101,7 +101,7 @@ input[type=number]::-webkit-outer-spin-button {
     border: 1px solid orangered !important;
 }
 .table-edit-input{
-    height:22px;
+    height:24px;
     width: 72%;
     display:inline-block;
 }
@@ -632,7 +632,7 @@ mark {
     width: auto;
 }
 .hover-tip .tooltip-inner  {
-    height: 150px;
+    height: 175px;
 }
 .rt-td input[type=checkbox] {
     cursor: pointer;
@@ -1950,7 +1950,7 @@ body.modal-open {
 
 /*********** D. 16 Jan 2018 *************/
 .productAccordian{
-    margin-bottom: 10px!important;
+    margin-bottom: 18px!important;
 }
 .productAccordian .panel-heading {
     padding: 18px!important;
@@ -1990,4 +1990,25 @@ body.modal-open {
 
 #configureGridId .ReactTable .rt-noData {
   margin-top:13px!important;
+}
+
+.editQuoteDiscountMargin {
+    margin: 20px;   
+}
+
+.editQuoteDiscountLabel {
+    margin: 20px;   
+}
+ .discountform-control {
+    display: inline-block !important;
+     width: 50% !important;
+    height: 25px !important;
+}
+#suggestionGridId .ReactTable .rt-noData {
+    margin-top: 20px !important;
+}
+
+#suggestionGridId {
+    height: auto !important;
+    min-height: auto !important;
 }
