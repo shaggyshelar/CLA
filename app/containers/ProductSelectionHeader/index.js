@@ -38,6 +38,15 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
       isGuidedSellingModalOpen: !this.state.isGuidedSellingModalOpen,
     });
   }
+
+  showClearFiter() {
+    if (this.props.showGuidedSellingFilter) {
+      return (<Button title={this.context.intl.formatMessage({ ...messages.clearFilter })} onClick={this.props.clearFilterData}><Glyphicon glyph="tasks" /></Button>);
+    }
+    return (
+      <div></div>
+    );
+  }
   renderGuidedSelling() {
     if (this.props.guidedSellingQuestions.length > 0) {
       return (
@@ -50,6 +59,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
       <div></div>
     );
   }
+
   render() {
     return (
       <div>
@@ -76,6 +86,7 @@ export class ProductSelectionHeader extends React.Component { // eslint-disable-
           </Col>
           <Col xs={12} md={5} style={{ textAlign: 'right' }}>
             { this.renderGuidedSelling() }
+            { this.showClearFiter() }
             {/* <Button className="margin" bsStyle="primary" onClick={this.handleFullScreen}><Glyphicon glyph="fullscreen" /></Button> */}
             <ButtonGroup className="margin">
               <Button disabled={this.props.disabledButton} title={this.context.intl.formatMessage({ ...messages.select })} onClick={this.props.addProducts}>{this.context.intl.formatMessage({ ...messages.select })}</Button>
@@ -117,5 +128,7 @@ ProductSelectionHeader.propTypes = {
   languageChange: React.PropTypes.func,
   // language: React.PropTypes.any,
   disabledButton: React.PropTypes.bool,
+  clearFilterData: React.PropTypes.func,
+  showGuidedSellingFilter: React.PropTypes.bool,
 };
 export default ProductSelectionHeader;
