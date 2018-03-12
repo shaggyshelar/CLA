@@ -524,7 +524,7 @@ mark {
     cursor:pointer;
 }
 .toastify {
-     word-break: break-all;
+    word-break: break-all !important;
     width : auto !important;
     max-width: 300px !important;
     min-width: 120px !important;

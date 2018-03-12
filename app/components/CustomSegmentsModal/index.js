@@ -76,6 +76,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
       customSegments[index].startDate = new Date(customSegments[index].startDate).toISOString();
       customSegments[index].endDate = new Date(customSegments[index].endDate).toISOString();
     }
+    toast.dismiss();
     if (isDateNull) {
       toast.error(this.context.intl.formatMessage({ ...messages.dateEmptyValidation }), {
         position: toast.POSITION.TOP_LEFT,
@@ -87,7 +88,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
         autoClose: true,
       });
     } else if (startDateEndDateError) {
-      toast.success(this.context.intl.formatMessage({ ...messages.startDateEndDateError }), {
+      toast.error(this.context.intl.formatMessage({ ...messages.startDateEndDateError }), {
         position: toast.POSITION.TOP_LEFT,
         autoClose: true,
       });
@@ -135,7 +136,7 @@ class CustomSegmentsModal extends React.Component { // eslint-disable-line react
     if (this.props.customSegments !== undefined) {
       const customSegments = _.filter(this.props.customSegments.toJS(), { isDeleted: false });
       rows = customSegments.map((item, index) => (
-      <tr key={index}>
+        <tr key={index}>
         <td>{!item.isDefault ? <input type="checkbox" className="check checkBox" checked={item.isSelected} id={item.id} onChange={this.toggleCheckboxChange} /> : <input type="checkbox" className="check hideSpan" />}</td>
         <td>
           <FormControl
