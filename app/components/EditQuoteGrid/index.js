@@ -236,6 +236,7 @@ class EditQuoteGrid extends React.Component { // eslint-disable-line react/prefe
           validate={this.validate}
           classInvalid="invalid"
         />
+        {' %'}
       </div>);
   }
 

@@ -340,7 +340,8 @@ function appReducer(state = initialState, action) {
 
     case CHANGE_DISCOUNT: {
       return state
-        .set('data', fromJS(action.quoteData));
+        .set('data', fromJS(action.quoteData))
+        .set('dataChanged', true);
     }
     default:
       return state;

@@ -147,6 +147,7 @@
   "app.containers.GroupQuote.subTotal": "Sub Total",
   "app.containers.PriceBook.header": "This is PriceBook container !",
   "app.containers.ProductSelectionHeader.cancel": "Cancel",
+  "app.containers.ProductSelectionHeader.clearFilter": "Clear Filter",
   "app.containers.ProductSelectionHeader.favourites": "Favourites",
   "app.containers.ProductSelectionHeader.filter": "Filter",
   "app.containers.ProductSelectionHeader.guidedSelling": "Guided Selling",

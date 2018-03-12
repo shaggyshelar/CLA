@@ -23,6 +23,7 @@ import {
 
 const initialState = fromJS({
   showFilter: false,
+  showGuidedSellingFilter: false,
   loading: false,
   error: false,
   products: [],
@@ -43,10 +44,15 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('guidedSellingQuestions', fromJS([]))
         .set('error', false);
     case LOAD_PRODUCTS_DATA_SUCCESS: {
+      let showGuidedSellingFilter = false;
+      if (action.products.guidedSelling && action.products.guidedSelling.quoteProcesses && action.products.guidedSelling.quoteProcesses.length > 0) {
+        showGuidedSellingFilter = true;
+      }
       return state
         .set('products', fromJS(action.products.products))
         .set('guidedSellingQuestions', fromJS(action.products.guidedSelling ? action.products.guidedSelling.quoteProcesses : []))
         .set('initialProducts', fromJS(action.products.products))
+        .set('showGuidedSellingFilter', showGuidedSellingFilter)
         .set('loading', false);
     }
     case LOAD_FILTERED_PRODUCTS_DATA_SUCCESS: {

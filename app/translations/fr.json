@@ -147,6 +147,7 @@
   "app.containers.GroupQuote.subTotal": "Sous total",
   "app.containers.PriceBook.header": "",
   "app.containers.ProductSelectionHeader.cancel": "Annuler",
+  "app.containers.ProductSelectionHeader.clearFilter": "Effacer le filtre",
   "app.containers.ProductSelectionHeader.favourites": "favoris",
   "app.containers.ProductSelectionHeader.filter": "Filtre",
   "app.containers.ProductSelectionHeader.guidedSelling": "",

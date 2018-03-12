@@ -378,7 +378,7 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
           />
         </div>
 
-        {this.showDiscountSection()}
+        {/* {this.showDiscountSection()} */}
 
         {grouped ?
 
