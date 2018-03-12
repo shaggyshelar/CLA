@@ -58,7 +58,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       e.currentTarget.previousSibling.focus();
     }
   }
-  dataChanged(decimal, data) {
+  dataChanged(decimal, cellInfo, data) {
     const key = Object.keys(data)[0];
     const field = key.split('*(&)*');
     const value = data[key];
@@ -68,6 +68,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
       value: parseFloat(value).toFixed(decimal) / 1,
       categoryId: this.props.categoryId,
       featureId: this.props.feature.id,
+      applyImmediately: cellInfo.applyImmediately,
     };
     this.props.updateField(productObj);
   }
@@ -111,7 +112,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
             classEditing="table-edit-input"
             value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
             propName={`${cellInfo.original.id}*(&)*${cellInfo.column.id}`}
-            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
+            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2, cellInfo.original)}
             validate={this.validate}
             format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
             id={cellInfo.original.id}

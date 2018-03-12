@@ -2012,3 +2012,10 @@ body.modal-open {
     height: auto !important;
     min-height: auto !important;
 }
+.configureLabel {
+    color: #54698d;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 2;
+    margin-left: 3px;
+}
