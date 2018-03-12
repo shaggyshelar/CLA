@@ -12,7 +12,7 @@ import _ from 'lodash';
 import { SERVER_URL, EntityURLs, tempPriceBookId } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData, makeGuidedSellingData } from './selectors';
+import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData, makeGuidedSellingData, showGuidedSellingFilter } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
 import { loadProductsData, showFilteredData, loadSearchData, filterSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
@@ -35,6 +35,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.searchInputChange = this.searchInputChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onFilterSearchClicked = this.onFilterSearchClicked.bind(this);
+    this.clearFilterData = this.clearFilterData.bind(this);
   }
 
   componentWillMount() {
@@ -214,6 +215,22 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     browserHistory.push(`/EditQuote${this.props.location.search}`);
   }
 
+  clearFilterData() {
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    for (let i = 0; i < d.length; i += 1) {
+      d[i].checked = false;
+    }
+
+    const priceBookId = tempPriceBookId;
+
+    if (process.env.NODE_ENV === 'production') {
+      this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId, this.props.location.query.QuoteId);
+    }
+    if (process.env.NODE_ENV === 'development') {
+      this.props.getProductsData(this.props.location.query.groupId, priceBookId, this.props.location.query.QuoteId);
+    }
+  }
+
   render() {
     let products = [];
     if (!_.isUndefined(this.props.guidedSellingQuestions)) {
@@ -261,6 +278,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             language={this.props.language}
             disabledButton={this.state.disabledButton}
             languageChange={this.props.changeLocale}
+            clearFilterData={this.clearFilterData}
+            showGuidedSellingFilter={this.props.showGuidedSellingFilter}
           />
         </div>
         <div>
@@ -297,6 +316,7 @@ ProductSelectionPage.propTypes = {
   globalLoading: PropTypes.any,
   language: PropTypes.any,
   changeLocale: PropTypes.any,
+  showGuidedSellingFilter: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -308,6 +328,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   globalLoading: globalLoading(),
   language: getLanguage(),
+  showGuidedSellingFilter: showGuidedSellingFilter(),
 });
 
 function mapDispatchToProps(dispatch) {

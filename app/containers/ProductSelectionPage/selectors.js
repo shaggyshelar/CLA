@@ -46,6 +46,11 @@ const makeGuidedSellingData = () =>
   (homeState) => homeState.get('guidedSellingQuestions')
 );
 
+const showGuidedSellingFilter = () => createSelector(
+  selectProductSelectionPageDomain,
+  (homeState) => homeState.get('showGuidedSellingFilter')
+);
+
 export {
   selectProductSelectionPageDomain,
   makeSelectProductSelectionPage,
@@ -57,5 +62,6 @@ export {
   getQuoteLines,
   getLanguage,
   globalLoading,
+  showGuidedSellingFilter,
 };
 

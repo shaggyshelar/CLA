@@ -2,6 +2,7 @@
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
+import { Row, Col, FormControl } from 'react-bootstrap/lib';
 import { generateGuid, removeQuery, addQuery } from 'containers/App/constants';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
@@ -12,6 +13,7 @@ import { EditQuoteHeader } from '../EditQuoteHeader';
 import { GroupQuote } from '../GroupQuote';
 import { SegmentedQuote } from '../SegmentedQuote';
 import { changeLocale } from '../LanguageProvider/actions';
+import messages from './messages';
 import { cloneLine,
   deleteLine,
   deleteMultipleLines,
@@ -38,6 +40,7 @@ import { cloneLine,
   loadData,
   toggleReconfigureLineStatus,
   toggleSuggestionStatus,
+  changeDiscount,
  } from '../App/actions';
 
 import { loadCustomSegmentsData, addCustomSegmentData, deleteCustomSegmentData, changeCustomSegmentFieldData, saveCustomSegmentData, checkAllCustomSegmentData, checkCustomSegmentData, clearCustomSegmentsData, toggleCheckAll } from './actions';
@@ -70,6 +73,8 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     this.group = this.group.bind(this);
     this.segment = this.segment.bind(this);
     this.saveCustomSegmentData = this.saveCustomSegmentData.bind(this);
+    this.showDiscountSection = this.showDiscountSection.bind(this);
+    this.changeDiscount = this.changeDiscount.bind(this);
   }
   componentWillMount() {
     // this.props.getAllData();
@@ -277,6 +282,59 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
     });
     this.props.quickSaveQuote();
   }
+
+  changeDiscount(event, field, data) {
+    const quoteData = data;
+    const val = event.target.value === '' ? null : parseFloat(event.target.value);
+    if (field === 'Partner Discount') {
+      quoteData.partnerDiscount = val;
+    }
+    if (field === 'Distributor Discount') {
+      quoteData.distributorDiscount = val;
+    }
+    if (field === 'Additional Disc') {
+      quoteData.additionalDiscount = val;
+    }
+
+    this.props.changeDiscount(quoteData);
+  }
+  showDiscountSection() {
+    const data = this.props.data.toJS();
+    console.log('data', data);
+    let partnerDiscount;
+    let distributorDiscount;
+    let additionalDiscount;
+    if (data.configure.showPartnerDiscount) {
+      partnerDiscount = (<Col md={4}>
+        <span className="editQuoteDiscountLabel">{this.context.intl.formatMessage({ ...messages.partnerDiscount })}</span>
+        <FormControl type="number" className="discountform-control" value={data.partnerDiscount != null ? data.partnerDiscount : ''} onChange={(event) => this.changeDiscount(event, 'Partner Discount', data)} />
+      </Col>);
+    }
+
+    if (data.configure.showDistributorDiscount) {
+      distributorDiscount = (<Col md={4}>
+        <span className="editQuoteDiscountLabel">{this.context.intl.formatMessage({ ...messages.distributorDiscount })}</span>
+        <FormControl type="number" className="discountform-control" value={data.distributorDiscount != null ? data.distributorDiscount : ''} onChange={(event) => this.changeDiscount(event, 'Distributor Discount', data)} />
+      </Col>);
+    }
+    if (data.configure.showAdditionalDiscount) {
+      additionalDiscount = (<Col md={4}>
+        <span className="editQuoteDiscountLabel">{this.context.intl.formatMessage({ ...messages.additionalDiscount })}.(%)</span>
+        <FormControl type="number" className="discountform-control" value={data.additionalDiscount != null ? data.additionalDiscount : ''} onChange={(event) => this.changeDiscount(event, 'Additional Disc', data)} />
+      </Col>);
+    }
+    if (data.configure.showAdditionalDiscount || data.configure.showDistributorDiscount
+      || data.configure.showPartnerDiscount) {
+      return (<div className="editQuoteDiscountMargin" >
+        <Row>
+          {partnerDiscount}
+          {distributorDiscount}
+          {additionalDiscount}
+        </Row>
+      </div>);
+    }
+    return (<div></div>);
+  }
   render() {
     let quoteData = {};
     const data = this.props.data.toJS();
@@ -319,6 +377,9 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
             toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
           />
         </div>
+
+        {/* {this.showDiscountSection()} */}
+
         {grouped ?
 
           <div className="quote-container table-container">
@@ -429,6 +490,10 @@ export class EditQuotePage extends React.Component { // eslint-disable-line reac
   }
 }
 
+EditQuotePage.contextTypes = {
+  intl: React.PropTypes.object.isRequired,
+};
+
 EditQuotePage.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   cloneLine: PropTypes.func,
@@ -474,6 +539,7 @@ EditQuotePage.propTypes = {
   toggleSuggestionStatus: PropTypes.func,
   getAllData: PropTypes.func,
   dataChanged: PropTypes.any,
+  changeDiscount: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -596,6 +662,10 @@ function mapDispatchToProps(dispatch) {
     },
     toggleSuggestionStatus: (suggestionObj) => {
       dispatch(toggleSuggestionStatus(suggestionObj));
+    },
+
+    changeDiscount: (quoteData) => {
+      dispatch(changeDiscount(quoteData));
     },
   };
 }

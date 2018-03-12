@@ -17,3 +17,4 @@ export const TOGGLE_CHECKBOX_CHANGE = 'app/ReConfigurtion/TOGGLE_CHECKBOX_CHANGE
 export const TOGGLE_ADDOPTIONS_STATE = 'app/Reconfiguration/TOGGLE_ADDOPTIONS_STATE';
 export const CANCEL = 'app/Reconfiguration/CANCEL';
 export const CONTINUE = 'app/Reconfiguration/CONTINUE';
+export const FEATURE_CONFIG_ATTR_CHANGE = 'app/Reconfiguration/onFeatureConfigAttrChange';

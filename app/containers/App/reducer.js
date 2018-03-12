@@ -52,6 +52,7 @@ import {
   TOGGLE_RECONFIGURELINE_STATUS,
   TOGGLE_SUGGESTION_STATUS,
   SAVESUGGESTION_SUCCESS,
+  CHANGE_DISCOUNT,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -174,8 +175,11 @@ function appReducer(state = initialState, action) {
         .setIn(['data', 'lines'], fromJS(action.lines))
         .setIn(['data', 'groups'], fromJS(action.groups)).set('dataChanged', true);
     case UNGROUP:
+      toast.dismiss();
       return state
-        .setIn(['data'], fromJS(action.data));
+       // .set('data', fromJS(action.data))
+        .set('error', false)
+        .set('loading', true);
     case GROUP:
       return state
         .setIn(['data'], fromJS(action.data));
@@ -197,7 +201,7 @@ function appReducer(state = initialState, action) {
       {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
-        if (action.field === 'partnerDiscount') {
+        if (action.field === 'partnerDiscount' || action.field === 'distributorDiscount') {
           line[0][action.field] = action.data;
         } else {
           line[0][action.field].value = action.data;
@@ -332,6 +336,12 @@ function appReducer(state = initialState, action) {
       return state
         .set('data', fromJS(action.data.quote))
         .set('loading', false);
+    }
+
+    case CHANGE_DISCOUNT: {
+      return state
+        .set('data', fromJS(action.quoteData))
+        .set('dataChanged', true);
     }
     default:
       return state;

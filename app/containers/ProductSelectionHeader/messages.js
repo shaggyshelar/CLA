@@ -38,4 +38,8 @@ export default defineMessages({
     id: 'app.containers.ProductSelectionHeader.searchProducts',
     defaultMessage: 'Search Products',
   },
+  clearFilter: {
+    id: 'app.containers.ProductSelectionHeader.clearFilter',
+    defaultMessage: 'Clear Filter',
+  },
 });

@@ -18,6 +18,7 @@ import {
   UPDATE_PRODUCT,
   TOGGLE_CHECKBOX_CHANGE,
   TOGGLE_ADDOPTIONS_STATE,
+  FEATURE_CONFIG_ATTR_CHANGE,
 } from './constants';
 
 export function defaultAction() {
@@ -112,5 +113,12 @@ export function toggleAddOptionsState(fromAddOptions, activeTab) {
     type: TOGGLE_ADDOPTIONS_STATE,
     fromAddOptions,
     activeTab,
+  };
+}
+
+export function onFeatureConfigAttrChange(data) {
+  return {
+    type: FEATURE_CONFIG_ATTR_CHANGE,
+    data,
   };
 }

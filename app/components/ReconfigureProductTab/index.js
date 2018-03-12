@@ -16,48 +16,63 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
     super(props);
     this.state = {
       activeTab: 0,
+      panelExpanderStates: [],
     };
     this.onTabSelect = this.onTabSelect.bind(this);
+    this.onTogglePanelExpander = this.onTogglePanelExpander.bind(this);
   }
   componentWillMount() {
+    if (this.props.reConfigureData && this.props.reConfigureData.features && this.props.reConfigureData.features.length > 0) {
+      const panelExpanderStates = [];
+      _.forEach(this.props.reConfigureData.features, (feature, index) => {
+        panelExpanderStates[index] = true;
+      });
+      this.setState({ panelExpanderStates });
+    }
     this.setState({ activeTab: this.props.activeTab });
   }
+
   onTabSelect(e) {
     this.setState({ activeTab: e });
   }
 
   onTextOrNumberBoxChange(event, configAttribute) {
-    configAttribute.values = [{ id: '', value: event.target.value, isSelected: true }];
+    //configAttribute.values = [{ id: '', value: event.target.value, isSelected: true }];
+    this.props.onQuoteLineTextValueChange(configAttribute, event.target.value);
   }
 
   onToggleCheckBox(event, configAttribute) {
-    const foundCheckbox = _.find(configAttribute.values, { value: event.target.value });
-    foundCheckbox.isSelected = event.target.checked;
+    // const foundCheckbox = _.find(configAttribute.values, { value: event.target.value });
+    // foundCheckbox.isSelected = event.target.checked;
+    this.props.onQuoteLineCheckboxValueChange(configAttribute, event.target.value, event.target.checked);
   }
 
   onToggleSelect(event, configAttribute) {
-    _.forEach(configAttribute.values, (value) => {
-      value.isSelected = false;
-    });
-    const foundItem = _.find(configAttribute.values, { value: event.target.value });
-    foundItem.isSelected = true;
+    // _.forEach(configAttribute.values, (value) => {
+    //   value.isSelected = false;
+    // });
+    // const foundItem = _.find(configAttribute.values, { value: event.target.value });
+    // foundItem.isSelected = true;
+    this.props.onQuoteLineRadioValueChange(configAttribute, event.target.value);
   }
 
   onRadioChange(event, configAttribute) {
-    _.forEach(configAttribute.values, (value) => {
-      value.isSelected = false;
-    });
-    const foundItem = _.find(configAttribute.values, { value: event.target.value });
-    foundItem.isSelected = true;
-    this.setState({
-      selectedRadioControlName: event.target.value,
-    });
+    // _.forEach(configAttribute.values, (value) => {
+    //   value.isSelected = false;
+    // });
+    // const foundItem = _.find(configAttribute.values, { value: event.target.value });
+    // foundItem.isSelected = true;
+    this.props.onQuoteLineRadioValueChange(configAttribute, event.target.value);
+    // this.setState({
+    //   selectedRadioControlName: event.target.value,
+    // });
   }
 
   returnReactTab(item, index) {
     return (<Tab key={index} eventKey={index} title={item.name}>
       <ReconfigureFeaturePanel
         dataProd={this.props.dataProd}
+        isCategory
         showFilter={this.props.showFilter}
         toggleSidebar={this.toggleSidebar}
         toggleCheckboxChange={this.props.toggleCheckboxChange}
@@ -66,33 +81,50 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
         features={item.features}
         categoryId={item.id}
         deleteProduct={this.props.deleteProduct}
+        expanderStates={this.state.panelExpanderStates}
+        onTogglePanelExpander={this.onTogglePanelExpander}
         updateField={this.props.updateField}
         params={this.props.params}
         toggleAddOptionsState={this.props.toggleAddOptionsState}
         activeTab={this.state.activeTab}
         currency={this.props.currency}
+        onFeatureConfigRadioValueChange={this.props.onFeatureConfigRadioValueChange}
+        onFeatureConfigTextValueChange={this.props.onFeatureConfigTextValueChange}
+        onFeatureConfigCheckBoxValueChange={this.props.onFeatureConfigCheckBoxValueChange}
       />
     </Tab>);
   }
 
-  returnFeaturePanel(item) {
+  returnFeaturePanel(features) {
     return (
       <ReconfigureFeaturePanel
         key={generateGuid()}
+        isCategory={false}
         dataProd={this.props.dataProd}
         showFilter={this.props.showFilter}
         toggleSidebar={this.toggleSidebar}
         toggleCheckboxChange={this.props.toggleCheckboxChange}
         addProductsWait={this.addProductsWait}
         checkAll={this.props.checkAll}
-        features={item}
+        features={features}
         deleteProduct={this.props.deleteProduct}
         updateField={this.props.updateField}
         params={this.props.params}
+        expanderStates={this.state.panelExpanderStates}
+        onTogglePanelExpander={this.onTogglePanelExpander}
         toggleAddOptionsState={this.props.toggleAddOptionsState}
         activeTab={this.state.activeTab}
         currency={this.props.currency}
+        onFeatureConfigRadioValueChange={this.props.onFeatureConfigRadioValueChange}
+        onFeatureConfigTextValueChange={this.props.onFeatureConfigTextValueChange}
+        onFeatureConfigCheckBoxValueChange={this.props.onFeatureConfigCheckBoxValueChange}
       />);
+  }
+
+  onTogglePanelExpander(event, index) {
+    const exapnderStates = this.state.panelExpanderStates;
+    exapnderStates[index] = event;
+    this.setState({ panelExpanderStates: exapnderStates });
   }
 
   renderTextBoxAnswer(configAttribute) {
@@ -140,7 +172,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
       <FormGroup key={configAttribute.id} onChange={(event) => this.onRadioChange(event, configAttribute)}>
         {
           configAttribute.values.map((option) => (
-            <Radio key={option.id} name="radioGroup" value={option.value} checked={this.state.selectedRadioControlName === option.value} inline>
+            <Radio key={option.id} name="radioGroup" value={option.value} checked={option.isSelected} inline>
               { option.value }
             </Radio>
           ))
@@ -189,7 +221,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
     if (configAttribute.dataType === 'DateTime') {
       return this.renderDateTimeAnswer(configAttribute);
     }
-    return this.renderNumericAnswer(configAttribute.values);
+    return this.renderNumericAnswer(configAttribute);
   }
 
   render() {
@@ -199,7 +231,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
       if (!_.isUndefined(this.props.reConfigureData.categories) && this.props.reConfigureData.categories.length > 0) {
         showTabView = true;
         this.props.reConfigureData.categories.map((categoryItem, categoryIndex) => {
-          tabtitleList.push(this.returnReactTab(categoryItem, categoryIndex, true));
+          tabtitleList.push(this.returnReactTab(categoryItem, categoryIndex));
           return categoryIndex;
         });
       } else if (!_.isUndefined(this.props.reConfigureData.features) && this.props.reConfigureData.features.length > 0) {
@@ -261,6 +293,12 @@ ReconfigureProductTab.propTypes = {
   activeTab: PropTypes.any,
   quoteLine: PropTypes.any,
   currency: PropTypes.any,
+  onQuoteLineRadioValueChange: PropTypes.func,
+  onQuoteLineCheckboxValueChange: PropTypes.func,
+  onQuoteLineTextValueChange: PropTypes.func,
+  onFeatureConfigRadioValueChange: PropTypes.func,
+  onFeatureConfigTextValueChange: PropTypes.func,
+  onFeatureConfigCheckBoxValueChange: PropTypes.func,
 };
 
 export default ReconfigureProductTab;
