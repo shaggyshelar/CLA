@@ -260,7 +260,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
       }
     }
     return (
-      <div className="quote-container reconfigureContainer">
+      <div className="quote-container reconfigureContainer reconfigureHeight">
         <div className="margin-tabs">
           <Row className="configureRow">
             <Col md={12} sm={12} xs={12}>
