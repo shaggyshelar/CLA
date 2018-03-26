@@ -2,7 +2,7 @@ import request from 'utils/request';
 import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import { take, call, put, actionChannel, select } from 'redux-saga/effects';
-import { LOAD_CONFIGURE_PRODUCTS_DATA, SAVE_CONFIGURE_PRODUCTS_DATA, TOGGLE_CHECKBOX_CHANGE } from './constants';
+import { LOAD_CONFIGURE_PRODUCTS_DATA, SAVE_CONFIGURE_PRODUCTS_DATA, TOGGLE_CHECKBOX_CHANGE, UPDATE_PRODUCT } from './constants';
 import { loadReConfigureProductsDataSuccess, reconfigureDataLoadingError } from './actions';
 import { saveConfiguration } from '../App/actions';
 import { SERVER_URL, EntityURLs } from '../App/constants';
@@ -151,9 +151,19 @@ export function* loadProductBundleData() {
   }
 }
 
+export function* updateProduct() {
+  // Create a channel outside while loop for request actions on the same page
+  const chan = yield actionChannel(UPDATE_PRODUCT);
+  while (true) {
+    const { productObj } = yield take(chan);
+    yield call(applyImmediateConfig, productObj);
+  }
+}
+
 // All sagas to be loaded
 export default [
   applyImmediateConfigProd,
   loadProductBundleData,
   saveConfiguredProducts,
+  updateProduct,
 ];

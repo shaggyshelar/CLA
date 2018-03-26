@@ -37,7 +37,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
   }
 
   onTextOrNumberBoxChange(event, configAttribute) {
-    //configAttribute.values = [{ id: '', value: event.target.value, isSelected: true }];
+    // configAttribute.values = [{ id: '', value: event.target.value, isSelected: true }];
     this.props.onQuoteLineTextValueChange(configAttribute, event.target.value);
   }
 
@@ -224,6 +224,25 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
     return this.renderNumericAnswer(configAttribute);
   }
 
+  renderConfigAttributeRow() {
+    if (this.props.quoteLine && this.props.quoteLine.configAttribute && this.props.quoteLine.configAttribute.length > 0) {
+      return (<div className="margin-tabs">
+        <Row className="configureRow">
+          { this.props.quoteLine.configAttribute.map((configAttribute, index) => (
+            <Col md={3} sm={6} xs={12}>
+              <div>
+                <span className="configureLabel">{configAttribute.name}</span>
+                { this.renderConfigAttribute(configAttribute, index) }
+              </div>
+            </Col>
+            ))
+          }
+        </Row>
+      </div>);
+    }
+    return (<div></div>);
+  }
+
   render() {
     const tabtitleList = [];
     let showTabView = true;
@@ -241,7 +260,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
       }
     }
     return (
-      <div className="quote-container reconfigureContainer">
+      <div className="quote-container reconfigureContainer reconfigureHeight">
         <div className="margin-tabs">
           <Row className="configureRow">
             <Col md={12} sm={12} xs={12}>
@@ -249,24 +268,7 @@ class ReconfigureProductTab extends React.Component { // eslint-disable-line rea
             </Col>
           </Row>
         </div>
-        <div className="margin-tabs">
-          <Row className="configureRow">
-            <Col md={12} sm={12} xs={12}>
-              {
-                this.props.quoteLine && this.props.quoteLine.configAttribute
-                ?
-                  this.props.quoteLine.configAttribute.map((configAttribute) => (
-                    <div>
-                      <span className="categoryLabel">{configAttribute.name}</span>
-                      { this.renderConfigAttribute(configAttribute) }
-                    </div>
-                  ))
-                :
-                    <div></div>
-              }
-            </Col>
-          </Row>
-        </div>
+        {this.renderConfigAttributeRow()}
         <div>
           {showTabView ?
             <Tabs defaultActiveKey={this.props.activeTab} id="configureProductsList" onSelect={this.onTabSelect}>
