@@ -34,8 +34,8 @@ export function* getProductsSaga(params) {
 }
 
 export function* loadProductsData() {
+  const chan = yield actionChannel(LOAD_PRODUCTS_DATA);
   while (true) {
-    const chan = yield actionChannel(LOAD_PRODUCTS_DATA);
     const { params } = yield take(chan);
     yield call(getProductsSaga, params);
   }
