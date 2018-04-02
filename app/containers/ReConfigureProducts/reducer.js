@@ -354,8 +354,16 @@ function reConfigureProductsReducer(state = initialState, action) {
             }
           }
         }
-        return state
+        let updatedState;
+        if (action.productObj.applyImmediately) {
+          updatedState = state
+        .set('reConfigureProductData', fromJS(reConfigureProduct))
+        .set('loading', true);
+        } else {
+          updatedState = state
         .set('reConfigureProductData', fromJS(reConfigureProduct));
+        }
+        return updatedState;
       }
     case TOGGLE_CHECKBOX_CHANGE: {
       const reConfigureProduct = state.get('reConfigureProductData').toJS();

@@ -524,7 +524,7 @@ mark {
     cursor:pointer;
 }
 .toastify {
-     word-break: break-all;
+    word-break: break-all !important;
     width : auto !important;
     max-width: 300px !important;
     min-width: 120px !important;
@@ -1668,14 +1668,14 @@ body.modal-open {
 .addConfigurationLabel {
     margin-left: 21px;
 }
-#configureProductsList .tab-content {
-    overflow-y: auto;
-    height: 75vh;
+/* #configureProductsList .tab-content {
+     overflow-y: auto;
+    height: 75vh; 
 }
 .reconfigureDivScroll {
-    overflow-y: auto;
-    height: 80vh;
-}
+     overflow-y: auto;
+    height: 80vh; 
+} */
 
 .suggestionProductLabel{
     font-size: 17px;
@@ -2010,4 +2010,15 @@ body.modal-open {
 #suggestionGridId {
     height: auto !important;
     min-height: auto !important;
+}
+.configureLabel {
+    color: #54698d;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 2;
+    margin-left: 3px;
+}
+.reconfigureHeight {
+    overflow-y: auto !important;
+    height: 90vh !important;
 }

@@ -35,8 +35,8 @@ export function* saveSegmentData(data) {
   }
 }
 export function* segmentCall() {
+  const chan = yield actionChannel(SEGMENT);
   while (true) {
-    const chan = yield actionChannel(SEGMENT);
     const action = yield take(chan);
     const data = yield select(selectGlobal);
     const postLines = Object.assign({}, data.toJS().data);
@@ -68,15 +68,15 @@ export function* segmentCall() {
   }
 }
 export function* saveCustomSegmentData() {
+  const chan = yield actionChannel(SAVE_CUSTOM_SEGMENT_DATA);
   while (true) {
-    const chan = yield actionChannel(SAVE_CUSTOM_SEGMENT_DATA);
     const { segment } = yield take(chan);
     yield call(saveSegmentData, segment);
   }
 }
 export function* calculateQuotes() {
+  const chan = yield actionChannel(CALCULATE_SELECTED);
   while (true) {
-    const chan = yield actionChannel(CALCULATE_SELECTED);
     const { data } = yield take(chan);
     yield call(calculateQuoteTotals, data);
     chan.close();
@@ -106,8 +106,8 @@ export function* calculateQuoteTotals(data) {
 }
 
 export function* saveQuoteLines() {
+  const chan = yield actionChannel(QUICK_SAVE_QUOTES);
   while (true) {
-    const chan = yield actionChannel(QUICK_SAVE_QUOTES);
     yield take(chan);
     const lines = yield select(selectGlobal);
     const postLines = Object.assign({}, lines.toJS().data);
@@ -139,8 +139,8 @@ export function* saveQuoteLines() {
   }
 }
 export function* deleteLines() {
+  const chan = yield actionChannel(DELETE_MULTIPLE_LINES);
   while (true) {
-    const chan = yield actionChannel(DELETE_MULTIPLE_LINES);
     const action = yield take(chan);
     const lines = yield select(selectGlobal);
     const postLines = Object.assign({}, lines.toJS().data);

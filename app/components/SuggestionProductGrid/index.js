@@ -9,6 +9,7 @@ import { Glyphicon } from 'react-bootstrap/lib';
 import React from 'react';
 import ReactTable from '../ReactTable';
 import messages from './messages';
+import ProductDetails from '../ProductDetails';
 
 // import styled from 'styled-components';
 
@@ -34,7 +35,10 @@ class SuggestionProductGrid extends React.Component { // eslint-disable-line rea
         freezeWhenExpanded: true,
         selectedLine: {},
         termDiscount: {},
+        selectedData: {},
       },
+      isVisible: false,
+      isProductDetailsModalOpen: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
     this.renderActionItems = this.renderActionItems.bind(this);
@@ -42,6 +46,8 @@ class SuggestionProductGrid extends React.Component { // eslint-disable-line rea
     this.renderEditable = this.renderEditable.bind(this);
     this.dataChanged = this.dataChanged.bind(this);
     this.clickEdit = this.clickEdit.bind(this);
+    this.handleProductDetailsToggle = this.handleProductDetailsToggle.bind(this);
+    this.renderOverlay = this.renderOverlay.bind(this);
   }
 
   setTableOption(event) {
@@ -80,6 +86,32 @@ class SuggestionProductGrid extends React.Component { // eslint-disable-line rea
   }
   formatt(e, d) {
     return (d.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e }));
+  }
+
+  handleProductDetailsToggle(cellInfo) {
+  let selectedData = cellInfo.original;
+    if (selectedData !== undefined) {     
+      selectedData.productId = selectedData.id;
+      this.setState({
+        isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
+        selectedData: selectedData,
+      });
+    } else {
+      this.setState({
+        isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
+      });
+    }
+  }
+
+  renderOverlay(cellInfo) {
+    if (cellInfo.original.detailedInfo.images.length > 0 || cellInfo.original.detailedInfo.description !== null ) {
+      return (
+        <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo)} className="proname-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+      );
+    }
+    return (
+      <div className="lab"><span  title={`${cellInfo.original.name}`}>{cellInfo.original.name}</span> </div>
+    );
   }
 
   toggleCheckboxChange(product) {
@@ -143,7 +175,8 @@ class SuggestionProductGrid extends React.Component { // eslint-disable-line rea
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (cellInfo.original.isSelected ? <span>{cellInfo.original.name}</span> : <span className="cellColor">{cellInfo.original.name}</span>),
+        //Cell: (cellInfo) => (cellInfo.original.isSelected ? <span>{cellInfo.original.name}</span> : <span className="cellColor">{cellInfo.original.name}</span>),
+        Cell: this.renderOverlay,
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
@@ -188,6 +221,15 @@ class SuggestionProductGrid extends React.Component { // eslint-disable-line rea
             style={{ width: '100%' }}
             {...this.state.tableOptions}
           />
+          <ProductDetails
+          show={this.state.isProductDetailsModalOpen} onHide={this.handleProductDetailsToggle}
+          style={{
+            display: 'inline-flex',
+          }}
+          isDetailsShown={this.state.isProductDetailsModalOpen}
+          value={this.state.value}
+          selectedData={this.state.selectedData}
+        />
         </div>
       </div>
     );
