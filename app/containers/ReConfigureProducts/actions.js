@@ -8,6 +8,8 @@ import {
   DEFAULT_ACTION,
   LOAD_CONFIGURE_PRODUCTS_DATA,
   LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS,
+  CANCEL,
+  CONTINUE,
   LOAD_CONFIGURE_PRODUCTS_DATA_ERROR,
   ADD_OPTIONS,
   SAVE_CONFIGURE_PRODUCTS_DATA,
@@ -16,6 +18,7 @@ import {
   UPDATE_PRODUCT,
   TOGGLE_CHECKBOX_CHANGE,
   TOGGLE_ADDOPTIONS_STATE,
+  FEATURE_CONFIG_ATTR_CHANGE,
 } from './constants';
 
 export function defaultAction() {
@@ -34,6 +37,18 @@ export function loadReConfigureProductsDataSuccess(productBundelData) {
   return {
     type: LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS,
     productBundelData,
+  };
+}
+
+export function cancel() {
+  return {
+    type: CANCEL,
+  };
+}
+
+export function continueSave() {
+  return {
+    type: CONTINUE,
   };
 }
 
@@ -98,5 +113,12 @@ export function toggleAddOptionsState(fromAddOptions, activeTab) {
     type: TOGGLE_ADDOPTIONS_STATE,
     fromAddOptions,
     activeTab,
+  };
+}
+
+export function onFeatureConfigAttrChange(data) {
+  return {
+    type: FEATURE_CONFIG_ATTR_CHANGE,
+    data,
   };
 }

@@ -5,9 +5,10 @@
 */
 
 import React from 'react';
-import ReactTable from '../ReactTable';
+import _ from 'lodash';
 import { RIENumber, RIESelect } from 'riek';
 import { Glyphicon } from 'react-bootstrap/lib';
+import ReactTable from '../ReactTable';
 import messages from './messages';
 class SegmentSubComponent extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -19,6 +20,7 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     this.selectBundleDataChanged = this.selectBundleDataChanged.bind(this);
     this.bundleDataChanged = this.bundleDataChanged.bind(this);
     this.renderDiscount = this.renderDiscount.bind(this);
+    this.renderPartnerDiscount = this.renderPartnerDiscount.bind(this);
     this.state = {
       tableOptions: {
         loading: false,
@@ -74,6 +76,26 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
   clickEdit(e) {
     e.currentTarget.nextSibling.focus();
   }
+  renderPartnerDiscount(cellInfo) {
+    const col = cellInfo.column.id.split('.')[0];
+    return (
+      cellInfo.original.isBundled && (cellInfo.original.prop === 'listPrice') ?
+        <span>Included</span>
+      :
+        <div>
+          <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
+          <RIENumber
+            className={cellInfo.original.prop === 'partnerDiscount' || cellInfo.original.prop === 'distributorDiscount' ? 'table-edit-quantity' : 'table-edit'}
+            classEditing="table-edit-input"
+            value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
+            propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
+            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)} validate={this.validate}
+            format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
+            classInvalid="invalid"
+          />
+          {cellInfo.original.prop === 'partnerDiscount' || cellInfo.original.prop === 'distributorDiscount' ? ' %' : '' }
+        </div>);
+  }
   renderDiscount(cellInfo) {
     const col = cellInfo.column.id.split('.')[0];
     const selected = cellInfo.original[col].selectValues;
@@ -115,14 +137,28 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
 
       </div>);
   }
-  renderEditable(cellInfo) {
-    if (cellInfo.original.editable === false) {
-      return (<span> {cellInfo.original.prop === 'quantity' || (cellInfo.original.isBundled && cellInfo.column.id === 'listPrice') ? '' : this.props.currency}
-        { cellInfo.original.isBundled && (cellInfo.original.prop === 'listPrice') ?
-          <span>Included</span>
-        :
-        cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>);
+  renderEditable(row, cellInfo, res) {
+    const blockPricing = res.value[0].value === 'BlockPricing' ? <a title={this.context.intl.formatMessage({ ...messages.pricingMethod })}><Glyphicon glyph="bold" /></a> : '';
+    if (!row.isOneTime && row.type === 'OneTime') {
+      return (<span></span>);
     }
+    if (cellInfo.original.editable === false) {
+      return (
+        <div>
+          <span>{(cellInfo.original.prop === 'listPrice') ? blockPricing : ''}</span>
+          <span> {cellInfo.original.prop === 'quantity' || (cellInfo.original.isBundled && cellInfo.column.id === 'listPrice') ? '' : this.props.currency}
+            { cellInfo.original.isBundled && (cellInfo.original.prop === 'listPrice') ?
+              <span>Included</span>
+        :
+        cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 })}</span>
+        </div>
+      );
+    }
+
+    if (cellInfo.original.prop === 'partnerDiscount' || cellInfo.original.prop === 'distributorDiscount') {
+      return this.renderPartnerDiscount(cellInfo);
+    }
+
     if (cellInfo.original.prop === 'additionalDiscount') {
       return this.renderDiscount(cellInfo);
     }
@@ -132,13 +168,14 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         <span>Included</span>
       :
         <div>
+          <span> {cellInfo.original.prop === 'partnerDiscount' ? <span> %</span> : '' }</span>
           <div className="edit-icon" style={{ cursor: 'pointer' }} onClick={this.clickEdit}><Glyphicon className="inline-edit" glyph="pencil" style={{ float: 'left', opacity: '.4' }} /></div>
           <RIENumber
             className={cellInfo.original.prop === 'quantity' ? 'table-edit-quantity' : 'table-edit'}
             classEditing="table-edit-input"
             value={parseFloat(cellInfo.value.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2 }).replace(/,/g, ''))}
             propName={`${cellInfo.original.isBundled ? cellInfo.original.parent : ''}*(&)*${cellInfo.original[col].id}*(&)*${col}*(&)*${cellInfo.original.prop}`}
-            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}            validate={this.validate}
+            change={this.dataChanged.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)} validate={this.validate}
             format={this.formatt.bind(this, cellInfo.original.decimalsSupported ? cellInfo.original.decimalsSupported : 2)}
             classInvalid="invalid"
           />
@@ -162,12 +199,12 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         width: 50,
       },
       {
-        accessor: 'name',
+        accessor: 'columnName',
         style: { textAlign: 'left' },
         width: 50,
       },
       {
-        accessor: 'name',
+        accessor: 'columnName',
         style: { textAlign: 'left' },
         width: 200,
       },
@@ -181,11 +218,12 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
     ];
     data.segmentData.columns.map((i) => {
       if (!i.isDeleted) {
+        const res = data.pricingMethod;
         columns.push({
-          accessor: `${i.name}.value`,
+          accessor: `${i.columnName}.value`,
           sortable: false,
           style: { textAlign: 'right' },
-          Cell: this.renderEditable,
+          Cell: (row) => (this.renderEditable(i, row, res)),
         });
       }
       return this;
@@ -205,6 +243,12 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
         prop: 'uplift',
       },
       {
+        prop: 'partnerDiscount',
+      },
+      {
+        prop: 'distributorDiscount',
+      },
+      {
         prop: 'additionalDiscount',
       },
       {
@@ -218,9 +262,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       switch (dataSet[i].prop) {
         case 'quantity':
           data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.quantity };
+            dataSet[i][j.columnName] = { id: data.id, value: j.quantity, type: j.type, isOneTime: j.isOneTime };
             dataSet[i].editable = data.quantity.isEditable;
             dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].parent = data.parent;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
@@ -228,9 +274,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           break;
         case 'listPrice':
           data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.listPrice };
+            dataSet[i][j.columnName] = { id: data.id, value: j.listPrice, type: j.type, isOneTime: j.isOneTime };
             dataSet[i].editable = data.listPrice.isEditable;
             dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].parent = data.parent;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
@@ -238,21 +286,49 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           break;
         case 'uplift':
           data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.uplift };
+            dataSet[i][j.columnName] = { id: data.id, value: j.uplift, type: j.type, isOneTime: j.isOneTime };
             dataSet[i].editable = false;
             dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
+            dataSet[i].parent = data.parent;
+            dataSet[i].decimalsSupported = data.decimalsSupported;
+            return this;
+          });
+          break;
+        case 'partnerDiscount':
+          data.segmentData.columns.map((j) => {
+            dataSet[i][j.columnName] = { id: data.id, value: j.partnerDiscount === null ? 0 : j.partnerDiscount, type: j.type, isOneTime: j.isOneTime };
+            dataSet[i].editable = true;
+            dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
+            dataSet[i].parent = data.parent;
+            dataSet[i].decimalsSupported = data.decimalsSupported;
+            return this;
+          });
+          break;
+        case 'distributorDiscount':
+          data.segmentData.columns.map((j) => {
+            dataSet[i][j.columnName] = { id: data.id, value: j.distributorDiscount === null ? 0 : j.distributorDiscount, type: j.type, isOneTime: j.isOneTime };
+            dataSet[i].editable = true;
+            dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].parent = data.parent;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
           });
           break;
         case 'additionalDiscount':
-        
+
           data.segmentData.columns.map((j, index) => {
-            dataSet[i][j.name] = { isEditable: j.additionalDiscount.isEditable, id: data.id, value: j.additionalDiscount.value, selectValues: data.segmentData.columns[index].additionalDiscount.selectValues };
+            dataSet[i][j.columnName] = { isEditable: j.additionalDiscount.isEditable, type: j.type, isOneTime: j.isOneTime, id: data.id, value: j.additionalDiscount.value, selectValues: data.segmentData.columns[index].additionalDiscount.selectValues };
             dataSet[i].editable = j.additionalDiscount.isEditable;
             dataSet[i].isBundled = data.isBundled;
             dataSet[i].parent = data.parentLineId;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             dataSet[i].selectValues = data.segmentData.columns[index].additionalDiscount.selectValues;
             return this;
@@ -260,9 +336,11 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           break;
         case 'netunitPrice':
           data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.netunitPrice };
+            dataSet[i][j.columnName] = { id: data.id, value: j.netunitPrice, type: j.type, isOneTime: j.isOneTime };
             dataSet[i].editable = false;
             dataSet[i].isBundled = data.isBundled;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].parent = data.parent;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
@@ -270,8 +348,10 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
           break;
         case 'netTotal':
           data.segmentData.columns.map((j) => {
-            dataSet[i][j.name] = { id: data.id, value: j.netTotal };
+            dataSet[i][j.columnName] = { id: data.id, value: j.netTotal, type: j.type, isOneTime: j.isOneTime };
             dataSet[i].editable = false;
+            dataSet[i].isOneTime = j.isOneTime;
+            dataSet[i].type = j.type;
             dataSet[i].decimalsSupported = data.decimalsSupported;
             return this;
           });
@@ -281,10 +361,31 @@ class SegmentSubComponent extends React.Component { // eslint-disable-line react
       }
     }
 
+    if (!this.props.quoteData.configure.showPartnerDiscount) {
+      _.remove(columns, {
+        id: 'partnerDiscount',
+      });
+    }
+    if (!this.props.quoteData.configure.showDistributorDiscount) {
+      _.remove(columns, {
+        id: 'distributorDiscount',
+      });
+    }
     return { columns, dataSet };
   }
   render() {
     const data = this.renderColumns(this.props.data);
+    if (!this.props.quoteData.configure.showPartnerDiscount) {
+      _.remove(data.dataSet, {
+        prop: 'partnerDiscount',
+      });
+    }
+
+    if (!this.props.quoteData.configure.showDistributorDiscount) {
+      _.remove(data.dataSet, {
+        prop: 'distributorDiscount',
+      });
+    }
     return (
       <div className="header sub-seg">
         <ReactTable
@@ -310,6 +411,7 @@ SegmentSubComponent.propTypes = {
   updateSegBundleSelect: React.PropTypes.func,
   updateSegBundle: React.PropTypes.func,
   currency: React.PropTypes.any,
+  quoteData: React.PropTypes.any,
 };
 
 export default SegmentSubComponent;

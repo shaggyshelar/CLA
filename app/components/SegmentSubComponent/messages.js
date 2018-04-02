@@ -22,6 +22,10 @@ export default defineMessages({
     id: 'app.components.SegmentSubComponent.listPrice',
     defaultMessage: 'List Unit Price',
   },
+  partnerDiscount: {
+    id: 'app.components.SegmentSubComponent.partnerDiscount',
+    defaultMessage: 'Partner Discount',
+  },
   additionalDiscount: {
     id: 'app.components.SegmentSubComponent.additionalDiscount',
     defaultMessage: 'Additional Discount',
@@ -46,6 +50,10 @@ export default defineMessages({
     id: 'app.components.SegmentSubComponent.segment',
     defaultMessage: 'Segment',
   },
+  pricingMethod: {
+    id: 'app.components.SegmentSubComponent.pricingMethod',
+    defaultMessage: 'Block Pricing',
+  },
   reconfigure: {
     id: 'app.components.SegmentSubComponent.reconfigure',
     defaultMessage: 'Reconfigure Lines',
@@ -61,5 +69,9 @@ export default defineMessages({
   uplift: {
     id: 'app.components.SegmentSubComponent.uplift',
     defaultMessage: 'Uplift',
+  },
+  distributorDiscount: {
+    id: 'app.components.SegmentSubComponent.distributorDiscount',
+    defaultMessage: 'Distributor Discount',
   },
 });

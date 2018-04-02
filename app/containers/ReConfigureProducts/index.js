@@ -1,10 +1,3 @@
-
-/*
- *
- * ReConfigureProducts
- *
- */
-
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
@@ -12,16 +5,20 @@ import { browserHistory } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import ReconfigureProductTab from 'components/ReconfigureProductTab';
 import ReconfigureProductHeader from 'components/ReconfigureProductHeader';
-import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError, getLanguage, getGlobalQuoteData, getReconfigureQuoteData } from './selectors';
-import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState } from './actions';
+import { makeSelectReConfigureProducts, getProductBundle, getReConfigureProductData, getAddOptionState, getActiveTabState, makeSelectLoading, makeSelectError, getSelectErrorMessage, getLanguage, getGlobalQuoteData, getReconfigureQuoteData } from './selectors';
+import { loadReConfigureProductsData, saveConfiguredProductsData, deleteProduct, updateProduct, toggleCheckboxChange, toggleAddOptionsState, cancel, continueSave, onFeatureConfigAttrChange } from './actions';
 import { changeLocale } from '../LanguageProvider/actions';
 import { toggleReconfigureLineStatus } from '../App/actions';
+import { tempQuoteId } from '../App/constants';
+import { toast } from 'react-toastify';
+import { Modal, Button, Glyphicon } from 'react-bootstrap/lib';
 
 export class ReConfigureProducts extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super(props);
     this.state = {
       selectedProducts: [],
+      loading: false,
       dataProd: [
         {
           _id: '596db79f58d3f94623033cd0',
@@ -64,12 +61,19 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
           unitPrice: '$ 230.653',
         },
       ],
+      quoteLine: {},
       reConfigureData: {},
     };
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.saveProducts = this.saveProducts.bind(this);
     this.cancelReconfiguration = this.cancelReconfiguration.bind(this);
+    this.onFeatureConfigRadioValueChange = this.onFeatureConfigRadioValueChange.bind(this);
+    this.onQuoteLineRadioValueChange = this.onQuoteLineRadioValueChange.bind(this);
+    this.onQuoteLineCheckboxValueChange = this.onQuoteLineCheckboxValueChange.bind(this);
+    this.onQuoteLineTextValueChange = this.onQuoteLineTextValueChange.bind(this);
+    this.onFeatureConfigTextValueChange = this.onFeatureConfigTextValueChange.bind(this);
+    this.onFeatureConfigCheckBoxValueChange = this.onFeatureConfigCheckBoxValueChange.bind(this);
   }
 
   componentDidMount() {
@@ -81,8 +85,124 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const reconfigureQuote = nextProps.reconfigureQuote;
+    if (reconfigureQuote && reconfigureQuote.lines && reconfigureQuote.lines.length > 0) {
+      reconfigureQuote.lines.forEach((quoteLineItem, index) => {
+        if (quoteLineItem.canReconfigure) {
+          const tempQuoteLine = reconfigureQuote.lines[index];
+          this.setState({
+            quoteLine: tempQuoteLine,
+          });
+        }
+      }, this);
+    }
+  }
+
+  validateConfigAttribute() {
+    let result = true;
+    _.forEach(this.state.quoteLine.configAttribute, (configAttr) => {
+      if (configAttr.isRequired) {
+        const isSelected = _.find(configAttr.values, { isSelected: true });
+        if (!isSelected) {
+          toast.error(<p>No value selected for '{configAttr.name}'</p>, {
+            position: toast.POSITION.TOP_LEFT,
+            autoClose: false,
+          });
+          result = false;
+          return false;
+        }
+      }
+    });
+    return result;
+  }
+
+  onFeatureConfigCheckBoxValueChange(configAttribute, isCategory, categoryId, featureId, selectedValue, isSelected) {
+    const data = this.props.reConfigureProductData.toJS();
+    if (isCategory) {
+      const categories = data.categories;
+      const foundCategory = _.find(categories, { id: categoryId });
+      const foundFeature = _.find(foundCategory.features, { id: featureId });
+      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
+      const foundCheckbox = _.find(foundConfigAttr.values, { value: selectedValue });
+      foundCheckbox.isSelected = isSelected;
+      this.props.onFeatureConfigAttrChange(data);
+    } else {
+      const foundFeature = _.find(data.features, { id: featureId });
+      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
+      const foundCheckbox = _.find(foundConfigAttr.values, { value: selectedValue });
+      foundCheckbox.isSelected = isSelected;
+      this.props.onFeatureConfigAttrChange(data);
+    }
+  }
+
+  onFeatureConfigTextValueChange(configAttribute, isCategory, categoryId, featureId) {
+    const data = this.props.reConfigureProductData.toJS();
+    if (isCategory) {
+      const categories = data.categories;
+      const foundCategory = _.find(categories, { id: categoryId });
+      const foundFeature = _.find(foundCategory.features, { id: featureId });
+      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
+      foundConfigAttr.values = configAttribute.values;
+      foundConfigAttr.value = configAttribute.value;
+      this.props.onFeatureConfigAttrChange(data);
+    } else {
+      const foundFeature = _.find(data.features, { id: featureId });
+      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
+      foundConfigAttr.values = configAttribute.values;
+      foundConfigAttr.value = configAttribute.value;
+      this.props.onFeatureConfigAttrChange(data);
+    }
+  }
+
+  onFeatureConfigRadioValueChange(configAttribute, isCategory, categoryId, featureId) {
+    const data = this.props.reConfigureProductData.toJS();
+    if (isCategory) {
+      const categories = data.categories;
+      const foundCategory = _.find(categories, { id: categoryId });
+      const foundFeature = _.find(foundCategory.features, { id: featureId });
+      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
+      foundConfigAttr.values = configAttribute.values;
+      this.props.onFeatureConfigAttrChange(data);
+    } else {
+      const foundFeature = _.find(data.features, { id: featureId });
+      const foundConfigAttr = _.find(foundFeature.configAttribute, { id: configAttribute.id });
+      foundConfigAttr.values = configAttribute.values;
+      this.props.onFeatureConfigAttrChange(data);
+    }
+  }
+
+  onQuoteLineTextValueChange(configAttribute, value) {
+    const quoteLine = this.state.quoteLine;
+    const foundConfig = _.find(quoteLine.configAttribute, { id: configAttribute.id });
+    foundConfig.values = [{ id: '', value, isSelected: true }];
+    this.setState({ quoteLine });
+  }
+
+  onQuoteLineCheckboxValueChange(configAttribute, value, selectedValue) {
+    const quoteLine = this.state.quoteLine;
+    const foundConfig = _.find(quoteLine.configAttribute, { id: configAttribute.id });
+    const foundCheckbox = _.find(foundConfig.values, { value });
+    foundCheckbox.isSelected = selectedValue;
+    this.setState({ quoteLine });
+  }
+
+  onQuoteLineRadioValueChange(configAttribute, selectedValue) {
+    const quoteLine = this.state.quoteLine;
+    const foundConfig = _.find(quoteLine.configAttribute, { id: configAttribute.id });
+    _.forEach(foundConfig.values, (value) => {
+      value.isSelected = false;
+    });
+    const foundItem = _.find(foundConfig.values, { value: selectedValue });
+    foundItem.isSelected = true;
+    this.setState({ quoteLine });
+  }
+
   saveProducts() {
-    const updatedQuote = this.props.reconfigureQuote.toJS();
+    if (!this.validateConfigAttribute()) {
+      return;
+    }
+    const updatedQuote = this.props.reconfigureQuote;
     const updatedProducts = [];
     const intialProductBundleData = this.props.productBundleData.toJS();
     const updatedProductBundleData = this.props.reConfigureProductData.toJS();
@@ -153,6 +273,7 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
       browserHistory.push('/EditQuote');
     }
   }
+
   toggleCheckboxChange(productObj) {
     this.props.toggleCheckboxChange(productObj);
   }
@@ -174,6 +295,21 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
     }
     return (
       <div>
+        <Modal
+          show={this.props.error} onHide={this.props.cancel} style={{ width: '50%' }}
+          autoFocus keyboard
+        >
+          <Modal.Header closeButton>
+            <Modal.Title style={{ textAlign: 'center' }}><Glyphicon glyph="warning-sign" /> Alert</Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ textAlign: 'center', fontSize: '18px' }}>
+            {this.props.errorMsg}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.props.cancel} >Cancel</Button>
+            <Button bsStyle="primary" onClick={this.props.cancel} >Continue</Button>
+          </Modal.Footer>
+        </Modal>
         <div
           style={{
             zIndex: '9999999',
@@ -202,9 +338,16 @@ export class ReConfigureProducts extends React.Component { // eslint-disable-lin
             deleteProduct={this.props.deleteProduct}
             updateField={this.props.updateField}
             params={params}
+            quoteLine={this.state.quoteLine}
             toggleAddOptionsState={this.props.toggleAddOptionsState}
             activeTab={this.props.activeTab}
             currency={quote.currency}
+            onFeatureConfigRadioValueChange={this.onFeatureConfigRadioValueChange}
+            onFeatureConfigTextValueChange={this.onFeatureConfigTextValueChange}
+            onFeatureConfigCheckBoxValueChange={this.onFeatureConfigCheckBoxValueChange}
+            onQuoteLineRadioValueChange={this.onQuoteLineRadioValueChange}
+            onQuoteLineCheckboxValueChange={this.onQuoteLineCheckboxValueChange}
+            onQuoteLineTextValueChange={this.onQuoteLineTextValueChange}
           />
         </div>
       </div>
@@ -220,6 +363,7 @@ ReConfigureProducts.propTypes = {
   productBundleData: PropTypes.any,
   getProductsData: PropTypes.func,
   saveConfiguredProducts: PropTypes.func,
+  onFeatureConfigAttrChange: PropTypes.func,
   deleteProduct: PropTypes.func,
   location: PropTypes.any,
   updateField: PropTypes.func,
@@ -233,6 +377,10 @@ ReConfigureProducts.propTypes = {
   quote: PropTypes.any,
   reconfigureQuote: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.any,
+  error: React.PropTypes.any,
+  cancel: React.PropTypes.any,
+  continue: React.PropTypes.any,
+  errorMsg: React.PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -246,6 +394,7 @@ const mapStateToProps = createStructuredSelector({
   language: getLanguage(),
   quote: getGlobalQuoteData(),
   reconfigureQuote: getReconfigureQuoteData(),
+  errorMsg: getSelectErrorMessage(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -272,8 +421,17 @@ function mapDispatchToProps(dispatch) {
     changeLocale: (locale) => {
       dispatch(changeLocale(locale));
     },
+    onFeatureConfigAttrChange: (data) => {
+      dispatch(onFeatureConfigAttrChange(data));
+    },
     toggleReconfigureLineStatus: (reconfigureObj) => {
       dispatch(toggleReconfigureLineStatus(reconfigureObj));
+    },
+    cancel: () => {
+      dispatch(cancel());
+    },
+    continue: () => {
+      dispatch(continueSave());
     },
   };
 }

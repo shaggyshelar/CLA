@@ -201,5 +201,5 @@ export default [
   calculateQuotes,
   saveQuoteLines,
   deleteLines,
-  // segmentCall,
+  segmentCall,
 ];

@@ -9,12 +9,12 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import _ from 'lodash';
-import { SERVER_URL, EntityURLs } from 'containers/App/constants';
+import { SERVER_URL, EntityURLs, tempPriceBookId } from 'containers/App/constants';
 import { createStructuredSelector } from 'reselect';
 import ProductSelectionGrid from 'components/ProductSelectionGrid';
-import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData } from './selectors';
+import { globalLoading, getLanguage, makeSelectProductSelectionPage, makeSelectLoading, showFilter, getQuoteLines, makeProductsData, makeGuidedSellingData, showGuidedSellingFilter } from './selectors';
 import { ProductSelectionHeader } from '../ProductSelectionHeader';
-import { loadProductsData, showFilteredData, loadSearchData, onSearchItemSelected } from './actions';
+import { loadProductsData, showFilteredData, loadSearchData, filterSearchData, onSearchItemSelected } from './actions';
 import { addProducts } from '../App/actions';
 import { changeLocale } from '../LanguageProvider/actions';
 
@@ -34,10 +34,13 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.onSearchItemSelected = this.onSearchItemSelected.bind(this);
     this.searchInputChange = this.searchInputChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.onFilterSearchClicked = this.onFilterSearchClicked.bind(this);
+    this.clearFilterData = this.clearFilterData.bind(this);
   }
 
   componentWillMount() {
-    const priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+    const priceBookId = tempPriceBookId;
+
     if (process.env.NODE_ENV === 'production') {
       this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId, this.props.location.query.QuoteId);
     }
@@ -55,7 +58,8 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.setState({
       searchedProducts: [],
     });
-    let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+    let priceBookId = tempPriceBookId;
+
     if (process.env.NODE_ENV === 'production') {
       priceBookId = this.props.location.query.PriceBookId;
     }
@@ -67,6 +71,19 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
       quoteId: this.props.location.query.QuoteId,
     };
     this.props.onSearch(searchObj);
+  }
+
+  onFilterSearchClicked(quoteProcesses) {
+    const getIds = this.getPriceBookAndQuoteId();
+    const postObject = {
+      PriceListId: getIds.priceBookId,
+      QuoteId: getIds.quoteId,
+      guidedSelling: {
+        id: '00000000-0000-0000-0000-000000000000',
+        quoteProcesses,
+      },
+    };
+    this.props.onFilterSearch(postObject);
   }
 
   onSearchItemSelected(value) {
@@ -81,13 +98,27 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     this.props.onSearchItemSelected(value);
   }
 
+  getPriceBookAndQuoteId() {
+    if (process.env.NODE_ENV === 'production') {
+      return {
+        quoteId: this.props.location.query.QuoteId,
+        priceBookId: this.props.location.query.PriceBookId,
+      };
+    }
+    return {
+      quoteId: this.props.location.query.QuoteId,
+      priceBookId: tempPriceBookId,
+    };
+  }
+
   searchInputChange(value) {
     if (this.state.selectedProducts.length > 0) {
       this.setState({
         selectedProducts: [],
       });
     }
-    let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+    let priceBookId = tempPriceBookId;
+
     if (process.env.NODE_ENV === 'production') {
       priceBookId = this.props.location.query.PriceBookId;
     }
@@ -171,6 +202,7 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
   }
   addProducts() {
     const data = [];
+
     const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
     for (let i = 0; i < d.length; i += 1) {
       if (d[i].checked && this.props.location.query.groupId) {
@@ -183,7 +215,37 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
     browserHistory.push(`/EditQuote${this.props.location.search}`);
   }
 
+  clearFilterData() {
+    const d = ReactDOM.findDOMNode(this).getElementsByClassName('check');
+    for (let i = 0; i < d.length; i += 1) {
+      d[i].checked = false;
+    }
+
+    const priceBookId = tempPriceBookId;
+
+    if (process.env.NODE_ENV === 'production') {
+      this.props.getProductsData(this.props.location.query.groupId, this.props.location.query.PriceBookId, this.props.location.query.QuoteId);
+    }
+    if (process.env.NODE_ENV === 'development') {
+      this.props.getProductsData(this.props.location.query.groupId, priceBookId, this.props.location.query.QuoteId);
+    }
+  }
+
   render() {
+    let products = [];
+    if (!_.isUndefined(this.props.guidedSellingQuestions)) {
+      products = _.filter(this.props.products.toJS(), (item) => {
+        if (!item.productComponent) {
+          return item;
+        }
+      });
+    }
+
+    let guidedSellingQuestions = [];
+    if (!_.isUndefined(this.props.guidedSellingQuestions)) {
+      guidedSellingQuestions = _.filter(this.props.guidedSellingQuestions.toJS(), (item) => item);
+    }
+
     const style = this.props.loading ? { display: 'inline' } : this.props.globalLoading ? { display: 'inline' } : { display: 'none' };
     return (
       <div>
@@ -207,18 +269,22 @@ export class ProductSelectionPage extends React.Component { // eslint-disable-li
             addProducts={this.addProducts}
             addProductsWait={this.addProductsWait}
             location={this.props.location}
-            data={this.props.products.toJS().map((item) => item.name)}
+            guidedSellingQuestions={guidedSellingQuestions}
+            data={this.props.products.toJS().map((item) => !item.productComponent ? item.name : '')}
             searchInputChange={this.searchInputChange}
             onSearchClick={this.onSearch}
+            onFilterSearchClicked={this.onFilterSearchClicked}
             onSearchItemSelected={this.onSearchItemSelected}
             language={this.props.language}
             disabledButton={this.state.disabledButton}
             languageChange={this.props.changeLocale}
+            clearFilterData={this.clearFilterData}
+            showGuidedSellingFilter={this.props.showGuidedSellingFilter}
           />
         </div>
         <div>
           <ProductSelectionGrid
-            products={this.props.products.toJS()}
+            products={products}
             showFilter={this.props.showFilter}
             toggleFilter={this.toggleSidebar}
             toggleCheckboxChange={this.toggleCheckboxChange}
@@ -243,11 +309,14 @@ ProductSelectionPage.propTypes = {
   location: PropTypes.any,
   addProductsToQuote: PropTypes.func,
   onSearch: PropTypes.func,
+  onFilterSearch: PropTypes.func,
   onSearchItemSelected: PropTypes.func,
+  guidedSellingQuestions: PropTypes.any,
   loading: PropTypes.any,
   globalLoading: PropTypes.any,
   language: PropTypes.any,
   changeLocale: PropTypes.any,
+  showGuidedSellingFilter: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -255,9 +324,11 @@ const mapStateToProps = createStructuredSelector({
   showFilter: showFilter(),
   data: getQuoteLines(),
   products: makeProductsData(),
+  guidedSellingQuestions: makeGuidedSellingData(),
   loading: makeSelectLoading(),
   globalLoading: globalLoading(),
   language: getLanguage(),
+  showGuidedSellingFilter: showGuidedSellingFilter(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -274,6 +345,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSearch: (searchObj) => {
       dispatch(loadSearchData(searchObj));
+    },
+    onFilterSearch: (filterObj) => {
+      dispatch(filterSearchData(filterObj));
     },
     onSearchItemSelected: (value) => {
       dispatch(onSearchItemSelected(value));

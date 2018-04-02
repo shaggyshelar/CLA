@@ -1,8 +1,7 @@
-import ReactTable from '../ReactTable';
 import React from 'react';
-
 import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
+import ReactTable from '../ReactTable';
 import messages from './messages';
 
 class AddConfigureProductGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -57,12 +56,8 @@ class AddConfigureProductGrid extends React.Component { // eslint-disable-line r
   renderActionItems(cellInfo) {
     let input;
     let title;
-    if (cellInfo.original.isDependent && cellInfo.original.isExclusion) {
-      title = `Required: ${cellInfo.original.dependentBy} / Exclusion: ${cellInfo.original.dependentBy}`;
-    } else if (cellInfo.original.isExclusion) {
-      title = `Exclusion: ${cellInfo.original.dependentBy}`;
-    } else if (cellInfo.original.isDependent) {
-      title = `Required: ${cellInfo.original.dependentBy}`;
+    if (cellInfo.original.constraintMessage) {
+      title = cellInfo.original.constraintMessage;
     }
 
     if (cellInfo.original.isDisable) {

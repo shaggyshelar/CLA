@@ -40,6 +40,9 @@ import {
   CONTINUE,
   SAVECONFIGURATION_SUCCESS,
   TOGGLE_RECONFIGURELINE_STATUS,
+  TOGGLE_SUGGESTION_STATUS,
+  SAVESUGGESTION_SUCCESS,
+  CHANGE_DISCOUNT,
 } from './constants';
 
 export function defaultAction() {
@@ -298,5 +301,26 @@ export function toggleReconfigureLineStatus(reconfigureObj) {
   return {
     type: TOGGLE_RECONFIGURELINE_STATUS,
     reconfigureObj,
+  };
+}
+
+export function toggleSuggestionStatus(suggestionObj) {
+  return {
+    type: TOGGLE_SUGGESTION_STATUS,
+    suggestionObj,
+  };
+}
+
+export function saveSuggestions(data) {
+  return {
+    type: SAVESUGGESTION_SUCCESS,
+    data,
+  };
+}
+
+export function changeDiscount(quoteData) {
+  return {
+    type: CHANGE_DISCOUNT,
+    quoteData,
   };
 }

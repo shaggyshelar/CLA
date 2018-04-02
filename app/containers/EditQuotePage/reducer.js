@@ -31,7 +31,7 @@ function editQuoteReducer(state = initialState, action) {
       const customSegments = state.get('customSegments').toJS();
       if (action && customSegments) {
         action.customSegments.forEach((item) => {
-          if (item.type !== 'One Time') {
+          if (item.type !== 'OneTime') {
             const rec = item;
             rec.id = generateGuid();
             rec.isSelected = false;

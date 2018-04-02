@@ -12,7 +12,7 @@ class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line r
 
   render() {
     return (
-      <div className="card" >
+      <div className="card">
         <div className="card-detail">
           <div>
             <div className="cartFont">
@@ -30,10 +30,10 @@ class EditQuoteHeaderCard extends React.PureComponent { // eslint-disable-line r
 }
 
 EditQuoteHeaderCard.propTypes = {
-  name: React.PropTypes.any,
+  // name: React.PropTypes.any,
   currency: React.PropTypes.any,
   total: React.PropTypes.any,
-
+  dataChanged: React.PropTypes.any,
 };
 
 export default EditQuoteHeaderCard;

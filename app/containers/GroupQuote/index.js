@@ -5,13 +5,13 @@
  */
 import { generateGuid, addQuery } from 'containers/App/constants';
 import React, { PropTypes } from 'react';
-import CKEditor from 'react-ckeditor-component';
+// import CKEditor from 'react-ckeditor-component';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { RIEInput } from 'riek';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
-import { Button, Glyphicon, Modal, ButtonGroup, Col, Row, DropdownButton, MenuItem, Badge, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
+import { Button, FormControl, Glyphicon, Modal, ButtonGroup, Col, Row, DropdownButton, MenuItem, Tooltip, OverlayTrigger } from 'react-bootstrap/lib';
 import EditQuoteGrid from 'components/EditQuoteGrid';
 import { SegmentedQuote } from '../SegmentedQuote';
 import messages from './messages';
@@ -51,7 +51,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
   }
   componentWillReceiveProps(nextProps) {
     const groupLen = _.find(nextProps.groups, { id: this.props.location.query.groupId });
-    if (this.state.selectedGroup !== null) {
+    if (this.state.selectedGroup !== null && groupLen) {
       if (this.props.location.query.groupId && !groupLen) {
         this.setState({ selectedGroup: this.props.groups[0].id, desc: this.props.groups[0].description });
         addQuery({ groupId: this.props.groups[0].id });
@@ -131,12 +131,12 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
     return !isNaN(number);
   }
   editorTextChange(e) {
-    this.setState({ desc: e.editor.getData() });
+    this.setState({ desc: e.target.value });
+    // this.setState({ desc: e.editor.getData() });
   }
   render() {
     let group = {};
     let groupLines = [];
-
     groupLines = _.filter(this.props.lines, { groupId: this.props.selectedGroup !== '' ? this.props.selectedGroup : this.state.selectedGroup });
     group = _.filter(this.props.groups, { id: this.props.selectedGroup !== '' ? this.props.selectedGroup : this.state.selectedGroup })[0];
     // const optionalTooltip = (
@@ -160,11 +160,18 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
             <Modal.Title id="contained-modal-title" style={{ textAlign: 'center' }}>Edit Description for {group.name} </Modal.Title>
           </Modal.Header>
           <Modal.Body className="group-des-edit">
-            <CKEditor
+            {/* <CKEditor
               content={group.description} events={{
                 change: this.editorTextChange,
               }}
-            ></CKEditor>
+            ></CKEditor> */}
+            <FormControl
+              componentClass="textarea"
+              type="text"
+              value={this.state.desc}
+              placeholder="Enter description"
+              onChange={this.editorTextChange}
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.toggleEditor}>Close</Button>
@@ -324,6 +331,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
               toggleCheckAll={this.props.toggleCheckAll}
               isCheckAll={this.props.isCheckAll}
               toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+              toggleSuggestionStatus={this.props.toggleSuggestionStatus}
             />
           :
               <EditQuoteGrid
@@ -342,6 +350,7 @@ export class GroupQuote extends React.Component { // eslint-disable-line react/p
                 quoteData={this.props.quoteData}
                 location={this.props.location}
                 toggleReconfigureLineStatus={this.props.toggleReconfigureLineStatus}
+                toggleSuggestionStatus={this.props.toggleSuggestionStatus}
               />
           }
         </div>
@@ -390,6 +399,8 @@ GroupQuote.propTypes = {
   isCheckAll: PropTypes.any,
   disableButton: PropTypes.any,
   toggleReconfigureLineStatus: PropTypes.func,
+  toggleSuggestionStatus: PropTypes.func,
+  changeGroup: PropTypes.any,
 };
 const mapStateToProps = createStructuredSelector({
 });

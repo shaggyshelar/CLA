@@ -10,12 +10,12 @@
  */
 import { browserHistory } from 'react-router';
 export const DEFAULT_LOCALE = 'en';
-let serverUrl = '';
+let serverUrl = 'http://localhost:3000/api';
 let entityUrls = {};
 if (process.env.NODE_ENV === 'production') {
   // serverUrl = 'https://esplsol.crm8.dynamics.com/api/data/v8.0/';
   // serverUrl = window.parent.Xrm.Page.context.getClientUrl();
-  serverUrl = 'https://14.141.105.180:1825/api';
+  serverUrl = 'https://crm.eternussolutions.com:1825/api';
   entityUrls = {
     PRODUCTS: '/Product',
     QUOTE: '/Quote',
@@ -33,7 +33,7 @@ export function addQuery(query) {
 
 export function removeQuery(...queryNames) {
   const location = Object.assign({}, browserHistory.getCurrentLocation());
-  queryNames.forEach((q) => delete location.query[q]);
+  queryNames.forEach(q => delete location.query[q]);
   browserHistory.push(location);
 }
 export function generateGuid() {
@@ -50,6 +50,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 export const SERVER_URL = serverUrl;
 export const EntityURLs = entityUrls;
+export const tempQuoteId = '02ea5f56-68cf-e711-812c-c4346bdd8041';
+export const tempPriceBookId = '079f247c-b29e-e711-8124-c4346bdc0e01';
+// export const tempQuoteId = '136cb345-e1df-e711-8138-c4346bdcdf81';
+// export const tempPriceBookId = '8a4eab39-4fe5-e711-813b-c4346bdcdf81';
 // export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
 // export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
 // export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
@@ -92,3 +96,6 @@ export const UPDATE_SELECT_BUNDLE = 'app/EditQuote/UPDATE_SELECT_BUNDLE';
 export const SAVE_APP_CUSTOM_SEGMENT_DATA = 'app/EditQuote/SAVE_APP_CUSTOM_SEGMENT_DATA';
 export const SAVECONFIGURATION_SUCCESS = 'app/EditQuote/SAVECONFIGURATION_SUCCESS';
 export const TOGGLE_RECONFIGURELINE_STATUS = 'app/EditQuote/TOGGLE_RECONFIGURELINE_STATUS';
+export const TOGGLE_SUGGESTION_STATUS = 'app/EditQuote/TOGGLE_SUGGESTION_STATUS';
+export const SAVESUGGESTION_SUCCESS = 'app/EditQuote/SAVESUGGESTION_SUCCESS';
+export const CHANGE_DISCOUNT = 'app/EditQuote/CHANGE_DISCOUNT';

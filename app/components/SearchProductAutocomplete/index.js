@@ -6,9 +6,9 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AsyncTypeahead, Typeahead } from 'react-bootstrap-typeahead';
+import { Typeahead } from 'react-bootstrap-typeahead';
 import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap/lib';
-import { SERVER_URL, EntityURLs } from 'containers/App/constants';
+import { SERVER_URL, EntityURLs, tempPriceBookId } from 'containers/App/constants';
 class SearchProductAutocomplete extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props) {
@@ -29,6 +29,12 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
     this.props.onSearchClick(searchInputValue);
   }
 
+  onInputChange(text) {
+    if (text === '') {
+      this.props.onSearchClick(text);
+    }
+  }
+
   handleChange(selection) {
     this.props.onSearchItemSelected(selection[0]);
   }
@@ -40,9 +46,13 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
         isLoding: true,
       });
     }
-    let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+   // let priceBookId = 'C0FE4869-0F78-E711-811F-C4346BDC0E01';
+   // let priceBookId = 'e171145c-86b9-e711-8131-c4346bdcdf81';
+    let priceBookId = '';
     if (process.env.NODE_ENV === 'production') {
       priceBookId = this.props.location.query.PriceBookId;
+    } else {
+      priceBookId = tempPriceBookId;
     }
     const searchObj = {
       searchValue: selection,
@@ -58,12 +68,7 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
         isLoding: false,
       });
     });
-    //this.props.searchInputChange(selection);
-  }
-  onInputChange(text) {
-    if (text === '') {
-      this.props.onSearchClick(text);
-    }
+    // this.props.searchInputChange(selection);
   }
 
   render() {
@@ -85,9 +90,10 @@ class SearchProductAutocomplete extends React.Component { // eslint-disable-line
 SearchProductAutocomplete.propTypes = {
   data: React.PropTypes.array,
   place: React.PropTypes.any,
-  searchInputChange: React.PropTypes.func,
+  // searchInputChange: React.PropTypes.func,
   onSearchClick: React.PropTypes.func,
   onSearchItemSelected: React.PropTypes.func,
+  location: React.PropTypes.any,
 };
 
 export default SearchProductAutocomplete;

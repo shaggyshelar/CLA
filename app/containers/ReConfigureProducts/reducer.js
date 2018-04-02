@@ -14,32 +14,45 @@ import {
   LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS,
   LOAD_CONFIGURE_PRODUCTS_DATA_ERROR,
   ADD_OPTIONS,
+  CANCEL,
+  CONTINUE,
   DELETE_PRODUCT,
   UPDATE_PRODUCT,
   TOGGLE_CHECKBOX_CHANGE,
   TOGGLE_ADDOPTIONS_STATE,
   SAVE_CONFIGURE_PRODUCTS_DATA,
+  FEATURE_CONFIG_ATTR_CHANGE,
 } from './constants';
 
 const initialState = fromJS({
   loading: false,
   error: false,
+  errorMessage: '',
   productBundleData: {},
   reConfigureProductData: {},
   fromAddOptions: false,
   activeTab: 0,
   quoteData: {},
 });
-
 function reConfigureProductsReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
+    case CANCEL:
+      return state
+        .set('error', false)
+        .set('errorMessage', '');
+    case CONTINUE:
+      return state
+        .set('loading', true)
+        .set('error', false)
+        .set('errorMessage', '');
     case LOAD_CONFIGURE_PRODUCTS_DATA:
       toast.dismiss();
       return state
         .set('loading', true)
-        .set('error', false);
+        .set('error', false)
+        .set('errorMessage', '');
     case LOAD_CONFIGURE_PRODUCTS_DATA_SUCCESS: {
       const reConfigureProducts = {};
       const productBundelData = action.productBundelData.quoteProductData;
@@ -194,7 +207,9 @@ function reConfigureProductsReducer(state = initialState, action) {
           products.forEach((product) => {
             const productObj = product;
             productObj.isDeleted = false;
-            otherOptions.products.push(productObj);
+            if (productObj.isVisible) {
+              otherOptions.products.push(productObj);
+            }
           }, this);
           reConfigureProducts.features.push(otherOptions);
         }
@@ -208,12 +223,19 @@ function reConfigureProductsReducer(state = initialState, action) {
     }
     case LOAD_CONFIGURE_PRODUCTS_DATA_ERROR: {
       toast.dismiss();
+      let error = false;
+      let errorMsg = false;
       if (action.error && action.error instanceof Array) {
-        action.error.map((i) => {
-          toast.error(<p>{i.message}</p>, {
-            position: toast.POSITION.TOP_LEFT,
-            autoClose: false,
-          });
+        action.error.map((errorObject) => {
+          if (errorObject.type === 'alert') {
+            error = true;
+            errorMsg = errorObject.message;
+          } else {
+            toast.error(<p>{errorObject.message}</p>, {
+              position: toast.POSITION.TOP_LEFT,
+              autoClose: false,
+            });
+          }
           return this;
         });
       } else {
@@ -223,7 +245,8 @@ function reConfigureProductsReducer(state = initialState, action) {
         });
       }
       return state
-        .set('error', action.error)
+        .set('error', error)
+        .set('errorMessage', errorMsg)
         .set('loading', false);
     }
     case ADD_OPTIONS : {
@@ -353,22 +376,54 @@ function reConfigureProductsReducer(state = initialState, action) {
                   const productArray = [];
                   featureData.products.forEach((productData) => {
                     const productObj = productData;
-                    let isDeleted = false;
-                    if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
-                      productObj.isDisable = true;
-                    } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
-                      if (productObj.isAdded) {
-                        isDeleted = true;
+                    const selectedDependentItems = [];
+                    const selectedExclusionItems = [];
+                    if (productObj.dependencyList.length > 0) {
+                      productObj.dependencyList.forEach((dependentProduct) => {
+                        reConfigureProduct.categories.forEach((reconfigureCategoryData) => {
+                          reconfigureCategoryData.features.forEach((reconfigureFeatureData) => {
+                            reconfigureFeatureData.products.forEach((reconfigureProductData) => {
+                              if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
+                                selectedDependentItems.push(reconfigureProductData.isSelected);
+                              }
+                              if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
+                                selectedExclusionItems.push(reconfigureProductData.isSelected);
+                              }
+                            });
+                          });
+                        });
+                      });
+
+                      if (!productObj.isRequired) {
+                        const filteredDependentArray = selectedDependentItems.filter((value) => value === false);
+                        if (selectedDependentItems.length === filteredDependentArray.length && selectedDependentItems.length !== 0) {
+                          productObj.isDisable = true;
+                          productObj.isSelected = false;
+                        } else {
+                          productObj.isDisable = false;
+                        }
+
+                        const filteredExclusionArray = selectedExclusionItems.filter((value) => value === true);
+                        if (filteredExclusionArray.length !== 0) {
+                          if (filteredExclusionArray.length > 0) {
+                            productObj.isDisable = true;
+                            productObj.isSelected = false;
+                          } else {
+                            productObj.isDisable = false;
+                          }
+                        }
                       }
-                      productObj.isDisable = !productObj.isDisable;
-                    } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
-                      productObj.isDisable = !productObj.isDisable;
-                      productObj.isSelected = false;
                     }
-                    if (!isDeleted) {
-                      productArray.push(productObj);
-                    }
+                    productArray.push(productObj);
                   });
+    //              isDeleted = false;
+    //              else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
+    //               if (productObj.isAdded) {
+    //                 isDeleted = true;
+    //               }
+    //              if (!isDeleted) {
+    //                productArray.push(productObj);
+    //              }
                   featureObj.products = productArray;
                   featureArray.push(featureObj);
                 });
@@ -391,21 +446,56 @@ function reConfigureProductsReducer(state = initialState, action) {
               const productArray = [];
               featureData.products.forEach((productData) => {
                 const productObj = productData;
-                let isDeleted = false;
-                if (productObj.isExclusion && productObj.isDependent && productObj.dependentProductId === product.id) {
-                  productObj.isDisable = true;
-                } else if (productObj.isExclusion && productObj.dependentProductId === product.id) {
-                  if (productObj.isAdded) {
-                    isDeleted = true;
+                const selectedDependentItems = [];
+                const selectedExclusionItems = [];
+                // Get status (isSelected) of dependent and exclusion product by comparing it with each product.
+                if (productObj.dependencyList.length > 0) {
+                  productObj.dependencyList.forEach((dependentProduct) => {
+                    reConfigureProduct.features.forEach((reconfigureFeatureData) => {
+                      reconfigureFeatureData.products.forEach((reconfigureProductData) => {
+                        if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isDependent) {
+                          selectedDependentItems.push(reconfigureProductData.isSelected);
+                          // Push true and false value of dependent product
+                          // ex. selectedDependentItems = [true, false]
+                        }
+                        if (reconfigureProductData.id === dependentProduct.dependentProductId && dependentProduct.isExclusion) {
+                          selectedExclusionItems.push(reconfigureProductData.isSelected);
+                           // Push true and false value of exclusion product
+                           // ex. selectedExclusionItems = [true, false]
+                        }
+                      });
+                    });
+                  });
+                  // Avoid applying dependent and exclusion rule on required product.
+                  if (!productObj.isRequired) {
+                    // For Dependent Product
+                    // Get product with status false
+                    // ex. filteredDependentArray = [false]
+                    const filteredDependentArray = selectedDependentItems.filter((value) => value === false);
+                    // Compare length of selectedDependentItems and filteredDependentArray to update value of disable and isSelected property
+                    if (selectedDependentItems.length === filteredDependentArray.length && selectedDependentItems.length !== 0) {
+                      productObj.isDisable = true;
+                      productObj.isSelected = false;
+                    } else {
+                      productObj.isDisable = false;
+                    }
+                    // For Exclusion Product
+                    // Get product with status true
+                    // ex. filteredDependentArray = [true]
+
+                    const filteredExclusionArray = selectedExclusionItems.filter((value) => value === true);
+                    // FilteredExclusionArray is having length greater than zero then update  value of disable and isSelected property
+                    if (filteredExclusionArray.length !== 0) {
+                      if (filteredExclusionArray.length > 0) {
+                        productObj.isDisable = true;
+                        productObj.isSelected = false;
+                      } else {
+                        productObj.isDisable = false;
+                      }
+                    }
                   }
-                  productObj.isDisable = !productObj.isDisable;
-                } else if (productObj.isDependent && productObj.dependentProductId === product.id) {
-                  productObj.isDisable = !productObj.isDisable;
-                  productObj.isSelected = false;
                 }
-                if (!isDeleted) {
-                  productArray.push(productObj);
-                }
+                productArray.push(productObj);
               });
               featureObj.products = productArray;
               featureArray.push(featureObj);
@@ -414,8 +504,16 @@ function reConfigureProductsReducer(state = initialState, action) {
           }
         }
       }
-      return state
+      let updatedState;
+      if (action.product.applyImmediately) {
+        updatedState = state
+        .set('reConfigureProductData', fromJS(reConfigureProduct))
+        .set('loading', true);
+      } else {
+        updatedState = state
         .set('reConfigureProductData', fromJS(reConfigureProduct));
+      }
+      return updatedState;
     }
 
     case TOGGLE_ADDOPTIONS_STATE: {
@@ -433,6 +531,13 @@ function reConfigureProductsReducer(state = initialState, action) {
       return state
         .set('loading', true)
         .set('error', false);
+    case FEATURE_CONFIG_ATTR_CHANGE:
+      const productBundleData = state.get('productBundleData').toJS();
+      productBundleData.categories = action.data.categories;
+      productBundleData.features = action.data.features;
+      return state
+        .set('productBundleData', fromJS(productBundleData))
+        .set('reConfigureProductData', fromJS(action.data));
     default:
       return state;
   }

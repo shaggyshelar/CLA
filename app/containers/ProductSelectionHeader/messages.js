@@ -26,6 +26,10 @@ export default defineMessages({
     id: 'app.containers.ProductSelectionHeader.filter',
     defaultMessage: 'Filter',
   },
+  guidedSelling: {
+    id: 'app.containers.ProductSelectionHeader.guidedSelling',
+    defaultMessage: 'Guided Selling',
+  },
   favourites: {
     id: 'app.containers.ProductSelectionHeader.favourites',
     defaultMessage: 'Favourites',
@@ -33,5 +37,9 @@ export default defineMessages({
   searchProducts: {
     id: 'app.containers.ProductSelectionHeader.searchProducts',
     defaultMessage: 'Search Products',
+  },
+  clearFilter: {
+    id: 'app.containers.ProductSelectionHeader.clearFilter',
+    defaultMessage: 'Clear Filter',
   },
 });

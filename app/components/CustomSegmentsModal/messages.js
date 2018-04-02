@@ -42,6 +42,10 @@ export default defineMessages({
     id: 'app.components.CustomSegmentsModal.save',
     defaultMessage: 'Save',
   },
+  segNameError: {
+    id: 'app.components.CustomSegmentsModal.segNameError',
+    defaultMessage: 'Segment Name Should not be Empty.',
+  },
   dateEmptyValidation: {
     id: 'app.components.CustomSegmentsModal.dateEmptyValidation',
     defaultMessage: 'Date Should not be Empty.',

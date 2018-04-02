@@ -13,7 +13,9 @@ import {
   LOAD_DATA_ERROR,
   LOAD_PRODUCTS_DATA,
   LOAD_PRODUCTS_DATA_SUCCESS,
+  LOAD_FILTERED_PRODUCTS_DATA_SUCCESS,
   LOAD_SEARCH_DATA,
+  FILTER_SEARCH_DATA,
   LOAD_SEARCH_DATA_SUCCESS,
   LOAD_SEARCH_BTN_DATA_SUCCESS,
   LOAD_SEARCH_ITEM_SELECTED,
@@ -21,6 +23,7 @@ import {
 
 const initialState = fromJS({
   showFilter: false,
+  showGuidedSellingFilter: false,
   loading: false,
   error: false,
   products: [],
@@ -38,11 +41,24 @@ function productSelectionPageReducer(state = initialState, action) {
       toast.dismiss();
       return state
         .set('loading', true)
+        .set('guidedSellingQuestions', fromJS([]))
         .set('error', false);
     case LOAD_PRODUCTS_DATA_SUCCESS: {
+      let showGuidedSellingFilter = false;
+      if (action.products.guidedSelling && action.products.guidedSelling.quoteProcesses && action.products.guidedSelling.quoteProcesses.length > 0) {
+        showGuidedSellingFilter = true;
+      }
       return state
         .set('products', fromJS(action.products.products))
+        .set('guidedSellingQuestions', fromJS(action.products.guidedSelling ? action.products.guidedSelling.quoteProcesses : []))
         .set('initialProducts', fromJS(action.products.products))
+        .set('showGuidedSellingFilter', showGuidedSellingFilter)
+        .set('loading', false);
+    }
+    case LOAD_FILTERED_PRODUCTS_DATA_SUCCESS: {
+      return state
+        .set('products', fromJS(action.products.products))
+        .set('guidedSellingQuestions', fromJS(action.products.guidedSelling ? action.products.guidedSelling.quoteProcesses : []))
         .set('loading', false);
     }
     case LOAD_DATA_ERROR:
@@ -51,6 +67,10 @@ function productSelectionPageReducer(state = initialState, action) {
         .set('error', action.error)
         .set('loading', false);
     case LOAD_SEARCH_DATA:
+      return state
+        .set('loading', true)
+        .set('error', false);
+    case FILTER_SEARCH_DATA:
       return state
         .set('loading', true)
         .set('error', false);

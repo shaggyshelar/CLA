@@ -54,6 +54,11 @@ const makeSelectError = () => createSelector(
   (homeState) => homeState.get('error')
 );
 
+const getSelectErrorMessage = () => createSelector(
+  selectReConfigureProductsDomain(),
+  (homeState) => homeState.get('errorMessage')
+);
+
 const getGlobalQuoteData = () =>
  createSelector(
   global,
@@ -63,7 +68,7 @@ const getGlobalQuoteData = () =>
 const getReconfigureQuoteData = () =>
  createSelector(
  selectReConfigureProductsDomain(),
-  (homeState) => homeState.get('quoteData')
+  (homeState) => homeState.get('quoteData').toJS()
 );
 
 const getLanguage = () =>
@@ -81,6 +86,7 @@ export {
   getActiveTabState,
   makeSelectLoading,
   makeSelectError,
+  getSelectErrorMessage,
   getLanguage,
   getGlobalQuoteData,
   getReconfigureQuoteData,

@@ -4,8 +4,12 @@ import { createSelector } from 'reselect';
  * Direct selector to the addConfigureProducts state domain
  */
 const selectAddConfigureProductsDomain = () => (state) => state.get('addConfigureProducts');
+
 const language = (state) => state.get('language');
 
+// const quote = (state) => state.get('global');
+
+const reconfigure = (state) => state.get('reConfigureProducts');
 /**
  * Other specific selectors
  */
@@ -41,6 +45,18 @@ const getLanguage = () =>
   (homeState) => homeState.get('locale')
 );
 
+const getReConfigureQuoteData = () =>
+ createSelector(
+  reconfigure,
+  (homeState) => homeState.get('quoteData')
+);
+
+const getReConfigureProductData = () =>
+ createSelector(
+  reconfigure,
+  (homeState) => homeState.get('reConfigureProductData')
+);
+
 export {
   selectAddConfigureProductsDomain,
   makeSelectAddConfigureProducts,
@@ -48,4 +64,6 @@ export {
   makeSelectLoading,
   makeSelectError,
   getLanguage,
+  getReConfigureQuoteData,
+  getReConfigureProductData,
 };

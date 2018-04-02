@@ -50,6 +50,9 @@ import {
   CONTINUE,
   SAVECONFIGURATION_SUCCESS,
   TOGGLE_RECONFIGURELINE_STATUS,
+  TOGGLE_SUGGESTION_STATUS,
+  SAVESUGGESTION_SUCCESS,
+  CHANGE_DISCOUNT,
 } from './constants';
 const initialState = fromJS({
   loading: false,
@@ -70,7 +73,7 @@ function appReducer(state = initialState, action) {
       return state.set('loading', true)
         .set('error', false);
     case LOAD_DATA_SUCCESS:
-      //toast.dismiss();
+      // toast.dismiss();
       return state
         .set('data', fromJS(action.data.quote))
         .set('dataChanged', false)
@@ -172,8 +175,11 @@ function appReducer(state = initialState, action) {
         .setIn(['data', 'lines'], fromJS(action.lines))
         .setIn(['data', 'groups'], fromJS(action.groups)).set('dataChanged', true);
     case UNGROUP:
+      toast.dismiss();
       return state
-        .setIn(['data'], fromJS(action.data));
+       // .set('data', fromJS(action.data))
+        .set('error', false)
+        .set('loading', true);
     case GROUP:
       return state
         .setIn(['data'], fromJS(action.data));
@@ -195,7 +201,11 @@ function appReducer(state = initialState, action) {
       {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
-        line[0][action.field].value = action.data;
+        if (action.field === 'partnerDiscount' || action.field === 'distributorDiscount') {
+          line[0][action.field] = action.data;
+        } else {
+          line[0][action.field].value = action.data;
+        }
         return state.setIn(['data', 'lines'], fromJS(lines))
                     .set('dataChanged', true);
       }
@@ -240,7 +250,7 @@ function appReducer(state = initialState, action) {
       {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
-        const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
+        const segLine = _.filter(line[0].segmentData.columns, { columnName: action.name });
         if (action.field === 'additionalDiscount') {
           segLine[0][action.field].value = action.data;
         } else {
@@ -253,7 +263,7 @@ function appReducer(state = initialState, action) {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.parentLineId });
         const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
-        const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
+        const segLine = _.filter(lineBundle[0].segmentData.columns, { columnName: action.name });
         segLine[0][action.field] = action.data;
         return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
@@ -261,7 +271,7 @@ function appReducer(state = initialState, action) {
       {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.id });
-        const segLine = _.filter(line[0].segmentData.columns, { name: action.name });
+        const segLine = _.filter(line[0].segmentData.columns, { columnName: action.name });
         _.map(segLine[0][action.field].selectValues, (i, index) => {
           if (i.id === action.data && !i.isSelected) {
             segLine[0][action.field].selectValues[index].isSelected = true;
@@ -277,17 +287,17 @@ function appReducer(state = initialState, action) {
         const lines = state.getIn(['data', 'lines']).toJS();
         const line = _.filter(lines, { id: action.parentLineId });
         const lineBundle = _.filter(line[0].bundleProducts, { id: action.id });
-        const segLine = _.filter(lineBundle[0].segmentData.columns, { name: action.name });
+        const segLine = _.filter(lineBundle[0].segmentData.columns, { columnName: action.name });
         segLine[0][action.field] = action.data;
         return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
     case SEGMENT:
       {
-        const lines = state.getIn(['data', 'lines']).toJS();
-        const line = _.filter(lines, { id: action.id });
-        line[0].isSegmented = action.value;
-        // return state.set('loading', true);
-        return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
+        // const lines = state.getIn(['data', 'lines']).toJS();
+        // const line = _.filter(lines, { id: action.id });
+        // line[0].isSegmented = action.value;
+        return state.set('loading', true);
+        // return state.setIn(['data', 'lines'], fromJS(lines)).set('dataChanged', true);
       }
     case SAVE_APP_CUSTOM_SEGMENT_DATA : {
       return state.set('loading', true).set('dataChanged', true)
@@ -303,9 +313,35 @@ function appReducer(state = initialState, action) {
       const line = _.find(quote.lines, { id: action.reconfigureObj.id });
       if (line) {
         line.reconfigured = action.reconfigureObj.reconfigured;
+        _.forEach(quote.lines, (line) => {
+          line.toReconfigure = false;
+        });
+        line.toReconfigure = true;
+      }
+      const updateQuote = fromJS(quote);
+      return state
+         .set('data', updateQuote);
+    }
+    case TOGGLE_SUGGESTION_STATUS : {
+      const quote = state.get('data').toJS();
+      const line = _.find(quote.lines, { id: action.suggestionObj.id });
+      if (line) {
+        line.suggested = action.suggestionObj.suggested;
       }
       return state
          .set('data', fromJS(quote));
+    }
+
+    case SAVESUGGESTION_SUCCESS: {
+      return state
+        .set('data', fromJS(action.data.quote))
+        .set('loading', false);
+    }
+
+    case CHANGE_DISCOUNT: {
+      return state
+        .set('data', fromJS(action.quoteData))
+        .set('dataChanged', true);
     }
     default:
       return state;
