@@ -127,8 +127,8 @@ export function* applyImmediateConfig(productData) {
 }
 
 export function* saveConfiguredProducts() {
+  const chan = yield actionChannel(SAVE_CONFIGURE_PRODUCTS_DATA);
   while (true) {
-    const chan = yield actionChannel(SAVE_CONFIGURE_PRODUCTS_DATA);
     const { data, locationQuery } = yield take(chan);
     yield call(saveProducts, data, locationQuery);
   }
@@ -144,8 +144,8 @@ export function* applyImmediateConfigProd() {
 }
 
 export function* loadProductBundleData() {
+  const chan = yield actionChannel(LOAD_CONFIGURE_PRODUCTS_DATA);
   while (true) {
-    const chan = yield actionChannel(LOAD_CONFIGURE_PRODUCTS_DATA);
     const { data } = yield take(chan);
     yield call(getProductBundleSaga, data);
   }

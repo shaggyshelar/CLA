@@ -24,8 +24,8 @@ export function* getSuggestions(data) {
 }
 
 export function* loadSuggestions() {
+  const chan = yield actionChannel(LOAD_SUGGESTIONS);
   while (true) {
-    const chan = yield actionChannel(LOAD_SUGGESTIONS);
     const { data } = yield take(chan);
     yield call(getSuggestions, data);
   }
@@ -60,8 +60,8 @@ export function* saveSuggestionsData(data, locationQuery) {
 }
 
 export function* saveSuggestionsProducts() {
+  const chan = yield actionChannel(SAVE_SUGGESTIONS);
   while (true) {
-    const chan = yield actionChannel(SAVE_SUGGESTIONS);
     const { data, locationQuery } = yield take(chan);
     yield call(saveSuggestionsData, data, locationQuery);
   }
