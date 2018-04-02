@@ -48,6 +48,7 @@ class ProductSelectionGrid extends React.Component { // eslint-disable-line reac
   handleProductDetailsToggle(index) {
     const selectedData = this.props.products[index];
     if (selectedData !== undefined) {
+      selectedData.productId = selectedData.id;
       this.setState({
         isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
         selectedData: selectedData,

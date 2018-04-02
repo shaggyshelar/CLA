@@ -9,6 +9,7 @@ import { Button, Glyphicon, FormControl } from 'react-bootstrap/lib';
 import Sidebar from 'components/Sidebar';
 import ReactTable from '../ReactTable';
 import messages from './messages';
+import ProductDetails from '../ProductDetails';
 
 class ReconfigureGrid extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -31,6 +32,7 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         selectedLine: {},
       },
       isVisible: false,
+      isProductDetailsModalOpen: false,
     };
     this.setTableOption = this.setTableOption.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
@@ -39,6 +41,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
     this.renderEditable = this.renderEditable.bind(this);
     this.toggleCheckboxChange = this.toggleCheckboxChange.bind(this);
     this.clickEdit = this.clickEdit.bind(this);
+    this.handleProductDetailsToggle = this.handleProductDetailsToggle.bind(this);
+    this.renderOverlay = this.renderOverlay.bind(this);
   }
 
   setTableOption(event) {
@@ -82,6 +86,32 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
   formatt(e, d) {
     return (d.toLocaleString('en', { minimumFractionDigits: 0, maximumFractionDigits: e }));
   }
+
+  handleProductDetailsToggle(cellInfo) {
+    let selectedData = cellInfo.original;
+      if (selectedData !== undefined) {     
+        selectedData.productId = selectedData.id;
+        this.setState({
+          isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
+          selectedData: selectedData,
+        });
+      } else {
+        this.setState({
+          isProductDetailsModalOpen: !this.state.isProductDetailsModalOpen,
+        });
+      }
+    }
+  
+    renderOverlay(cellInfo) {
+      if (cellInfo.original.detailedInfo.images.length > 0 || cellInfo.original.detailedInfo.description !== null ) {
+        return (
+          <div className="lab"><a onClick={this.handleProductDetailsToggle.bind(this, cellInfo)} className="proname-icon" title={`${cellInfo.original.name}`}>{cellInfo.original.name}</a> </div>
+        );
+      }
+      return (
+        <div className="lab"><span  title={`${cellInfo.original.name}`}>{cellInfo.original.name}</span> </div>
+      );
+    }
 
   deleteProduct(product) {
     const productObj = {
@@ -178,7 +208,8 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
         accessor: 'name',
         style: { textAlign: 'left' },
         headerStyle: { textAlign: 'left' },
-        Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.name}</span> : <span className="cellColor">{cellInfo.original.name}</span>),
+        //Cell: (cellInfo) => (this.props.feature.dynamicAddEnabled || cellInfo.original.isSelected ? <span>{cellInfo.original.name}</span> : <span className="cellColor">{cellInfo.original.name}</span>),
+        Cell: this.renderOverlay,
       },
       {
         Header: () => <span className="upper-case" title={this.context.intl.formatMessage({ ...messages.productDescription })}>{this.context.intl.formatMessage({ ...messages.productDescription })}</span>,
@@ -222,8 +253,16 @@ class ReconfigureGrid extends React.Component { // eslint-disable-line react/pre
             pageSize={this.props.products.length > 0 ? this.props.products.length : 1}
             style={{ width: '100%' }}
             {...this.state.tableOptions}
-
           />
+          <ProductDetails
+          show={this.state.isProductDetailsModalOpen} onHide={this.handleProductDetailsToggle}
+          style={{
+            display: 'inline-flex',
+          }}
+          isDetailsShown={this.state.isProductDetailsModalOpen}
+          value={this.state.value}
+          selectedData={this.state.selectedData}
+         />
           <div className="filter">
             <Sidebar container={this} title="Product Filter" side="left" isVisible={this.props.showFilter} onHide={this.props.toggleFilter}>
               <h4>FG</h4>
