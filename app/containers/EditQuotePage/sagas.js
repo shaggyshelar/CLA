@@ -74,9 +74,9 @@ export function* saveCustomSegmentData() {
     yield call(saveSegmentData, segment);
   }
 }
-export function* calculateQuotes() {
-  const chan = yield actionChannel(CALCULATE_SELECTED);
+export function* calculateQuotes() {  
   while (true) {
+    const chan = yield actionChannel(CALCULATE_SELECTED);
     const { data } = yield take(chan);
     yield call(calculateQuoteTotals, data);
     chan.close();
