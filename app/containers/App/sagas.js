@@ -32,8 +32,8 @@ export function* getData(action) {
   }
 }
 export function* dataSaga() {
-  const chan = yield actionChannel(LOAD_DATA);
   while (true) {
+    const chan = yield actionChannel(LOAD_DATA);
     const action = yield take(chan);
     const requestURL = `${`${SERVER_URL + EntityURLs.QUOTE}/EditQuote?QuoteId=${action.quoteId}`}`;
     const options = {
@@ -57,8 +57,8 @@ export function* dataSaga() {
   }
 }
 export function* continueSave() {
-  const chan = yield actionChannel(CONTINUE);
   while (true) {
+    const chan = yield actionChannel(CONTINUE);
     yield take(chan);
     const lines = yield select(selectGlobal);
     const postLines = Object.assign({}, lines.toJS().data);
