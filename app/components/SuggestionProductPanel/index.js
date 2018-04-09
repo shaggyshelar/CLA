@@ -40,7 +40,7 @@ class SuggestionProductPanel extends React.Component { // eslint-disable-line re
             <span className="categoryLabel">{name}</span>
           </div>
           <div className="panel-group" id="suggestionAccordion">
-            <Panel id="panelCrossSell" defaultExpanded className="productAccordian">
+            <Panel id="panelCrossSell" className="productAccordian">
               <Panel.Heading className="panel-heading">              
                 <Panel.Title toggle>
                   CrossSell <Glyphicon glyph="chevron-down" />
